@@ -6,8 +6,8 @@ export const DashboardRoutes: Routes = [{
   path: '',
   component: DashboardComponent,
   data: {
-    breadcrumb: 'Dashboard',
+    breadcrumb: 'Accueil',
     icon: 'icofont-home bg-c-blue',
-    status: false
+    status: true
   }
 }];
