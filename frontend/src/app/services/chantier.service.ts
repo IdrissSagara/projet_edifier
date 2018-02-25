@@ -3,6 +3,9 @@ import {AuthHttp} from 'angular2-jwt';
 import {Chantier} from '../models/chantier';
 import {Observable} from 'rxjs/Observable';
 import {UtilitairesService} from './utilitaires.service';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
 
 @Injectable()
 export class ChantierService {
