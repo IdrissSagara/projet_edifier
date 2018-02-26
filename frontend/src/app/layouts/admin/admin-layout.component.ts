@@ -54,8 +54,8 @@ export class AdminLayoutComponent implements OnInit {
     this.setMenuAttributs(this.windowWidth);
 
     this.htmlButton = '<div class="fixed-button">';
-    this.htmlButton += '<a href="https://codedthemes.com/item/mash-able-pro-admin-template/" class="btn btn-primary" aria-hidden="true">';
-    this.htmlButton += 'Upgrade To Pro</a>';
+    /*this.htmlButton += '<a href="https://codedthemes.com/item/mash-able-pro-admin-template/" class="btn btn-primary" aria-hidden="true">';*/
+    this.htmlButton += '<a class="btn btn-primary" href="#"><i class="icofont icofont-arrow-up"></i></a>';
     this.htmlButton += '</div>';
 
   }
