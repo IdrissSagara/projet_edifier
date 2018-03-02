@@ -18,8 +18,7 @@ export const AppRoutes: Routes = [{
       path: 'basic',
       loadChildren: './components/basic/basic.module#BasicModule'
     }, {
-      path: 'advance',
-      loadChildren: './components/advance/advance.module#AdvanceModule'
+      path: 'client', loadChildren: './components/client/advance.module#AdvanceModule'
     }, {
       path: 'forms',
       loadChildren: './components/forms/forms.module#FormsModule'

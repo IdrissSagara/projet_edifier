@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ToastyService, ToastOptions, ToastData} from 'ng2-toasty';
+import {ToastData, ToastOptions, ToastyService} from 'ng2-toasty';
 
 @Component({
-  selector: 'app-notifications',
-  templateUrl: './notifications.component.html'
+  selector: 'app-client', templateUrl: './client.component.html'
 })
-export class NotificationsComponent implements OnInit {
+export class ClientComponent implements OnInit {
   position = 'bottom-right';
   title: string;
   msg: string;

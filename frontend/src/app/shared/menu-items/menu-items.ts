@@ -58,7 +58,7 @@ const MENUITEMS = [
         ]
       },
       {
-        state: 'advance',
+        state: 'client',
         name: 'Clients',
         type: 'link',
         icon: 'ti-crown'
