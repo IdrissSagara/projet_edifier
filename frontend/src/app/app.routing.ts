@@ -36,7 +36,7 @@ export const AppRoutes: Routes = [{
       loadChildren: './components/tables/bootstrap-table/bootstrap-table.module#BootstrapTableModule',
     }, {
       path: 'mouvement',
-      loadChildren: './components/tables/bootstrap-table/bootstrap-table.module#BootstrapTableModule',
+      loadChildren: './mouvement/mouvement.module#MouvementModule',
     }, {
       path: 'map',
       loadChildren: './map/map.module#MapModule',
