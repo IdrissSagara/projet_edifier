@@ -7,7 +7,7 @@ export const BasicRoutes: Routes = [
     {
         path: '',
         data: {
-            breadcrumb: 'Basic Components',
+          breadcrumb: 'Caisse',
             status: false
         },
         children: [
@@ -15,21 +15,21 @@ export const BasicRoutes: Routes = [
               path: 'factures',
                 component: BreadcrumbComponent,
                 data: {
-                    breadcrumb: 'Breadcrumb Style',
+                  breadcrumb: 'Factures',
                     status: true
                 }
             }, {
             path: 'recus',
                 component: ButtonComponent,
                 data: {
-                    breadcrumb: 'Button',
+                  breadcrumb: 'Reçus',
                     status: true
                 }
             }, {
             path: 'paiements',
                 component: TypographyComponent,
                 data: {
-                    breadcrumb: 'Typography',
+                  breadcrumb: 'Paiements',
                     status: true
                 }
             }

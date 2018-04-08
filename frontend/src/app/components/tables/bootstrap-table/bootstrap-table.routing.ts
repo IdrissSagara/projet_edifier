@@ -6,7 +6,7 @@ export const BootstrapTableRoutes: Routes = [
     path: '',
     component: BasicComponent,
     data: {
-      breadcrumb: 'Basic Table',
+      breadcrumb: 'Ouvriers',
       status: true
     }
   }

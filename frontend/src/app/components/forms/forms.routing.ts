@@ -6,7 +6,7 @@ export const FormsRoutes: Routes = [
     path: '',
     component: BasicElementsComponent,
     data: {
-      breadcrumb: 'Form Components',
+      breadcrumb: 'Budget',
       status: true
     }
   }
