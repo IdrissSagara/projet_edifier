@@ -1,7 +1,7 @@
-import { Routes } from '@angular/router';
-import {BreadcrumbComponent} from './breadcrumb/breadcrumb.component';
-import {ButtonComponent} from './button/button.component';
-import {TypographyComponent} from './typography/typography.component';
+import {Routes} from '@angular/router';
+import {BreadcrumbComponent} from './factures/breadcrumb.component';
+import {ButtonComponent} from './recus/button.component';
+import {TypographyComponent} from './paiements/typography.component';
 
 export const BasicRoutes: Routes = [
     {
@@ -12,21 +12,21 @@ export const BasicRoutes: Routes = [
         },
         children: [
             {
-                path: 'breadcrumb',
+              path: 'factures',
                 component: BreadcrumbComponent,
                 data: {
                     breadcrumb: 'Breadcrumb Style',
                     status: true
                 }
             }, {
-                path: 'button',
+            path: 'recus',
                 component: ButtonComponent,
                 data: {
                     breadcrumb: 'Button',
                     status: true
                 }
             }, {
-                path: 'typography',
+            path: 'paiements',
                 component: TypographyComponent,
                 data: {
                     breadcrumb: 'Typography',

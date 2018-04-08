@@ -38,21 +38,21 @@ const MENUITEMS = [
         icon: 'ti-home' // icon qui sera affiché a gauche du menu, http://themify.me/themify-icons
       },
       {
-        state: 'basic',
+        state: 'caisse',
         name: 'Caisse',
         type: 'sub',
         icon: 'ti-layout-grid2-alt',
         children: [ // children est la liste des sous-menus
           {
-            state: 'breadcrumb',
+            state: 'factures',
             name: 'Factures'
           },
           {
-            state: 'button',
+            state: 'recus',
             name: 'Reçus'
           },
           {
-            state: 'typography',
+            state: 'paiements',
             name: 'Paiements'
           }
         ]
@@ -68,13 +68,13 @@ const MENUITEMS = [
   {
     main: [
       {
-        state: 'forms',
+        state: 'budget',
         name: 'Budget',
         type: 'link',
         icon: 'ti-layers'
       },
       {
-        state: 'bootstrap-table',
+        state: 'ouvrier',
         name: 'Ouvrier',
         type: 'link',
         icon: 'ti-receipt'
@@ -90,19 +90,19 @@ const MENUITEMS = [
         icon: 'ti-map-alt'
       },
       {
-        state: 'authentication',
+        state: 'mouvement',
         name: 'Mouvement d\'argent',
         type: 'sub',
         icon: 'ti-id-badge',
         children: [
           {
-            state: 'login',
+            state: 'entrant',
             type: 'link',
             name: 'Entrant',
             target: false // target active ou non l'ouverture sur une nouvelle page
           },
           {
-            state: 'forgot',
+            state: 'sortant',
             name: 'Sortant',
             target: false
           },

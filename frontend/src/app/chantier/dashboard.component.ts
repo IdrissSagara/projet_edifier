@@ -12,6 +12,10 @@ export class DashboardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  init() {
     setTimeout(() => {
       $('.resource-barchart1').sparkline([5, 6, 9, 7, 8, 4, 6], {
         type: 'bar',
