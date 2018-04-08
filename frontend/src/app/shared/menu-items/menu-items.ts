@@ -32,17 +32,17 @@ const MENUITEMS = [
   {
     main: [
       {
-        state: 'chantier',
-        name: 'Chantier',
-        type: 'link',
-        icon: 'ti-home'
+        state: 'chantier', // state represente le nom du component concerné
+        name: 'Chantier', // name est le nom affiché sur la page
+        type: 'link',  // type du menu, si celui-ci est un menu simple (link) ou un menu avec sous-menu (sub)
+        icon: 'ti-home' // icon qui sera affiché a gauche du menu, http://themify.me/themify-icons
       },
       {
         state: 'basic',
         name: 'Caisse',
         type: 'sub',
         icon: 'ti-layout-grid2-alt',
-        children: [
+        children: [ // children est la liste des sous-menus
           {
             state: 'breadcrumb',
             name: 'Factures'
@@ -99,12 +99,12 @@ const MENUITEMS = [
             state: 'login',
             type: 'link',
             name: 'Entrant',
-            target: true
+            target: false // target active ou non l'ouverture sur une nouvelle page
           },
           {
             state: 'forgot',
             name: 'Sortant',
-            target: true
+            target: false
           },
         ]
       },
