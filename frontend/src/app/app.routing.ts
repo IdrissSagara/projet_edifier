@@ -43,6 +43,9 @@ export const AppRoutes: Routes = [{
     }, {
       path: 'simple-page',
       loadChildren: './simple-page/simple-page.module#SimplePageModule'
+    }, {
+      path: 'formulaires',
+      loadChildren: './formulaires/formulaires.module#FormulairesModule'
     }
   ]
 }, {
