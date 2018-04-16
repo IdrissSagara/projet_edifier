@@ -2138,3 +2138,7 @@ agm-map, vector_map {
 .pcoded[vertical-nav-type="collapsed"] .slimScrollDiv,.pcoded[vertical-nav-type="collapsed"] .main-menu{
     overflow: visible !important;
 }
+
+.requis {
+  color: #e64056;
+}
