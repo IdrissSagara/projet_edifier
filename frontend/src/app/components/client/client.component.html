@@ -2,7 +2,9 @@
     <div class="row">
         <!-- bootstrap modal start -->
         <div class="col-sm-12">
-          <button class="btn btn-inverse waves-effect" (click)="showClientDialog()">Default</button>
+          <a class="btn btn-inverse waves-effect" [routerLink]="['/formulaires/client']">
+            <i class="icofont icofont-plus"></i>
+          </a>
             <!-- Notification card start -->
           <app-card [title]="'Client'">
                 <div class="row">
