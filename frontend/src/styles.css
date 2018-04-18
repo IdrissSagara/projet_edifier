@@ -18,7 +18,7 @@ File: style.css
 	- Advance Form Elements
 	- Pages
 		-	Loader page, Invoice, Tasklist, Task detail, Range-slider, Counter, Maintenance, Color, FAQ, Progress, Panels & wells, Contact card, Auth pages, Flag
-		-	Gallery, Products pages, Widget, Email, Social timeline, Datatable, Chat, Blog, Wizard, CRM chantier, Task board, Issue list, Chartlist, X-editable
+		-	Gallery, Products pages, Widget, Email, Social timeline, Datatable, Chat, Blog, Wizard, CRM dashboard, Task board, Issue list, Chartlist, X-editable
 		-	Home chat, Dashboard 1-2-3-4
 	- Responsive media class
 
@@ -107,7 +107,7 @@ p {
 .card {
   border-radius: 2px;
   border-top: 4px solid #8CDDCD;
-  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   border-left: none;
   border-right: none;
   border-bottom: none;
@@ -12704,7 +12704,7 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
 }
 
 /**  =====================
-      Theme-chantier css start
+      Theme-dashboard css start
 ==========================  **/
 .d-timeline-btn .f-right {
   height: 40px;
@@ -12963,7 +12963,7 @@ table.footable-paging-center > tfoot > tr.footable-paging > td {
   font-weight: 600;
 }
 
-/**====== Theme-chantier css end ======**/
+/**====== Theme-dashboard css end ======**/
 /**  =====================
       Alert css start
 ==========================  **/

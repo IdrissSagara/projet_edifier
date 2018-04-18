@@ -32,7 +32,7 @@ const MENUITEMS = [
   {
     main: [
       {
-        state: 'chantier', // state represente le nom du component concerné
+        state: 'dashboard', // state represente le nom du component concerné
         name: 'Chantier', // name est le nom affiché sur la page
         type: 'link',  // type du menu, si celui-ci est un menu simple (link) ou un menu avec sous-menu (sub)
         icon: 'ti-home' // icon qui sera affiché a gauche du menu, http://themify.me/themify-icons
