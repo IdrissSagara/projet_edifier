@@ -26,7 +26,7 @@ export const AppRoutes: Routes = [{
       loadChildren: './client/client.module#ClientModule'
     }, {
       path: 'budget',
-      loadChildren: './components/forms/forms.module#FormsModule'
+      loadChildren: './budget/budget.module#BudgetModule'
     }, {
       path: 'ouvriers',
       loadChildren: './ouvrier/ouvrier.module#OuvrierModule',
