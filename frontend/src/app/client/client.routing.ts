@@ -6,7 +6,7 @@ export const ClientRouting: Routes = [{
   path: '',
   component: ClientComponent,
   data: {
-    breadcrumb: 'Client',
+    breadcrumb: 'Clients',
     icon: 'icofont-home bg-c-blue',
     status: true
   }

@@ -5,7 +5,7 @@ export const OuvrierRouting: Routes = [{
   path: '',
   component: OuvrierComponent,
   data: {
-    breadcrumb: 'Ouvrier',
+    breadcrumb: 'Ouvriers',
     icon: 'icofont-home bg-c-blue',
     status: true
   }

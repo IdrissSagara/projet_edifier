@@ -18,17 +18,17 @@ export const AppRoutes: Routes = [{
       path: 'caisse',
       loadChildren: './caisse/caisse.module#CaisseModule'
     }, {
-      path: 'chantier',
+      path: 'chantiers',
       loadChildren: './chantier/chantier.module#ChantierModule'
     },
     {
-      path: 'client',
+      path: 'clients',
       loadChildren: './client/client.module#ClientModule'
     }, {
       path: 'budget',
       loadChildren: './components/forms/forms.module#FormsModule'
     }, {
-      path: 'ouvrier',
+      path: 'ouvriers',
       loadChildren: './ouvrier/ouvrier.module#OuvrierModule',
     }, {
       path: 'mouvement',

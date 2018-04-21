@@ -4,12 +4,13 @@ import {ChantierComponent} from './chantier.component';
 import {ChantierRouting} from './chantier.routing';
 import {RouterModule} from '@angular/router';
 import {SharedModule} from '../shared/shared.module';
+import {DataTableModule} from 'primeng/primeng';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(ChantierRouting),
-    SharedModule
+    SharedModule, DataTableModule
   ],
   declarations: [ChantierComponent]
 })

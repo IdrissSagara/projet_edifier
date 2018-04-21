@@ -22,7 +22,7 @@ export const CaisseRouting: Routes = [
         path: 'recus',
         component: RecusComponent,
         data: {
-          breadcrumb: 'Réçus',
+          breadcrumb: 'Reçus',
           status: true
         }
       }, {

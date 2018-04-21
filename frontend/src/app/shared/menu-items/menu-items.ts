@@ -33,9 +33,15 @@ const MENUITEMS = [
     main: [
       {
         state: 'dashboard', // state represente le nom du component concerné
-        name: 'Chantier', // name est le nom affiché sur la page
+        name: 'Tableau de bord', // name est le nom affiché sur la page
         type: 'link',  // type du menu, si celui-ci est un menu simple (link) ou un menu avec sous-menu (sub)
-        icon: 'ti-home' // icon qui sera affiché a gauche du menu, http://themify.me/themify-icons
+        icon: 'ti-dashboard' // icon qui sera affiché a gauche du menu, http://themify.me/themify-icons
+      },
+      {
+        state: 'chantiers',
+        name: 'Chantiers',
+        type: 'link',
+        icon: 'ti-home'
       },
       {
         state: 'caisse',
@@ -74,8 +80,8 @@ const MENUITEMS = [
         icon: 'ti-layers'
       },
       {
-        state: 'ouvrier',
-        name: 'Ouvrier',
+        state: 'ouvriers',
+        name: 'Ouvriers',
         type: 'link',
         icon: 'ti-receipt'
       }

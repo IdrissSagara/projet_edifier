@@ -1,3 +1,48 @@
-<p>
-  chantier works!
-</p>
+<div class="row m-b-5">
+  <div class="col-11"></div>
+  <div class="col-1">
+    <a class="btn btn-success btn-outline-success btn-icon icon-btn btn-lg"
+       [routerLink]="['/formulaires/chantier']">
+      <i class="icofont icofont-plus"></i>
+    </a>
+  </div>
+</div>
+
+<app-card [title]="'Chantiers'" [classHeader]="true" [blockClass]="'table-border-style'">
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Client</th>
+        <th>Quartier</th>
+        <th>Coût</th>
+        <th>Etat</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+        <td>@twitter</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</app-card>

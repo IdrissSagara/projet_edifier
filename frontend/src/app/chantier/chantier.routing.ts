@@ -6,7 +6,7 @@ export const ChantierRouting: Routes = [
     path: '',
     component: ChantierComponent,
     data: {
-      breadcrumb: 'Chantier',
+      breadcrumb: 'Chantiers',
       icon: 'icofont-home bg-c-blue',
       status: true
     }

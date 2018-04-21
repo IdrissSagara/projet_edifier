@@ -13,14 +13,14 @@ export const MouvementRoutes: Routes = [
         path: 'entrant',
         component: EntrantComponent,
         data: {
-          breadcrumb: 'Mouvement Entrant',
+          breadcrumb: 'Mouvements Entrant',
           status: true
         }
       }, {
         path: 'sortant',
         component: SortantComponent,
         data: {
-          breadcrumb: 'Mouvement Sortant',
+          breadcrumb: 'Mouvements Sortant',
           status: true
         }
       }
