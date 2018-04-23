@@ -114,6 +114,22 @@ const MENUITEMS = [
           },
         ]
       },
+      {
+        state: 'parametrage',
+        name: 'Parametrage',
+        type: 'sub',
+        icon: 'ti-layout-grid2-alt',
+        children: [ // children est la liste des sous-menus
+          {
+            state: 'entreprise',
+            name: 'Entreprise'
+          },
+          {
+            state: 'utilisateurs',
+            name: 'Utilisateurs'
+          }
+        ]
+      },
     ]
   },
   /**

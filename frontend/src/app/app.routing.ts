@@ -39,7 +39,10 @@ export const AppRoutes: Routes = [{
     }, {
       path: 'formulaires',
       loadChildren: './formulaires/formulaires.module#FormulairesModule'
-    }
+    },{
+      path: 'parametrage',
+      loadChildren: './parametrage/parametrage.module#ParametrageModule',
+    },
   ]
 }, {
   path: '',
