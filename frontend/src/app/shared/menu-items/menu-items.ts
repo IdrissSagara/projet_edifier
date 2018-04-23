@@ -118,7 +118,7 @@ const MENUITEMS = [
         state: 'parametrage',
         name: 'Parametrage',
         type: 'sub',
-        icon: 'ti-layout-grid2-alt',
+        icon: 'ti-settings',
         children: [ // children est la liste des sous-menus
           {
             state: 'entreprise',

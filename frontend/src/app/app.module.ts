@@ -22,8 +22,6 @@ import {FactureService} from './services/facture.service';
 import {PaiementService} from './services/paiement.service';
 import {RecuService} from './services/recu.service';
 import {MouvementService} from './services/mouvement.service';
-import { UtilisateursComponent } from './parametrage/utilisateurs/utilisateurs.component';
-import { EntrepriseComponent } from './parametrage/entreprise/entreprise.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +30,6 @@ import { EntrepriseComponent } from './parametrage/entreprise/entreprise.compone
     AuthLayoutComponent,
     BreadcrumbsComponent,
     TitleComponent,
-    UtilisateursComponent,
-    EntrepriseComponent
   ],
   imports: [
     BrowserModule,
