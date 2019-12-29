@@ -45,7 +45,7 @@ exports.validate = (operation) => {
         }
         case 'getChantiers': {
             return [ 
-                check('id', 'invalid client id').exists().isNumeric().trim().escape(),,
+                check('id', 'invalid client id').exists().isNumeric().trim().escape(),
             ]   
         }
         default:

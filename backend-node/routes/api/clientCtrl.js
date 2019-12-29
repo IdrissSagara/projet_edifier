@@ -113,13 +113,57 @@ function save(req, res) {
         });
     }).catch((err) => {
         console.error(err);
-            return res.status(500).json({
-                'error': 'unable to check client validity'
-            })
+        return res.status(500).json({
+            'error': 'unable to check client validity'
+        });
     })
 
 }
 
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+function getChantiers(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var id = req.params.id;
+
+    models.Client.findOne({
+        where: {id: id}
+    }).then((clientFound) => {
+        if (clientFound) {
+            models.Chantier.findAll({
+                where: {ClientId: id}
+            }).then((chantiersFound) => {
+                if (chantiersFound) {
+                    return res.status(200).json(chantiersFound);
+                } else {
+                    return res.status(404).json({
+                        'error': 'no chantier found'
+                    })
+                }
+            }).catch((err) => {
+                console.error(err);
+                return res.status(500).json(err.errors);
+            })
+        } else {
+            return res.status(404).json({
+                'error': 'no client found for id ' + id
+            })
+        }
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
 module.exports = {
-    save, getAll, getById,
+    save, getAll, getById, getChantiers,
 }

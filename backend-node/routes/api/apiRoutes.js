@@ -7,9 +7,21 @@ exports.router = (function() {
     var apiRouter = express.Router();
 
     //client routes
-    apiRouter.get('/client', clientValidator.validate('getAllClients'), clientCtrl.getAll);
-    apiRouter.get('/client/:id', clientValidator.validate('getClient'), clientCtrl.getById);
-    apiRouter.post('/client', clientValidator.validate('saveClient'), clientCtrl.save);
+    apiRouter.get('/client', 
+        clientValidator.validate('getAllClients'), 
+        clientCtrl.getAll);
+
+    apiRouter.get('/client/:id', 
+        clientValidator.validate('getClient'), 
+        clientCtrl.getById);
+
+    apiRouter.get('/client/:id/chantiers', 
+        clientValidator.validate('getChantiers'), 
+        clientCtrl.getChantiers);
+        
+    apiRouter.post('/client', 
+        clientValidator.validate('saveClient'), 
+        clientCtrl.save);
 
     //chantier routes
     apiRouter.route('/chantier').get(chantierCtrl.getAll);
