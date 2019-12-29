@@ -1,5 +1,5 @@
 var models = require('../../models');
-const { check, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 /**
  * 
@@ -7,20 +7,14 @@ const { check, validationResult } = require('express-validator');
  * @param {*} res 
  */
 function getById(req, res) {
-
-    check('id').not().isEmpty().isNumeric();
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
+      res.status(422).json({ errors: errors.array() });
+      return;
     }
 
     var id = req.params.id;
-    
-    if (!id) {
-        return res.status(401).json({
-            'error': 'no client id parameter found'
-        });
-    }
 
     models.Client.findOne({
         where: {id: id}
@@ -44,6 +38,13 @@ function getById(req, res) {
  * @param {*} res 
  */
 function getAll(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
     var fields = req.query.fields;
     var offset = parseInt(req.query.limit);
     var limit = parseInt(req.query.offset);
@@ -74,24 +75,16 @@ function getAll(req, res) {
  * @param {*} res 
  */
 function save(req, res) {
-
-    check('nom').not().isEmpty().isLength({min: 2});
-    check('prenom').not().isEmpty().isLength({min: 2});
-    check('telephone').not().isEmpty().isLength({min: 8});
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
-        return res.status(422).json({ errors: errors.array() });
+      res.status(422).json({ errors: errors.array() });
+      return;
     }
 
     var nom = req.body.nom;
     var prenom = req.body.prenom;
     var telephone = req.body.telephone;
-
-    if (!nom || !prenom || !telephone) {
-        return res.status(401).json({
-            'error': 'missing parameter'
-        });
-    }
 
     models.Client.findOne({
         where: {telephone: telephone}

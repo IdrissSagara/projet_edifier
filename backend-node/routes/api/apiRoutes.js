@@ -1,14 +1,15 @@
 var express = require('express');
 var clientCtrl = require('./clientCtrl');
 var chantierCtrl = require('./chantierCtrl');
+var clientValidator = require('./validators/clientValidator');
 
 exports.router = (function() {
     var apiRouter = express.Router();
 
     //client routes
-    apiRouter.route('/client').get(clientCtrl.getAll);
-    apiRouter.route('/client/:id').get(clientCtrl.getById);
-    apiRouter.route('/client').post(clientCtrl.save);
+    apiRouter.get('/client', clientValidator.validate('getAllClients'), clientCtrl.getAll);
+    apiRouter.get('/client/:id', clientValidator.validate('getClient'), clientCtrl.getById);
+    apiRouter.post('/client', clientValidator.validate('saveClient'), clientCtrl.save);
 
     //chantier routes
     apiRouter.route('/chantier').get(chantierCtrl.getAll);
