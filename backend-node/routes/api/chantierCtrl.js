@@ -67,6 +67,61 @@ function save(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
+function updateChantier(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var id = req.body.id;
+    
+}
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
+function deleteChantier(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var id = req.body.id;
+
+    models.Chantier.findByPk(id).then((chantierFound) => {
+        if (!chantierFound) {
+            return res.status(404).json({
+                'error': 'no chantier found with ' +id
+            })
+        }
+
+        chantierFound.destroy().then((chantierDestroyed) => {
+            if (chantierDestroyed) {
+                return res.status(200).json({
+                    'message': 'chantier ' +id+ ' deleted'
+                })
+            } else {
+                return res.status(403).json({
+                    'error': 'cannot delete chantier with id ' + id
+                })
+            }
+        });
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getAll(req, res) {
     const errors = validationResult(req);
 
@@ -181,5 +236,5 @@ function getClient(req, res) {
 }
 
 module.exports = {
-    save, getAll, getById, getClient
+    save, getAll, getById, getClient, deleteChantier
 }

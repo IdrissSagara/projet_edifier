@@ -11,7 +11,7 @@ exports.validate = (operation) => {
                     .trim().escape(),
                 body('emplacement', 'invalid emplacement')
                     .exists().withMessage('parameter emplacement not found')
-                    .isAlpha().withMessage('emplacement is not alpha')
+                    .isString().withMessage('emplacement is not alpha')
                     .isLength({min: 2}).withMessage('emplacement is too short')
                     .trim().escape(),
                 body('cout', 'invalid cout')
@@ -20,9 +20,9 @@ exports.validate = (operation) => {
                     .trim().escape(),
                 body('date_debut', 'invalid date_debut')
                     .exists().withMessage('parameter date_debut not found')
-                    .trim().escape().toDate(),
+                    .toDate(),
                 body('date_fin', 'invalid phone number').optional()
-                    .trim().escape().toDate(),
+                    .toDate(),
                 body('walita', 'invalid walita').optional()
                     .isNumeric().withMessage('walita is not numeric')
                     .trim().escape(),

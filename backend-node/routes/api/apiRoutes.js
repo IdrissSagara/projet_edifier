@@ -41,6 +41,10 @@ exports.router = (function() {
         chantierValidator.validate('saveChantier'), 
         chantierCtrl.save);
 
+    apiRouter.delete('/chantier',
+        chantierValidator.validate('getChantier'),
+        chantierCtrl.deleteChantier);
+
     //ouvrier routes
     
     //paiement routes
