@@ -1,7 +1,8 @@
 var express = require('express');
 var clientCtrl = require('./clientCtrl');
 var chantierCtrl = require('./chantierCtrl');
-var clientValidator = require('./validators/clientValidator');
+const clientValidator = require('./validators/clientValidator');
+const chantierValidator = require('./validators/chantierValidator');
 
 exports.router = (function() {
     var apiRouter = express.Router();
@@ -18,15 +19,27 @@ exports.router = (function() {
     apiRouter.get('/client/:id/chantiers', 
         clientValidator.validate('getChantiers'), 
         clientCtrl.getChantiers);
-        
+
     apiRouter.post('/client', 
         clientValidator.validate('saveClient'), 
         clientCtrl.save);
 
     //chantier routes
-    apiRouter.route('/chantier').get(chantierCtrl.getAll);
-    apiRouter.route('/chantier/:id').get(chantierCtrl.getById);
-    apiRouter.route('/chantier').post(chantierCtrl.save);
+    apiRouter.get('/chantier',
+        chantierValidator.validate('getAllChantiers'),
+        chantierCtrl.getAll);
+
+    apiRouter.get('/chantier/:id',
+        chantierValidator.validate('getChantier'),
+        chantierCtrl.getById);
+    
+    apiRouter.get('/chantier/:id/client', 
+        chantierValidator.validate('getChantier'),
+        chantierCtrl.getClient);
+
+    apiRouter.post('/chantier', 
+        chantierValidator.validate('saveChantier'), 
+        chantierCtrl.save);
 
     //ouvrier routes
     

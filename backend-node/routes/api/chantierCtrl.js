@@ -1,5 +1,6 @@
 var chantierDao = require('../../dao/chantierDao');
 var models = require('../../models');
+const { validationResult } = require('express-validator');
 
 /**
  * 
@@ -7,6 +8,13 @@ var models = require('../../models');
  * @param {*} res 
  */
 function save(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
     chantier = {
         ClientId: req.body.clientId,
         emplacement: req.body.emplacement,
@@ -18,27 +26,40 @@ function save(req, res) {
         montant_dispo: req.body.cout,
     }
 
-    models.Chantier.create({
-        ClientId: chantier.clientId,
-        emplacement: chantier.emplacement,
-        cout: chantier.cout,
-        date_debut: chantier.date_debut,
-        date_fin: chantier.date_fin,
-        walita: chantier.walita,
-        yereta: chantier.yereta,
-        montant_dispo: chantier.montant_dispo
-    }).then((newChantier) => {
-        if (newChantier) {
-            return res.status(201).json(newChantier);
-        } else {
-            return res.status(500).json({
-                'err': 'couldn\'t post chantier'
+    models.Client.findOne({
+        where: {id: chantier.ClientId}
+    }).then((clientFound) => {
+        if (clientFound) {            
+            models.Chantier.create({
+                ClientId: clientFound.id,
+                emplacement: chantier.emplacement,
+                cout: chantier.cout,
+                date_debut: chantier.date_debut,
+                date_fin: chantier.date_fin,
+                walita: chantier.walita,
+                yereta: chantier.yereta,
+                montant_dispo: chantier.montant_dispo
+            }).then((newChantier) => {
+                if (newChantier) {
+                    return res.status(201).json(newChantier);
+                } else {
+                    return res.status(500).json({
+                        'error': 'couldn\'t post chantier'
+                    });
+                }
+            }).catch((err) => {
+                console.error(err);
+                return res.status(500).json(err.errors);
             });
+        } else {
+            return res.status(404).json({
+                'message': 'no client found with id ' + chantier.ClientId
+            })
         }
     }).catch((err) => {
         console.error(err);
         return res.status(500).json(err.errors);
-    });
+    });   
 }
 
 /**
@@ -46,39 +67,40 @@ function save(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-function getAll(req, res) {  
-    try {        
-        var fields = req.query.fields;
-        var offset = parseInt(req.query.limit);
-        var limit = parseInt(req.query.offset);
-        var order = req.query.order;
-        
-        models.Chantier.findAll({
-            order: [(order != null) ? order.split(':'): ['date_debut', 'ASC']],
-            attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
-            limit: (!isNaN(limit) ? limit : 10),
-            offset: (!isNaN(offset) ? offset : null),
-            include: [{
-                model: models.Client,
-                attributes: ['nom', 'prenom', 'telephone']
-            }]
-        }).then((chantier) => {
-            if (chantier) {
-                return res.status(200).json(chantier);
-            } else {
-                return res.status(404).json({
-                    'error': 'no chantier found '
-                });
-            }
-        }).catch((err) => {
-            console.error(err);
-            return res.status(500).json(err.errors);
-        })   
-    } catch (err) {
-        return res.status(500).json({
-            'error': 'can\'t continue, probably int parsing error'
-        })
-    } 
+function getAll(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var fields = req.query.fields;
+    var offset = parseInt(req.query.limit);
+    var limit = parseInt(req.query.offset);
+    var order = req.query.order;
+    
+    models.Chantier.findAll({
+        order: [(order != null) ? order.split(':'): ['date_debut', 'ASC']],
+        attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
+        limit: (!isNaN(limit) ? limit : 10),
+        offset: (!isNaN(offset) ? offset : null),
+        include: [{
+            model: models.Client,
+            attributes: ['nom', 'prenom', 'telephone']
+        }]
+    }).then((chantier) => {
+        if (chantier) {
+            return res.status(200).json(chantier);
+        } else {
+            return res.status(404).json({
+                'error': 'no chantier found '
+            });
+        }
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    }) 
 }
 
 /**
@@ -87,12 +109,14 @@ function getAll(req, res) {
  * @param {*} res 
  */
 function getById(req, res) {
-    var idChantier = req.params.id;
+    const errors = validationResult(req);
 
-    if (!idChantier)
-        return res.status(401).json({
-            'error': 'no chantier id parameter found'
-        });
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var idChantier = req.params.id;
 
     models.Chantier.findOne({
         where: {id: idChantier},
@@ -113,6 +137,49 @@ function getById(req, res) {
     });
 }
 
+function getClient(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var id = req.params.id;
+
+    models.Chantier.findOne({
+        where: {id: id},
+        include: [{
+            model: models.Client,
+            attributes: ['nom', 'prenom', 'telephone']
+        }]
+    }).then((chantierFound) => {
+        if (chantierFound) {
+            models.Client.findOne({
+                where: {id: chantierFound.ClientId}
+            }).then((clientFound) => {
+                if (clientFound) {                
+                    return res.status(200).json(clientFound);
+                } else {                    
+                    return res.status(404).json({
+                        'error': 'no client found'
+                    });
+                }    
+            }).catch((err) => {
+                console.error(err);
+                return res.status(500).json(err.errors);
+            });
+        } else {
+            return res.status(404).json({
+                'error': 'no chantier found with id ' + id
+            });
+        }        
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
 module.exports = {
-    save, getAll, getById
+    save, getAll, getById, getClient
 }
