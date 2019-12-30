@@ -11,17 +11,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Chantier.associate = function(models) {
     // associations can be defined here
-    models.Chantier.belongsToMany(models.Ouvrier, {
-      through: 'ChantierOuvrier',
-      as: 'ouvriers',
-      foreignKey: 'ChantierId',
-      otherKey: 'OuvrierId'
-    });
     models.Chantier.belongsTo(models.Client, {
       foreignKey: {
         allowNull: false
       }
     });
+    models.Chantier.hasMany(models.ChantierOuvrier);
     models.Chantier.hasMany(models.Facture);
     models.Chantier.hasMany(models.Mouvement);
     models.Chantier.hasMany(models.Paiement);

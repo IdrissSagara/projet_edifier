@@ -8,12 +8,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Ouvrier.associate = function(models) {
     // associations can be defined here
-    models.Chantier.belongsToMany(models.Ouvrier, {
-      through: 'ChantierOuvrier',
-      as: 'chantiers',
-      foreignKey: 'OuvrierId',
-      otherKey: 'ChantierId'
-    });
+    models.Ouvrier.hasMany(models.ChantierOuvrier);
   };
   return Ouvrier;
 };

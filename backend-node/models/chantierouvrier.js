@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   ChantierOuvrier.associate = function(models) {
     // associations can be defined here
+    models.ChantierOuvrier.belongsTo(models.Chantier);
+    models.ChantierOuvrier.belongsTo(models.Ouvrier);
   };
   return ChantierOuvrier;
 };
