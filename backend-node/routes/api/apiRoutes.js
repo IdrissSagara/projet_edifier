@@ -7,7 +7,9 @@ const chantierValidator = require('./validators/chantierValidator');
 exports.router = (function() {
     var apiRouter = express.Router();
 
-    //client routes
+    /**
+     * Routes to manage the Clients
+     */
     apiRouter.get('/client', 
         clientValidator.validate('getAllClients'), 
         clientCtrl.getAll);
@@ -22,9 +24,19 @@ exports.router = (function() {
 
     apiRouter.post('/client', 
         clientValidator.validate('saveClient'), 
-        clientCtrl.save);
+        clientCtrl.update);
 
-    //chantier routes
+    apiRouter.put('/client', 
+        clientValidator.validate('saveClient'), 
+        clientCtrl.update);
+
+    apiRouter.delete('/client', 
+        clientValidator.validate('getClient'), 
+        clientCtrl.destroy);
+
+    /**
+     * Routes to manage the chantiers
+     */
     apiRouter.get('/chantier',
         chantierValidator.validate('getAllChantiers'),
         chantierCtrl.getAll);
@@ -41,9 +53,13 @@ exports.router = (function() {
         chantierValidator.validate('saveChantier'), 
         chantierCtrl.save);
 
+    apiRouter.put('/chantier',
+        chantierValidator.validate('saveChantier'),
+        chantierCtrl.update);
+
     apiRouter.delete('/chantier',
         chantierValidator.validate('getChantier'),
-        chantierCtrl.deleteChantier);
+        chantierCtrl.destroy);
 
     //ouvrier routes
     

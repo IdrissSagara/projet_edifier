@@ -125,6 +125,88 @@ function save(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
+function update(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var client = {
+        id: req.body.id,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        telephone: req.body.telephone
+    };
+
+    models.Client.findByPk(client.id).then((clientFound) => {
+        if (!clientFound) {
+            return res.status(404).json({
+                'error': 'no client found with ' +client.id
+            })
+        }
+
+        clientFound.update(client).then((clientUpdated) => {
+                if (clientUpdated) {
+                    return res.status(200).json(clientUpdated);
+                } else {
+                    return res.status(403).json({
+                        'message': 'cannot update the client'
+                    })
+                }
+            }).catch((err) => {
+                console.error(err);
+                return res.status(500).json(err.errors);
+            })
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
+function destroy(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      res.status(422).json({ errors: errors.array() });
+      return;
+    }
+
+    var id = req.body.id;
+
+    models.Client.findByPk(id).then((clientFound) => {
+        if (!clientFound) {
+            return res.status(404).json({
+                'error': 'no client found with ' +id
+            })
+        }
+
+        clientFound.destroy().then((clientDestroyed) => {
+            if (clientDestroyed) {
+                return res.status(200).json({
+                    'message': 'client ' +id+ ' deleted'
+                })
+            } else {
+                return res.status(403).json({
+                    'error': 'cannot delete client with id ' + id
+                })
+            }
+        }).catch((err) => {
+            console.error(err);
+            return res.status(500).json(err.errors);
+        });
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res 
+ */
 function getChantiers(req, res) {
     const errors = validationResult(req);
 
@@ -165,5 +247,5 @@ function getChantiers(req, res) {
 }
 
 module.exports = {
-    save, getAll, getById, getChantiers,
+    save, getAll, getById, getChantiers, update, destroy
 }

@@ -12,12 +12,12 @@ exports.validate = (operation) => {
             return [ 
                 body('nom', 'invalid nom')
                     .exists().withMessage('parameter nom not found')
-                    .isAlpha().withMessage('nom is not alpha')
+                    .isString().withMessage('nom is not alpha')
                     .isLength({min: 2}).withMessage('nom is too short')
                     .trim().escape(),
                 body('prenom', 'invalid prenom')
                     .exists().withMessage('parameter prenom not found')
-                    .isAlpha().withMessage('prenom is not alpha')
+                    .isString().withMessage('prenom is not alpha')
                     .isLength({min: 2}).withMessage('prenom is too short')
                     .trim().escape(),
                 body('telephone', 'invalid phone number')

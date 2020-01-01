@@ -67,7 +67,7 @@ function save(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-function updateChantier(req, res) {
+function update(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -75,15 +75,47 @@ function updateChantier(req, res) {
       return;
     }
 
-    var id = req.body.id;
-    
+    var chantier = {
+        id: req.body.id,
+        emplacement: req.body.emplacement,
+        cout: req.body.cout,
+        date_debut: req.body.date_debut,
+        date_fin: req.body.date_fin,
+        walita: req.body.walita,
+        yereta: req.body.yereta,
+        montant_dispo: req.body.montant_dispo,
+    };
+
+    models.Chantier.findByPk(chantier.id).then((chantierFound) => {
+        if (!chantierFound) {
+            return res.status(404).json({
+                'error': 'no client found with ' +chantier.id
+            })
+        }
+
+        chantierFound.update(chantier).then((clientUpdated) => {
+                if (clientUpdated) {
+                    return res.status(200).json(clientUpdated);
+                } else {
+                    return res.status(403).json({
+                        'message': 'cannot update the client'
+                    })
+                }
+            }).catch((err) => {
+                console.error(err);
+                return res.status(500).json(err.errors);
+            })
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
 }
 /**
  * 
  * @param {*} req 
  * @param {*} res 
  */
-function deleteChantier(req, res) {
+function destroy(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -236,5 +268,5 @@ function getClient(req, res) {
 }
 
 module.exports = {
-    save, getAll, getById, getClient, deleteChantier
+    save, getAll, getById, getClient, update, destroy
 }
