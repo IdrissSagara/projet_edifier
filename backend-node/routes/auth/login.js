@@ -1,8 +1,7 @@
 var models = require('../../models');
 var bcrypt = require('bcrypt');
-var jwt = require('jsonwebtoken');
+var jwtUtils = require('./jwtUtils');
 const { validationResult } = require('express-validator');
-const JWT_SIGN_SECRET = 'cl3 de ch1ffr3m3nt_JWT';
 
 function login(req, res) {
     const errors = validationResult(req);
@@ -33,7 +32,7 @@ function login(req, res) {
 
             return res.status(200).json({
                 'id': userFound.id,
-                'token': genToken(userFound)
+                'token': jwtUtils.genToken(userFound)
             });
         });
     }).catch((err) => {
@@ -42,17 +41,17 @@ function login(req, res) {
     });
 }
 
-function genToken(userData) {
-    return jwt.sign({
-        userId: userData.id,
-        role: userData.role
-    },
-    JWT_SIGN_SECRET,
-    {
-        expiresIn: '3d'
-    })
+function isAuthenticated(req, res, next) {
+    req.isAuth = false;
+
+    var id = jwtUtils.getUserId(req.headers['authorization']);
+    if (id != -1) {
+        req.isAuth = true;        
+    }
+
+    next();
 }
 
 module.exports = {
-    login,
+    login, isAuthenticated
 }

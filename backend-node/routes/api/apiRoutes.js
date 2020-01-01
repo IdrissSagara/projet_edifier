@@ -3,6 +3,7 @@ var clientCtrl = require('./clientCtrl');
 var chantierCtrl = require('./chantierCtrl');
 const clientValidator = require('./validators/clientValidator');
 const chantierValidator = require('./validators/chantierValidator');
+const login = require('../auth/login');
 
 exports.router = (function() {
     var apiRouter = express.Router();
@@ -39,6 +40,7 @@ exports.router = (function() {
      */
     apiRouter.get('/chantier',
         chantierValidator.validate('getAllChantiers'),
+        login.isAuthenticated,
         chantierCtrl.getAll);
 
     apiRouter.get('/chantier/:id',
