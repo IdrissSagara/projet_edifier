@@ -34,6 +34,34 @@ function canAccess(authorisedRoles = []) {
     ]
 }
 
+function deniedRoles(deniedRoles = []) {
+    if (typeof deniedRoles === 'string') {
+        deniedRoles = [deniedRoles];
+    }
+    return [
+        (req, res, next) => {
+            authInfo = login.isAuthenticated(req);
+            console.log(authInfo);
+
+            //If the user is not authenticated
+            if (!authInfo.isAuth) {
+                return res.status(401).json({
+                    message: (authInfo.status === '') ? 'Vous n\'êtes pas authentifié' : authInfo.status
+                });
+            }
+
+            //If the user is denied to access the ressource
+            if ( deniedRoles.includes(authInfo.role)) {                
+                return res.status(401).json({
+                    message: 'Vous n\'êtes pas autorisé à acceder à cette ressource'
+                });
+            }
+
+            next();
+        }
+    ]
+}
+
 module.exports = {
-    canAccess,
+    canAccess, deniedRoles,
 }

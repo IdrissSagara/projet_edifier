@@ -104,7 +104,7 @@ function save(req, res) {
                 return res.status(201).json(newClient);
             } else {
                 return res.status(500).json({
-                    'err': 'couldn\'t post chantier'
+                    'err': 'couldn\'t post client'
                 });
             }
         }).catch((err) => {
