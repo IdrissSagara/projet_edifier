@@ -1,8 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
 import { AdminComponent } from './layouts/admin/admin.component';
 import { TitleComponent } from './layouts/admin/title/title.component';
@@ -10,6 +8,11 @@ import { BreadcrumbsComponent } from './layouts/admin/breadcrumbs/breadcrumbs.co
 import { AuthComponent } from './layouts/auth/auth.component';
 import {SharedModule} from './shared/shared.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { OuvrierComponent } from './ouvrier/ouvrier.component';
+import { MouvementComponent } from './mouvement/mouvement.component';
+import { EntrantComponent } from './mouvement/entrant/entrant.component';
+import { SortantComponent } from './mouvement/sortant/sortant.component';
+import { UtilisateurComponent } from './utilisateur/utilisateur.component';
 
 
 @NgModule({
@@ -18,7 +21,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     AdminComponent,
     TitleComponent,
     BreadcrumbsComponent,
-    AuthComponent
+    AuthComponent,
+    UtilisateurComponent,
   ],
   imports: [
     BrowserModule,

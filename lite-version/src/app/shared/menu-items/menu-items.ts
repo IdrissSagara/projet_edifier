@@ -34,73 +34,112 @@ const MENUITEMS = [
     label: 'Navigation',
     main: [
       {
-        state: 'dashboard',
-        name: 'Dashboard',
-        type: 'link',
-        icon: 'ti-home'
-      }
+        state: 'dashboard', //  state represente le nom du component concerné
+        name: 'Tableau de bord', // name est le nom affiché sur la page
+        type: 'link', // type du menu, si celui-ci est un menu simple (link) ou un menu avec sous-menu (sub)
+        icon: 'ti-home' // icon qui sera affiché a gauche du menu, http://themify.me/themify-icons
+      },
     ],
   },
   {
-    label: 'UI Element',
+    label: 'chantier',
     main: [
       {
-        state: 'basic',
-        name: 'Basic Components',
-        type: 'sub',
-        icon: 'ti-layout-grid2-alt',
-        children: [
-          {
-            state: 'button',
-            name: 'Button'
-          },
-          {
-            state: 'typography',
-            name: 'Typography'
-          }
-        ]
+        state: 'chantier',
+        name: 'Chantiers',
+        type: 'link',
+        icon: 'ti-home'
       },
+    ],
+  },
+  {
+    label: 'Clients',
+    main: [
       {
-        state: 'notifications',
-        name: 'Notifications',
+        state: 'client',
+        name: 'Clients',
         type: 'link',
         icon: 'ti-crown'
       }
     ]
   },
   {
-    label: 'Forms',
+    label: 'Budget',
     main: [
       {
-        state: 'forms',
-        name: 'Form Components',
+        state: 'budget',
+        name: 'Budget',
         type: 'link',
         icon: 'ti-layers'
       }
     ]
-  },
-  {
-    label: 'Tables',
+  }, {
+    label: 'Ouvrier',
     main: [
       {
-        state: 'bootstrap-table',
-        name: 'Bootstrap Table',
+        state: 'ouvrier',
+        name: 'Ouvrier',
         type: 'link',
         icon: 'ti-receipt'
       }
     ]
-  },
-  {
-    label: 'Map',
+  }, {
+    label: 'Caisse',
     main: [
       {
-        state: 'map',
-        name: 'Maps',
+        state: 'caisse',
+        name: 'Caisse',
+        type: 'sub',
+        icon: 'ti-layout-grid2-alt',
+        children: [
+          {
+            state: 'facture',
+            name: 'Factures'
+          },
+          {
+            state: 'paiement',
+            name: 'Paiement'
+          },
+          {
+            state: 'recu',
+            name: 'reçu'
+          }
+        ]
+      },
+    ]
+  },
+  {
+    label: 'Transaction',
+    main: [
+      {
+        state: 'mouvement',
+        name: 'Mouvement',
+        type: 'sub',
+        icon: 'ti-id-badge',
+        children: [
+          {
+            state: 'entrant',
+            name: 'Mouvement entrant'
+          },
+          {
+            state: 'sortant',
+            name: 'Mouvement sortant'
+          }
+        ]
+      },
+    ]
+  }, {
+    label: 'Utilisateur',
+    main: [
+      {
+        state: 'utilisateur',
+        name: 'Utilisateur',
         type: 'link',
-        icon: 'ti-map-alt'
+        icon: 'ti-settings'
       }
     ]
   },
+  /*
   {
     label: 'Pages',
     main: [
@@ -126,66 +165,8 @@ const MENUITEMS = [
       }
     ]
   },
-  {
-    label: 'Other',
-    main: [
-      {
-        state: '',
-        name: 'Menu Levels',
-        type: 'sub',
-        icon: 'ti-direction-alt',
-        children: [
-          {
-            state: '',
-            name: 'Menu Level 2.1',
-            target: true
-          }, {
-            state: '',
-            name: 'Menu Level 2.2',
-            type: 'sub',
-            children: [
-              {
-                state: '',
-                name: 'Menu Level 2.2.1',
-                target: true
-              },
-              {
-                state: '',
-                name: 'Menu Level 2.2.2',
-                target: true
-              }
-            ]
-          }, {
-            state: '',
-            name: 'Menu Level 2.3',
-            target: true
-          }, {
-            state: '',
-            name: 'Menu Level 2.4',
-            type: 'sub',
-            children: [
-              {
-                state: '',
-                name: 'Menu Level 2.4.1',
-                target: true
-              },
-              {
-                state: '',
-                name: 'Menu Level 2.4.2',
-                target: true
-              }
-            ]
-          }
-        ]
-      }, {
-        state: 'simple-page',
-        name: 'Simple Page',
-        type: 'link',
-        icon: 'ti-layout-sidebar-left'
-      }
-    ]
-  }
-];
+  */
+  ];
 
 @Injectable()
 export class MenuItems {

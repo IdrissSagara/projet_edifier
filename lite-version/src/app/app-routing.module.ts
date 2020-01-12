@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './layouts/admin/admin.component';
 import {AuthComponent} from './layouts/auth/auth.component';
 
+// @ts-ignore
 const routes: Routes = [
   {
     path: '',
@@ -16,6 +17,25 @@ const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      }, {
+        path: 'chantier',
+        loadChildren: () => import('./chantier/chantier.module').then(m => m.ChantierModule)
+      }, {
+        path: 'client',
+        loadChildren: () => import('./client/client.module').then(m => m.ClientModule)
+      }, {
+        path: 'budget',
+        loadChildren: () => import('./budget/budget.module').then(m => m.BudgetModule)
+      }, {
+        path: 'caisse',
+        loadChildren: () => import('./caisse/caisse.module').then(m => m.CaisseModule)
+      }, {
+        path: 'ouvrier',
+        loadChildren: () => import('./ouvrier/ouvrier.module').then(m => m.OuvrierModule)
+      },
+      {
+        path: 'mouvement',
+        loadChildren: () => import('./mouvement/mouvement.module').then(m => m.MouvementModule)
       }, {
         path: 'basic',
         loadChildren: () => import('./components/basic/basic.module').then(m => m.BasicModule)
