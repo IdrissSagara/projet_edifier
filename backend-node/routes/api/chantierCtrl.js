@@ -162,12 +162,6 @@ function getAll(req, res) {
       return;
     }
 
-    if (!req.isAuth) {
-        return res.status(403).json({
-            'error': 'you may not be authenticated'
-        });
-    }
-
     var fields = req.query.fields;
     var offset = parseInt(req.query.limit);
     var limit = parseInt(req.query.offset);

@@ -41,15 +41,20 @@ function login(req, res) {
     });
 }
 
-function isAuthenticated(req, res, next) {
-    req.isAuth = false;
+function isAuthenticated(req) {
+    var obj = {
+        isAuth: false,
+        role: '',
+        userId: -1,
+    };
 
-    var id = jwtUtils.getUserId(req.headers['authorization']);
-    if (id != -1) {
-        req.isAuth = true;        
+    obj = jwtUtils.getUserId(req.headers['authorization']);
+    
+    if (obj.userId != -1) {
+        obj.isAuth = true;
     }
 
-    next();
+    return obj;
 }
 
 module.exports = {
