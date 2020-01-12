@@ -12,13 +12,14 @@ function genToken(userData) {
     },
     JWT_SIGN_SECRET,
     {
-        expiresIn: '8h'
+        expiresIn: '8d' /* /!\/!\/!\/!\/!\/!\/!\ */
     })
 }
 
-function getUserId(authorization) {
+function getUserInfo(authorization) {
     var userId = -1;
     var role = '';
+    var status = '';
     var token = module.exports.parseAuthorization(authorization);
     
     if(token != null) {
@@ -26,17 +27,18 @@ function getUserId(authorization) {
             var jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
             if(jwtToken != null) {
                 userId = jwtToken.userId;
-                role = jwtToken.role;
+                role = jwtToken.role;        
             }
         } catch(err) {
             console.log('jwt verification error');
             console.log(err);
+            status = err;
         }
     }
 
-    return userId;
+    return {userId, status, role};
 }
 
 module.exports = {
-    parseAuthorization, getUserId, genToken
+    parseAuthorization, getUserId: getUserInfo, genToken
 }

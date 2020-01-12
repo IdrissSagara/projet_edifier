@@ -1,4 +1,4 @@
-const { body, check } = require('express-validator');
+const { body } = require('express-validator');
 
 exports.validate = (operation) => {
     switch (operation) {
@@ -21,8 +21,7 @@ exports.validate = (operation) => {
                     .trim().escape(),
                 body('password', 'invalid password')
                     .exists().withMessage('parameter password not found')
-                    .isString().withMessage('password is not a string')
-                    .isLength({min: 3}).withMessage('password must be at least 3 long')
+                    .isLength({min: 4}).withMessage('password must be at least 4 long')
                     .trim().escape(),
                 body('role', 'invalid role')
                     .exists().withMessage('parameter role not found')
