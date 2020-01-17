@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AdminComponent} from './layouts/admin/admin.component';
 import {AuthComponent} from './layouts/auth/auth.component';
+import {ClientFormulaireComponent} from "./formulaire/client-formulaire/client-formulaire.component";
 
 // @ts-ignore
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
         path: 'mouvement',
         loadChildren: () => import('./mouvement/mouvement.module').then(m => m.MouvementModule)
       }, {
+        path: 'formulaire',
+        loadChildren: () => import('./formulaire/formulaire.module').then(m => m.FormulaireModule)
+      },
+      {
         path: 'basic',
         loadChildren: () => import('./components/basic/basic.module').then(m => m.BasicModule)
       }, {
