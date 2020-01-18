@@ -6,6 +6,119 @@
 	},
 	"item": [
 		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "localhost:3000/auth/register",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU3ODgzNTQ2MSwiZXhwIjoxNTc4ODY0MjYxfQ.izRVSMaoibs7-ej3lWJMi-uDfgCX3irSNljYPoIRCV8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nom",
+									"value": "Coulou",
+									"type": "text"
+								},
+								{
+									"key": "prenom",
+									"value": "Kadi",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "kadicoul",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "kadicoul",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "basic-user",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/auth/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/auth/login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
 			"name": "client",
 			"item": [
 				{
@@ -458,6 +571,16 @@
 				{
 					"name": "localhost:3000/api/chantier",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU3ODA5MzkxMiwiZXhwIjoxNTc4MTIyNzEyfQ.JVW421t6Lx9A2YYg2O5fEYyHX7I8W6kJbsRYoa8Cbi8",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -553,6 +676,257 @@
 								"chantier",
 								"1",
 								"client"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "ouvrier",
+			"item": [
+				{
+					"name": "localhost:3000/api/ouvrier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nom",
+									"value": "unNom",
+									"type": "text"
+								},
+								{
+									"key": "prenom",
+									"value": "unPrenom",
+									"type": "text"
+								},
+								{
+									"key": "telephone",
+									"value": "00000001",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "maçon",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/ouvrier",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"ouvrier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/ouvrier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/ouvrier/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"ouvrier",
+								""
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "nom;prenom;id",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "telephone:desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/ouvrier/1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/ouvrier/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"ouvrier",
+								"1"
+							],
+							"query": [
+								{
+									"key": "fields",
+									"value": "nom;prenom;id",
+									"disabled": true
+								},
+								{
+									"key": "offset",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "order",
+									"value": "telephone:desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/ouvrier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nom",
+									"value": "changé",
+									"type": "text"
+								},
+								{
+									"key": "prenom",
+									"value": "de nom",
+									"type": "text"
+								},
+								{
+									"key": "telephone",
+									"value": "00000001",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "maçon",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/ouvrier",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"ouvrier"
 							]
 						}
 					},
