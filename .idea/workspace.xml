@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b4187cfb-835a-47c9-b887-461578b8da64" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend-node/models/client.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend-node/routes/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-node/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend-node/app.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="$PROJECT_DIR$/.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1UiMMgxhZSCzq2QR2Yy83HvX8cs" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="$PROJECT_DIR$/lite-version/node_modules/typescript/lib" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/lite-version/src/app/formulaire/ouvrier-formulaire/" />
+      <recent name="$PROJECT_DIR$/lite-version/src/app/formulaire/chantier-formulaire/" />
+      <recent name="$PROJECT_DIR$/lite-version/src/app/formulaire/chantier-formulaire" />
+      <recent name="$PROJECT_DIR$/lite-version/src/app/formulaire/" />
+      <recent name="$PROJECT_DIR$/lite-version/src/app/formulaire" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b4187cfb-835a-47c9-b887-461578b8da64" name="Default Changelist" comment="" />
+      <created>1575834915767</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1575834915767</updated>
+      <workItem from="1575834917810" duration="8194000" />
+      <workItem from="1576155326567" duration="5812000" />
+      <workItem from="1577733105893" duration="5799000" />
+      <workItem from="1578830684172" duration="8518000" />
+      <workItem from="1578839656530" duration="3607000" />
+      <workItem from="1578844158552" duration="10750000" />
+      <workItem from="1579198632358" duration="12566000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+    <option name="exactExcludedFiles">
+      <list>
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/accordion/accordionanchor.directive.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/card/card-animation.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/accordion/accordion.directive.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/card/card-toggle.directive.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/fullscreen/toggle-fullscreen.directive.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/card/card.component.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/accordion/accordionlink.directive.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/elements/parent-remove.directive.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/card/card-refresh.directive.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/menu-items/menu-items.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/shared.module.js" />
+        <option value="$PROJECT_DIR$/frontend/src/app/shared/accordion/index.js" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
