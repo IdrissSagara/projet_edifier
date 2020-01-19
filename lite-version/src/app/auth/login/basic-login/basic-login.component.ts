@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from '../../../service/auth.service';
 
 @Component({
   selector: 'app-basic-login',
@@ -7,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BasicLoginComponent implements OnInit {
 
-  constructor() { }
+  username;
+  password;
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit() {
     document.querySelector('body').setAttribute('themebg-pattern', 'theme1');
+  }
+
+  login() {
+      this.authService.login(this.username, this.password);
   }
 
 }

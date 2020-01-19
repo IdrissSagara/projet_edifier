@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~8.2.3",
     "@angular/platform-browser-dynamic": "~8.2.3",
     "@angular/router": "~8.2.3",
+    "@auth0/angular-jwt": "^3.0.1",
     "@ng-bootstrap/ng-bootstrap": "^5.1.1",
     "@nicky-lenaers/ngx-scroll-to": "^3.0.1",
     "angular2-notifications": "^0.7.4",
