@@ -31,7 +31,7 @@ app.use(cors());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRoutes);
-app.use('/auth/', authRoutes);
+app.use('/api/auth/', authRoutes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
