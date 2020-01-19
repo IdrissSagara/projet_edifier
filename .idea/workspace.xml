@@ -2,9 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4187cfb-835a-47c9-b887-461578b8da64" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend-node/models/client.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend-node/routes/client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-node/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend-node/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/edifier.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-node/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend-node/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend-node/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend-node/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -79,7 +85,7 @@
       <workItem from="1578830684172" duration="8518000" />
       <workItem from="1578839656530" duration="3607000" />
       <workItem from="1578844158552" duration="10750000" />
-      <workItem from="1579198632358" duration="12566000" />
+      <workItem from="1579198632358" duration="18654000" />
     </task>
     <servers />
   </component>
