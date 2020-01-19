@@ -1,0 +1,10 @@
+/**
+ Export to JSON plugin for PHPMyAdmin
+ @version 4.6.6deb5
+ */
+
+// Database 'edifier'
+
+// edifier.Users
+
+[{"id":"1","nom":"admin","prenom":"admin","username":"admin","password":"$2b$07$Ag6shPE6X1Qj.nKfhJmh2eEt8p3jKZNWmrbG4wLxG52H6ftg4uWIm","role":"admin","createdAt":"2020-01-01 02:07:00","updatedAt":"2020-01-01 02:07:00"}, {"id":"2","nom":"admin2","prenom":"admin2","username":"admin2","password":"$2b$07$NyPgKe8pIAOhe\/CiA7Kq9.2w\/APZ.HEnkNQRCpUsLe1XuPxNpCwbe","role":"admin","createdAt":"2020-01-12 13:24:47","updatedAt":"2020-01-12 13:24:47"}, {"id":"3","nom":"Coulou","prenom":"Kadi","username":"kadicoul","password":"$2b$07$zCV5vicVhG4r9BJLU2DBHeq\/kIrsqKbiBamqDmim6L7qozXna1.z6","role":"basic-user","createdAt":"2020-01-12 13:38:11","updatedAt":"2020-01-12 13:38:11"}]
