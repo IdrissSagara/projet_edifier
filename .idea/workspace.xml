@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b4187cfb-835a-47c9-b887-461578b8da64" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/edifier.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-node/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend-node/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend-node/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend-node/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lite-version/src/app/chantier/chantier.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/lite-version/src/app/chantier/chantier.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lite-version/src/app/chantier/chantier.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lite-version/src/app/chantier/chantier.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lite-version/src/app/client/client.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/lite-version/src/app/client/client.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lite-version/src/app/client/client.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lite-version/src/app/client/client.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lite-version/src/app/client/client.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lite-version/src/app/client/client.module.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

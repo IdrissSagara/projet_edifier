@@ -10,5 +10,8 @@ import {ClientComponent} from './client.component';
     SharedModule,
   ],
   declarations: [ClientComponent],
+  exports: [
+    ClientComponent
+  ]
 })
 export class ClientModule { }

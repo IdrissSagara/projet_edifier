@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ClientModel} from '../model/clientModel';
+import {ClientService} from '../service/client.service';
 
 @Component({
   selector: 'app-client',
@@ -6,10 +8,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements OnInit {
-
-  constructor() { }
+  client: ClientModel;
+  constructor(private clientService: ClientService) { }
 
   ngOnInit() {
+     this.getClients();
+  }
+  // recuperation des clients
+   async getClients() {
+      await this.clientService.getAllClient().then(res => {
+        this.client = res;
+        console.log(res);
+      }, r => {
+        console.log('errr' + r);
+      });
+
+
   }
 
 }

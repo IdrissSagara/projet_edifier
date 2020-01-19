@@ -7,40 +7,23 @@
     </a>
   </div>
 </div>
-
-
 <app-card [title]="'Clients'" [classHeader]="true" [blockClass]="'table-border-style'">
   <div class="table-responsive">
-    <table class="table">
+    <table class="table" >
       <thead>
       <tr>
-        <th>#</th>
+        <th>Id</th>
         <th>Nom</th>
         <th>Prénom</th>
         <th>Téléphone</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
+      <tbody >
+      <tr *ngFor="let clt of client ">
+        <th scope="row">{{clt.id}}</th>
+        <td>{{clt.nom}}</td>
+        <td>{{clt.prenom}}</td>
+        <td>{{clt.telephone}}</td>
       </tr>
       </tbody>
     </table>
