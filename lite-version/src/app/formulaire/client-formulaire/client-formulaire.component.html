@@ -9,7 +9,7 @@
             Nom<span class="requis">&nbsp;*</span>:
           </label>
           <div class="col-sm-10">
-            <input id="nom" #nom type="text" class="form-control"
+            <input [(ngModel)]="nom" name="nom" id="nom" type="text" class="form-control"
                    placeholder="Nom du client" required>
           </div>
         </div>
@@ -18,20 +18,20 @@
             Prénom<span class="requis">&nbsp;*</span>:
           </label>
           <div class="col-sm-10">
-            <input id="prenom" #prenom type="text" class="form-control"
+            <input [(ngModel)]="prenom" name="prenom" id="prenom"type="text" class="form-control"
                    placeholder="Prénom du client" required>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="telephone">
+          <label class="col-sm-2 col-form-label" >
             Téléphone<span class="requis">&nbsp;*</span>:
           </label>
           <div class="col-sm-10">
-            <input id="telephone" #telephone type="tel" class="form-control"
+            <input [(ngModel)]="telephone" name="telephone" type="text" class="form-control"
                    placeholder="Téléphone du client" required>
           </div>
         </div>
-        <button class="btn btn-primary block full-width"
+        <button class="btn btn-primary block full-width" (click)="sendClient()"
                 [disabled]="formulaire.invalid"
                 type="submit" style="width: 100%">Enregistrer
         </button>
@@ -39,3 +39,4 @@
     </app-card>
   </div>
 </div>
+<ng2-toasty [position]="position"></ng2-toasty>

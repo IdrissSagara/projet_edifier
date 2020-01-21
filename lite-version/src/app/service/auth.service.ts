@@ -26,7 +26,7 @@ export class AuthService {
    * @returns {Observable<R|T>}
    */
   login(username: string, password: string) {
-    let credentials = {
+    const credentials = {
       username: username,
       password: password
     };
@@ -59,7 +59,7 @@ export class AuthService {
 
     const body = UtilService.extractData(res);
     localStorage.setItem(environment.jwt_token_name, body.token);
-    //this._utilisateurCourant = body.user;
+    // this._utilisateurCourant = body.user;
 
     return body;
   }

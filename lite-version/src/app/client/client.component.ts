@@ -18,12 +18,9 @@ export class ClientComponent implements OnInit {
    async getClients() {
       await this.clientService.getAllClient().then(res => {
         this.client = res;
-        console.log(res);
-      }, r => {
-        console.log('errr' + r);
       });
-
-
   }
+
+
 
 }
