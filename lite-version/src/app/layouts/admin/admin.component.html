@@ -222,7 +222,7 @@
                     </a>
                   </li>
                   <li>
-                    <a [routerLink]="['/']">
+                    <a (click)="logMeOut()" [routerLink]="['/']">
                       <i class="ti-layout-sidebar-left"></i> Logout
                     </a>
                   </li>

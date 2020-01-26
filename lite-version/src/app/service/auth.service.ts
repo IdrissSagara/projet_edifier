@@ -75,7 +75,8 @@ export class AuthService {
    * @returns {boolean} Renvoie true si l'utilisateur est connecté
    */
   isloggedIn(): boolean {
-    return this.getToken() !== null;
+    const tok = this.getToken();
+    return tok !== null && !this.jsonHelp.isTokenExpired(tok);
   }
 
   logout() {
