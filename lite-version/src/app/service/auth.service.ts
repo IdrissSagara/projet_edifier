@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {UtilService} from './util.service';
@@ -68,7 +68,7 @@ export class AuthService {
    * Check si le token de l'utilisateur est bien valide
    * @returns {boolean} Renvoie true si l'utilisateur est connecté
    */
-  loggedIn(): boolean {
+  isloggedIn(): boolean {
     return this.getToken() !== null;
   }
 

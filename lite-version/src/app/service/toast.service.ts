@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
-import {ToastOptions, ToastyService, ToastData} from "ng2-toasty";
-import {ClientService} from "./client.service";
+import {Injectable} from '@angular/core';
+import {ToastOptions, ToastyService} from 'ng2-toasty';
 
 @Injectable({
   providedIn: 'root'
@@ -62,9 +61,9 @@ export class ToastService {
       closeOther: true});
   }
 
-  toastError() {
+  toastError(message) {
     this.addToast({title: 'Erreur',
-      msg: `Erreur lors de l\'enregistrement`,
+      msg: message,
       showClose: true,
       timeout: 5000,
       theme: 'bootstrap',

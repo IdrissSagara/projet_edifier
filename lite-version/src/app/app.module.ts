@@ -13,6 +13,7 @@ import {JwtModule} from '@auth0/angular-jwt';
 import {UtilService} from './service/util.service';
 import {AuthService} from './service/auth.service';
 import {HttpClientModule} from '@angular/common/http';
+import {AuthGuard} from './auth/auth.guard';
 
 
 @NgModule({
@@ -39,7 +40,7 @@ import {HttpClientModule} from '@angular/common/http';
       }
     })
   ],
-  providers: [UtilService, AuthService,],
+  providers: [UtilService, AuthService, AuthGuard,],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
