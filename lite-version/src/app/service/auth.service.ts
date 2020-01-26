@@ -3,12 +3,14 @@ import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {UtilService} from './util.service';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  jsonHelp = new JwtHelperService();
   get_token_endpoint = environment.api_url + 'auth/login/';
 
   /**
@@ -48,6 +50,10 @@ export class AuthService {
    */
   getToken(): string {
     return localStorage.getItem(environment.jwt_token_name);
+  }
+
+  getRole(): string {
+    return this.jsonHelp.decodeToken(localStorage.getItem(environment.jwt_token_name)).role;
   }
 
   /**
