@@ -24,7 +24,7 @@ function login(req, res) {
         }
 
         bcrypt.compare(password, userFound.password, (errBcrypt, resBcrypt) => {
-            if (errBcrypt) {
+            if (resBcrypt != true) {
                 return res.status(403).json({
                     'error': 'invalid password'
                 })
