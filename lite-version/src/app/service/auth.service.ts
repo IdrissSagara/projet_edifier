@@ -41,8 +41,11 @@ export class AuthService {
       responseType: 'json',
       headers: {'content-type': 'application/x-www-form-urlencoded'}
     }).toPromise().then(res => {
-      this.handleToken(res);
+      const body = this.handleToken(res);
+      console.log('this is the body returned by the login');
+      return Promise.resolve(body);
     }).catch(err => {
+      return Promise.reject(err);
     });
   }
 
@@ -54,6 +57,7 @@ export class AuthService {
   }
 
   getRole(): string {
+    console.log(this.jsonHelp.decodeToken(localStorage.getItem(environment.jwt_token_name)));
     return this.jsonHelp.decodeToken(localStorage.getItem(environment.jwt_token_name)).role;
   }
 

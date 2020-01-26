@@ -10,7 +10,7 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
-    data: { roles: [Role.Admin] },
+    data: { roles: [Role.Admin, Role.BasicUser] },
     component: AdminComponent,
     children: [
       {
