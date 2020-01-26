@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../service/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-basic-login',
@@ -11,14 +12,16 @@ export class BasicLoginComponent implements OnInit {
   username;
   password;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     document.querySelector('body').setAttribute('themebg-pattern', 'theme1');
   }
 
   login() {
-      this.authService.login(this.username, this.password);
+      this.authService.login(this.username, this.password).then(r => {
+        this.router.navigate(['dashboard']);
+      });
   }
 
 }

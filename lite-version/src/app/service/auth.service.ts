@@ -42,6 +42,7 @@ export class AuthService {
       headers: {'content-type': 'application/x-www-form-urlencoded'}
     }).toPromise().then(res => {
       this.handleToken(res);
+    }).catch(err => {
     });
   }
 
