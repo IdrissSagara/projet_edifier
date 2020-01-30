@@ -1,10 +1,52 @@
 import {Injectable} from '@angular/core';
-import {ToastOptions, ToastyService} from 'ng2-toasty';
+import {ToastData, ToastOptions, ToastyService} from 'ng2-toasty';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
+
+  constructor(private toastyService: ToastyService) {}
+
+  position = 'bottom-right';
+  title: string;
+  msg: string;
+  showClose = true;
+  timeout = 5000;
+  theme = 'bootstrap';
+  type = 'default';
+  closeOther = false;
+  addToast(options) {
+    if (options.closeOther) {
+      this.toastyService.clearAll();
+    }
+    this.position = options.position ? options.position : this.position;
+    const toastOptions: ToastOptions = {
+      title: options.title,
+      msg: options.msg,
+      showClose: options.showClose,
+      timeout: options.timeout,
+      theme: options.theme,
+      onAdd: (toast: ToastData) => {
+        console.log('Toast ' + toast.id + ' has been added!');
+      },
+      onRemove: (toast: ToastData) => {
+        console.log('Toast ' + toast.id + ' has been added removed!');
+      }
+    };
+
+    switch (options.type) {
+      case 'default': this.toastyService.default(toastOptions); break;
+      case 'info': this.toastyService.info(toastOptions); break;
+      case 'success': this.toastyService.success(toastOptions); break;
+      case 'wait': this.toastyService.wait(toastOptions); break;
+      case 'error': this.toastyService.error(toastOptions); break;
+      case 'warning': this.toastyService.warning(toastOptions); break;
+    }
+  }
+
+
+  /*
   constructor(private toastyService: ToastyService ) { }
 
   position = 'bottom-right';
@@ -49,6 +91,15 @@ export class ToastService {
       position: 'top-center',
       closeOther: true});
   }
+
+  public succes(message: string, titre?: string): void {
+      this.toastyService.success({title: '👍🏾',
+        msg: 'Client enregistré avec succes',
+        showClose: true,
+        timeout: 5000,
+        theme: 'bootstrap',
+        });
+  }
   // Succes Toast
   toastSucces() {
     this.addToast({title: '👍🏾',
@@ -61,7 +112,7 @@ export class ToastService {
       closeOther: true});
   }
 
-  toastError(message) {
+  toastError(message: string) {
     this.addToast({title: 'Erreur',
       msg: message,
       showClose: true,
@@ -71,4 +122,5 @@ export class ToastService {
       position: 'bottom-right',
       closeOther: true});
   }
+   */
 }

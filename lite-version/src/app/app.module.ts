@@ -14,6 +14,8 @@ import {UtilService} from './service/util.service';
 import {AuthService} from './service/auth.service';
 import {HttpClientModule} from '@angular/common/http';
 import {AuthGuard} from './auth/auth.guard';
+import {ToastyModule} from "ng2-toasty";
+import {ToastService} from "./service/toast.service";
 
 
 @NgModule({
@@ -31,6 +33,7 @@ import {AuthGuard} from './auth/auth.guard';
     AppRoutingModule,
     SharedModule,
     HttpClientModule,
+    ToastyModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: function  tokenGetter() {
@@ -40,7 +43,7 @@ import {AuthGuard} from './auth/auth.guard';
       }
     })
   ],
-  providers: [UtilService, AuthService, AuthGuard,],
+  providers: [UtilService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate {
     } else {
       this.router.navigate(['/auth/login']).then(r => {
         console.error("Vous devez vous authentifier pour acceder à cette ressource");
-        this.toastService.toastError("Vous devez vous authentifier pour acceder à cette ressource");
+        // this.toastService.toastError("Vous devez vous authentifier pour acceder à cette ressource");
       });
       return false;
     }

@@ -16,6 +16,7 @@
         <th>Nom</th>
         <th>Prénom</th>
         <th>Téléphone</th>
+        <th>Action</th>
       </tr>
       </thead>
       <tbody >
@@ -24,6 +25,13 @@
         <td>{{clt.nom}}</td>
         <td>{{clt.prenom}}</td>
         <td>{{clt.telephone}}</td>
+        <td style="align-content: space-between">
+          <div class="btn-group">
+            <button class="btn btn-info btn-outline-info btn-icon"><i class="icofont icofont-ui-edit"></i></button>
+            <button class="btn btn-warning btn-outline-warning btn-icon"><i class="icofont icofont-eye-alt"></i></button>
+            <button class="btn btn-danger btn-outline-danger btn-icon"><i class="icofont icofont-ui-delete"></i></button>
+          </div >
+        </td>
       </tr>
       </tbody>
     </table>
