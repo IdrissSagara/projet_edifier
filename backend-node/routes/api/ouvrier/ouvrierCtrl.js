@@ -1,4 +1,4 @@
-var ouvrierModel = require('../../models').Ouvrier;
+var ouvrierModel = require('../../../models').Ouvrier;
 const { validationResult } = require('express-validator');
 
 /**

@@ -1,0 +1,37 @@
+let express = require('express');
+let router = express.Router();
+
+let ouvrierValidator = require('./ouvrierValidator');
+const accessControl = require('../../auth/accessControl');
+let ouvrierCtrl = require('./ouvrierCtrl');
+const roles = accessControl.roles;
+
+//save a ouvrier
+router.post('/',
+    ouvrierValidator.validate('save'),
+    accessControl.canAccess([roles.ALL]),
+    ouvrierCtrl.save);
+
+//get all the ouvriers
+router.get('/',
+    accessControl.canAccess([roles.ALL]),
+    ouvrierCtrl.getAll);
+
+//get a ouvrier by id
+router.get('/:id',
+    ouvrierValidator.validate('getById'),
+    accessControl.canAccess([roles.ALL]),
+    ouvrierCtrl.getById);
+
+//edit a ouvrier
+router.put('/',
+    ouvrierValidator.validate('getById'),
+    accessControl.canAccess([roles.ALL]),
+    ouvrierCtrl.update);
+
+router.delete('/',
+    ouvrierValidator.validate('getById'),
+    accessControl.deniedRoles([roles.BASIC]),
+    ouvrierCtrl.destroy);
+
+module.exports = router;

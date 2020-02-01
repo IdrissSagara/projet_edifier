@@ -1,5 +1,13 @@
 const login = require('../auth/login');
 
+const roles = {
+    ADMIN: 'admin',
+    ADVANCED: 'advanced-user',
+    ALL: 'all',
+    BASIC: 'basic-user',
+    MEDIUM: 'medium-user',
+};
+
 /**
  * Ensures that the user is connected and has the minimum accreditation level to access
  * @param {*} role role of the user which want to access the ressource
@@ -63,5 +71,5 @@ function deniedRoles(deniedRoles = []) {
 }
 
 module.exports = {
-    canAccess, deniedRoles,
-}
+    canAccess, deniedRoles, roles,
+};

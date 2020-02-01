@@ -1,5 +1,4 @@
-var chantierDao = require('../../dao/chantierDao');
-var models = require('../../models');
+var models = require('../../../models');
 const { validationResult } = require('express-validator');
 
 /**
