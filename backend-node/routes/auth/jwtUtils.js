@@ -1,5 +1,6 @@
 var jwt = require('jsonwebtoken');
-const JWT_SIGN_SECRET = 'cl3 de ch1ffr3m3nt_JWT';
+//const JWT_SIGN_SECRET = 'cl3 de ch1ffr3m3nt_JWT';
+const JWT_SIGN_SECRET = require('../../config/jwt_config').secret;
 
 function parseAuthorization(authorization) {
     return (authorization != null) ? authorization.replace('Bearer ', ''): null;

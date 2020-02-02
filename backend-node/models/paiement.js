@@ -6,11 +6,14 @@ module.exports = (sequelize, DataTypes) => {
     montant_restant: DataTypes.INTEGER,
     type: DataTypes.INTEGER,
     commentaire: DataTypes.STRING,
-    idChantier: DataTypes.INTEGER
   }, {});
   Paiement.associate = function(models) {
     // associations can be defined here
-    models.Paiement.belongsTo(models.Chantier);
+    models.Paiement.belongsTo(models.Chantier, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
   return Paiement;
 };

@@ -182,4 +182,4 @@ function destroy(req, res, next) {
 
 module.exports = {
     save, getAll, getById, update, destroy
-}
+};

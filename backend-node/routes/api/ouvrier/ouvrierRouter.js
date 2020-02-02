@@ -14,6 +14,7 @@ router.post('/',
 
 //get all the ouvriers
 router.get('/',
+    ouvrierValidator.validate('getAllOuvriers'),
     accessControl.canAccess([roles.ALL]),
     ouvrierCtrl.getAll);
 
