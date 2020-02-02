@@ -10,6 +10,13 @@ const roles = accessControl.roles;
 router.get('/chantier/:id',
     paiementValidator.validate('getById',),
     accessControl.canAccess([roles.ALL]),
-    paiementCtrl.getAll);
+    paiementCtrl.getAll
+);
+
+router.post('/chantier/:id',
+    paiementValidator.validate('save'),
+    accessControl.canAccess([roles.ALL]),
+    paiementCtrl.save
+);
 
 module.exports = router;

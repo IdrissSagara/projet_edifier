@@ -12,6 +12,10 @@ exports.validate = (operation) => {
     switch (operation) {
         case 'save': {
             return [
+                body('id', 'invalid chantier id')
+                    .exists().withMessage('parameter id not found')
+                    .isNumeric().withMessage('parameter id is not numeric')
+                    .trim().escape(),
                 body('montant', 'invalid montant')
                     .exists().withMessage('parameter montant not found').bail()
                     .isNumeric().withMessage('montant is not numeric').bail()
@@ -25,6 +29,8 @@ exports.validate = (operation) => {
                     .isString().withMessage('type is not alpha')
                     .isLength({min: 2}).withMessage('type is too short')
                     .trim().escape(),
+                body('date_paiement', 'invalid date_paiement date')
+                    .optional().toDate(),
             ]
         }
         case 'getById': {

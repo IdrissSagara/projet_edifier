@@ -1,6 +1,7 @@
 /**
  * https://flaviocopes.com/express-validate-input/
  * https://flaviocopes.com/express-sanitize-input/
+ * https://github.com/validatorjs/validator.js#validators
  */
 
 //const { check } = require('express-validator');
