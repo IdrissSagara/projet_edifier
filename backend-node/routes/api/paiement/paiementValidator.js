@@ -12,7 +12,7 @@ exports.validate = (operation) => {
     switch (operation) {
         case 'save': {
             return [
-                body('id', 'invalid chantier id')
+                check('id', 'invalid chantier id')
                     .exists().withMessage('parameter id not found')
                     .isNumeric().withMessage('parameter id is not numeric')
                     .trim().escape(),

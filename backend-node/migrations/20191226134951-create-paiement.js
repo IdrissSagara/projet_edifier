@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       type: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       commentaire: {
         type: Sequelize.STRING

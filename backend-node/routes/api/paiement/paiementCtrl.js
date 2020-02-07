@@ -77,29 +77,27 @@ function save(req, res, next) {
             });
         }
 
-        let cout = chantierFound.cout;
-        console.log('\n\n' + cout + '\n\n');
+        let cout = parseFloat(chantierFound.cout);
+        let montant = parseFloat(req.body.montant);
         let date_paiement = req.body.date_paiement;
-        let montant = req.body.montant;
         let type = req.body.type;
         let commentaire = req.body.commentaire;
         
-        //sum up the paiement
+        //sum up the earlier paiements
         models.Paiement.findAll({
-            where: {chantierId: id},
+            where: {chantierId: chantierFound.id},
             attributes: [
                 'id',
                 [sequelize.fn('sum', sequelize.col('montant')), 'total_amount'],
             ],
             group: ['id'],
+            raw: true
         }).then(p => {
-            if (p.total_amount == null) {
-                console.log('setting a default value for total_amount');
-                p.total_amount = 0;
-            }
-            console.log('\n\n' + p.total_amount + '\n\n');
-            console.log(p);
-            let montant_restant = cout - (p.total_amount + montant);
+            let total_amount = 0;
+            p.map(i => {
+                return total_amount += parseFloat(i.total_amount);
+            });
+            let montant_restant = cout - (total_amount + montant);
 
             if (montant_restant < 0) {
                 return res.status(400).json({
@@ -113,11 +111,11 @@ function save(req, res, next) {
                 montant_restant: montant_restant,
                 type: type,
                 commentaire: commentaire,
-                chantierId: chantierFound.id,
+                ChantierId: chantierFound.id,
             }).then((newPaiement) => {
                 if (!newPaiement) {
                     return res.status(500).json({
-                        'err': 'couldn\'t post paiement to chantier '+id
+                        'err': 'couldn\'t add paiement to chantier '+id
                     });
                 }
 

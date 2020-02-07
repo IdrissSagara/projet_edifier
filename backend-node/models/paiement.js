@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     date_paiement: DataTypes.DATE,
     montant: DataTypes.INTEGER,
     montant_restant: DataTypes.INTEGER,
-    type: DataTypes.INTEGER,
+    type: DataTypes.STRING,
     commentaire: DataTypes.STRING,
   }, {});
   Paiement.associate = function(models) {
