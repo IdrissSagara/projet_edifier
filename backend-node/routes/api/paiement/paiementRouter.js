@@ -19,4 +19,11 @@ router.post('/chantier/:id',
     paiementCtrl.save
 );
 
+// /chantier/:id_chantier/paiement/
+router.get('/:id_paiement/chantier/:id_chantier/',
+    paiementValidator.validate('getOnePaieOfChan',),
+    accessControl.canAccess([roles.ALL]),
+    paiementCtrl.getById
+);
+
 module.exports = router;

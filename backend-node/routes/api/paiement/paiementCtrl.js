@@ -134,7 +134,49 @@ function save(req, res, next) {
         return res.status(500).json(err.errors);
     });
 }
-function getById() {}
+
+function getById(req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({ errors: errors.array() });
+        return;
+    }
+
+    let id_chantier = req.params.id_chantier;
+    let id_paiement = req.params.id_paiement;
+    models.Chantier.findByPk(id_chantier).then((chantierFound) => {
+        if (!chantierFound) {
+            return res.status(404).json({
+                'error': 'no chantier found for id ' + id_chantier
+            });
+        }
+
+        models.Paiement.findOne({
+            where: {
+                chantierId: chantierFound.id,
+                id: id_paiement
+            }
+        }).then((paiement_found) => {
+            if (!paiement_found) {
+                return res.status(404).json({
+                    'error': 'no paiement found with id ' + id_paiement
+                        + ' for the chantier ' + id_chantier
+                });
+            }
+
+            return res.status(200).json(paiement_found);
+
+        }).catch((err) => { //paiement.findByPk errors
+            console.error(err);
+            return res.status(500).json(err.errors);
+        });
+    }).catch((err) => { //chantier.findByPk errors
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
 function update() {}
 function destroy() {}
 

@@ -47,6 +47,24 @@ exports.validate = (operation) => {
                     .trim().escape(),
             ]
         }
+        case 'getOnePaieOfChan': {
+            return [
+                check('id_paiement', 'invalid paiement id')
+                    .exists().withMessage('parameter id_paiement not found')
+                    .isNumeric().withMessage('parameter id id_paiement not numeric')
+                    .trim().escape(),
+                check('id_chantier', 'invalid chantier id')
+                    .exists().withMessage('parameter id_chantier not found')
+                    .isNumeric().withMessage('parameter id_chantier is not numeric')
+                    .trim().escape(),
+                check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
+                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
+                check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
+                check('order', 'invalid value for order').optional()
+                //.isIn(['ASC', 'DESC', 'asc', 'desc']).withMessage('must be ASC or DESC')
+                    .trim().escape(),
+            ]
+        }
         case 'getAllPaiements': {
             return [
                 check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
