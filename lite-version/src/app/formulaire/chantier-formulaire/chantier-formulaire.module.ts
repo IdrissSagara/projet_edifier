@@ -4,6 +4,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {ClientFormulaireComponent} from '../client-formulaire/client-formulaire.component';
 import {ChantierFormulaireRoutingModule} from './chantier-formulaire-routing.module';
 import {ChantierFormulaireComponent} from "./chantier-formulaire.component";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 
 
@@ -12,6 +13,7 @@ import {ChantierFormulaireComponent} from "./chantier-formulaire.component";
     CommonModule,
     ChantierFormulaireRoutingModule,
     SharedModule,
+    NgSelectModule,
   ],
   declarations: [ChantierFormulaireComponent],
 })

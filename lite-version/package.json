@@ -19,6 +19,7 @@
     "@angular/core": "~8.2.3",
     "@angular/forms": "~8.2.3",
     "@angular/material": "^8.2.3",
+    "@ng-select/ng-select": "^2.16.0",
     "@angular/platform-browser": "~8.2.3",
     "@angular/platform-browser-dynamic": "~8.2.3",
     "@angular/router": "~8.2.3",

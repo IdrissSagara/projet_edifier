@@ -16,6 +16,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AuthGuard} from './auth/auth.guard';
 import {ToastyModule} from "ng2-toasty";
 import {ToastService} from "./service/toast.service";
+import {NgSelectModule} from "@ng-select/ng-select";
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {ToastService} from "./service/toast.service";
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    NgSelectModule,
     HttpClientModule,
     ToastyModule.forRoot(),
     JwtModule.forRoot({

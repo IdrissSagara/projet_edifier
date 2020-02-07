@@ -8,7 +8,7 @@ import {ClientService} from '../service/client.service';
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements OnInit {
-  client: ClientModel;
+  client: ClientModel[];
   constructor(private clientService: ClientService) { }
 
   ngOnInit() {

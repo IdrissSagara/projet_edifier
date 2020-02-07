@@ -12,8 +12,8 @@ export class ClientService {
 
   constructor(private authHttp: HttpClient) { }
   // recuperation des clients
-  async getAllClient(): Promise<ClientModel> {
-    return new Promise<ClientModel>(((resolve, reject) => {
+  async getAllClient(): Promise<ClientModel[]> {
+    return new Promise<ClientModel[]>(((resolve, reject) => {
       this.authHttp.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(
         res => {
           resolve(JSON.parse(res));

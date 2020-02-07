@@ -7,31 +7,39 @@
     </a>
   </div>
 </div>
-
 <app-card [title]="'Chantiers'" [classHeader]="true" [blockClass]="'table-border-style'">
   <div class="table-responsive">
-    <table class="table table-bordered">
+    <table class="table" >
       <thead>
       <tr>
-        <th>#</th>
-        <th>Client</th>
-        <th>Quartier</th>
-        <th>Coût</th>
-        <th>Etat</th>
+        <th>Id</th>
+        <th>ClientId</th>
+        <th>emplacement</th>
+        <th>cout</th>
+        <th>montant_dispo</th>
+        <th>walita</th>
+        <th>yereta</th>
+        <th>Action</th>
       </tr>
       </thead>
-      <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-        <td>@mdo</td>
+      <tbody >
+      <tr *ngFor="let chantier of chantiers ">
+        <th scope="row">{{chantier.id}}</th>
+        <td>{{chantier.ClientId}}</td>
+        <td>{{chantier.emplacement}}</td>
+        <td>{{chantier.cout}}</td>
+        <td>{{chantier.montant_dispo}}</td>
+        <td>{{chantier.walita}}</td>
+        <td>{{chantier.yereta}}</td>
+        <td style="align-content: space-between">
+          <div class="btn-group">
+            <button class="btn btn-info btn-outline-info btn-icon"><i class="icofont icofont-ui-edit"></i></button>
+            <button class="btn btn-warning btn-outline-warning btn-icon"><i class="icofont icofont-eye-alt"></i></button>
+            <button class="btn btn-danger btn-outline-danger btn-icon"><i class="icofont icofont-ui-delete"></i></button>
+          </div >
+        </td>
       </tr>
-
       </tbody>
     </table>
   </div>
 </app-card>
-<br>
-
