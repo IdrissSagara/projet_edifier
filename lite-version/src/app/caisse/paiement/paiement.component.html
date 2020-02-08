@@ -1,1 +1,43 @@
-<p>paiement works!</p>
+<div class="row m-b-5">
+  <div class="col-10 col-lg-11"></div>
+  <div class="col-2 col-lg-1">
+    <a [routerLink]="['/formulaire/chantier-formulaire']"
+       class="btn btn-success btn-outline-success btn-icon icon-btn btn-lg">
+      <i class="icofont icofont-plus"></i>
+    </a>
+  </div>
+</div>
+<app-card [blockClass]="'table-border-style'" [classHeader]="true" [title]="'Paiements'">
+  <div class="table-responsive">
+    <table class="table" >
+      <thead>
+      <tr>
+        <th>Id</th>
+        <th>Montant</th>
+        <th>Montant restant</th>
+        <th>Type</th>
+        <th>Commentaire</th>
+        <th>Date paiement</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody >
+      <tr *ngFor="let p of paiements">
+        <th scope="row"></th>
+        <td>{{p.id}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="align-content: space-between">
+          <div class="btn-group">
+            <button class="btn btn-info btn-outline-info btn-icon"><i class="icofont icofont-ui-edit"></i></button>
+            <button class="btn btn-warning btn-outline-warning btn-icon"><i class="icofont icofont-eye-alt"></i></button>
+            <button class="btn btn-danger btn-outline-danger btn-icon"><i class="icofont icofont-ui-delete"></i></button>
+          </div >
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</app-card>
