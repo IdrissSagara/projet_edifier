@@ -3,6 +3,28 @@ let models = require('../../../models');
 let sequelize = require('sequelize');
 const { validationResult } = require('express-validator');
 
+function getVeryAll(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({ errors: errors.array() });
+        return;
+    }
+
+    models.Paiement.findAll().then((paiements) => {
+        if (!paiements) {
+            return res.status(404).json({
+                'error': 'no paiement found'
+            });
+        }
+
+        return res.status(200).json(paiements);
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
 /**
  * This method gets all the paiements for a chantier.
  * It looks for the chantier which id was passed in param
@@ -181,5 +203,5 @@ function update() {}
 function destroy() {}
 
 module.exports = {
-    save, getAll, getById, update, destroy
+    save, getAll, getVeryAll, getById, update, destroy
 };

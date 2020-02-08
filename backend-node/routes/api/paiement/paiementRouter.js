@@ -6,6 +6,12 @@ const accessControl = require('../../auth/accessControl');
 let paiementCtrl = require('./paiementCtrl');
 const roles = accessControl.roles;
 
+router.get('/all',
+    paiementValidator.validate('getAllPaiements',),
+    accessControl.canAccess([roles.ALL]),
+    paiementCtrl.getVeryAll
+);
+
 // /chantier/:id_chantier/paiement/
 router.get('/chantier/:id',
     paiementValidator.validate('getById',),
