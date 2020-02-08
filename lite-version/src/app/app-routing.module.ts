@@ -1,12 +1,16 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 import {AdminComponent} from './layouts/admin/admin.component';
 import {AuthComponent} from './layouts/auth/auth.component';
+import {AuthGuard} from './auth/auth.guard';
+import {Role} from './utilisateur/user.roles';
 
 // @ts-ignore
 const routes: Routes = [
   {
     path: '',
+    canActivate: [AuthGuard],
+    data: { roles: [Role.Admin, Role.BasicUser] },
     component: AdminComponent,
     children: [
       {
@@ -37,6 +41,10 @@ const routes: Routes = [
         path: 'mouvement',
         loadChildren: () => import('./mouvement/mouvement.module').then(m => m.MouvementModule)
       }, {
+        path: 'formulaire',
+        loadChildren: () => import('./formulaire/formulaire.module').then(m => m.FormulaireModule)
+      },
+      {
         path: 'basic',
         loadChildren: () => import('./components/basic/basic.module').then(m => m.BasicModule)
       }, {

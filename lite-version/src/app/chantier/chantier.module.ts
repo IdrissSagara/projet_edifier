@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ChantierRoutingModule } from './chantier-routing.module';
 import {SharedModule} from '../shared/shared.module';
 import {ChantierComponent} from './chantier.component';
+import {ClientModule} from "../client/client.module";
 @NgModule({
   imports: [
     CommonModule,
     ChantierRoutingModule,
-    SharedModule
+    SharedModule,
+    ClientModule
   ],
   declarations: [ChantierComponent],
 })

@@ -18,6 +18,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRoutes = require('./routes/api/apiRoutes').router;
 var authRoutes = require('./routes/auth/authRouter').router;
+var clientRouter = require('./routes/client');
 
 var app = express();
 

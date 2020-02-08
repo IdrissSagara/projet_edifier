@@ -1,0 +1,54 @@
+<div class="row">
+
+  <div class="col-sm-12">
+    <!-- Basic Form Inputs card start -->
+    <app-card [title]="'Formulaire chantier'">
+      <p></p>
+      <form #formulaire="ngForm" role="form" (ngSubmit)="addChantier()">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="ClientId">
+            Client <span class="requis">&nbsp;*</span>:
+          </label>
+          <div class="col-sm-10">
+            <ng-select  [items]="categories" [(ngModel)]="clSel" bindLabel="name"
+                       [searchable]="true" placeholder="Sélectionnnez un Client" name="ClientId"
+                       required *ngIf="categories.length" type="text"
+                       notFoundText="Aucune client n'a été choisi" id="ClientId">
+            </ng-select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="emplacement">
+            Emplacement<span class="requis">&nbsp;*</span>:
+          </label>
+          <div class="col-sm-10">
+            <input [(ngModel)]="emplacement" name="emplacement" id="emplacement"  type="text" class="form-control"
+                   placeholder="Emplacement du chantier" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="cout">
+            Coût<span class="requis">&nbsp;*</span>:
+          </label>
+          <div class="col-sm-10">
+            <input [(ngModel)]="cout" name="cout" id="cout"  type="number" class="form-control"
+                   placeholder="CoûT du chantier" required>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label" for="date_debut">
+            Date de début<span class="requis">&nbsp;*</span>:
+          </label>
+          <div class="col-sm-10">
+            <input [(ngModel)]="date_debut" name="date_debut" id="date_debut" type="date" class="form-control"
+                   placeholder="Date de début du chantier" required>
+          </div>
+        </div>
+        <button class="btn btn-primary block full-width"
+                [disabled]="formulaire.invalid"
+                type="submit" style="width: 100%">Enregistrer
+        </button>
+      </form>
+    </app-card>
+  </div>
+</div>

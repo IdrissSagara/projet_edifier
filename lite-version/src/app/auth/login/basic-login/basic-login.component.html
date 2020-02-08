@@ -10,16 +10,19 @@
             <div class="auth-box">
               <div class="row m-b-20">
                 <div class="col-md-12">
-                  <h3 class="text-left txt-primary">Sign In</h3>
+                  <h3 class="text-left txt-primary">Connexion</h3>
                 </div>
               </div>
               <hr/>
+              <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+                {{errorMessage}}
+              </div>
               <div class="input-group">
-                <input type="email" class="form-control" placeholder="Your Email Address">
+                <input [(ngModel)]="username" class="form-control" name="username" placeholder="Nom d'utilisateur" type="text">
                 <span class="md-line"></span>
               </div>
               <div class="input-group">
-                <input type="password" class="form-control" placeholder="Password">
+                <input [(ngModel)]="password" class="form-control" name="password" placeholder="Mot de passe" type="password">
                 <span class="md-line"></span>
               </div>
               <div class="row m-t-25 text-left">
@@ -33,12 +36,13 @@
                   </div>
                 </div>
                 <div class="col-sm-5 col-xs-12 forgot-phone text-right">
-                  <a [routerLink]="['/auth/forgot']" class="text-right f-w-600 text-inverse"> Forgot Your Password?</a>
+                  <a [routerLink]="['/auth/forgot']" class="text-right f-w-600 text-inverse"> Mot de passe oublié?</a>
                 </div>
               </div>
               <div class="row m-t-30">
                 <div class="col-md-12">
-                  <button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Sign in</button>
+                  <button (click)="login()" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                          type="submit">Se connecter</button>
                 </div>
               </div>
               <hr/>
