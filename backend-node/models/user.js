@@ -1,4 +1,31 @@
 'use strict';
+/**
+ * @swagger
+ * definitions:
+ *   User:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: integer
+ *       nom:
+ *         type: string
+ *       prenom:
+ *         type: string
+ *       username:
+ *         type: string
+ *       password:
+ *         type: string
+ *         format: password
+ *       role:
+ *         type: string
+ *         format: password
+ *       required:
+ *         - nom
+ *         - prenom
+ *         - username
+ *         - password
+ *         - role
+ */
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     nom: DataTypes.STRING,

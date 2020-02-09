@@ -1,4 +1,23 @@
 'use strict';
+/**
+ * @swagger
+ * definitions:
+ *   Chantier:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: integer
+ *       nom:
+ *         type: string
+ *       prenom:
+ *         type: string
+ *       telephone:
+ *         type: string
+ *       required:
+ *         - nom
+ *         - prenom
+ *         - telephone
+ */
 module.exports = (sequelize, DataTypes) => {
   const Client = sequelize.define('Client', {
     nom: DataTypes.STRING,

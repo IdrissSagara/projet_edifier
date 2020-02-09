@@ -13,6 +13,37 @@ router.get('/',
     chantierCtrl.getAll);
 
 //get a chantier by its id
+/**
+ * @swagger
+ * /api/chantier:
+ *   get:
+ *     tags:
+ *       - Chantier
+ *     name: Find chantier
+ *     summary: Finds a chantier
+ *     security:
+ *       - bearerAuth: []
+ *     consumes:
+ *       - application/json
+ *     produces:
+ *       - application/json
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required:
+ *           - id
+ *     responses:
+ *       '200':
+ *         description: A single chantier object
+ *         schema:
+ *           $ref: '#/definitions/Chantier'
+ *       '401':
+ *         description: No auth token / no chantier found in db with that name
+ *       '404':
+ *         description: No chantier found for this id
+ */
 router.get('/:id',
     chantierValidator.validate('getChantier'),
     accessControl.canAccess([roles.ALL]),

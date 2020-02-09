@@ -32,7 +32,7 @@ const swaggerOptions = {
     },
   },
   // List of files to be processes. You can also set globs './routes/*.js'
-  apis: ['routes/api/*.js'],
+  apis: ['routes/api/*/*.js'],
 };
 const specs = swaggerJsdoc(swaggerOptions);
 

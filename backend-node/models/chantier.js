@@ -1,4 +1,33 @@
 'use strict';
+/**
+ * @swagger
+ * definitions:
+ *   Chantier:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: integer
+ *       emplacement:
+ *         type: string
+ *       cout:
+ *         type: integer
+ *       date_debut:
+ *         type: string
+ *         format: date-time
+ *       date_fin:
+ *         type: string
+ *         format: date-time
+ *       walita:
+ *         type: integer
+ *       yereta:
+ *         type: integer
+ *       montant_dispo:
+ *         type: integer
+ *       required:
+ *         - emplacement
+ *         - cout
+ *         - date_debut
+ */
 module.exports = (sequelize, DataTypes) => {
   const Chantier = sequelize.define('Chantier', {
     emplacement: DataTypes.STRING,
