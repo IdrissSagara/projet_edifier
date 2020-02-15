@@ -61,7 +61,7 @@ function getAll(req, res, next) {
     var limit = parseInt(req.query.offset);
     var order = req.query.order;
 
-    ouvrierModel.findAll({
+    ouvrierModel.findAndCountAll({
         order: [(order != null) ? order.split(':'): ['nom', 'ASC']],
         attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
         limit: (!isNaN(limit) ? limit : 10),

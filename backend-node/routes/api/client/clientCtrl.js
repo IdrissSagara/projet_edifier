@@ -50,7 +50,7 @@ function getAll(req, res) {
     var limit = parseInt(req.query.offset);
     var order = req.query.order;
 
-    models.Client.findAll({
+    models.Client.findAndCountAll({
         order: [(order != null) ? order.split(':'): ['nom', 'ASC']],
         attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
         limit: (!isNaN(limit) ? limit : 10),
@@ -221,9 +221,7 @@ function getChantiers(req, res) {
         where: {id: id}
     }).then((clientFound) => {
         if (clientFound) {
-            models.Chantier.findAll({
-                where: {ClientId: id}
-            }).then((chantiersFound) => {
+            models.Chantier.findByPk(id).then((chantiersFound) => {
                 if (chantiersFound) {
                     return res.status(200).json(chantiersFound);
                 } else {

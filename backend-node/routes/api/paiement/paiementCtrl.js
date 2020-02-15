@@ -11,7 +11,7 @@ function getVeryAll(req, res) {
         return;
     }
 
-    models.Paiement.findAll().then((paiements) => {
+    models.Paiement.findAndCountAll().then((paiements) => {
         if (!paiements) {
             return res.status(404).json({
                 'error': 'no paiement found'
@@ -44,9 +44,7 @@ function getAll(req, res, next) {
 
     let id = req.params.id;
 
-    models.Chantier.findOne({
-        where: {id: id}
-    }).then((chantierFound) => {
+    models.Chantier.findByPk(id).then((chantierFound) => {
         if (!chantierFound) {
             return res.status(404).json({
                 'error': 'no chantier found for id ' + id
@@ -58,7 +56,7 @@ function getAll(req, res, next) {
         let limit = parseInt(req.query.offset);
         let order = req.query.order;
 
-        models.Paiement.findAll({
+        models.Paiement.findAndCountAll({
             where: {chantierId: id},
             order: [(order != null) ? order.split(':'): ['date_paiement', 'ASC']],
             attributes: (fields !== '*' && fields != null) ? fields.split(';') : null,

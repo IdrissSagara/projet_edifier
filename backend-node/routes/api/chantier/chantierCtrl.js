@@ -165,8 +165,8 @@ function getAll(req, res) {
     var offset = parseInt(req.query.limit);
     var limit = parseInt(req.query.offset);
     var order = req.query.order;
-    
-    models.Chantier.findAll({
+
+    models.Chantier.findAndCountAll({
         order: [(order != null) ? order.split(':'): ['date_debut', 'ASC']],
         attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
         limit: (!isNaN(limit) ? limit : 10),
