@@ -1,7 +1,8 @@
 var models = require('../../models');
 var bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
-const SALT_FACTOR = 7;
+const config = require('../../config/jwt_config');
+const SALT_FACTOR = config.salt_factor;
 
 function register(req, res) {
     const errors = validationResult(req);
@@ -55,4 +56,4 @@ function register(req, res) {
 
 module.exports = {
     register,
-}
+};

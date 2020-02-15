@@ -9,9 +9,8 @@ const roles = {
 };
 
 /**
- * Ensures that the user is connected and has the minimum accreditation level to access
- * @param {*} role role of the user which want to access the ressource
- * @param {*} minimumRole Minimum role to give access to ressources
+ * Ensures that the user is connected and has the required accreditation level to access
+ * @param authorisedRoles
  */
 function canAccess(authorisedRoles = []) {
 
@@ -20,8 +19,7 @@ function canAccess(authorisedRoles = []) {
     }
     return [
         (req, res, next) => {
-            authInfo = login.isAuthenticated(req);
-            console.log(authInfo);
+            let authInfo = login.isAuthenticated(req);
 
             //If the user is not authenticated
             if (!authInfo.isAuth) {
@@ -30,7 +28,7 @@ function canAccess(authorisedRoles = []) {
                 });
             }
 
-            //If the user is not authorised to access the ressource
+            //If the user is not authorised to access the resource
             if ( !authorisedRoles.includes(authInfo.role) && !authorisedRoles.includes('all')) {                
                 return res.status(401).json({
                     message: 'Vous n\'êtes pas autorisé à acceder à cette ressource'
@@ -48,8 +46,7 @@ function deniedRoles(deniedRoles = []) {
     }
     return [
         (req, res, next) => {
-            authInfo = login.isAuthenticated(req);
-            console.log(authInfo);
+            let authInfo = login.isAuthenticated(req);
 
             //If the user is not authenticated
             if (!authInfo.isAuth) {

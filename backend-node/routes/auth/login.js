@@ -24,14 +24,15 @@ function login(req, res) {
         }
 
         bcrypt.compare(password, userFound.password, (errBcrypt, resBcrypt) => {
-            if (resBcrypt != true) {
+            if (resBcrypt !== true) {
                 return res.status(403).json({
                     'error': 'invalid password'
                 })
             }
 
+            userFound.password = undefined;
             return res.status(200).json({
-                'id': userFound.id,
+                'user': userFound,
                 'token': jwtUtils.genToken(userFound)
             });
         });
@@ -42,21 +43,24 @@ function login(req, res) {
 }
 
 function isAuthenticated(req) {
-    var obj = {
+    let user = {
         isAuth: false,
-        role: '',
         userId: -1,
+        nom: "",
+        prenom: "",
+        username: "",
+        createdAt: "",
+        updatedAt: "",
+        role: ""
     };
 
-    obj = jwtUtils.getUserId(req.headers['authorization']);
-    
-    if (obj.userId != -1) {
-        obj.isAuth = true;
-    }
+    user = jwtUtils.getUserInfo(req.headers['authorization']);
 
-    return obj;
+    (user.userId !== -1) ? user.isAuth = true : user.isAuth = false;
+
+    return user;
 }
 
 module.exports = {
     login, isAuthenticated
-}
+};

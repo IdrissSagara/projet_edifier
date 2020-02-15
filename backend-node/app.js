@@ -4,12 +4,6 @@ var cors = require('cors');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-/**
- * How to add swagger to an existing node project
- * http://www.acuriousanimal.com/2018/10/20/express-swagger-doc.html
- */
-const swaggerUi = require('swagger-ui-express');
-const swaggerJsdoc = require('swagger-jsdoc');
 
 //User imports
 
@@ -21,20 +15,6 @@ var authRoutes = require('./routes/auth/authRouter').router;
 var clientRouter = require('./routes/client');
 
 var app = express();
-
-const swaggerOptions = {
-  swaggerDefinition: {
-    // Like the one described here: https://swagger.io/specification/#infoObject
-    info: {
-      title: 'Edifier API',
-      version: '1.0.0',
-      description: 'Provides services for the Edifier app with json based authentication and authorization',
-    },
-  },
-  // List of files to be processes. You can also set globs './routes/*.js'
-  apis: ['routes/api/*.js'],
-};
-const specs = swaggerJsdoc(swaggerOptions);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,7 +31,6 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.use('/api', apiRoutes);
 app.use('/auth/', authRoutes);
 
