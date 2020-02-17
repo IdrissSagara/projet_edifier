@@ -1,5 +1,7 @@
 //let paiement = require('../../../models').Paiement;
 let models = require('../../../models');
+let chantierDAO = require('../../../dao/chantierDao');
+let paiementDAO = require('../../../dao/paiementDao');
 let sequelize = require('sequelize');
 const { validationResult } = require('express-validator');
 
@@ -198,7 +200,55 @@ function getById(req, res, next) {
 }
 
 function update() {}
-function destroy() {}
+
+async function destroy(req, res, next) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({
+            status: 'error',
+            message: errors.array()
+        });
+    }
+
+    let id_paiement = req.params.id;
+
+    let paiement_found = await paiementDAO.getPaiementById(id_paiement).catch((err) => {
+        console.error(err);
+        return res.status(500).json({
+            status: 'error',
+            message: err.errors
+        });
+    });
+
+    if (!paiement_found) {
+        return res.status(404).json({
+            status: 'error',
+            message: 'no paiement found with id ' + id_paiement
+        });
+    }
+
+    let destroyedPaiement = paiementDAO.destroy(paiement_found).catch(err => {
+        console.error(err);
+        return res.status(500).json({
+            status: 'error',
+            message: err.errors
+        });
+    });
+
+    if (!destroyedPaiement) {
+        return res.status(403).json({
+            status: 'error',
+            message: 'cannot delete paiement with id ' + id_paiement
+        });
+    }
+
+    //remettre la somme qui vient d'etre supprimée
+    return res.status(200).json({
+        status: "success",
+        message: 'Paiement with id ' + id_paiement + ' deleted'
+    });
+}
 
 module.exports = {
     save, getAll, getVeryAll, getById, update, destroy

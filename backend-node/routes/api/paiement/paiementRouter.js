@@ -26,10 +26,21 @@ router.post('/chantier/:id',
 );
 
 // /chantier/:id_chantier/paiement/
+//gets a specific paiement for a given chantier
 router.get('/:id_paiement/chantier/:id_chantier/',
     paiementValidator.validate('getOnePaieOfChan',),
     accessControl.canAccess([roles.ALL]),
     paiementCtrl.getById
+);
+
+/**
+ * /api/paiement/:id_paiement
+ * Deletes a paiement
+ */
+router.delete('/:id',
+    paiementValidator.validate('getById',),
+    accessControl.deniedRoles([roles.BASIC]),
+    paiementCtrl.destroy
 );
 
 module.exports = router;
