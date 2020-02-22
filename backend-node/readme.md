@@ -2,7 +2,11 @@
 ## 1. Getting started
 
 ### Configure database
-Create a config file under `backend-node/config/config.json` and copy/paste (thanks to [Larry Tesler](https://en.wikipedia.org/wiki/Larry_Tesler)) the following content into it and replace username and password by your own
+Create a new `MySql` database and name it `edifier` or any name you want.
+
+You need to configure at least the development database.
+So create a config file under `backend-node/config/config.json` and copy/paste (thanks to [Larry Tesler](https://en.wikipedia.org/wiki/Larry_Tesler)) 
+the following content into it and replace username and password by your own.
 ```json
 {
   "development": {
@@ -34,7 +38,11 @@ Create a config file under `backend-node/config/config.json` and copy/paste (tha
 
 ### Configure authentication information
 Create a config file under `backend-node/config/jwt_config.json` and copy/paste 
- the following content into it
+ the following content into it.
+ 
+ *`secret`* is used to sign the authentication jwt<br>
+ *`expires_in`* defines the validity period<br>
+ *`salt_factor`* defines the password hash factor
 ```json
 {
     "secret": "my extra long jwt signature string",
@@ -45,24 +53,24 @@ Create a config file under `backend-node/config/jwt_config.json` and copy/paste
 
 ### Launch the application
 
-First install dependencies by running
+First install dependencies by running:
 ```npm
 npm install
 ```
 You need to install `sequelize v5` globally in order to to make and import 
-migrations.
+migrations:
 ```npm
 npm install -g sequelize-cli
 ```
-Then make migrations by running
+Then make migrations by running:
 ```npm
 npx sequelize-cli db:migrate
 ``` 
-Finally run the app with the command
+Finally run the app with the command:
 ```npm
 npm start
 ```
-More information about sequelize on their [website](https://sequelize.org/v5/manual/)
+More information about sequelize on their [website](https://sequelize.org/v5/manual/).
 ## 2. Useful links
 ### Validators
 - https://flaviocopes.com/express-validate-input/
