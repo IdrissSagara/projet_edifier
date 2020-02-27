@@ -1,0 +1,22 @@
+--client
+sequelize-cli model:generate --name Client --attributes nom:string,prenom:string,telephone:string
+
+--chantier
+sequelize-cli model:generate --name Chantier --attributes emplacement:string,cout:integer,date_debut:date,date_fin:date,idClient:integer,walita:integer,yereta:integer,montant_dispo:integer
+
+--ouvrier
+sequelize-cli model:generate --name Ouvrier --attributes nom:string,prenom:string,telephone:string,type:string
+
+--chantierOuvrier
+sequelize-cli model:generate --name ChantierOuvrier --attributes idChantier:integer,idOuvrier:integer
+
+--facture
+sequelize-cli model:generate --name Facture --attributes date_etablissement:date,montant:integer,idChantier:integer
+
+--mouvement
+sequelize-cli model:generate --name Mouvement --attributes date_mouvement:date,montant:integer,source:integer,destination:integer,type:string,commentaire:string
+
+--paiement
+sequelize-cli model:generate --name Paiement --attributes date_paiement:date,montant:integer,montant_restant:integer,type:integer,commentaire:string
+
+
