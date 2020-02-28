@@ -809,6 +809,11 @@ p {
     margin-right: 8px;
 }
 
+.single-pricing .pricing-list ul li i.lni-cross-circle {
+    color: #fd1717;
+    margin-right: 8px;
+}
+
 .single-pricing .pricing-btn {
     margin-top: 42px;
 }
