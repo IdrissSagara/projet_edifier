@@ -27,7 +27,7 @@ async function loginCtrl(req, res) {
         });
     }
 
-    let authed = userDao.pwdCompare(userFound, password);
+    let authed = userDao.pwdCompare(userFound.password, password);
 
     if (!authed) {
         return res.status(403).json({

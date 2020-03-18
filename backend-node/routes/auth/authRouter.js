@@ -1,12 +1,13 @@
 var express = require('express');
 var loginCtrl = require('./loginCtrl');
 var registerCtrl = require('./register');
+let resetPwdCtrl = require('./resetPwdCtrl');
 // Validators
 const loginValidator = require('./validators/loginValidator');
 const registerValidator = require('./validators/registerValidator');
 
 const accessControl = require('./accessControl');
-
+const roles = accessControl.roles;
 exports.router = (function() {
     var authRouter = express.Router();
 
@@ -20,10 +21,13 @@ exports.router = (function() {
      */
     authRouter.post('/register',
         registerValidator.validate('register'),
-        accessControl.canAccess(['admin']),
+        accessControl.canAccess([roles.ADMIN]),
         registerCtrl.register);
 
     authRouter.post('/reset-password',
+        registerValidator.validate('resetPwd'),
+        accessControl.canAccess([roles.ALL]),
+        resetPwdCtrl.resetPwd
     );
 
     return authRouter;

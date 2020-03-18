@@ -10,8 +10,8 @@ async function getByUsername(username) {
     });
 }
 
-function pwdCompare(UserFound, password) {
-    return bcrypt.compareSync(password, UserFound.password);
+function pwdCompare(hashedPwd, pwdClair) {
+    return bcrypt.compareSync(pwdClair, hashedPwd);
 }
 
 async function save(user) {
@@ -19,6 +19,15 @@ async function save(user) {
         return null;
 
     return models.User.create(user);
+}
+
+async function update(criteria, username) {
+    if (!criteria)
+        return null;
+
+    return models.User.update(criteria,
+        {where: {username: username}}
+    );
 }
 
 async function destroy(username) {
@@ -31,5 +40,5 @@ async function destroy(username) {
 }
 
 module.exports = {
-    getByUsername, pwdCompare, save
+    getByUsername, pwdCompare, save, update, destroy
 };

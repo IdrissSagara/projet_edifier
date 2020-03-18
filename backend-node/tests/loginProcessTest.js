@@ -44,14 +44,14 @@ describe("Test userDao", () => {
         username = 'admin';
         let pwd = 'admin';
         it("Should authentify the user " + username, async () => {
-            const result = userDao.pwdCompare(user, pwd);
+            const result = userDao.pwdCompare(user.password, pwd);
             assert.isDefined(result, 'Result should be defined');
             assert(result === true, 'user admin should log in with pwd admin');
         });
 
         it("Should fail authentication due to wrong pwd", async () => {
             pwd = 'afmin1';
-            const result = userDao.pwdCompare(user, pwd);
+            const result = userDao.pwdCompare(user.password, pwd);
             assert.isDefined(result);
             assert(result === false);
         });
