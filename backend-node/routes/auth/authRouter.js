@@ -1,5 +1,5 @@
 var express = require('express');
-var loginCtrl = require('./login');
+var loginCtrl = require('./loginCtrl');
 var registerCtrl = require('./register');
 // Validators
 const loginValidator = require('./validators/loginValidator');
@@ -13,7 +13,7 @@ exports.router = (function() {
     /**
      * Route for login
      */
-    authRouter.post('/login', loginValidator.validate('login'), loginCtrl.login);
+    authRouter.post('/login', loginValidator.validate('login'), loginCtrl.loginCtrl);
 
     /**
      * Route for register
@@ -22,6 +22,9 @@ exports.router = (function() {
         registerValidator.validate('register'),
         accessControl.canAccess(['admin']),
         registerCtrl.register);
+
+    authRouter.post('/reset-password',
+    );
 
     return authRouter;
 })();

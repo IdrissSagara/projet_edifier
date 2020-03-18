@@ -1,4 +1,4 @@
-const login = require('../auth/login');
+const login = require('./loginCtrl');
 
 const roles = {
     ADMIN: 'admin',
