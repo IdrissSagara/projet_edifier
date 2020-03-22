@@ -1,10 +1,8 @@
-{{chantiers}}
-
 <div class="animated fadeIn">
   <div class="col-lg-12">
     <div class="card">
       <div class="card-header">
-        <i class="fa fa-align-justify"></i> Striped Table
+        <i class="icon-home"></i> Chantiers
       </div>
       <div class="card-body">
         <table class="table table-striped">
@@ -12,23 +10,21 @@
           <tr>
             <th>Client</th>
             <th>Emplacement</th>
-            <th>Cout</th>
-            <th>Montant disponible</th>
-            <th>Walita</th>
-            <th>Yereta</th>
+            <th>Date de debut</th>
             <th>Actions</th>
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>Yiorgos Avraamu</td>
-            <td>2012/01/01</td>
-            <td>Member</td>
-            <td>Member</td>
-            <td>Member</td>
-            <td>Member</td>
+          <tr *ngFor="let chantier of chantiers">
+            <td>{{chantier.Client.prenom | titlecase}} {{chantier.Client.nom | titlecase}}</td>
+            <td>{{chantier.emplacement | titlecase}}</td>
+            <td>{{chantier.date_debut | date: 'dd/MM/yyyy'}}</td>
             <td>
-              <span class="badge badge-success">Active</span>
+              <div class="btn-group">
+                <button class="btn btn-info btn-outline-info btn-icon"><i class="icon-eye"></i></button>
+                <button class="btn btn-warning btn-outline-warning btn-icon"><i class="icon-pencil"></i></button>
+                <button class="btn btn-danger btn-outline-danger btn-icon"><i class="icon-trash"></i></button>
+              </div>
             </td>
           </tr>
           </tbody>

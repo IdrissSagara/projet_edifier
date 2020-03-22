@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {Chantier} from '../model/chantier';
+import {AllChantierResponse} from "../model/responses/AllChantierResponse";
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +15,9 @@ export class ChantierService {
   /*
   * recuperation des chantiers
    */
-  async getAllChantier(): Promise<Chantier> {
-    return new Promise<Chantier>(((resolve, reject) => {
-      this.authHttp.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(
-        res => {
+  async getAllChantier(): Promise<AllChantierResponse> {
+    return new Promise<AllChantierResponse>(((resolve, reject) => {
+      this.authHttp.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(res => {
           resolve(JSON.parse(res));
         }, rej => {
           reject(rej);
