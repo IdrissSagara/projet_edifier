@@ -56,7 +56,8 @@
     "ts-helpers": "^1.1.2",
     "tslib": "^1.10.0",
     "web-animations-js": "^2.3.2",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@auth0/angular-jwt": "^3.0.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.900.1",
