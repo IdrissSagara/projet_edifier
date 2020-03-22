@@ -9,7 +9,46 @@ export const navItems: INavData[] = [
       variant: 'info',
       text: 'NEW'
     }
+  }, {
+    title: true,
+    name: 'Gestion chantiers'
+  }, {
+    name: 'Chantiers',
+    url: '/theme/colors',
+    icon: 'icon-home'
+  }, {
+    title: true,
+    name: 'Gestion Transactions'
+  }, {
+    name: 'Budget',
+    url: '/theme/colors',
+    icon: 'icon-credit-card'
+  }, {
+    name: 'Caisse',
+    url: '/theme/colors',
+    icon: 'fa fa-money'
+  }, {
+    name: 'Mouvements',
+    url: '/theme/colors',
+    icon: 'icon-credit-card'
+  }, {
+    title: true,
+    name: 'Gestion de personnes'
+  }, {
+    name: 'Clients',
+    url: '/theme/colors',
+    icon: 'fa fa-user-circle-o'
+  }, {
+    name: 'Ouvriers',
+    url: '/theme/colors',
+    icon: 'fa fa-group'
+  }, {
+    name: 'Utilisateurs',
+    url: '/theme/colors',
+    icon: 'fa fa-user-o'
   },
+
+
   {
     title: true,
     name: 'Theme'
