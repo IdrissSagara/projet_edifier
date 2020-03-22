@@ -1,0 +1,187 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Bootstrap Alerts</strong>
+          <div class="card-header-actions">
+            <a href="https://valor-software.com/ngx-bootstrap/#/alerts" target="_blank">
+              <small className="text-muted">docs</small>
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <alert type="success">
+            <strong>Well done!</strong> You successfully read this important alert message.
+          </alert>
+          <alert type="info">
+            <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+          </alert>
+          <alert type="warning">
+            <strong>Warning!</strong> Better check yourself, you're not looking too good.
+          </alert>
+          <alert type="danger">
+            <strong>Oh snap!</strong> Change a few things up and try submitting again.
+          </alert>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong>
+          <small>link</small>
+        </div>
+        <div class="card-body">
+          <alert type="success">
+            <strong>Well done!</strong> You successfully read <a class="alert-link" href="#">this important alert
+            message</a>.
+          </alert>
+          <alert type="info">
+            <strong>Heads up!</strong> This <a class="alert-link" href="#">alert needs your attention</a>, but it's not
+            super important.
+          </alert>
+          <alert type="warning">
+            <strong>Warning!</strong> Better check yourself, you're <a class="alert-link" href="#">not looking too
+            good</a>.
+          </alert>
+          <alert type="danger">
+            <strong>Oh snap!</strong> <a class="alert-link" href="#">Change a few things up</a> and try submitting
+            again.
+          </alert>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>additional content</small>
+        </div>
+        <div class="card-body">
+          <alert type="success">
+            <h4 class="alert-heading">Well done!</h4>
+            <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit
+              longer so that you can see how spacing within an alert works with this kind of content.</p>
+            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+          </alert>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>dismissing</small>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let alert of alerts">
+            <alert [dismissible]="dismissible" [type]="alert.type">{{ alert.msg }}</alert>
+          </div>
+          <button (click)="dismissible = !dismissible" class="btn btn-primary" type="button">Toggle dismissible</button>
+          <button (click)="reset()" class="btn btn-primary" type="button">Reset</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>dynamic html</small>
+        </div>
+        <div class="card-body">
+          <div *ngFor="let alert of alertsHtml">
+            <alert [type]="alert.type"><span [innerHtml]="alert.msg"></span></alert>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>dynamic content</small>
+        </div>
+        <div class="card-body">
+          <alert type="success">{{messages[index]}}</alert>
+
+          <div *ngIf="index !== messages.length -1; else elseBlock">
+            <button (click)="changeText()" class="btn btn-primary">Change text</button>
+          </div>
+          <ng-template #elseBlock>
+            <button (click)="index = 0" class="btn btn-primary">Reset</button>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>dismiss on timeout</small>
+        </div>
+        <div class="card-body">
+          <alert dismissOnTimeout="5000" type="success">
+            <strong>Well done!</strong> You successfully read this important alert message.
+          </alert>
+
+          <p>If you missed alert on top of me, just press <code>Add more</code> button</p>
+          <div *ngFor="let alert of alertsDismiss">
+            <alert [dismissOnTimeout]="alert.timeout" [type]="alert.type">{{ alert.msg }}</alert>
+          </div>
+          <button (click)="add()" class="btn btn-primary" type="button">Add more</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>global styling</small>
+        </div>
+        <div class="card-body">
+          <style>
+            .alert-md-color {
+              background-color: #7B1FA2;
+              border-color: #4A148C;
+              color: #fff;
+            }
+          </style>
+          <alert type="md-color">
+            <strong>Well done!</strong> You successfully read this important alert message.
+          </alert>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>component level styling</small>
+        </div>
+        <div class="card-body">
+          <alert type="md-local">
+            <strong>Well done!</strong> You successfully read this important alert message.
+          </alert>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Alerts</strong> <small>configuring defaults</small>
+        </div>
+        <div class="card-body">
+          <alert>
+            <strong>Well done!</strong> You successfully read this important alert message.
+          </alert>
+          <alert type="info">
+            <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+          </alert>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

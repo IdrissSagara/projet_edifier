@@ -1,0 +1,161 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      Bootstrap Tooltips
+      <div class="card-header-actions">
+        <a href="https://valor-software.com/ngx-bootstrap/#/tooltip" target="_blank">
+          <small className="text-muted">docs</small>
+        </a>
+      </div>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-primary" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              type="button">
+        Simple demo
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Tooltips <small>positioning</small>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-default btn-secondary" placement="top"
+              tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              type="button">
+        Tooltip on top
+      </button>
+
+      <button class="btn btn-default btn-secondary" placement="right"
+              tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              type="button">
+        Tooltip on right
+      </button>
+
+      <button class="btn btn-default btn-secondary" placement="auto"
+              tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              type="button">
+        Tooltip auto
+      </button>
+
+      <button class="btn btn-default btn-secondary" placement="left"
+              tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              type="button">
+        Tooltip on left
+      </button>
+
+      <button class="btn btn-default btn-secondary" placement="bottom"
+              tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              type="button">
+        Tooltip on bottom
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Tooltips <small>dismissible</small>
+    </div>
+    <div class="card-body">
+      <button class="btn btn-success" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+              triggers="focus"
+              type="button">
+        Dismissible tooltip
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Tooltips <small>dynamic content</small>
+    </div>
+    <div class="card-body">
+      <button [tooltip]="content" class="btn btn-info" type="button">
+        Simple binding
+      </button>
+
+      <ng-template #tolTemplate>Just another: {{content}}</ng-template>
+      <button [tooltip]="tolTemplate" class="btn btn-warning" type="button">
+        TemplateRef binding
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Tooltips <small>dynamic html</small>
+    </div>
+    <div class="card-body">
+      <ng-template #popTemplate>Here we go:
+        <div [innerHtml]="html"></div>
+      </ng-template>
+      <button [tooltip]="popTemplate" class="btn btn-success"
+              type="button">
+        Show me tooltip with html
+      </button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Tooltips <small>append to <code>body</code></small>
+    </div>
+    <div class="card-body">
+      <div class="row" style="position: relative; overflow: hidden; padding-top: 10px;">
+        <div class="col-xs-12 col-12">
+          <button class="btn btn-danger" tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                  type="button">
+            Default tooltip
+          </button>
+          <button class="btn btn-success" container="body"
+                  tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus."
+                  type="button">
+            Tooltip appended to body
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Tooltips <small>custom triggers</small>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xs-6 col-6">
+          <p>Desktop</p>
+          <button class="btn btn-info" tooltip="I will hide on click"
+                  triggers="mouseenter:click"
+                  type="button">
+            Hover over me!
+          </button>
+        </div>
+
+        <div class="col-xs-6 col-6">
+          <p>Mobile</p>
+          <button class="btn btn-info" tooltip="I will hide on click"
+                  triggers="click"
+                  type="button">
+            Click on me!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      Tooltips <small>manual triggers</small>
+    </div>
+    <div class="card-body">
+      <p>
+  <span #pop="bs-tooltip"
+        tooltip="Hello there! I was triggered manually" triggers="">
+  This text has attached tooltip
+  </span>
+      </p>
+
+      <button (click)="pop.show()" class="btn btn-success" type="button">
+        Show
+      </button>
+      <button (click)="pop.hide()" class="btn btn-warning" type="button">
+        Hide
+      </button>
+    </div>
+  </div>
+</div>

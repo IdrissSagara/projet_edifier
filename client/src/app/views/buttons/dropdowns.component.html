@@ -1,0 +1,214 @@
+<div class="animated fadeIn">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Bootstrap Dropdowns
+          <div class="card-header-actions">
+            <a href="https://valor-software.com/ngx-bootstrap/#/dropdowns" target="_blank">
+              <small className="text-muted">docs</small>
+            </a>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="btn-group" dropdown>
+            <button class="btn btn-primary dropdown-toggle" dropdownToggle type="button">
+              Button dropdown <span class="caret"></span>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Dropdowns
+          <small>trigger by <code>&lt;a&gt;</code></small>
+        </div>
+        <div class="card-body">
+      <span (isOpenChange)="isOpenChange()" (onHidden)="onHidden()" (onShown)="onShown()" dropdown>
+        <a (click)="false" dropdownToggle href>Click me for a dropdown, yo!</a>
+          <ul *dropdownMenu class="dropdown-menu">
+            <li *ngFor="let choice of items">
+              <a class="dropdown-item" href="#">{{choice}}</a>
+            </li>
+          </ul>
+      </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Dropdowns
+          <small>split button</small>
+        </div>
+        <div class="card-body">
+          <div class="btn-group" dropdown>
+            <button class="btn btn-danger" type="button">Action</button>
+            <button class="btn btn-danger dropdown-toggle dropdown-toggle-split" dropdownToggle type="button">
+              <span class="caret"></span>
+              <span class="sr-only">Split button!</span>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Something else
+                here</a></li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Dropdowns
+          <small>manual triggers</small>
+        </div>
+        <div class="card-body">
+          <div (isOpenChange)="change($event)" [isOpen]="status.isOpen" class="btn-group" dropdown placement="top">
+            <button class="btn btn-primary dropdown-toggle" dropdownToggle type="button">
+              Button dropdown <span class="caret"></span>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Something else
+                here</a></li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+          <button (click)="toggleDropdown($event)" class="btn btn-primary" type="button">Toggle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Dropdowns
+          <small>disabled menu</small>
+        </div>
+        <div class="card-body">
+          <div [isDisabled]="disabled" class="btn-group" dropdown>
+            <button class="btn btn-primary dropdownToggle" dropdownToggle type="button">
+              Button dropdown <span class="caret"></span>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Something else
+                here</a></li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+          <button (click)="disabled = !disabled" class="btn btn-warning" type="button">
+            Enable/Disable
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Dropdowns
+          <small>menu alignment</small>
+        </div>
+        <div class="card-body">
+          <div class="btn-group" dropdown placement="bottom right">
+            <button class="btn btn-primary dropdown-toggle" dropdownToggle type="button">
+              This menu is right-aligned <span class="caret"></span>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Dropdowns
+          <small>dropup variation</small>
+        </div>
+        <div class="card-body">
+          <div [dropup]="isDropup" class="btn-group" dropdown>
+            <button class="btn btn-primary dropdown-toggle" dropdownToggle id="button-dropup" type="button">
+              Dropup <span class="caret"></span>
+            </button>
+            <ul *dropdownMenu aria-labelledby="button-dropup" class="dropdown-menu" id="dropdown-dropup" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Something else
+                here</a></li>
+              <li class="divider dropdown-divider"></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="checkbox">
+            <label>
+              <input [(ngModel)]="isDropup" style="display: inline-block;" type="checkbox"
+                     value="true">
+              {{ isDropup ? 'Is dropup' : 'Is dropdown' }}
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Dropdowns
+          <small> with <code>autoClose</code></small>
+        </div>
+        <div class="card-body">
+          <div [autoClose]="autoClose" class="btn-group" dropdown>
+            <button class="btn btn-primary dropdown-toggle" dropdownToggle type="button">
+              Button dropdown <span class="caret"></span>
+            </button>
+            <ul *dropdownMenu class="dropdown-menu" role="menu">
+              <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li role="menuitem"><a class="dropdown-item" href="#">Something else
+                here</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
