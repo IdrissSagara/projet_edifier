@@ -36,15 +36,15 @@ export const navItems: INavData[] = [
     name: 'Gestion de personnes'
   }, {
     name: 'Clients',
-    url: '/theme/colors',
+    url: '/personnes/clients',
     icon: 'fa fa-user-circle-o'
   }, {
     name: 'Ouvriers',
-    url: '/theme/colors',
+    url: '/personnes/ouvriers',
     icon: 'fa fa-group'
   }, {
     name: 'Utilisateurs',
-    url: '/theme/colors',
+    url: '/personnes/utilisateurs',
     icon: 'fa fa-user-o'
   },
 

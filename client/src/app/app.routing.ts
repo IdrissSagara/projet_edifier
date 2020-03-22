@@ -52,7 +52,12 @@ export const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('./chantier/chantier.module').then(m => m.ChantierModule)
+      }, {
+        path: 'personnes',
+        loadChildren: () => import('./personnes/personnes.module').then(m => m.PersonnesModule)
       },
+
+
       {
         path: 'base',
         loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
