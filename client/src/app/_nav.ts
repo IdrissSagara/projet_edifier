@@ -14,7 +14,7 @@ export const navItems: INavData[] = [
     name: 'Gestion chantiers'
   }, {
     name: 'Chantiers',
-    url: '/theme/colors',
+    url: '/chantiers',
     icon: 'icon-home'
   }, {
     title: true,

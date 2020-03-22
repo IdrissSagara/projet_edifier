@@ -50,6 +50,10 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: '',
+        loadChildren: () => import('./chantier/chantier.module').then(m => m.ChantierModule)
+      },
+      {
         path: 'base',
         loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
       },
