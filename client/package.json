@@ -20,7 +20,7 @@
   "scripts": {
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config proxy.conf.json",
     "start4201": "npm start -- --port 4201",
     "build": "ng build --prod --aot --buildOptimizer --commonChunk --vendorChunk --optimization --progress",
     "test": "ng test",
