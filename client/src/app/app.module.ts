@@ -59,7 +59,7 @@ const APP_CONTAINERS = [
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
   providers: [{
     provide: LocationStrategy,
