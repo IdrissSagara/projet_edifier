@@ -21,16 +21,44 @@ export const navItems: INavData[] = [
     name: 'Gestion Transactions'
   }, {
     name: 'Budget',
-    url: '/theme/colors',
+    url: '/transactions/budget',
     icon: 'icon-credit-card'
   }, {
     name: 'Caisse',
-    url: '/theme/colors',
-    icon: 'fa fa-money'
+    url: '/caisse',
+    icon: 'fa fa-money',
+    children: [
+      {
+        name: 'Facture',
+        url: '/transactions/caisse/factures',
+        icon: 'fa fa-file'
+      },
+      {
+        name: 'Paiements',
+        url: '/transactions/caisse/paiements',
+        icon: 'icon-puzzle'
+      },
+      {
+        name: 'Reçu',
+        url: '/transactions/caisse/recus',
+        icon: 'icon-puzzle'
+      },
+    ]
   }, {
     name: 'Mouvements',
-    url: '/theme/colors',
-    icon: 'icon-credit-card'
+    url: '/transactions/mouvements',
+    icon: 'icon-credit-card',
+    children: [
+      {
+        name: 'Entrant',
+        url: '/transactions/mouvements/entrant',
+        icon: 'fa fa-angle-double-right'
+      }, {
+        name: 'Sortant',
+        url: '/transactions/mouvements/sortant',
+        icon: 'fa fa-angle-double-left'
+      },
+    ]
   }, {
     title: true,
     name: 'Gestion de personnes'

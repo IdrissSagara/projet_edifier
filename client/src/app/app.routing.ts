@@ -55,6 +55,9 @@ export const routes: Routes = [
       }, {
         path: 'personnes',
         loadChildren: () => import('./personnes/personnes.module').then(m => m.PersonnesModule)
+      }, {
+        path: 'transactions',
+        loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)
       },
 
 
