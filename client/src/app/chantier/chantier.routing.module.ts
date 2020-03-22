@@ -4,23 +4,11 @@ import {ChantierComponent} from "./chantier.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'chantiers',
+    component: ChantierComponent,
     data: {
       title: 'Chantiers'
-    },
-    children: [
-      {
-        path: '',
-        redirectTo: 'chantiers'
-      },
-      {
-        path: 'chantiers',
-        component: ChantierComponent,
-        data: {
-          title: 'Chantiers'
-        }
-      },
-    ]
+    }
   }
 ];
 
