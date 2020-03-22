@@ -21,6 +21,7 @@
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
     "start": "ng serve",
+    "start4201": "npm start -- --port 4201",
     "build": "ng build --prod --aot --buildOptimizer --commonChunk --vendorChunk --optimization --progress",
     "test": "ng test",
     "lint": "ng lint",
@@ -73,7 +74,7 @@
     "karma-coverage-istanbul-reporter": "^2.1.0",
     "karma-jasmine": "^2.0.1",
     "karma-jasmine-html-reporter": "^1.5.2",
-    "protractor": "^5.4.2",
+    "protractor": "^5.4.3",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "typescript": "~3.7.5"
