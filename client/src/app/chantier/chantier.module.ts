@@ -3,8 +3,10 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {
   BsDropdownModule,
+  BsModalRef,
   CarouselModule,
   CollapseModule,
+  ModalModule,
   PaginationModule,
   PopoverModule,
   ProgressbarModule,
@@ -13,11 +15,16 @@ import {
 } from "ngx-bootstrap";
 import {ChantierRoutingModule} from "./chantier.routing.module";
 import {ChantierComponent} from "./chantier.component";
+import {ChantierModalComponent} from './chantier-modal/chantier-modal.component';
 
 
 @NgModule({
   declarations: [
-    ChantierComponent
+    ChantierComponent,
+    ChantierModalComponent,
+  ],
+  entryComponents: [
+    ChantierModalComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +37,11 @@ import {ChantierComponent} from "./chantier.component";
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
     ProgressbarModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ModalModule.forRoot()
+  ],
+  providers: [
+    BsModalRef,
   ]
 })
 export class ChantierModule {

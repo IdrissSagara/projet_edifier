@@ -1,8 +1,11 @@
 <div class="animated fadeIn">
-  <div class="col-lg-12">
+  <div class="col-lg-12 col-sm-offset-8">
     <div class="card">
       <div class="card-header">
-        <i class="icon-home"></i> Chantiers
+        <span class="pull-left"><i class="icon-home"></i> Chantiers</span>
+        <button (click)="showAddChantierDialog()" class="btn btn-outline-info pull-right" type="button">
+          <i class="fa fa-plus"></i> Ajouter
+        </button>
       </div>
       <div class="card-body">
         <table class="table table-striped">
@@ -43,3 +46,4 @@
     </div>
   </div>
 </div>
+<app-chantier-modal></app-chantier-modal>
