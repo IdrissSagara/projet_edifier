@@ -13,6 +13,8 @@ export class ChantierComponent implements OnInit {
   chantiers;
   newChantier: Chantier;
   chantierModalRef: BsModalRef;
+  isLoading: Boolean;
+  errorMessage: String;
 
   constructor(private chantierService: ChantierService, private modalService: BsModalService) {
   }
@@ -22,23 +24,24 @@ export class ChantierComponent implements OnInit {
   }
 
   getAllChantiers() {
+    this.isLoading = true;
+    this.chantiers = [];
     this.chantierService.getAllChantier().then(res => {
+      this.errorMessage = undefined;
       this.chantiers = res.rows;
     }).catch(err => {
+      this.errorMessage = "data loading error";
       console.log("error during getting all the chantiers");
       console.log(err);
+    }).finally(() => {
+      this.isLoading = false;
     });
   }
 
   showAddChantierDialog() {
     const initialState = {
-      list: [
-        'Open a modal with component',
-        'Pass your data',
-        'Do something else',
-        '...'
-      ],
-      title: 'Modal with component'
+      chantier: this.newChantier,
+      title: 'Ajouter un nouveau chantier'
     };
     this.chantierModalRef = this.modalService.show(ChantierModalComponent, {initialState});
     this.chantierModalRef.content.closeBtnName = 'Close';

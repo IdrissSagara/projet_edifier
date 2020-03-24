@@ -10,6 +10,7 @@ import {Chantier} from "../../model/chantier";
 
 // https://www.jonashendrickx.com/2019/04/25/using-ngx-bootstraps-modal-separate-component/
 // https://valor-software.com/ngx-bootstrap/#/modals
+// https://stackblitz.com/run?file=app%2Fngx-bootstrap-demo.component.ts
 
 export class ChantierModalComponent implements OnInit {
   title: string;
@@ -19,10 +20,13 @@ export class ChantierModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    if (this.chantier === undefined) {
+      this.chantier = new Chantier();
+    }
   }
 
   confirm() {
-
+    console.log('chantier to save');
+    console.log(this.chantier);
   }
 }
