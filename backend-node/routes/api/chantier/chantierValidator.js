@@ -3,19 +3,19 @@ const { body, check } = require('express-validator');
 exports.validate = (operation) => {
     switch (operation) {
         case 'saveChantier': {
-            return [ 
-                body('clientId', 'invalid clientId')
-                    .exists().withMessage('parameter clientId not found')
+            return [
+                body('ClientId', 'invalid clientId')
+                    .exists().withMessage('parameter clientId not found').bail()
                     .not().isEmpty().withMessage('clientId cannot be empty')
                     .isNumeric().withMessage('clientId is not numeric')
                     .trim().escape(),
                 body('emplacement', 'invalid emplacement')
-                    .exists().withMessage('parameter emplacement not found')
+                    .exists().withMessage('parameter emplacement not found').bail()
                     .isString().withMessage('emplacement is not alpha')
                     .isLength({min: 2}).withMessage('emplacement is too short')
                     .trim().escape(),
                 body('cout', 'invalid cout')
-                    .exists().withMessage('parameter cout not found')
+                    .exists().withMessage('parameter cout not found').bail()
                     .isNumeric().withMessage('cout is not numeric')
                     .trim().escape(),
                 body('date_debut', 'invalid date_debut')
@@ -37,7 +37,7 @@ exports.validate = (operation) => {
         case 'getChantier': {
             return [ 
                 check('id', 'invalid chantier id')
-                    .exists().withMessage('parameter id not found')
+                    .exists().withMessage('parameter id not found').bail()
                     .isNumeric().withMessage('parameter id is not numeric')
                     .trim().escape(),
             ] 

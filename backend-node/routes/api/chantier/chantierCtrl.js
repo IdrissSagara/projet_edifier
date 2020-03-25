@@ -15,7 +15,7 @@ function save(req, res) {
     }
 
     chantier = {
-        ClientId: req.body.clientId,
+        ClientId: req.body.ClientId,
         emplacement: req.body.emplacement,
         cout: req.body.cout,
         date_debut: req.body.date_debut,
