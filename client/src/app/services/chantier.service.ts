@@ -10,14 +10,15 @@ import {AllChantierResponse} from "../model/responses/AllChantierResponse";
 export class ChantierService {
   apiUrl = environment.api_url + 'api/chantier';
 
-  constructor(private authHttp: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   /*
   * recuperation des chantiers
    */
   async getAllChantier(): Promise<AllChantierResponse> {
     return new Promise<AllChantierResponse>(((resolve, reject) => {
-      this.authHttp.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(res => {
+      this.http.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(res => {
           resolve(JSON.parse(res));
         }, rej => {
           reject(rej);
@@ -28,7 +29,7 @@ export class ChantierService {
 
   async getChantierById(id: string): Promise<any> {
     return new Promise<any>(((resolve, reject) => {
-      this.authHttp.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(
+      this.http.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(
         res => {
           resolve(JSON.parse(res));
         }, rej => {
@@ -43,7 +44,7 @@ export class ChantierService {
    */
   deleteClientById(id: number): Promise<Chantier> {
     return new Promise<Chantier>(((resolve, reject ) => {
-      this.authHttp.delete(`${this.apiUrl}/${id}`, {responseType: 'text'}).toPromise().then(
+      this.http.delete(`${this.apiUrl}/${id}`, {responseType: 'text'}).toPromise().then(
         res => {
           resolve(JSON.parse(res));
         }, rej => {
@@ -59,7 +60,7 @@ export class ChantierService {
    */
   updateChantier(params: {[key: string]: string}): Promise<HttpResponse<string>> {
     const P = new HttpParams( {fromObject: params} );
-    return this.authHttp.put( `${this.apiUrl}`, P, {
+    return this.http.put(`${this.apiUrl}`, P, {
       observe: 'response',
       responseType: 'text',
       headers: {'content-type': 'application/x-www-form-urlencoded'}
@@ -73,9 +74,9 @@ export class ChantierService {
    * Ajout d'un chantier
    * @param params
    */
-  addChantier(params: {[key: string]: string}): Promise<HttpResponse<string>> {
+  addChantier(params): Promise<HttpResponse<string>> {
     const P = new HttpParams( {fromObject: params} );
-    return this.authHttp.post( `${this.apiUrl}`, P, {
+    return this.http.post(`${this.apiUrl}`, P, {
       observe: 'response',
       responseType: 'text',
       headers: {'content-type': 'application/x-www-form-urlencoded'}

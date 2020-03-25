@@ -1,6 +1,6 @@
-import {Client} from "../client";
+import {ClientModel} from "../clientModel";
 
 export class AllClientsResponse {
   count: number;
-  rows: Client[];
+  rows: ClientModel[];
 }

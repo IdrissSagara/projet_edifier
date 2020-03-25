@@ -12,9 +12,9 @@
     <form #form="ngForm">
       <div class="form-group">
         <label for="client">Client</label>
-        <select class="form-control" id="client">
-          <option>Client 1</option>
-          <option>Client 2</option>
+        <select [(ngModel)]="chantier.ClientId" class="form-control" id="client" name="client">
+          <option selected value="undefined">--Selectionnez un client--</option>
+          <option *ngFor="let c of clients" value="{{c.id}}">{{c.prenom}} {{c.nom}}</option>
         </select>
       </div>
       <div class="form-group">
@@ -30,14 +30,24 @@
       <div class="form-group">
         <label for="montant_dispo">Montant disponible</label>
         <input [(ngModel)]="chantier.montant_dispo" class="form-control" id="montant_dispo" name="montant_dispo"
-               placeholder="Entrez le coût..." required type="number">
+               placeholder="Entrez le montant disponible..." required type="number">
+      </div>
+      <div *ngIf="advanced" class="form-group">
+        <label for="walita">Walita</label>
+        <input [(ngModel)]="chantier.walita" class="form-control" id="walita" name="walita"
+               placeholder="Entrez le montant walita..." required type="number">
+      </div>
+      <div *ngIf="advanced" class="form-group">
+        <label for="yereta">Yereta</label>
+        <input [(ngModel)]="chantier.yereta" class="form-control" id="yereta" name="yereta"
+               placeholder="Entrez le montant yereta..." required type="number">
       </div>
       <div class="form-group">
         <label for="date_debut">Date de début</label>
         <input [(ngModel)]="chantier.date_debut" class="form-control" id="date_debut" name="date_debut"
-               placeholder="Entrez la date de début.." required type="date">
+               placeholder="Entrez la date de début..." required type="date">
       </div>
-      <div class="form-group">
+      <div *ngIf="advanced" class="form-group">
         <label for="date_fin">Date de fin</label>
         <input [(ngModel)]="chantier.date_fin" class="form-control" id="date_fin" name="date_fin"
                placeholder="Entrez la date de fin.." required type="date">
@@ -45,10 +55,19 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button (click)="chantierModalRef.hide()" class="btn btn-secondary" type="button">Fermer</button>
+    <div class="form-check pull-left">
+      <input [(ngModel)]="advanced" class="form-check-input" id="advanced" type="checkbox" value="advanced">
+      <label class="form-check-label" for="advanced">
+        Mode avancé
+      </label>
+    </div>
+    <button (click)="form.reset()" *ngIf="advanced" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
+      Nettoyer
+    </button>
     <button (click)="confirm()" [disabled]="form.invalid"
             class="btn btn-primary" type="button">Enregistrer
     </button>
+    <button (click)="chantierModalRef.hide()" class="btn btn-secondary" type="button">Fermer</button>
   </div>
   <!--<pre>{{form.value | json}}</pre>-->
 </div>

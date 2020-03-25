@@ -1,9 +1,9 @@
-import {Client} from './client';
+import {ClientModel} from './clientModel';
 
 export class Chantier {
   id: number;
-  ClientId: Client;
-  Client: Client;
+  ClientId: number;
+  Client: ClientModel;
   emplacement: string;
   cout: number;
   date_debut: string;

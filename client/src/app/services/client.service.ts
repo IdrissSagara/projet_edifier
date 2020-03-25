@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
-import {Client} from '../model/client';
 import {environment} from '../../environments/environment';
+import {AllClientsResponse} from "../model/responses/AllClientsResponse";
 
 
 @Injectable({
@@ -12,8 +12,8 @@ export class ClientService {
 
   constructor(private authHttp: HttpClient) { }
   // recuperation des clients
-  async getAllClient(): Promise<Client[]> {
-    return new Promise<Client[]>(((resolve, reject) => {
+  async getAllClient(): Promise<AllClientsResponse> {
+    return new Promise<AllClientsResponse>(((resolve, reject) => {
       this.authHttp.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(
         res => {
           resolve(JSON.parse(res));
