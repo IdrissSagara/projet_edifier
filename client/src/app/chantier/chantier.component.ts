@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {ChantierService} from "../services/chantier.service";
 import {Chantier} from "../model/chantier";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {ChantierModalComponent} from "./chantier-modal/chantier-modal.component";
+import {combineLatest, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-chantier',
@@ -16,7 +17,9 @@ export class ChantierComponent implements OnInit {
   isLoading: Boolean;
   errorMessage: String;
 
-  constructor(private chantierService: ChantierService, private modalService: BsModalService) {
+  subscriptions: Subscription[] = [];
+
+  constructor(private chantierService: ChantierService, private modalService: BsModalService, private changeDetection: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -43,7 +46,37 @@ export class ChantierComponent implements OnInit {
       chantier: this.newChantier,
       title: 'Ajouter un nouveau chantier'
     };
+
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllChantiers();
+        }
+
+        this.unsubscribe();
+      })
+    );
+
+    this.subscriptions.push(_combine);
+
     this.chantierModalRef = this.modalService.show(ChantierModalComponent, {initialState});
     this.chantierModalRef.content.closeBtnName = 'Close';
+  }
+
+  unsubscribe() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+    this.subscriptions = [];
   }
 }

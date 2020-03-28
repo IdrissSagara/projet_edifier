@@ -4,7 +4,6 @@ import {Chantier} from "../../model/chantier";
 import {ClientService} from "../../services/client.service";
 import {ChantierService} from "../../services/chantier.service";
 import {ClientModel} from "../../model/clientModel";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-chantier-modal',
@@ -23,7 +22,7 @@ export class ChantierModalComponent implements OnInit {
   advanced: Boolean = false;
 
   constructor(public chantierModalRef: BsModalRef, private clientService: ClientService,
-              private chantierService: ChantierService, private router: Router) {
+              private chantierService: ChantierService) {
   }
 
   ngOnInit(): void {
@@ -35,12 +34,10 @@ export class ChantierModalComponent implements OnInit {
   }
 
   async confirm() {
-    console.log('chantier to save');
-    console.log(this.chantier);
     this.buildChantier();
+
     await this.chantierService.addChantier(this.chantier).then(data => {
-      console.log("data savd");
-      console.log(data);
+
     }).catch(err => {
       const erreur = JSON.parse(err.error);
       console.log(erreur);

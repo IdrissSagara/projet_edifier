@@ -16,9 +16,10 @@
         </div>
       </div>
       <div class="card-body">
-        <table class="table table-striped">
+        <table class="table table-striped table-bordered">
           <thead>
           <tr>
+            <th>#</th>
             <th>Client</th>
             <th>Emplacement</th>
             <th>Date de debut</th>
@@ -26,7 +27,8 @@
           </tr>
           </thead>
           <tbody *ngIf="!isLoading">
-          <tr *ngFor="let chantier of chantiers">
+          <tr *ngFor="let chantier of chantiers; let i = index">
+            <td>{{i + 1}}</td>
             <td>{{chantier.Client.prenom | titlecase}} {{chantier.Client.nom | titlecase}}</td>
             <td>{{chantier.emplacement | titlecase}}</td>
             <td>{{chantier.date_debut | date: 'dd/MM/yyyy'}}</td>
