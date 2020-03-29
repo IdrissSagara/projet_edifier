@@ -5,9 +5,9 @@ import {DefaultLayoutComponent} from './containers';
 
 import {P404Component} from './views/error/404.component';
 import {P500Component} from './views/error/500.component';
-import {LoginComponent} from './views/login/login.component';
-import {RegisterComponent} from './views/register/register.component';
-import {AuthGuard} from "./authGuard/auth.guard";
+import {LoginComponent} from './authentication/login/login.component';
+import {RegisterComponent} from './authentication/register/register.component';
+import {AuthGuard} from "./authentication/authGuard/auth.guard";
 import {Role} from "./personnes/utilisateurs/user.roles";
 
 export const routes: Routes = [
