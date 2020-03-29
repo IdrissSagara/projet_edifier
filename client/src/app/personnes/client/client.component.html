@@ -1,1 +1,69 @@
-<p>client works!</p>
+<div class="animated fadeIn">
+  <div class="col-lg-12 col-sm-offset-8">
+    <div class="card">
+      <div class="card-header">
+        <span class="pull-left"><i class="icon-home"></i> Clients</span>
+        <div class="pull-right">
+          <span>
+            <button (click)="getAllClients()" [disabled]="isLoading"
+                    class="btn btn-outline-info mr-3" tooltip="Rafraichir"><i class="fa fa-refresh"></i>
+            </button>
+          </span>
+          <button (click)="showAddClientDialog()" class="btn btn-outline-info"
+                  tooltip="Ajouter un nouveau  client" type="button">
+            <i class="fa fa-plus"></i> Ajouter
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Téléphone</th>
+            <th>Actions</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="!isLoading">
+          <tr *ngFor="let client of clients; let i = index">
+            <td>{{i + 1}}</td>
+            <td>{{client.prenom | titlecase}}</td>
+            <td>{{client.nom | titlecase}}</td>
+            <td>{{client.telephone}}</td>
+            <td>
+              <div class="btn-group">
+                <button class="btn btn-info btn-outline-info btn-icon" tooltip="Voir les détails du client"><i
+                  class="icon-eye"></i></button>
+                <button class="btn btn-warning btn-outline-warning btn-icon" tooltip="Modifier le client"><i
+                  class="icon-pencil"></i></button>
+                <button class="btn btn-danger btn-outline-danger btn-icon" tooltip="Supprimer le client"><i
+                  class="icon-trash"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="errorMessage">
+            <td class="text-center" colspan="5">{{errorMessage}}</td>
+          </tr>
+          </tbody>
+          <tbody *ngIf="isLoading">
+          <tr>
+            <td class="text-center" colspan="5"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
+          </tr>
+          </tbody>
+        </table>
+        <ul *ngIf="totalPages > 1" class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Prev</a></li>
+          <li class="page-item active">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">4</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

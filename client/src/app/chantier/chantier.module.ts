@@ -2,9 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {
-  BsDropdownModule,
   BsModalRef,
-  CarouselModule,
   CollapseModule,
   ModalModule,
   PaginationModule,
@@ -30,9 +28,7 @@ import {ChantierModalComponent} from './chantier-modal/chantier-modal.component'
     CommonModule,
     FormsModule,
     ChantierRoutingModule,
-    BsDropdownModule.forRoot(),
     TabsModule,
-    CarouselModule.forRoot(),
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),

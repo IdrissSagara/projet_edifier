@@ -19,19 +19,19 @@ const routes: Routes = [
         path: 'clients',
         component: ClientComponent,
         data: {
-          title: 'Chantiers'
+          title: 'Clients'
         }
       }, {
         path: 'ouvriers',
         component: OuvriersComponent,
         data: {
-          title: 'Chantiers'
+          title: 'Ouvriers'
         }
       }, {
         path: 'utilisateurs',
         component: UtilisateursComponent,
         data: {
-          title: 'Chantiers'
+          title: 'Utilisateurs'
         }
       },
     ]

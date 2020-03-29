@@ -44,16 +44,16 @@
             </td>
           </tr>
           <tr *ngIf="errorMessage">
-            <td class="text-center" colspan="4">{{errorMessage}}</td>
+            <td class="text-center" colspan="5">{{errorMessage}}</td>
           </tr>
           </tbody>
           <tbody *ngIf="isLoading">
           <tr>
-            <td class="text-center" colspan="4"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
+            <td class="text-center" colspan="5"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
           </tr>
           </tbody>
         </table>
-        <ul class="pagination">
+        <ul *ngIf="totalPages > 1" class="pagination">
           <li class="page-item"><a class="page-link" href="#">Prev</a></li>
           <li class="page-item active">
             <a class="page-link" href="#">1</a>

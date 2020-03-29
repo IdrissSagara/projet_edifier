@@ -16,7 +16,7 @@ export class ChantierComponent implements OnInit {
   chantierModalRef: BsModalRef;
   isLoading: Boolean;
   errorMessage: String;
-
+  totalPages: number;
   subscriptions: Subscription[] = [];
 
   constructor(private chantierService: ChantierService, private modalService: BsModalService, private changeDetection: ChangeDetectorRef) {
@@ -32,6 +32,7 @@ export class ChantierComponent implements OnInit {
     this.chantierService.getAllChantier().then(res => {
       this.errorMessage = undefined;
       this.chantiers = res.rows;
+      this.totalPages = res.count;
     }).catch(err => {
       this.errorMessage = "data loading error";
       console.log("error during getting all the chantiers");

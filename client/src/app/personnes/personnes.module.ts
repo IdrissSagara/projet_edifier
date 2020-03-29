@@ -6,8 +6,10 @@ import {UtilisateursComponent} from './utilisateurs/utilisateurs.component';
 import {FormsModule} from "@angular/forms";
 import {
   BsDropdownModule,
+  BsModalService,
   CarouselModule,
   CollapseModule,
+  ModalModule,
   PaginationModule,
   PopoverModule,
   ProgressbarModule,
@@ -29,7 +31,11 @@ import {PersonnesRoutingModule} from "./personnes.routing.module";
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
     ProgressbarModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    ModalModule.forRoot()
+  ],
+  providers: [
+    BsModalService
   ]
 })
 export class PersonnesModule {
