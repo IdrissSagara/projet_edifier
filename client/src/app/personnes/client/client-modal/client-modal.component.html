@@ -1,0 +1,22 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button (click)="clientModalRef.hide()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <p>formulaire client</p>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="form.reset()" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
+      Nettoyer
+    </button>
+    <button (click)="confirm()" [disabled]="form.invalid"
+            class="btn btn-primary" type="button">Enregistrer
+    </button>
+    <button (click)="clientModalRef.hide()" class="btn btn-secondary" type="button">Fermer</button>
+  </div>
+</div>

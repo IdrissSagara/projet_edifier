@@ -17,9 +17,13 @@ import {
   TooltipModule
 } from "ngx-bootstrap";
 import {PersonnesRoutingModule} from "./personnes.routing.module";
+import {ClientModalComponent} from "./client/client-modal/client-modal.component";
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent],
+  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent],
+  entryComponents: [
+    ClientModalComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,

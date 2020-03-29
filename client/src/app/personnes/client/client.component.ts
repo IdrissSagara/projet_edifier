@@ -2,7 +2,8 @@ import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {ClientService} from "../../services/client.service";
 import {ClientModel} from "../../model/clientModel";
-import {Subscription} from "rxjs";
+import {combineLatest, Subscription} from "rxjs";
+import {ClientModalComponent} from "./client-modal/client-modal.component";
 
 @Component({
   selector: 'app-client',
@@ -40,7 +41,7 @@ export class ClientComponent implements OnInit {
   }
 
   showAddClientDialog() {
-    /*  const initialState = {
+    const initialState = {
         chantier: this.newClient,
         title: 'Ajouter un nouveau client'
       };
@@ -68,7 +69,6 @@ export class ClientComponent implements OnInit {
 
       this.clientModalRef = this.modalService.show(ClientModalComponent, {initialState});
       this.clientModalRef.content.closeBtnName = 'Close';
-    */
   }
 
   unsubscribe() {
