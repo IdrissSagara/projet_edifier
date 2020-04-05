@@ -38,12 +38,13 @@ export class ChantierService {
       );
     }));
   }
+
   /**
    * service de suppression d'un chantier par son id
    * @param id
    */
-  deleteClientById(id: number): Promise<Chantier> {
-    return new Promise<Chantier>(((resolve, reject ) => {
+  deleteChantierById(id: number): Promise<Chantier> {
+    return new Promise<Chantier>(((resolve, reject) => {
       this.http.delete(`${this.apiUrl}/${id}`, {responseType: 'text'}).toPromise().then(
         res => {
           resolve(JSON.parse(res));

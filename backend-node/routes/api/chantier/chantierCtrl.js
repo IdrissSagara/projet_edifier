@@ -122,7 +122,7 @@ function destroy(req, res) {
       return;
     }
 
-    var id = req.body.id;
+    var id = req.params.id;
 
     models.Chantier.findByPk(id).then((chantierFound) => {
         if (!chantierFound) {
