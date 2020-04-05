@@ -37,12 +37,12 @@ export class ChantierModalComponent implements OnInit {
     this.buildChantier();
 
     await this.chantierService.addChantier(this.chantier).then(data => {
-
+      this.chantierModalRef.hide();
     }).catch(err => {
       const erreur = JSON.parse(err.error);
       console.log(erreur);
     }).finally(() => {
-      this.chantierModalRef.hide();
+
     });
   }
 

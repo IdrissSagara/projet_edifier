@@ -42,7 +42,7 @@ export class ClientComponent implements OnInit {
 
   showAddClientDialog() {
     const initialState = {
-        chantier: this.newClient,
+      client: this.newClient,
         title: 'Ajouter un nouveau client'
       };
 

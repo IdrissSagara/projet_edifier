@@ -16,9 +16,17 @@ export class ClientModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.client === undefined) {
+      this.client = new ClientModel();
+    }
   }
 
   async confirm() {
-
+    await this.clientService.addClient(this.client).then(res => {
+      this.clientModalRef.hide();
+    }).catch((err) => {
+      const erreur = JSON.parse(err.error);
+      console.log(erreur);
+    });
   }
 }

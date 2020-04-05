@@ -84,19 +84,19 @@ router.get('/:id/chantiers',
     clientCtrl.getChantiers);
 
 //save a client
-router.post('/client',
+router.post('/',
     clientValidator.validate('saveClient'),
     accessControl.canAccess([roles.ALL]),
     clientCtrl.save);
 
 //edit a client
-router.put('/client',
+router.put('/',
     clientValidator.validate('saveClient'),
     accessControl.canAccess(['medium-user', 'advanced-user', 'admin']),
     clientCtrl.update);
 
 //delete a client
-router.delete('/client',
+router.delete('/',
     clientValidator.validate('getClient'),
     accessControl.deniedRoles([roles.BASIC]),
     clientCtrl.destroy);

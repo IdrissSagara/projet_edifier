@@ -7,7 +7,21 @@
   </div>
   <div class="modal-body">
     <form #form="ngForm">
-      <p>formulaire client</p>
+      <div class="form-group">
+        <label for="nom">Nom</label>
+        <input [(ngModel)]="client.nom" autocomplete="text" class="form-control" id="nom"
+               minlength="2" name="nom" placeholder="Entrez le nom..." required type="text">
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prénom</label>
+        <input [(ngModel)]="client.prenom" class="form-control" id="prenom" minlength="2"
+               name="prenom" placeholder="Entrez le prénom..." required type="text">
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input [(ngModel)]="client.telephone" class="form-control" id="telephone" name="telephone"
+               placeholder="Entrez le numéro de téléphone..." required type="phone">
+      </div>
     </form>
   </div>
   <div class="modal-footer">
