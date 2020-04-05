@@ -1,9 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ChantierService} from "../services/chantier.service";
 import {Chantier} from "../model/chantier";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {ChantierModalComponent} from "./chantier-modal/chantier-modal.component";
 import {combineLatest, Subscription} from "rxjs";
+import {ModalDirective} from "ngx-bootstrap/modal";
 
 @Component({
   selector: 'app-chantier',
@@ -18,8 +19,14 @@ export class ChantierComponent implements OnInit {
   errorMessage: String;
   totalPages: number;
   subscriptions: Subscription[] = [];
+  delId: number;
+  delName: string;
 
-  constructor(private chantierService: ChantierService, private modalService: BsModalService, private changeDetection: ChangeDetectorRef) {
+  @ViewChild('dangerModal') public dangerModal: ModalDirective;
+
+  constructor(private chantierService: ChantierService,
+              private modalService: BsModalService,
+              private changeDetection: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -79,5 +86,30 @@ export class ChantierComponent implements OnInit {
       subscription.unsubscribe();
     });
     this.subscriptions = [];
+  }
+
+  confirmationSuppressionDialog(chantier: Chantier): void {
+    this.delId = chantier.id;
+    this.delName = chantier.Client.nom + " " + chantier.Client.prenom;
+    this.dangerModal.show();
+  }
+
+  declineSupprimeChantier() {
+    this.dangerModal.hide();
+  }
+
+  confirmSupprimerChantier(): void {
+    console.log("chantier id :" + this.delId);
+
+    this.chantierService.deleteChantierById(this.delId).then(res => {
+      console.log("suppression du chantier ok");
+      this.getAllChantiers();
+      this.dangerModal.hide();
+    }).catch(err => {
+      console.error("une erreur est survenu" + err);
+    }).finally(() => {
+      this.delId = undefined;
+    });
+
   }
 }

@@ -68,7 +68,7 @@ router.put('/',
     chantierCtrl.update);
 
 //delete a chantier
-router.delete('/',
+router.delete('/:id',
     chantierValidator.validate('getChantier'),
     accessControl.deniedRoles([roles.BASIC]),
     chantierCtrl.destroy);
