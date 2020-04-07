@@ -74,6 +74,42 @@ async function save(req, res) {
     });
 }
 
+function getAll(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors.array()});
+        return;
+    }
+
+    var fields = req.query.fields;
+    var offset = parseInt(req.query.offset);
+    var limit = parseInt(req.query.limit);
+    var order = req.query.order;
+
+    models.Mouvement.findAndCountAll({
+        order: [(order != null) ? order.split(':') : ['date_mouvement', 'ASC']],
+        attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
+        limit: (!isNaN(limit) ? limit : 10),
+        offset: (!isNaN(offset) ? offset : null),
+        include: [{
+            model: models.Chantier,
+            attributes: ['emplacement', 'cout', 'date_debut', 'date_fin', 'montant_dispo']
+        }]
+    }).then((mouvement) => {
+        if (mouvement) {
+            return res.status(200).json(mouvement);
+        } else {
+            return res.status(404).json({
+                'error': 'no mouvement found '
+            });
+        }
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    })
+}
+
 module.exports = {
-    save
+    save, getAll
 };
