@@ -32,5 +32,13 @@ exports.validate = (operation) => {
                 check('order', 'invalid value for order').optional().optional().trim().escape(),
             ]
         }
+        case 'getMouvement': {
+            return [
+                check('id', 'invalid mouvement id')
+                    .exists().withMessage('parameter id not found').bail()
+                    .isNumeric().withMessage('parameter id is not numeric')
+                    .trim().escape(),
+            ]
+        }
     }
 }

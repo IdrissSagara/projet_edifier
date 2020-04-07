@@ -110,6 +110,111 @@ function getAll(req, res) {
     })
 }
 
+function update(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors.array()});
+        return;
+    }
+    var mouvement = {
+        id: req.body.id,
+        source: req.body.source,
+        destination: req.body.destination,
+        commentaire: req.body.commentaire,
+        montant: req.body.montant
+    };
+
+    models.Mouvement.findByPk(mouvement.id).then((mouvementFound) => {
+        if (!mouvementFound) {
+            return res.status(404).json({
+                'error': 'no mouvement found with ' + mouvement.id
+            })
+        }
+
+        mouvementFound.update(mouvement).then((mouvementUpdated) => {
+            if (mouvementUpdated) {
+                return res.status(200).json(mouvementUpdated);
+            } else {
+                return res.status(403).json({
+                    'message': 'cannot update the mouvement'
+                })
+            }
+        }).catch((err) => {
+            console.error(err);
+            return res.status(500).json(err.errors);
+        })
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
+function destroy(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors.array()});
+        return;
+    }
+
+    var id = req.params.id;
+
+    models.Mouvement.findByPk(id).then((mouvementFound) => {
+        if (!mouvementFound) {
+            return res.status(404).json({
+                'error': 'no mouvement found with ' + id
+            })
+        }
+
+        mouvementFound.destroy().then((mouvementDestroyed) => {
+            if (mouvementDestroyed) {
+                return res.status(200).json({
+                    'message': 'mouvement ' + id + ' deleted'
+                })
+            } else {
+                return res.status(403).json({
+                    'error': 'cannot delete mouvement with id ' + id
+                })
+            }
+        });
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
+function getMouvement(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors.array()});
+        return;
+    }
+
+    var id = req.params.id;
+
+    models.Mouvement.findOne({
+        where: {id: id},
+        include: [{
+            model: models.Chantier,
+            attributes: ['emplacement', 'cout', 'date_debut', 'date_fin', 'montant_dispo']
+        }]
+    }).then((mouvementrFound) => {
+        if (mouvementrFound) {
+            return res.status(200).json(mouvementrFound);
+        } else {
+            return res.status(404).json({
+                'error': 'no mouvement found '
+            });
+        }
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json(err.errors);
+    });
+}
+
+
 module.exports = {
-    save, getAll
+    save, getAll, update, destroy, getMouvement
 };
