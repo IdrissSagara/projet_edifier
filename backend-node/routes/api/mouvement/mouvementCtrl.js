@@ -42,41 +42,29 @@ async function save(req, res) {
     }
 
     //transaction
-    chantierDepart.montant_dispo -= mouvement.montant;
-    chantierDestination.montant_dispo += mouvement.montant;
+    chantierDepart.montant_dispo = parseInt(chantierDepart.montant_dispo) - parseInt(mouvement.montant);
+    chantierDestination.montant_dispo = parseInt(chantierDestination.montant_dispo) + parseInt(mouvement.montant);
+    console.log("\n\n");
+    console.log("chantierDestination.montant_dispo :" + chantierDestination.montant_dispo);
+    console.log("chantierDepart.montant_dispo :" + chantierDepart.montant_dispo);
+    console.log("\n\n");
 
-    chantierDestination.update(chantierDestination).then((res) => {
+    let transaction = await models.sequelize.transaction({autocommit: false});
+    try {
+        await chantierDao.update(chantierDestination, transaction);
+        await chantierDao.update(chantierDepart, transaction);
+        await mvtDao.save(mouvement, transaction);
+        await transaction.commit();
 
-    }).catch((err) => {
-        //cancel all the transaction
+        return res.status(200).json(mouvement);
+    } catch (e) {
+        console.log(e);
+        await transaction.rollback();
         return res.status(500).json({
             status: 'error',
-            message: err.errors
+            message: e.errors,
         });
-    });
-
-    chantierDepart.update(chantierDepart).then((res) => {
-
-    }).catch((err) => {
-        return res.status(500).json({
-            status: 'error',
-            message: err.errors
-        });
-    });
-
-    let mres = await mvtDao.save(mouvement).catch((err) => {
-        console.error(err);
-        return res.status(500).json({
-            status: 'error',
-            message: err.errors
-        });
-    });
-
-    if (mres.status === 'error') {
-        return res.status(500).json(mres);
     }
-
-    return res.status(200).json(mres);
 }
 
 function getAll(req, res) {
@@ -115,45 +103,6 @@ function getAll(req, res) {
     })
 }
 
-function update(req, res) {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
-        return;
-    }
-    var mouvement = {
-        id: req.body.id,
-        source: req.body.source,
-        destination: req.body.destination,
-        commentaire: req.body.commentaire,
-        montant: req.body.montant
-    };
-
-    models.Mouvement.findByPk(mouvement.id).then((mouvementFound) => {
-        if (!mouvementFound) {
-            return res.status(404).json({
-                'error': 'no mouvement found with ' + mouvement.id
-            })
-        }
-
-        mouvementFound.update(mouvement).then((mouvementUpdated) => {
-            if (mouvementUpdated) {
-                return res.status(200).json(mouvementUpdated);
-            } else {
-                return res.status(403).json({
-                    'message': 'cannot update the mouvement'
-                })
-            }
-        }).catch((err) => {
-            console.error(err);
-            return res.status(500).json(err.errors);
-        })
-    }).catch((err) => {
-        console.error(err);
-        return res.status(500).json(err.errors);
-    });
-}
 
 function destroy(req, res) {
     const errors = validationResult(req);
@@ -221,5 +170,5 @@ function getMouvement(req, res) {
 
 
 module.exports = {
-    save, getAll, update, destroy, getMouvement
+    save, getAll, destroy, getMouvement
 };

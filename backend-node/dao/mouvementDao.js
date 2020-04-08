@@ -18,13 +18,13 @@ async function getById(id) {
     return models.Mouvement.findByPk(id);
 }
 
-async function save(mouvement) {
+async function save(mouvement, transaction) {
     return models.Mouvement.create({
         source: mouvement.source,
         destination: mouvement.destination,
         commentaire: mouvement.commentaire,
         montant: mouvement.montant
-    }).catch(err => {
+    }, {transaction: transaction}).catch(err => {
         console.error(err);
         return {
             status: 'error',

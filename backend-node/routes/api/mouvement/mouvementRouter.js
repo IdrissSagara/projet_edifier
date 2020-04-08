@@ -17,11 +17,6 @@ router.get('/',
     accessControl.canAccess([roles.ALL]),
     mouvementCtrl.getAll);
 
-router.put('/',
-    mouvementValidator.validate('save'),
-    accessControl.canAccess([roles.ALL]),
-    mouvementCtrl.update);
-
 router.delete('/:id',
     mouvementValidator.validate('getMouvement'),
     accessControl.deniedRoles([roles.BASIC]),

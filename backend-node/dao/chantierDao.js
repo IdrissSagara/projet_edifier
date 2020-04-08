@@ -14,7 +14,7 @@ async function getChantierById(id, include_client = true) {
     });
 }
 
-async function update(chantier) {
+async function update(chantier, transaction) {
     return models.Chantier.update({
             ClientId: chantier.ClientId,
             emplacement: chantier.emplacement,
@@ -27,7 +27,7 @@ async function update(chantier) {
         },
         {
             where: {id: chantier.id}
-        }).catch((err) => {
+        }, {transaction: transaction}).catch((err) => {
         console.error(err);
         return {
             status: 'error',

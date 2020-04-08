@@ -60,7 +60,7 @@ describe("update chantier", () => {
     it("Should fail trying to update inextant chantier", async () => {
         chantier.id = 99999;
         const result = await chantierDAO.update(chantier);
-        console.log(result);
+        //console.log(result);
         assert.isDefined(result);
         assert(result[0] === 0, 'must return O')
     });

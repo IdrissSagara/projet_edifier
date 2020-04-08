@@ -8,7 +8,7 @@ const mvtDao = require('../dao/mouvementDao');
 chai.use(chaiHttp);
 chai.should();
 
-describe("create a mouvement", () => {
+describe("mouvement creation", () => {
     let mouvement = {
         montant: 200,
         source: 5,
