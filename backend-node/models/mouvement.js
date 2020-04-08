@@ -1,7 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Mouvement = sequelize.define('Mouvement', {
-    date_mouvement: DataTypes.DATE,
     montant: DataTypes.INTEGER,
     source: DataTypes.INTEGER,
     destination: DataTypes.INTEGER,

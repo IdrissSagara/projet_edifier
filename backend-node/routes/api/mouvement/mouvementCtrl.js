@@ -16,7 +16,6 @@ async function save(req, res) {
         source: req.body.source,
         destination: req.body.destination,
         commentaire: req.body.commentaire,
-        idChantier: req.body.source
     };
 
     let chantierDepart = await chantierDao.getChantierById(mouvement.source);
@@ -65,13 +64,19 @@ async function save(req, res) {
         });
     });
 
-    mvtDao.save(mouvement).catch((err) => {
+    let mres = await mvtDao.save(mouvement).catch((err) => {
         console.error(err);
         return res.status(500).json({
             status: 'error',
             message: err.errors
         });
     });
+
+    if (mres.status === 'error') {
+        return res.status(500).json(mres);
+    }
+
+    return res.status(200).json(mres);
 }
 
 function getAll(req, res) {

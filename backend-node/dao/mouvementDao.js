@@ -20,12 +20,17 @@ async function getById(id) {
 
 async function save(mouvement) {
     return models.Mouvement.create({
-            source: mouvement.source,
-            destination: mouvement.destination,
-            commentaire: mouvement.commentaire,
-            montant: mouvement.montant
-        }
-    );
+        source: mouvement.source,
+        destination: mouvement.destination,
+        commentaire: mouvement.commentaire,
+        montant: mouvement.montant
+    }).catch(err => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when creating mouvement'
+        };
+    });
 }
 
 module.exports = {

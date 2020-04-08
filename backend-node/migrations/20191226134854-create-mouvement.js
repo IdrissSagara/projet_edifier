@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      date_mouvement: {
-        type: Sequelize.DATE
-      },
       montant: {
         type: Sequelize.INTEGER
       },
