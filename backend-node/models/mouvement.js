@@ -5,9 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     montant: DataTypes.INTEGER,
     source: DataTypes.INTEGER,
     destination: DataTypes.INTEGER,
-    type: DataTypes.STRING,
     commentaire: DataTypes.STRING,
-    idChantier: DataTypes.INTEGER
   }, {});
   Mouvement.associate = function(models) {
     // associations can be defined here
