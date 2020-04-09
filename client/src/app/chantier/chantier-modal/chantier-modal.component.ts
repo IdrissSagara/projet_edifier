@@ -21,6 +21,9 @@ export class ChantierModalComponent implements OnInit {
   clients: ClientModel[];
   advanced: Boolean = false;
 
+
+  // titreModal: String;
+
   constructor(public chantierModalRef: BsModalRef, private clientService: ClientService,
               private chantierService: ChantierService) {
   }
@@ -28,22 +31,39 @@ export class ChantierModalComponent implements OnInit {
   ngOnInit(): void {
     if (this.chantier === undefined) {
       this.chantier = new Chantier();
+    } else {
+      this.chantier.date_debut = new Date().toISOString().split('T')[0];
+      this.chantier.date_fin = new Date().toISOString().split('T')[0];
     }
 
     this.getAllClients();
   }
 
+  modeModification(): boolean {
+    return this.chantier.id !== undefined;
+  }
+
   async confirm() {
     this.buildChantier();
 
-    await this.chantierService.addChantier(this.chantier).then(data => {
-      this.chantierModalRef.hide();
-    }).catch(err => {
-      const erreur = JSON.parse(err.error);
-      console.log(erreur);
-    }).finally(() => {
+    if (this.modeModification()) {
+      await this.chantierService.updateChantier(this.chantier).then(chantier => {
+        this.chantierModalRef.hide();
+      }).catch(err => {
 
-    });
+      });
+    } else {
+      await this.chantierService.addChantier(this.chantier).then(data => {
+        this.chantierModalRef.hide();
+      }).catch(err => {
+        const erreur = JSON.parse(err.error);
+        console.log(erreur);
+      }).finally(() => {
+
+      });
+    }
+
+
   }
 
   /**
