@@ -90,7 +90,7 @@ async function getAll(req, res) {
     return res.status(200).json(mvts);
 }
 
-function getById(req, res) {
+async function getById(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -100,21 +100,18 @@ function getById(req, res) {
 
     var id = req.params.id;
 
-    models.Mouvement.findOne({
-        where: {id: id}
-    }).then((mouvementFound) => {
-        if (mouvementFound) {
-            return res.status(200).json(mouvementFound);
-        } else {
-            return res.status(404).json({
-                'message': 'pas de mouvement trouver pour cet' + id
-            })
-        }
-    }).catch((err) => {
-        console.error(err);
-        return res.status(500).json(err.errors)
+    let mvts = await mvtDao.getById(id).catch((err) => {
+        return res.status(500).json({
+            status: 'error',
+            message: 'erreur en essayant de recupperer le movement par id'
+        });
     });
 
+    if (mvts.status === 'error') {
+        return res.status(500).json(mvts);
+    }
+
+    return res.status(200).json(mvts);
 
 }
 

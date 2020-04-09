@@ -16,7 +16,15 @@ async function getAll(fields, offset, limit, order) {
 }
 
 async function getById(id) {
-    return models.Mouvement.findByPk(id);
+    return models.Mouvement.findOne({
+        where: {id: id}
+    }).catch(err => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when get mouvements'
+        };
+    });
 }
 
 async function save(mouvement, transaction) {
