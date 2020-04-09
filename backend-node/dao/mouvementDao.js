@@ -1,16 +1,17 @@
 var models = require('../models');
 
-async function getChantierById(id, include_client = true) {
-    if (!include_client) {
-        return models.Chantier.findByPk(id);
-    }
-
-    return models.Chantier.findOne({
-        where: {id: id},
-        include: [{
-            model: models.Client,
-            attributes: ['nom', 'prenom', 'telephone']
-        }]
+async function getAll(fields, offset, limit, order) {
+    return models.Mouvement.findAndCountAll({
+        order: [(order != null) ? order.split(':') : ['createdAt', 'ASC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(';') : null,
+        limit: (!isNaN(limit) ? limit : 10),
+        offset: (!isNaN(offset) ? offset : null),
+    }).catch(err => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when get mouvements'
+        };
     });
 }
 
@@ -34,5 +35,5 @@ async function save(mouvement, transaction) {
 }
 
 module.exports = {
-    getById, save
+    getById, save, getAll
 };

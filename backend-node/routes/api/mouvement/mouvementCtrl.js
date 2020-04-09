@@ -44,10 +44,6 @@ async function save(req, res) {
     //transaction
     chantierDepart.montant_dispo = parseInt(chantierDepart.montant_dispo) - parseInt(mouvement.montant);
     chantierDestination.montant_dispo = parseInt(chantierDestination.montant_dispo) + parseInt(mouvement.montant);
-    console.log("\n\n");
-    console.log("chantierDestination.montant_dispo :" + chantierDestination.montant_dispo);
-    console.log("chantierDepart.montant_dispo :" + chantierDepart.montant_dispo);
-    console.log("\n\n");
 
     let transaction = await models.sequelize.transaction({autocommit: false});
     try {
@@ -67,7 +63,7 @@ async function save(req, res) {
     }
 }
 
-function getAll(req, res) {
+async function getAll(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -75,32 +71,51 @@ function getAll(req, res) {
         return;
     }
 
-    var fields = req.query.fields;
-    var offset = parseInt(req.query.offset);
-    var limit = parseInt(req.query.limit);
-    var order = req.query.order;
+    let fields = req.query.fields;
+    let offset = parseInt(req.query.offset);
+    let limit = parseInt(req.query.limit);
+    let order = req.query.order;
 
-    models.Mouvement.findAndCountAll({
-        order: [(order != null) ? order.split(':') : ['date_mouvement', 'ASC']],
-        attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
-        limit: (!isNaN(limit) ? limit : 10),
-        offset: (!isNaN(offset) ? offset : null),
-        include: [{
-            model: models.Chantier,
-            attributes: ['emplacement', 'cout', 'date_debut', 'date_fin', 'montant_dispo']
-        }]
-    }).then((mouvement) => {
-        if (mouvement) {
-            return res.status(200).json(mouvement);
+    let mvts = await mvtDao.getAll(fields, offset, limit, order).catch((err) => {
+        return res.status(500).json({
+            status: 'error',
+            message: 'error while getting the mouvements'
+        });
+    });
+
+    if (mvts.status === 'error') {
+        return res.status(500).json(mvts);
+    }
+
+    return res.status(200).json(mvts);
+}
+
+function getById(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors.array()});
+        return;
+    }
+
+    var id = req.params.id;
+
+    models.Mouvement.findOne({
+        where: {id: id}
+    }).then((mouvementFound) => {
+        if (mouvementFound) {
+            return res.status(200).json(mouvementFound);
         } else {
             return res.status(404).json({
-                'error': 'no mouvement found '
-            });
+                'message': 'pas de mouvement trouver pour cet' + id
+            })
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
-    })
+        return res.status(500).json(err.errors)
+    });
+
+
 }
 
 
@@ -170,5 +185,5 @@ function getMouvement(req, res) {
 
 
 module.exports = {
-    save, getAll, destroy, getMouvement
+    save, getAll, destroy, getMouvement, getById
 };

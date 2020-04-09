@@ -12,14 +12,15 @@ router.post('/',
     mouvementCtrl.save);
 
 //get all Mouvement
+
 router.get('/',
     mouvementValidator.validate('getAllMouvement'),
     accessControl.canAccess([roles.ALL]),
     mouvementCtrl.getAll);
 
-router.delete('/:id',
+router.get('/:id',
     mouvementValidator.validate('getMouvement'),
-    accessControl.deniedRoles([roles.BASIC]),
-    mouvementCtrl.destroy);
+    accessControl.canAccess([roles.ALL]),
+    mouvementCtrl.getById);
 
 module.exports = router;

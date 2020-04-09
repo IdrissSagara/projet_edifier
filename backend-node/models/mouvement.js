@@ -8,7 +8,6 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Mouvement.associate = function(models) {
     // associations can be defined here
-    models.Mouvement.belongsTo(models.Chantier);
   };
   return Mouvement;
 };
