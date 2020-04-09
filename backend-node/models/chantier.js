@@ -47,7 +47,6 @@ module.exports = (sequelize, DataTypes) => {
     });
     models.Chantier.hasMany(models.ChantierOuvrier);
     models.Chantier.hasMany(models.Facture);
-    models.Chantier.hasMany(models.Mouvement);
     models.Chantier.hasMany(models.Paiement);
   };
   return Chantier;
