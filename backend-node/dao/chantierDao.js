@@ -14,6 +14,28 @@ async function getChantierById(id, include_client = true) {
     });
 }
 
+async function update(chantier, transaction) {
+    return models.Chantier.update({
+            ClientId: chantier.ClientId,
+            emplacement: chantier.emplacement,
+            cout: chantier.cout,
+            date_debut: chantier.date_debut,
+            date_fin: chantier.date_fin,
+            walita: chantier.walita,
+            yereta: chantier.yereta,
+            montant_dispo: chantier.montant_dispo
+        },
+        {
+            where: {id: chantier.id}
+        }, {transaction: transaction}).catch((err) => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when updating chantier'
+        };
+    });
+}
+
 module.exports = {
-    getChantierById
+    getChantierById, update
 };

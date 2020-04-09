@@ -13,7 +13,7 @@ import {ModalDirective} from "ngx-bootstrap/modal";
 })
 export class ChantierComponent implements OnInit {
   chantiers;
-  newChantier: Chantier;
+  chantier: Chantier;
   chantierModalRef: BsModalRef;
   isLoading: Boolean;
   errorMessage: String;
@@ -51,7 +51,7 @@ export class ChantierComponent implements OnInit {
 
   showAddChantierDialog() {
     const initialState = {
-      chantier: this.newChantier,
+      chantier: this.chantier = new Chantier(),
       title: 'Ajouter un nouveau chantier'
     };
 
@@ -80,6 +80,39 @@ export class ChantierComponent implements OnInit {
     this.chantierModalRef = this.modalService.show(ChantierModalComponent, {initialState});
     this.chantierModalRef.content.closeBtnName = 'Close';
   }
+
+  showUpdateChantierDialog(chantier: Chantier) {
+    const initialState = {
+      chantier: this.chantier = chantier,
+      title: `Modifier le chantier du client : ${this.chantier.Client.nom + ' ' + this.chantier.Client.prenom} `
+    };
+
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllChantiers();
+        }
+
+        this.unsubscribe();
+      })
+    );
+
+    this.subscriptions.push(_combine);
+
+    this.chantierModalRef = this.modalService.show(ChantierModalComponent, {initialState});
+    this.chantierModalRef.content.closeBtnName = 'Close';
+  }
+
 
   unsubscribe() {
     this.subscriptions.forEach((subscription: Subscription) => {
@@ -112,4 +145,6 @@ export class ChantierComponent implements OnInit {
     });
 
   }
+
+
 }

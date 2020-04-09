@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "phpmyadmin",
-    "password": "root",
-    "database": "edifier",
+    "username": "root",
+    "password": "",
+    "database": "arctec",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },

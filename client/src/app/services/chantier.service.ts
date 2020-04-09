@@ -59,8 +59,8 @@ export class ChantierService {
    * service de modification d'un chantier
    * @param params
    */
-  updateChantier(params: {[key: string]: string}): Promise<HttpResponse<string>> {
-    const P = new HttpParams( {fromObject: params} );
+  updateChantier(params): Promise<HttpResponse<string>> {
+    const P = new HttpParams({fromObject: params});
     return this.http.put(`${this.apiUrl}`, P, {
       observe: 'response',
       responseType: 'text',

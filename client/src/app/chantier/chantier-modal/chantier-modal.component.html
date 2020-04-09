@@ -49,7 +49,7 @@
       </div>
       <div *ngIf="advanced" class="form-group">
         <label for="date_fin">Date de fin</label>
-        <input [(ngModel)]="chantier.date_fin" class="form-control" id="date_fin" name="date_fin"
+        <input [(ngModel)]="chantier.date_fin " [value]="" class="form-control" id="date_fin" name="date_fin"
                placeholder="Entrez la date de fin.." required type="date">
       </div>
     </form>
