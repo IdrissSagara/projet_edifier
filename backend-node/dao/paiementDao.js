@@ -18,6 +18,16 @@ async function destroy(paiement) {
     return paiement.destroy();
 }
 
+async function getAll(options) {
+    return models.Paiement.findAll(options).catch((err) => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'Impossible de récuperer les paiements'
+        };
+    });
+}
+
 module.exports = {
-    getPaiementById, destroy
+    getPaiementById, destroy, getAll
 };
