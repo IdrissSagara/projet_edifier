@@ -2,6 +2,7 @@
 let models = require('../../../models');
 let chantierDAO = require('../../../dao/chantierDao');
 let paiementDAO = require('../../../dao/paiementDao');
+let factureDAO = require('../../../dao/factureDao');
 let sequelize = require('sequelize');
 const { validationResult } = require('express-validator');
 
@@ -143,26 +144,56 @@ async function save(req, res, next) {
         });
     }
 
-    let newPaiement = await paiementDAO.save({
-        date_paiement: (date_paiement != null) ? date_paiement : new Date(),
-        montant: montant,
-        montant_restant: montant_restant,
-        type: type,
-        commentaire: commentaire,
-        ChantierId: chantierFound.id,
-    });
+    let transaction = await models.sequelize.transaction({autocommit: false});
+    try {
+        let newPaiement = await paiementDAO.save({
+            date_paiement: (date_paiement != null) ? date_paiement : new Date(),
+            montant: montant,
+            montant_restant: montant_restant,
+            type: type,
+            commentaire: commentaire,
+            ChantierId: chantierFound.id,
+        }, transaction);
 
-    if (!newPaiement) {
+        if (!newPaiement) {
+            await transaction.rollback();
+            return res.status(403).json({
+                status: 'error',
+                message: 'couldn\'t add paiement to chantier ' + id +
+                    'operations are rolled back'
+            });
+        }
+
+        //generate the facture
+        let f = {
+            date_etablissement: new Date(),
+            montant: newPaiement.montant,
+            idChantier: chantierFound.id
+        };
+        let facture = await factureDAO.save(f);
+
+        if (!facture) {
+            await transaction.rollback();
+            return res.status(403).json({
+                status: 'error',
+                message: 'cannot continue due to an error during saving facture. ' +
+                    'operations are rolled back'
+            });
+        }
+
+        //validate transact
+        await transaction.commit();
+
+        //the return the reçu
+        return res.status(201).json(facture);
+    } catch (e) {
+        console.log(e);
+        await transaction.rollback();
         return res.status(500).json({
-            'err': 'couldn\'t add paiement to chantier ' + id
+            status: 'error',
+            message: e.errors,
         });
     }
-
-    if (newPaiement.status === 'error') {
-        return res.status(500).json(newPaiement);
-    }
-
-    return res.status(201).json(newPaiement);
 }
 
 function getById(req, res, next) {
