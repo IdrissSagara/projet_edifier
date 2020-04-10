@@ -1,4 +1,14 @@
-var models = require('../models');
+let models = require('../models');
+
+async function save(paiement) {
+    return models.Paiement.create(paiement).catch((err) => {
+        return {
+            status: 'error',
+            message: 'cannot save paiement',
+            details: err.errors
+        };
+    });
+}
 
 /**
  * Gets the paiement which is identified by its id and its chantier id
@@ -29,5 +39,5 @@ async function getAll(options) {
 }
 
 module.exports = {
-    getPaiementById, destroy, getAll
+    getPaiementById, destroy, getAll, save
 };

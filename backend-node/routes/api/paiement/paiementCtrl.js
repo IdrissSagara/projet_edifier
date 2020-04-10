@@ -83,78 +83,86 @@ function getAll(req, res, next) {
     });
 }
 
-function save(req, res, next) {
+async function save(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
-        return;
+        return res.status(422).json({errors: errors.array()});
     }
 
     let id = req.params.id;
-    models.Chantier.findByPk(id).then((chantierFound) => {
-        if (!chantierFound) {
-            return res.status(404).json({
-                'error': 'no chantier found for id ' + id
-            });
-        }
 
-        let cout = parseFloat(chantierFound.cout);
-        let montant = parseFloat(req.body.montant);
-        let date_paiement = req.body.date_paiement;
-        let type = req.body.type;
-        let commentaire = req.body.commentaire;
-        
-        //sum up the earlier paiements
-        models.Paiement.findAll({
-            where: {chantierId: chantierFound.id},
-            attributes: [
-                'id',
-                [sequelize.fn('sum', sequelize.col('montant')), 'total_amount'],
-            ],
-            group: ['id'],
-            raw: true
-        }).then(p => {
-            let total_amount = 0;
-            p.map(i => {
-                return total_amount += parseFloat(i.total_amount);
-            });
-            let montant_restant = cout - (total_amount + montant);
+    let chantierFound = await chantierDAO.getChantierById(id);
 
-            if (montant_restant < 0) {
-                return res.status(400).json({
-                    'err': 'Cannot process to paiement due to negative montant_restant'
-                });
-            }
-
-            models.Paiement.create({
-                date_paiement: (date_paiement != null ) ? date_paiement : new Date(),
-                montant: montant,
-                montant_restant: montant_restant,
-                type: type,
-                commentaire: commentaire,
-                ChantierId: chantierFound.id,
-            }).then((newPaiement) => {
-                if (!newPaiement) {
-                    return res.status(500).json({
-                        'err': 'couldn\'t add paiement to chantier '+id
-                    });
-                }
-
-                return res.status(201).json(newPaiement);
-
-            }).catch((err) => { //creation errors
-                console.error(err);
-                return res.status(500).json(err.errors);
-            });
-        }).catch((err) => { //getAll errors
-            console.error(err);
-            return res.status(500).json(err.errors);
+    if (!chantierFound) {
+        return res.status(404).json({
+            'error': 'no chantier found for id ' + id
         });
-    }).catch((err) => { //getByPk
-        console.error(err);
-        return res.status(500).json(err.errors);
+    }
+
+    if (chantierFound.status === 'error') {
+        return res.status(500).json(chantierFound);
+    }
+
+    let cout = parseFloat(chantierFound.cout);
+    let montant = parseFloat(req.body.montant);
+    let date_paiement = req.body.date_paiement;
+    let type = req.body.type;
+    let commentaire = req.body.commentaire;
+
+    //sum up the earlier paiements
+    let allPaiements = await paiementDAO.getAll({
+        where: {chantierId: chantierFound.id},
+        attributes: [
+            'id',
+            [sequelize.fn('sum', sequelize.col('montant')), 'total_amount'],
+        ],
+        group: ['id'],
+        raw: true
     });
+
+    if (!allPaiements) {
+        return res.status(404).json({
+            'error': 'no paiement found for chantier ' + id
+        });
+    }
+
+    if (allPaiements.status === 'error') {
+        return res.status(500).json(allPaiements);
+    }
+
+    let total_amount = 0;
+    allPaiements.map(i => {
+        return total_amount += parseFloat(i.total_amount);
+    });
+    let montant_restant = cout - (total_amount + montant);
+
+    if (montant_restant < 0) {
+        return res.status(400).json({
+            'err': 'Cannot process to paiement due to negative montant_restant'
+        });
+    }
+
+    let newPaiement = await paiementDAO.save({
+        date_paiement: (date_paiement != null) ? date_paiement : new Date(),
+        montant: montant,
+        montant_restant: montant_restant,
+        type: type,
+        commentaire: commentaire,
+        ChantierId: chantierFound.id,
+    });
+
+    if (!newPaiement) {
+        return res.status(500).json({
+            'err': 'couldn\'t add paiement to chantier ' + id
+        });
+    }
+
+    if (newPaiement.status === 'error') {
+        return res.status(500).json(newPaiement);
+    }
+
+    return res.status(201).json(newPaiement);
 }
 
 function getById(req, res, next) {
