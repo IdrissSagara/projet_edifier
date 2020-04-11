@@ -4,6 +4,9 @@ let chantierDAO = require('../../../dao/chantierDao');
 let paiementDAO = require('../../../dao/paiementDao');
 let factureDAO = require('../../../dao/factureDao');
 let sequelize = require('sequelize');
+let genPDF = require('./generatePDF');
+let fs = require('fs');
+let path = require('path');
 const { validationResult } = require('express-validator');
 
 function getVeryAll(req, res) {
@@ -184,8 +187,36 @@ async function save(req, res, next) {
         //validate transact
         await transaction.commit();
 
-        //the return the reçu
-        return res.status(201).json(facture);
+        let options = {
+            format: "A3",
+            orientation: "portrait",
+            border: "10mm",
+            header: {
+                height: "45mm",
+                contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+            },
+            "footer": {
+                "height": "28mm",
+                "contents": {
+                    2: 'Second page', // Any page number is working. 1-based index
+                    default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
+                }
+            }
+        };
+
+        let data = {
+            facture: {
+                id: 3,
+                montant: 200,
+                idChantier: 7
+            }
+        };
+
+        let template_path = path.join(__dirname, 'facture_template.html');
+        let pdf = await genPDF.genPDF(options, template_path, data, './facture' + new Date() + '.pdf');
+        let fact = fs.readFileSync(pdf.filename);
+
+        return res.status(201).contentType("application/pdf").send(fact);
     } catch (e) {
         console.log(e);
         await transaction.rollback();
