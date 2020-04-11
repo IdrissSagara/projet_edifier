@@ -10,8 +10,12 @@ import {Chantier} from "../../model/chantier";
 })
 export class ChantierDetailsComponent implements OnInit {
 
+  // graph pie
+  public pieChartLabels: string[] = ['Cout du chantier', 'yereta', 'walita'];
+
   chantier: Chantier;
-  isCollapsed: boolean = false;
+  public pieChartData: number[];
+  public pieChartType = 'pie';
 
   constructor(private route: ActivatedRoute, private chantierService: ChantierService) {
   }
@@ -23,7 +27,7 @@ export class ChantierDetailsComponent implements OnInit {
   async getChantierById(id: number) {
     await this.chantierService.getChantierById(id).then(chantier => {
       this.chantier = chantier;
-      console.log(this.chantier);
+      this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita]
     }).catch(err => {
       console.log(err);
     });
@@ -41,6 +45,15 @@ export class ChantierDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.getChantierById(params['id']);
     });
+  }
+
+  // events
+  public chartClicked(e: any): void {
+    console.log(e);
+  }
+
+  public chartHovered(e: any): void {
+    console.log(e);
   }
 
 }

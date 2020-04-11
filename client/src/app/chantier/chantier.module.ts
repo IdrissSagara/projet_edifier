@@ -15,6 +15,7 @@ import {ChantierRoutingModule} from "./chantier.routing.module";
 import {ChantierComponent} from "./chantier.component";
 import {ChantierModalComponent} from './chantier-modal/chantier-modal.component';
 import {ChantierDetailsComponent} from './chantier-details/chantier-details.component';
+import {ChartsModule} from "ng2-charts";
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import {ChantierDetailsComponent} from './chantier-details/chantier-details.comp
     ChantierModalComponent
   ],
   imports: [
+    ChartsModule,
     CommonModule,
     FormsModule,
     ChantierRoutingModule,
