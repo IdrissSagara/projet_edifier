@@ -27,9 +27,9 @@ export class ChantierService {
     }));
   }
 
-  async getChantierById(id: string): Promise<any> {
+  async getChantierById(id: number): Promise<any> {
     return new Promise<any>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(
+      this.http.get(`${this.apiUrl}/${id}`, {responseType: 'text'}).toPromise().then(
         res => {
           resolve(JSON.parse(res));
         }, rej => {

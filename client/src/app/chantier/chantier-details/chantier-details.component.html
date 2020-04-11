@@ -1,0 +1,152 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div class="card-header">
+      <h2>Details du chantier : N° {{chantier?.id}} du client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
+      <div class="card-header-actions">
+        <a href="https://valor-software.com/ngx-bootstrap/#/collapse" target="_blank">
+          <small className="text-muted">docs</small>
+        </a>
+      </div>
+    </div>
+    <div (collapsed)="collapsed($event)"
+         (expanded)="expanded($event)"
+         [collapse]="isCollapsed"
+         class="card-body">
+
+      <div class="wrapper wrapper-content ">
+        <div class="row">
+          <div class="container col-md-8 col-lg-offset-2 col-md-offset-2">
+
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <table class="table table-responsive">
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Identifiant: </b></td>
+                    <td class="col-sm-4">{{chantier?.id}}</td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Cout du chantier: </b></td>
+                    <td class="col-sm-4">{{chantier.cout }}</td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Client: </b>
+                    </td>
+                    <td class="col-sm-4">
+                      {{chantier.Client.nom }} {{chantier.Client.prenom}}
+                    </td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Montant Total Disponible: </b>
+                    </td>
+                    <td class="col-sm-4">{{chantier.montant_dispo}}</td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Montant venant d'un autre chantier: </b>
+                    </td>
+                    <td class="col-sm-4">{{chantier.walita }}</td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Montant du chantier: </b>
+                    </td>
+                    <td class="col-sm-4">{{chantier.yereta}} %</td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Date debut du chantier: </b>
+                    </td>
+                    <td class="col-sm-4">{{chantier.date_debut | date:"dd/MM/yyyy"}}</td>
+                  </tr>
+                  <tr class="table-bordered">
+                    <td class="col-sm-2"><b>Date fin du chantier: </b></td>
+                    <td class="col-sm-4">{{chantier.date_fin | date:"dd/MM/yyyy"}}</td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Créee le: </b></td>
+                    <td class="col-sm-4">{{chantier.createdAt | date:"dd/MM/yyyy"}} à
+                      {{chantier.createdAt | date:"H:mm:ss"}}
+                    </td>
+                  </tr>
+                  <tr class="table-bordered ">
+                    <td class="col-sm-2"><b>Modifier le: </b></td>
+                    <td class="col-sm-4">{{chantier.updatedAt | date:"dd/MM/yyyy"}} à
+                      {{chantier.updatedAt | date:"H:mm:ss"}}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <button (click)="isCollapsed = !isCollapsed" class="btn btn-primary"
+              type="button">Toggle collapse
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!--
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table table-responsive">
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Identifiant: </b></td>
+        <td class="col-sm-4">{{chantier?.id}}</td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Cout du chantier: </b></td>
+        <td class="col-sm-4">{{chantier.cout }}</td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Client: </b>
+        </td>
+        <td class="col-sm-4">
+          {{chantier.Client.nom }} {{chantier.Client.prenom}}
+        </td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Montant Total Disponible: </b>
+        </td>
+        <td class="col-sm-4">{{chantier.montant_dispo}}</td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Montant venant d'un autre chantier: </b>
+        </td>
+        <td class="col-sm-4">{{chantier.walita }}</td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Montant du chantier: </b>
+        </td>
+        <td class="col-sm-4">{{chantier.yereta}} %</td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Date debut du chantier: </b>
+        </td>
+        <td class="col-sm-4">{{chantier.date_debut | date:"dd/MM/yyyy"}}</td>
+      </tr>
+      <tr class="table-bordered">
+        <td class="col-sm-2"><b>Date fin du chantier: </b></td>
+        <td class="col-sm-4">{{chantier.date_fin | date:"dd/MM/yyyy"}}</td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Créee le: </b></td>
+        <td class="col-sm-4">{{chantier.createdAt | date:"dd/MM/yyyy"}} à
+          {{chantier.createdAt | date:"H:mm:ss"}}
+        </td>
+      </tr>
+      <tr class="table-bordered ">
+        <td class="col-sm-2"><b>Modifier le: </b></td>
+        <td class="col-sm-4">{{chantier.updatedAt | date:"dd/MM/yyyy"}} à
+          {{chantier.updatedAt | date:"H:mm:ss"}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+-->
+

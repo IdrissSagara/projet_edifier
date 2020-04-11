@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {ChantierComponent} from "./chantier.component";
+import {ChantierDetailsComponent} from "./chantier-details/chantier-details.component";
 
 const routes: Routes = [
   {
@@ -8,6 +9,13 @@ const routes: Routes = [
     component: ChantierComponent,
     data: {
       title: 'Chantiers'
+    }
+  },
+  {
+    path: 'chantier/:id',
+    component: ChantierDetailsComponent,
+    data: {
+      title: 'Detail du chantier'
     }
   }
 ];

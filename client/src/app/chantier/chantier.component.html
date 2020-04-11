@@ -34,7 +34,8 @@
             <td>{{chantier.date_debut | date: 'dd/MM/yyyy'}}</td>
             <td>
               <div class="btn-group">
-                <button class="btn btn-info btn-outline-info btn-icon" tooltip="Voir les détails du chantier"><i
+                <button [routerLink]="['/chantier', chantier.id]"
+                        class="btn btn-info btn-outline-info btn-icon" tooltip="Voir les détails du chantier"><i
                   class="icon-eye"></i></button>
                 <button (click)="showUpdateChantierDialog(chantier)"
                         class="btn btn-warning btn-outline-warning btn-icon" tooltip="Modifier le chantier"><i
