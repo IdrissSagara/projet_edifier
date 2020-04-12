@@ -31,6 +31,16 @@ async function cleanFile(file_path) {
     });
 }
 
+function deleteFile(file) {
+    fs.unlink(file, function (err) {
+        if (err) {
+            console.error(err.toString());
+        } else {
+            console.warn(file + ' deleted');
+        }
+    });
+}
+
 module.exports = {
-    genPDF, cleanFile
+    genPDF, cleanFile, deleteFile
 };

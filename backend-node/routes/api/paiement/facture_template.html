@@ -111,8 +111,8 @@
                         </td>
 
                         <td>
-                            Facture n°: {{facture.id}}<br>
-                            Date: {{facture.createdAt}}<br>
+                            Facture du paiement n°: {{paiement.id}}<br>
+                            Date: {{paiement.createdAt}}<br>
                             Due: February 1, 2015
                         </td>
                     </tr>
@@ -151,11 +151,11 @@
 
         <tr class="details">
             <td>
-                {{facture.mode_paiement}}
+                {{paiement.type}}
             </td>
 
             <td>
-                {{facture.montant}}
+                {{paiement.montant}}
             </td>
         </tr>
 

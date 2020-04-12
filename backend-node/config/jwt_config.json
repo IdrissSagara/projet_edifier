@@ -2,5 +2,21 @@
 	"app_name": "Edifier | Application de gestion de chantier",
     "secret": "cl3 de ch1ffr3m3nt_JWT",
     "expires_in": "8d",
-    "salt_factor": 7
+  "salt_factor": 7,
+  "print_options": {
+    "format": "A3",
+    "orientation": "portrait",
+    "border": "10mm",
+    "header": {
+      "height": "45mm",
+      "contents": "<div style=\"text-align: center;\">Author: Nom entreprise</div>"
+    },
+    "footer": {
+      "height": "28mm",
+      "contents": {
+        "2": "Second page",
+        "default": "<span style=\"color: #444;\">{{page}}</span>/<span>{{pages}}</span>"
+      }
+    }
+  }
 }
