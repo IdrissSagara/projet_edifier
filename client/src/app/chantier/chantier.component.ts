@@ -17,10 +17,12 @@ export class ChantierComponent implements OnInit {
   chantierModalRef: BsModalRef;
   isLoading: Boolean;
   errorMessage: String;
-  totalPages: number;
   subscriptions: Subscription[] = [];
   delId: number;
   delName: string;
+
+  totalItems: number;
+  currentPage: number;
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
@@ -33,13 +35,13 @@ export class ChantierComponent implements OnInit {
     this.getAllChantiers();
   }
 
-  getAllChantiers() {
+  getAllChantiers(offset = 0) {
     this.isLoading = true;
     this.chantiers = [];
-    this.chantierService.getAllChantier().then(res => {
+    this.chantierService.getAllChantier(offset).then(res => {
       this.errorMessage = undefined;
       this.chantiers = res.rows;
-      this.totalPages = res.count;
+      this.totalItems = res.count;
     }).catch(err => {
       this.errorMessage = "data loading error";
       console.log("error during getting all the chantiers");
@@ -143,8 +145,10 @@ export class ChantierComponent implements OnInit {
     }).finally(() => {
       this.delId = undefined;
     });
-
   }
 
-
+  pageChanged(event: any): void {
+    let offset = (event.page - 1) * 10;
+    this.getAllChantiers(offset);
+  }
 }
