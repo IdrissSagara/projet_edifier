@@ -31,4 +31,12 @@ describe("get all paiements", () => {
         console.log(total_amount);
         assert.isDefined(result);
     });
+
+    it('should return one paiement with id 3', async () => {
+        const result = await paiementDao.getPaiementById(20);
+
+        console.log(result.get({plain: true}));
+        assert.isDefined(result);
+        assert(result.id === 20);
+    })
 });

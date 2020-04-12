@@ -2,12 +2,8 @@
 const models = require('../../../models');
 const chantierDAO = require('../../../dao/chantierDao');
 const paiementDAO = require('../../../dao/paiementDao');
-const printOptions = require('../../../config/jwt_config').print_options;
 
 const sequelize = require('sequelize');
-const genPDF = require('./generatePDF');
-const fs = require('fs');
-const path = require('path');
 const { validationResult } = require('express-validator');
 
 function getVeryAll(req, res) {
@@ -172,21 +168,9 @@ async function save(req, res, next) {
         await transaction.commit();
 
         let ch = chantierFound.get({plain: true});
-        let data = {
-            paiement: newPaiement.get({plain: true}),
-            client: ch.Client,
-            chantier: ch
-        };
-
-        let template_path = path.join(__dirname, 'facture_template.html');
-        let pdf = await genPDF.genPDF(printOptions, template_path, data, './facture.pdf');
-
-        let stream = fs.createReadStream(pdf.filename);
-        stream.pipe(res).once("close", function () {
-            stream.destroy(); // makesure stream closed, not close if download aborted.
-            genPDF.deleteFile(pdf.filename);
-            return;
-        });
+        let p = newPaiement.get({plain: true});
+        req.infosFacture = {ch, p};
+        next();
     } catch (e) {
         console.log(e);
         await transaction.rollback();
