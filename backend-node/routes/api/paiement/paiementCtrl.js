@@ -2,7 +2,11 @@
 let models = require('../../../models');
 let chantierDAO = require('../../../dao/chantierDao');
 let paiementDAO = require('../../../dao/paiementDao');
+let factureDAO = require('../../../dao/factureDao');
 let sequelize = require('sequelize');
+let genPDF = require('./generatePDF');
+let fs = require('fs');
+let path = require('path');
 const { validationResult } = require('express-validator');
 
 function getVeryAll(req, res) {
@@ -83,78 +87,144 @@ function getAll(req, res, next) {
     });
 }
 
-function save(req, res, next) {
+async function save(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        res.status(422).json({errors: errors.array()});
-        return;
+        return res.status(422).json({errors: errors.array()});
     }
 
     let id = req.params.id;
-    models.Chantier.findByPk(id).then((chantierFound) => {
-        if (!chantierFound) {
-            return res.status(404).json({
-                'error': 'no chantier found for id ' + id
+
+    let chantierFound = await chantierDAO.getChantierById(id);
+
+    if (!chantierFound) {
+        return res.status(404).json({
+            'error': 'no chantier found for id ' + id
+        });
+    }
+
+    if (chantierFound.status === 'error') {
+        return res.status(500).json(chantierFound);
+    }
+
+    let cout = parseFloat(chantierFound.cout);
+    let montant = parseFloat(req.body.montant);
+    let date_paiement = req.body.date_paiement;
+    let type = req.body.type;
+    let commentaire = req.body.commentaire;
+
+    //sum up the earlier paiements
+    let allPaiements = await paiementDAO.getAll({
+        where: {chantierId: chantierFound.id},
+        attributes: [
+            'id',
+            [sequelize.fn('sum', sequelize.col('montant')), 'total_amount'],
+        ],
+        group: ['id'],
+        raw: true
+    });
+
+    if (!allPaiements) {
+        return res.status(404).json({
+            'error': 'no paiement found for chantier ' + id
+        });
+    }
+
+    if (allPaiements.status === 'error') {
+        return res.status(500).json(allPaiements);
+    }
+
+    let total_amount = 0;
+    allPaiements.map(i => {
+        return total_amount += parseFloat(i.total_amount);
+    });
+    let montant_restant = cout - (total_amount + montant);
+
+    if (montant_restant < 0) {
+        return res.status(400).json({
+            'err': 'Cannot process to paiement due to negative montant_restant'
+        });
+    }
+
+    let transaction = await models.sequelize.transaction({autocommit: false});
+    try {
+        let newPaiement = await paiementDAO.save({
+            date_paiement: (date_paiement != null) ? date_paiement : new Date(),
+            montant: montant,
+            montant_restant: montant_restant,
+            type: type,
+            commentaire: commentaire,
+            ChantierId: chantierFound.id,
+        }, transaction);
+
+        if (!newPaiement) {
+            await transaction.rollback();
+            return res.status(403).json({
+                status: 'error',
+                message: 'couldn\'t add paiement to chantier ' + id +
+                    'operations are rolled back'
             });
         }
 
-        let cout = parseFloat(chantierFound.cout);
-        let montant = parseFloat(req.body.montant);
-        let date_paiement = req.body.date_paiement;
-        let type = req.body.type;
-        let commentaire = req.body.commentaire;
-        
-        //sum up the earlier paiements
-        models.Paiement.findAll({
-            where: {chantierId: chantierFound.id},
-            attributes: [
-                'id',
-                [sequelize.fn('sum', sequelize.col('montant')), 'total_amount'],
-            ],
-            group: ['id'],
-            raw: true
-        }).then(p => {
-            let total_amount = 0;
-            p.map(i => {
-                return total_amount += parseFloat(i.total_amount);
+        //generate the facture
+        let f = {
+            date_etablissement: new Date(),
+            montant: newPaiement.montant,
+            idChantier: chantierFound.id
+        };
+        let facture = await factureDAO.save(f);
+
+        if (!facture) {
+            await transaction.rollback();
+            return res.status(403).json({
+                status: 'error',
+                message: 'cannot continue due to an error during saving facture. ' +
+                    'operations are rolled back'
             });
-            let montant_restant = cout - (total_amount + montant);
+        }
 
-            if (montant_restant < 0) {
-                return res.status(400).json({
-                    'err': 'Cannot process to paiement due to negative montant_restant'
-                });
-            }
+        //validate transact
+        await transaction.commit();
 
-            models.Paiement.create({
-                date_paiement: (date_paiement != null ) ? date_paiement : new Date(),
-                montant: montant,
-                montant_restant: montant_restant,
-                type: type,
-                commentaire: commentaire,
-                ChantierId: chantierFound.id,
-            }).then((newPaiement) => {
-                if (!newPaiement) {
-                    return res.status(500).json({
-                        'err': 'couldn\'t add paiement to chantier '+id
-                    });
+        let options = {
+            format: "A3",
+            orientation: "portrait",
+            border: "10mm",
+            header: {
+                height: "45mm",
+                contents: '<div style="text-align: center;">Author: Shyam Hajare</div>'
+            },
+            "footer": {
+                "height": "28mm",
+                "contents": {
+                    2: 'Second page', // Any page number is working. 1-based index
+                    default: '<span style="color: #444;">{{page}}</span>/<span>{{pages}}</span>', // fallback value
                 }
+            }
+        };
 
-                return res.status(201).json(newPaiement);
+        let data = {
+            facture: {
+                id: 3,
+                montant: 200,
+                idChantier: 7
+            }
+        };
 
-            }).catch((err) => { //creation errors
-                console.error(err);
-                return res.status(500).json(err.errors);
-            });
-        }).catch((err) => { //getAll errors
-            console.error(err);
-            return res.status(500).json(err.errors);
+        let template_path = path.join(__dirname, 'facture_template.html');
+        let pdf = await genPDF.genPDF(options, template_path, data, './facture' + new Date() + '.pdf');
+        let fact = fs.readFileSync(pdf.filename);
+
+        return res.status(201).contentType("application/pdf").send(fact);
+    } catch (e) {
+        console.log(e);
+        await transaction.rollback();
+        return res.status(500).json({
+            status: 'error',
+            message: e.errors,
         });
-    }).catch((err) => { //getByPk
-        console.error(err);
-        return res.status(500).json(err.errors);
-    });
+    }
 }
 
 function getById(req, res, next) {
