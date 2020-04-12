@@ -86,7 +86,7 @@ export class ChartJSComponent {
   public polarAreaChartType = 'polarArea';
 
   // events
-  public chartClicked(e: any): void {
+  public chartClicchartClickked(e: any): void {
     console.log(e);
   }
 

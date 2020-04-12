@@ -1,0 +1,116 @@
+<div class="animated fadeIn">
+  <div class="card">
+    <div *ngIf="chantier" class="card-header" id="title">
+      <h2>Details du chantier : N° {{chantier?.id}} du client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
+
+    </div>
+  </div>
+</div>
+
+<div *ngIf="chantier" class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Autre infos sur le <i>client & chantier </i></strong>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td><strong>Identifiant du client :</strong></td>
+            <td>{{chantier.ClientId}}</td>
+          </tr>
+          <tr>
+            <td><strong>Nom :</strong></td>
+            <td>{{chantier.Client.nom}}</td>
+          </tr>
+          <tr>
+            <td><strong>Prenom :</strong></td>
+            <td>{{chantier.Client.prenom}}</td>
+          </tr>
+          <tr>
+            <td><strong>Téléphone :</strong></td>
+            <td>{{chantier.Client.telephone}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <hr>
+        <br>
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td><strong>Emplacement :</strong></td>
+            <td>{{chantier.emplacement}}</td>
+          </tr>
+          <tr>
+            <td><strong>Date début :</strong></td>
+            <td>{{chantier.date_fin | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Date fin :</strong></td>
+            <td>{{chantier.date_fin | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Chantier créer le :</strong></td>
+            <td>{{chantier.createdAt | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Chantier modifier le :</strong></td>
+            <td>{{chantier.updatedAt | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="col-md-6">
+    <div class="card">
+      <div chiffre_title class="card-header">
+        <strong>Chiffres du chantier </strong>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td><strong>Coût du chantier :</strong></td>
+            <td>{{chantier.cout}} Fcfa</td>
+          </tr>
+          <tr>
+            <td><strong>Montant disponible :</strong></td>
+            <td>{{chantier.montant_dispo}} Fcfa</td>
+          </tr>
+          <tr>
+            <td><strong>Montant emprunter sur un autre chantier :</strong></td>
+            <td>{{chantier.walita}} Fcfa</td>
+          </tr>
+          <tr>
+            <td><strong>Montant de cet chantier :</strong></td>
+            <td>{{chantier.yereta}} Fcfa</td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="card-header" id="graph_title">
+          <strong>Graphe </strong>
+        </div>
+        <div class="card-body">
+          <div class="card">
+            <div class="card-body">
+              <div *ngIf="chantier" class="chart-wrapper">
+                <canvas (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)"
+                        [chartType]="pieChartType"
+                        [data]="pieChartData"
+                        [labels]="pieChartLabels"
+                        baseChart
+                        class="chart"></canvas>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div><!--/.col-->
+</div><!--/.row-->
