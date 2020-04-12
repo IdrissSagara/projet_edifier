@@ -1,9 +1,17 @@
 <div class="animated fadeIn">
   <div class="card">
     <div *ngIf="chantier" class="card-header" id="title">
-      <h2>Details du chantier : N° {{chantier?.id}} du client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
-
+      <div class="pull-left">
+        <h2>Details du chantier : N° {{chantier?.id}} du
+          client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
+      </div>
+      <div class="pull-right" id="btn_add_mouv">
+        <button (click)="addMouvement()"
+                class="btn btn-pill btn-block btn-primary" type="button">Effectuer un mouvment
+        </button>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -98,8 +106,7 @@
           <div class="card">
             <div class="card-body">
               <div *ngIf="chantier" class="chart-wrapper">
-                <canvas (chartClick)="chartClicked($event)" (chartHover)="chartHovered($event)"
-                        [chartType]="pieChartType"
+                <canvas [chartType]="pieChartType"
                         [data]="pieChartData"
                         [labels]="pieChartLabels"
                         baseChart

@@ -14,7 +14,7 @@ exports.validate = (operation) => {
                     .not().isEmpty().withMessage('destination cannot be empty').bail()
                     .isNumeric().withMessage('destination is not numeric')
                     .trim().escape(),
-                body('commentaire', 'invalid commentaire')
+                body('commentaire', 'invalid commentaire').optional()
                     .isString().withMessage('commentaire is not alpha').bail()
                     .isLength({min: 10}).withMessage('commentaire is too short')
                     .trim().escape(),

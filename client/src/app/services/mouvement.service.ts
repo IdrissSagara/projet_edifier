@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
 import {AllMouvementResponse} from "../model/responses/AllMouvementResponse";
 
 @Injectable({
@@ -34,5 +34,14 @@ export class MouvementService {
         }
       );
     }));
+  }
+
+  addMouvement(params): Promise<HttpResponse<string>> {
+    const P = new HttpParams({fromObject: params});
+    return this.http.post(`${this.apiUrl}`, P, {
+      observe: 'response',
+      responseType: 'text',
+      headers: {'content-type': 'application/x-www-form-urlencoded'}
+    }).toPromise();
   }
 }
