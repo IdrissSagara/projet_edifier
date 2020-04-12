@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MvSortantComponent} from './mv-sortant.component';
+import {MouvementsComponent} from './mouvements.component';
 
-describe('MvSortantComponent', () => {
-  let component: MvSortantComponent;
-  let fixture: ComponentFixture<MvSortantComponent>;
+describe('MvEntrantComponent', () => {
+  let component: MouvementsComponent;
+  let fixture: ComponentFixture<MouvementsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MvSortantComponent]
+      declarations: [MouvementsComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MvSortantComponent);
+    fixture = TestBed.createComponent(MouvementsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

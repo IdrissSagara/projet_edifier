@@ -16,12 +16,11 @@ import {BudgetComponent} from './budget/budget.component';
 import {FacturesComponent} from './caisse/factures/factures.component';
 import {PaiementsComponent} from './caisse/paiements/paiements.component';
 import {RecusComponent} from './caisse/recus/recus.component';
-import {MvEntrantComponent} from './mouvement/mv-entrant/mv-entrant.component';
-import {MvSortantComponent} from './mouvement/mv-sortant/mv-sortant.component';
+import {MouvementsComponent} from './mouvement/mouvements/mouvements.component';
 
 
 @NgModule({
-  declarations: [BudgetComponent, FacturesComponent, PaiementsComponent, RecusComponent, MvEntrantComponent, MvSortantComponent],
+  declarations: [BudgetComponent, FacturesComponent, PaiementsComponent, RecusComponent, MouvementsComponent],
   imports: [
     CommonModule,
     FormsModule,

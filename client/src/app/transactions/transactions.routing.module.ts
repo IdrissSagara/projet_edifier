@@ -4,8 +4,7 @@ import {BudgetComponent} from "./budget/budget.component";
 import {RecusComponent} from "./caisse/recus/recus.component";
 import {PaiementsComponent} from "./caisse/paiements/paiements.component";
 import {FacturesComponent} from "./caisse/factures/factures.component";
-import {MvSortantComponent} from "./mouvement/mv-sortant/mv-sortant.component";
-import {MvEntrantComponent} from "./mouvement/mv-entrant/mv-entrant.component";
+import {MouvementsComponent} from "./mouvement/mouvements/mouvements.component";
 
 const routes: Routes = [
   {
@@ -61,16 +60,10 @@ const routes: Routes = [
             path: '',
             redirectTo: 'entrant'
           }, {
-            path: 'entrant',
-            component: MvEntrantComponent,
+            path: '',
+            component: MouvementsComponent,
             data: {
-              title: 'Mouvements entrants'
-            }
-          }, {
-            path: 'sortant',
-            component: MvSortantComponent,
-            data: {
-              title: 'Mouvements sortants'
+              title: 'Mouvements '
             }
           },
         ]
