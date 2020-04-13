@@ -18,6 +18,7 @@ export class ClientComponent implements OnInit {
   errorMessage: String;
   totalPages: number;
   subscriptions: Subscription[] = [];
+  currentPage: number;
 
   constructor(private clientService: ClientService, private modalService: BsModalService, private changeDetection: ChangeDetectorRef) {
   }
@@ -26,9 +27,9 @@ export class ClientComponent implements OnInit {
     this.getAllClients();
   }
 
-  getAllClients() {
+  getAllClients(offset = 0) {
     this.isLoading = true;
-    this.clientService.getAllClient().then((res) => {
+    this.clientService.getAllClient(offset).then((res) => {
       this.clients = res.rows;
       this.totalPages = res.count;
       this.isLoading = true;
@@ -67,8 +68,8 @@ export class ClientComponent implements OnInit {
 
       this.subscriptions.push(_combine);
 
-      this.clientModalRef = this.modalService.show(ClientModalComponent, {initialState});
-      this.clientModalRef.content.closeBtnName = 'Close';
+    this.clientModalRef = this.modalService.show(ClientModalComponent, {initialState});
+    this.clientModalRef.content.closeBtnName = 'Close';
   }
 
   unsubscribe() {
@@ -76,5 +77,10 @@ export class ClientComponent implements OnInit {
       subscription.unsubscribe();
     });
     this.subscriptions = [];
+  }
+
+  pageChanged(event: any): void {
+    const offset = (event.page - 1) * 10;
+    this.getAllClients(offset);
   }
 }

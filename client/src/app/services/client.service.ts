@@ -13,9 +13,9 @@ export class ClientService {
   constructor(private httpClient: HttpClient) {
   }
   // recuperation des clients
-  async getAllClient(): Promise<AllClientsResponse> {
+  async getAllClient(offset = 0): Promise<AllClientsResponse> {
     return new Promise<AllClientsResponse>(((resolve, reject) => {
-      this.httpClient.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(
+      this.httpClient.get(`${this.apiUrl}?offset=${offset}`, {responseType: 'text'}).toPromise().then(
         res => {
           resolve(JSON.parse(res));
         }, rej => {

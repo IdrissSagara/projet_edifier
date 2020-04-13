@@ -148,7 +148,7 @@ export class ChantierComponent implements OnInit {
   }
 
   pageChanged(event: any): void {
-    let offset = (event.page - 1) * 10;
+    const offset = (event.page - 1) * 10;
     this.getAllChantiers(offset);
   }
 }

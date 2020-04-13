@@ -1,3 +1,4 @@
+<script src="../../../services/mouvement.service.ts"></script>
 <div class="animated fadeIn">
   <div class="col-lg-12 col-sm-offset-8">
     <div class="card">
@@ -48,16 +49,14 @@
           </tr>
           </tbody>
         </table>
-        <ul *ngIf="totalPages > 1" class="pagination">
-          <li class="page-item"><a class="page-link" href="#">Prev</a></li>
-          <li class="page-item active">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">Next</a></li>
-        </ul>
+        <div class="col-xs-12 col-12">
+          <pagination (pageChanged)="pageChandeg($event)" [(ngModel)]="currentPage" [boundaryLinks]="true"
+                      [maxSize]="9" [totalItems]="totalPages" class="pagination"
+                      firstText="&laquo;" lastText="&raquo;" nextText="&rsaquo;" previousText="&lsaquo;">
+
+          </pagination>
+
+        </div>
       </div>
     </div>
   </div>

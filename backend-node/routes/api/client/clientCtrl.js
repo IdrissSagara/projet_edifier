@@ -41,20 +41,20 @@ function getAll(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
+        res.status(422).json({errors: errors.array()});
+        return;
     }
 
     var fields = req.query.fields;
-    var offset = parseInt(req.query.limit);
-    var limit = parseInt(req.query.offset);
+    var offset = parseInt(req.query.offset);
+    var limit = parseInt(req.query.limit);
     var order = req.query.order;
 
     models.Client.findAndCountAll({
-        order: [(order != null) ? order.split(':'): ['nom', 'ASC']],
+        order: [(order != null) ? order.split(':') : ['nom', 'ASC']],
         attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
         limit: (!isNaN(limit) ? limit : 10),
-        offset: (!isNaN(offset) ? offset : null),    
+        offset: (!isNaN(offset) ? offset : null),
     }).then((client) => {
         if (client) {
             return res.status(200).json(client);

@@ -12,9 +12,9 @@ export class MouvementService {
   constructor(private http: HttpClient) {
   }
 
-  async getAllMouvement(): Promise<AllMouvementResponse> {
+  async getAllMouvement(offset = 0): Promise<AllMouvementResponse> {
     return new Promise<AllMouvementResponse>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(res => {
+      this.http.get(`${this.apiUrl}?offset=${offset}`, {responseType: 'text'}).toPromise().then(res => {
           resolve(JSON.parse(res));
         }, rej => {
           reject(rej);
