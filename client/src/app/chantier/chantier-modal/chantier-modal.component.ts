@@ -4,6 +4,7 @@ import {Chantier} from "../../model/chantier";
 import {ClientService} from "../../services/client.service";
 import {ChantierService} from "../../services/chantier.service";
 import {ClientModel} from "../../model/clientModel";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-chantier-modal',
@@ -25,7 +26,7 @@ export class ChantierModalComponent implements OnInit {
   // titreModal: String;
 
   constructor(public chantierModalRef: BsModalRef, private clientService: ClientService,
-              private chantierService: ChantierService) {
+              private chantierService: ChantierService, private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -47,14 +48,25 @@ export class ChantierModalComponent implements OnInit {
     this.buildChantier();
 
     if (this.modeModification()) {
+      this.chantierModalRef.hide();
       await this.chantierService.updateChantier(this.chantier).then(chantier => {
-        this.chantierModalRef.hide();
+        const message = `Modification du chantier ${this.chantier.id} effectuer avec succes`;
+        this.toastService.success(message, '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
       }).catch(err => {
 
       });
     } else {
       await this.chantierService.addChantier(this.chantier).then(data => {
         this.chantierModalRef.hide();
+        this.toastService.success('Le chantier à été ajouter avec succes', '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
       }).catch(err => {
         const erreur = JSON.parse(err.error);
         console.log(erreur);

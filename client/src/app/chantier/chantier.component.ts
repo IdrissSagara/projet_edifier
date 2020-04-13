@@ -5,6 +5,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {ChantierModalComponent} from "./chantier-modal/chantier-modal.component";
 import {combineLatest, Subscription} from "rxjs";
 import {ModalDirective} from "ngx-bootstrap/modal";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-chantier',
@@ -28,7 +29,8 @@ export class ChantierComponent implements OnInit {
 
   constructor(private chantierService: ChantierService,
               private modalService: BsModalService,
-              private changeDetection: ChangeDetectorRef) {
+              private changeDetection: ChangeDetectorRef,
+              private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -44,8 +46,11 @@ export class ChantierComponent implements OnInit {
       this.totalItems = res.count;
     }).catch(err => {
       this.errorMessage = "data loading error";
-      console.log("error during getting all the chantiers");
-      console.log(err);
+      this.toastService.error('Une erreur est survenu lors de la récuperation des chantiers', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
     }).finally(() => {
       this.isLoading = false;
     });
@@ -134,14 +139,26 @@ export class ChantierComponent implements OnInit {
   }
 
   confirmSupprimerChantier(): void {
-    console.log("chantier id :" + this.delId);
-
     this.chantierService.deleteChantierById(this.delId).then(res => {
-      console.log("suppression du chantier ok");
       this.getAllChantiers();
       this.dangerModal.hide();
+      this.toastService.success('Chantier suppimer avec succes ', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
     }).catch(err => {
-      console.error("une erreur est survenu" + err);
+      const e = JSON.parse(err.error);
+      let message = 'Une erreur est survenu lors de la suppression du chantier';
+      if (e.code === 'ER_ROW_IS_REFERENCED_2') {
+        message = 'Cet chantier contient des mouvements vous ne pouvez pas le supprimer';
+      }
+      this.dangerModal.hide();
+      this.toastService.error(message, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
     }).finally(() => {
       this.delId = undefined;
     });
