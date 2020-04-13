@@ -162,8 +162,8 @@ function getAll(req, res) {
     }
 
     var fields = req.query.fields;
-    var offset = parseInt(req.query.limit);
-    var limit = parseInt(req.query.offset);
+    var offset = parseInt(req.query.offset);
+    var limit = parseInt(req.query.limit);
     var order = req.query.order;
 
     models.Chantier.findAndCountAll({

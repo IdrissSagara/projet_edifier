@@ -16,9 +16,9 @@ export class ChantierService {
   /*
   * recuperation des chantiers
    */
-  async getAllChantier(): Promise<AllChantierResponse> {
+  async getAllChantier(offset = 0): Promise<AllChantierResponse> {
     return new Promise<AllChantierResponse>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}`, {responseType: 'text'}).toPromise().then(res => {
+      this.http.get(`${this.apiUrl}?offset=${offset}`, {responseType: 'text'}).toPromise().then(res => {
           resolve(JSON.parse(res));
         }, rej => {
           reject(rej);
