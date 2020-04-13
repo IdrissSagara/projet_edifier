@@ -28,6 +28,7 @@ import {ChartsModule} from 'ng2-charts';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {JwtModule} from "@auth0/angular-jwt";
+import {ToastrModule} from "ngx-toastr";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -41,17 +42,18 @@ const APP_CONTAINERS = [
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        AppRoutingModule,
-        AppAsideModule,
-        HttpClientModule,
-        AppBreadcrumbModule.forRoot(),
-        AppFooterModule,
-        AppHeaderModule,
-        AppSidebarModule,
-        PerfectScrollbarModule,
-        BsDropdownModule.forRoot(),
-        TabsModule.forRoot(),
-        ChartsModule,
+      AppRoutingModule,
+      AppAsideModule,
+      HttpClientModule,
+      AppBreadcrumbModule.forRoot(),
+      AppFooterModule,
+      AppHeaderModule,
+      AppSidebarModule,
+      PerfectScrollbarModule,
+      BsDropdownModule.forRoot(),
+      TabsModule.forRoot(),
+      ToastrModule.forRoot(),
+      ChartsModule,
       FormsModule,
       JwtModule.forRoot({
         config: {

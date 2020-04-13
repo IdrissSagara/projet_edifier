@@ -5,19 +5,32 @@ import {ChantierDetailsComponent} from "./chantier-details/chantier-details.comp
 
 const routes: Routes = [
   {
-    path: 'chantiers',
-    component: ChantierComponent,
+    path: '',
     data: {
       title: 'Chantiers'
-    }
+    },
+    children: [
+      {
+        path: '',
+        redirectTo: 'list'
+      },
+      {
+        path: 'list',
+        component: ChantierComponent,
+        data: {
+          title: 'Liste des chantiers'
+        }
+      },
+      {
+        path: 'details/:id',
+        component: ChantierDetailsComponent,
+        data: {
+          title: 'Detail du chantier'
+        }
+      }
+    ]
   },
-  {
-    path: 'chantier/:id',
-    component: ChantierDetailsComponent,
-    data: {
-      title: 'Detail du chantier'
-    }
-  }
+
 ];
 
 @NgModule({
