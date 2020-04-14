@@ -1,9 +1,9 @@
 export interface Paiement {
   id: number;
-  ChantierId: 1;
+  ChantierId: number;
   date_paiement: string;
   montant: number;
-  montant_restant: 117300;
+  montant_restant: number;
   type: string;
   commentaire: string;
   createdAt: string;

@@ -1,1 +1,77 @@
-<p>paiements works!</p>
+<script src="mouvements.component.ts"></script>
+<script src="../../../services/mouvement.service.ts"></script>
+<div class="animated fadeIn">
+  <div class="col-lg-12 col-sm-offset-8">
+    <div class="card">
+      <div class="card-header">
+        <span class="pull-left"><i class="icon-credit-card"></i> Mouvements</span>
+        <div class="pull-right">
+          <span>
+            <button (click)="getAllPaiement()" [disabled]="isLoading"
+                    class="btn btn-outline-info mr-3" tooltip="Rafraichir"><i class="fa fa-refresh"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped table-bordered">
+          <thead>
+          <tr>
+            <th>id paiement</th>
+            <th>Montant</th>
+            <th>Montant restant</th>
+            <th>Type Paiement</th>
+            <th>Commentaire</th>
+            <th>Chantier id</th>
+            <th>Creer le</th>
+            <th style="padding-left: 50px">Action</th>
+          </tr>
+          </thead>
+          <tbody *ngIf="!isLoading">
+          <tr *ngFor="let paiement of paiements; let i = index">
+            <td>{{paiement.id }} </td>
+            <td>{{paiement.montant }}</td>
+            <td>{{paiement.montant_restant }}</td>
+            <td>{{paiement.type }}</td>
+            <td>{{paiement.commentaire }}</td>
+            <td>{{paiement.ChantierId }}</td>
+            <td>{{paiement.createdAt | date: 'dd/MM/yyyy'}}</td>
+            <td>
+              <div class="btn-group" id="button_action">
+                <button [routerLink]=""
+                        class="btn btn-info btn-icon" tooltip="Voir les détails du paiement"><i
+                  class="icon-eye"></i></button>
+                <button (click)="UpdatePaiementDialog()"
+                        class="btn btn-warning btn-icon" tooltip="Modifier le paiemnt"><i
+                  class="icon-pencil"></i></button>
+                <button (click)="confirmationSuppressionDialog()"
+                        class="btn btn-danger  btn-icon" tooltip="Supprimer le paiement"><i
+                  class="icon-trash"></i></button>
+                <button [routerLink]=""
+                        class="btn btn-link bg-success btn-icon" tooltip="Voir les details de la factuer"><i
+                  class="icon-doc"></i></button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="errorMessage">
+            <td class="text-center" colspan="5">{{errorMessage}}</td>
+          </tr>
+          </tbody>
+          <tbody *ngIf="isLoading">
+          <tr>
+            <td class="text-center" colspan="5"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
+          </tr>
+          </tbody>
+        </table>
+        <div class="col-xs-12 col-12">
+          <pagination [(ngModel)]="currentPage" [boundaryLinks]="true"
+                      [maxSize]="9" [totalItems]="totalPages" class="pagination"
+                      firstText="&laquo;" lastText="&raquo;" nextText="&rsaquo;" previousText="&lsaquo;">
+
+          </pagination>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
