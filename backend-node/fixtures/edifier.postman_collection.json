@@ -16,7 +16,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU3ODgzNTQ2MSwiZXhwIjoxNTc4ODY0MjYxfQ.izRVSMaoibs7-ej3lWJMi-uDfgCX3irSNljYPoIRCV8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg0NTY2MDQ5LCJleHAiOjE1ODUyNTcyNDl9.pP-mmQ7qXN2Y3C_VNHno7Yj0I4lLIKEzFKiBwua1bNk",
 									"type": "string"
 								}
 							]
@@ -45,7 +45,7 @@
 								},
 								{
 									"key": "username",
-									"value": "kadicoul",
+									"value": "KOUL93",
 									"type": "text"
 								},
 								{
@@ -110,6 +110,62 @@
 							"path": [
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/auth/reset-password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg0NTY2MDQ5LCJleHAiOjE1ODUyNTcyNDl9.pP-mmQ7qXN2Y3C_VNHno7Yj0I4lLIKEzFKiBwua1bNk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "KOUL93",
+									"type": "text"
+								},
+								{
+									"key": "oldPassword",
+									"value": "kadicoul",
+									"type": "text"
+								},
+								{
+									"key": "newPassword",
+									"value": "KOUL93",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/auth/reset-password",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"auth",
+								"reset-password"
 							]
 						}
 					},
@@ -276,6 +332,16 @@
 				{
 					"name": "localhost:3000/api/client",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg2MTA1MTc4LCJleHAiOjE1ODY3OTYzNzh9.FViBsnoqqc2VQuNgjvpSaarTjTKYhCCNVZaEd5gFkto",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -576,7 +642,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInJvbGUiOiJhZG1pbiIsImlhdCI6MTU3ODA5MzkxMiwiZXhwIjoxNTc4MTIyNzEyfQ.JVW421t6Lx9A2YYg2O5fEYyHX7I8W6kJbsRYoa8Cbi8",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg2NTE2NDE0LCJleHAiOjE1ODcyMDc2MTR9.m_HLeYePgxq60-F6PZuLEFjP7q0pvCQtZMkY4Zb0sYk",
 									"type": "string"
 								}
 							]
@@ -756,7 +822,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMS0wMVQwMjowNzowMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMS0wMVQwMjowNzowMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTgyNzE4OTYzLCJleHAiOjE1ODM0MTAxNjN9.HuCJ2rgAsoqXzY3yvUU8UscNxUudiNxt5f_A7Lilj9Q",
 									"type": "string"
 								}
 							]
@@ -927,6 +993,195 @@
 							"path": [
 								"api",
 								"ouvrier"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "paiement",
+			"item": [
+				{
+					"name": "localhost:3000/api/paiement/chantier/1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMS0wMVQwMjowNzowMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMS0wMVQwMjowNzowMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTgxNzY0ODAyLCJleHAiOjE1ODI0NTYwMDJ9.8jDM_Sz_pFkRWRGd9060Lkd-MILhm4ujZeiP28FMaCo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/paiement/11",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"paiement",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/paiement/chantier/1",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg2NTE2NDE0LCJleHAiOjE1ODcyMDc2MTR9.m_HLeYePgxq60-F6PZuLEFjP7q0pvCQtZMkY4Zb0sYk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "montant",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "type",
+									"value": "Espèce",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/api/paiement/chantier/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"paiement",
+								"chantier",
+								"1"
+							]
+						},
+						"description": "Make a paiement on the chantier 1. The montant to pay and the type of paiement are passed on body"
+					},
+					"response": []
+				},
+				{
+					"name": "Get all paiements for all chantiers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg0NTU3OTIyLCJleHAiOjE1ODUyNDkxMjJ9.a9eHJMTP3Jv0lWK0pEU8PaKN2kqmknHlpgXepr2ghog",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/paiement/all",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"paiement",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/paiement/chantier/3",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg0NTU3OTIyLCJleHAiOjE1ODUyNDkxMjJ9.a9eHJMTP3Jv0lWK0pEU8PaKN2kqmknHlpgXepr2ghog",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/paiement/chantier/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"paiement",
+								"chantier",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "localhost:3000/api/paiement/20/facture",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg2NTE2NDE0LCJleHAiOjE1ODcyMDc2MTR9.m_HLeYePgxq60-F6PZuLEFjP7q0pvCQtZMkY4Zb0sYk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/paiement/20/facture",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"paiement",
+								"20",
+								"facture"
 							]
 						}
 					},
