@@ -16,6 +16,7 @@ import {ChantierComponent} from "./chantier.component";
 import {ChantierModalComponent} from './chantier-modal/chantier-modal.component';
 import {ChantierDetailsComponent} from './chantier-details/chantier-details.component';
 import {ChartsModule} from "ng2-charts";
+import {MouvementModule} from "../transactions/mouvement/mouvement.module";
 
 
 @NgModule({
@@ -25,7 +26,7 @@ import {ChartsModule} from "ng2-charts";
     ChantierDetailsComponent,
   ],
   entryComponents: [
-    ChantierModalComponent
+    ChantierModalComponent,
   ],
   imports: [
     ChartsModule,
@@ -33,6 +34,7 @@ import {ChartsModule} from "ng2-charts";
     FormsModule,
     ChantierRoutingModule,
     TabsModule,
+    MouvementModule,
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),

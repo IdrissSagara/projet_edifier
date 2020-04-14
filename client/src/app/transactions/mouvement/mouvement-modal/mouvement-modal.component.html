@@ -1,0 +1,50 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button (click)="mouvementModalRef.hide()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="source">Source chantier</label>
+        <input [(ngModel)]="mouvement.source" autocomplete="text" class="form-control" id="source"
+               name="source" required type="text">
+      </div>
+      <div class="form-group">
+        <label for="destination">Destination chantier</label>
+        <select [(ngModel)]="mouvement.destination" class="form-control" id="destination" name="destination">
+          <option selected value="undefined">--Selectionnez un chantier--</option>
+          <option *ngFor="let c of chantiers" value="{{c.id}}">Chantier de {{c.Client.nom}} {{c.Client.prenom}}
+            à {{c.emplacement}}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="montant">Montant</label>
+        <input [(ngModel)]="mouvement.montant" autocomplete="text" class="form-control" id="montant"
+               name="montant" placeholder="Entrez le montant..." required type="number">
+      </div>
+
+      <div class="form-group">
+        <label for="commentaire">Commentaire</label>
+        <input [(ngModel)]="mouvement.commentaire" autocomplete="text" class="form-control" id="commentaire"
+               name="commentaire" placeholder="Entrez un commentaire..." required type="number">
+      </div>
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="form.reset()" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
+      Nettoyer
+    </button>
+    <button (click)="addMouvement()" [disabled]="form.invalid"
+            class="btn btn-primary" type="button">Enregistrer
+    </button>
+    <button (click)="mouvementModalRef.hide()" class="btn btn-secondary" type="button">Fermer</button>
+  </div>
+  <!--<pre>{{form.value | json}}</pre>-->
+</div>
+<!--</div>
+</div>
+-->

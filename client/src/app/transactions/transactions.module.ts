@@ -16,18 +16,23 @@ import {BudgetComponent} from './budget/budget.component';
 import {FacturesComponent} from './caisse/factures/factures.component';
 import {PaiementsComponent} from './caisse/paiements/paiements.component';
 import {RecusComponent} from './caisse/recus/recus.component';
-import {MvEntrantComponent} from './mouvement/mv-entrant/mv-entrant.component';
-import {MvSortantComponent} from './mouvement/mv-sortant/mv-sortant.component';
+import {MouvementsComponent} from './mouvement/mouvements/mouvements.component';
+import {MouvementModule} from "./mouvement/mouvement.module";
 
 
 @NgModule({
-  declarations: [BudgetComponent, FacturesComponent, PaiementsComponent, RecusComponent, MvEntrantComponent, MvSortantComponent],
+  declarations: [BudgetComponent,
+    FacturesComponent,
+    PaiementsComponent,
+    RecusComponent,
+    MouvementsComponent],
   imports: [
     CommonModule,
     FormsModule,
     TransactionsRoutingModule,
-    BsDropdownModule.forRoot(),
     TabsModule,
+    MouvementModule,
+    BsDropdownModule.forRoot(),
     CarouselModule.forRoot(),
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),

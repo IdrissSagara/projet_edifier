@@ -134,15 +134,24 @@ function destroy(req, res) {
         chantierFound.destroy().then((chantierDestroyed) => {
             if (chantierDestroyed) {
                 return res.status(200).json({
-                    'message': 'chantier ' +id+ ' deleted'
+                    'message': 'chantier ' + id + ' deleted'
                 })
             } else {
                 return res.status(403).json({
                     'error': 'cannot delete chantier with id ' + id
                 })
             }
+        }).catch((err) => {
+            console.log(err);
+            return res.status(500).json({
+                status: 'error',
+                code: 'ER_ROW_IS_REFERENCED_2',
+                message: 'cannot delete chantier due to internal error'
+            });
         });
     }).catch((err) => {
+        //find out where errors come from
+        //https://stackoverflow.com/a/47002994
         console.error(err);
         return res.status(500).json(err.errors);
     });
@@ -261,7 +270,6 @@ function getClient(req, res) {
             });
         }        
     }).catch((err) => {
-        console.error(err);
         return res.status(500).json(err.errors);
     });
 }

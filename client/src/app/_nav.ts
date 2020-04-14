@@ -47,18 +47,7 @@ export const navItems: INavData[] = [
   }, {
     name: 'Mouvements',
     url: '/transactions/mouvements',
-    icon: 'icon-credit-card',
-    children: [
-      {
-        name: 'Entrant',
-        url: '/transactions/mouvements/entrant',
-        icon: 'fa fa-angle-double-right'
-      }, {
-        name: 'Sortant',
-        url: '/transactions/mouvements/sortant',
-        icon: 'fa fa-angle-double-left'
-      },
-    ]
+    icon: 'icon-credit-card'
   }, {
     title: true,
     name: 'Gestion de personnes'

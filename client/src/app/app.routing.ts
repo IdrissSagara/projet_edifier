@@ -54,7 +54,7 @@ export const routes: Routes = [
     },
     children: [
       {
-        path: '',
+        path: 'chantiers',
         loadChildren: () => import('./chantier/chantier.module').then(m => m.ChantierModule)
       }, {
         path: 'personnes',
