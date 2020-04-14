@@ -4,6 +4,7 @@ let router = express.Router();
 let paiementValidator = require('./paiementValidator');
 const accessControl = require('../../auth/accessControl');
 let paiementCtrl = require('./paiementCtrl');
+const factureCtrl = require('./generatePDF');
 const roles = accessControl.roles;
 
 router.get('/all',
@@ -22,7 +23,8 @@ router.get('/chantier/:id',
 router.post('/chantier/:id',
     paiementValidator.validate('save'),
     accessControl.canAccess([roles.ALL]),
-    paiementCtrl.save
+    paiementCtrl.save,
+    factureCtrl.sendFacturePDF
 );
 
 // /chantier/:id_chantier/paiement/
@@ -31,6 +33,12 @@ router.get('/:id_paiement/chantier/:id_chantier/',
     paiementValidator.validate('getOnePaieOfChan',),
     accessControl.canAccess([roles.ALL]),
     paiementCtrl.getById
+);
+
+router.get('/:id/facture/',
+    paiementValidator.validate('getById',),
+    accessControl.canAccess([roles.ALL]),
+    factureCtrl.sendFacturePDF
 );
 
 /**
