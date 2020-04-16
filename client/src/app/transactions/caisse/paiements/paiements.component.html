@@ -47,7 +47,7 @@
                 <button (click)="confirmationSuppressionDialog()"
                         class="btn btn-danger  btn-icon" tooltip="Supprimer le paiement"><i
                   class="icon-trash"></i></button>
-                <button [routerLink]=""
+                <button (click)="imprimerFacture(paiement)"
                         class="btn btn-link bg-success btn-icon" tooltip="Voir les details de la factuer"><i
                   class="icon-doc"></i></button>
               </div>
@@ -75,3 +75,5 @@
     </div>
   </div>
 </div>
+<iframe #pdfIframe *ngIf="pdfUrl" [src]="pdfUrl">
+</iframe>

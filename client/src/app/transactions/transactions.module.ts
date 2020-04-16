@@ -18,6 +18,7 @@ import {PaiementsComponent} from './caisse/paiements/paiements.component';
 import {RecusComponent} from './caisse/recus/recus.component';
 import {MouvementsComponent} from './mouvement/mouvements/mouvements.component';
 import {MouvementModule} from "./mouvement/mouvement.module";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import {MouvementModule} from "./mouvement/mouvement.module";
     MouvementsComponent],
   imports: [
     CommonModule,
+    HttpClientModule,
     FormsModule,
     TransactionsRoutingModule,
     TabsModule,
