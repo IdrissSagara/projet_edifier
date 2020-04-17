@@ -14,7 +14,17 @@ function getVeryAll(req, res) {
         return;
     }
 
-    models.Paiement.findAndCountAll().then((paiements) => {
+    let fields = req.query.fields;
+    let offset = parseInt(req.query.offset);
+    let limit = parseInt(req.query.limit);
+    let order = req.query.order;
+
+    models.Paiement.findAndCountAll({
+        order: [(order != null) ? order.split(':') : ['date_paiement', 'ASC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(';') : null,
+        limit: (!isNaN(limit) ? limit : 10),
+        offset: (!isNaN(offset) ? offset : null),
+    }).then((paiements) => {
         if (!paiements) {
             return res.status(404).json({
                 'error': 'no paiement found'
@@ -55,16 +65,16 @@ function getAll(req, res, next) {
         }
 
         let fields = req.query.fields;
-        let offset = parseInt(req.query.limit);
-        let limit = parseInt(req.query.offset);
+        let offset = parseInt(req.query.offset);
+        let limit = parseInt(req.query.limit);
         let order = req.query.order;
 
         models.Paiement.findAndCountAll({
-            where: {chantierId: id},
             order: [(order != null) ? order.split(':'): ['date_paiement', 'ASC']],
             attributes: (fields !== '*' && fields != null) ? fields.split(';') : null,
             limit: (!isNaN(limit) ? limit : 10),
-            offset: (!isNaN(offset) ? offset : null)
+            offset: (!isNaN(offset) ? offset : null),
+            where: {chantierId: id},
         }).then((paiementsFound) => {
             if (!paiementsFound) {
                 return res.status(404).json({
