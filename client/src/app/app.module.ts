@@ -29,6 +29,7 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {JwtModule} from "@auth0/angular-jwt";
 import {ToastrModule} from "ngx-toastr";
+import {NgxSpinnerModule} from "ngx-spinner";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -39,32 +40,33 @@ const APP_CONTAINERS = [
 ];
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-      AppRoutingModule,
-      AppAsideModule,
-      HttpClientModule,
-      AppBreadcrumbModule.forRoot(),
-      AppFooterModule,
-      AppHeaderModule,
-      AppSidebarModule,
-      PerfectScrollbarModule,
-      BsDropdownModule.forRoot(),
-      TabsModule.forRoot(),
-      ToastrModule.forRoot(),
-      ChartsModule,
-      FormsModule,
-      JwtModule.forRoot({
-        config: {
-          tokenGetter: function tokenGetter() {
-            return localStorage.getItem('token');
-          },
-          whitelistedDomains: ['localhost:3000'],
-          blacklistedRoutes: ['http://localhost:3000/auth/login']
-        }
-      })
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    AppAsideModule,
+    HttpClientModule,
+    AppBreadcrumbModule.forRoot(),
+    AppFooterModule,
+    AppHeaderModule,
+    AppSidebarModule,
+    PerfectScrollbarModule,
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    ToastrModule.forRoot(),
+    ChartsModule,
+    FormsModule,
+    NgxSpinnerModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: function tokenGetter() {
+          return localStorage.getItem('token');
+        },
+        whitelistedDomains: ['localhost:3000'],
+        blacklistedRoutes: ['http://localhost:3000/auth/login']
+      }
+    })
+  ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,

@@ -5,6 +5,7 @@ import {ClientService} from "../../services/client.service";
 import {ChantierService} from "../../services/chantier.service";
 import {ClientModel} from "../../model/clientModel";
 import {ToastrService} from "ngx-toastr";
+import {SpinnerService} from "../../services/spinner.service";
 
 @Component({
   selector: 'app-chantier-modal',
@@ -26,7 +27,8 @@ export class ChantierModalComponent implements OnInit {
   // titreModal: String;
 
   constructor(public chantierModalRef: BsModalRef, private clientService: ClientService,
-              private chantierService: ChantierService, private toastService: ToastrService) {
+              private chantierService: ChantierService, private toastService: ToastrService,
+              private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class ChantierModalComponent implements OnInit {
 
     if (this.modeModification()) {
       this.chantierModalRef.hide();
+      this.spinner.show();
       await this.chantierService.updateChantier(this.chantier).then(chantier => {
         const message = `Modification du chantier ${this.chantier.id} effectuer avec succes`;
         this.toastService.success(message, '', {
@@ -58,10 +61,13 @@ export class ChantierModalComponent implements OnInit {
         });
       }).catch(err => {
 
+      }).finally(() => {
+        this.spinner.hide();
       });
     } else {
       await this.chantierService.addChantier(this.chantier).then(data => {
         this.chantierModalRef.hide();
+        this.spinner.show();
         this.toastService.success('Le chantier à été ajouter avec succes', '', {
           progressBar: true,
           closeButton: true,
@@ -71,11 +77,9 @@ export class ChantierModalComponent implements OnInit {
         const erreur = JSON.parse(err.error);
         console.log(erreur);
       }).finally(() => {
-
+        this.spinner.hide();
       });
     }
-
-
   }
 
   /**
@@ -83,7 +87,12 @@ export class ChantierModalComponent implements OnInit {
    */
   getAllClients() {
     this.clientService.getAllClient().then((res) => {
+      this.spinner.show();
       this.clients = res.rows;
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      this.spinner.hide();
     });
   }
 

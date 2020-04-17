@@ -7,6 +7,7 @@ import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {combineLatest, Subscription} from "rxjs";
 import {Mouvement} from "../../model/mouvement";
 import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-modal/mouvement-modal.component";
+import {SpinnerService} from "../../services/spinner.service";
 
 @Component({
   selector: 'app-chantier-details',
@@ -27,7 +28,7 @@ export class ChantierDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute, private chantierService: ChantierService,
               private mouvementService: MouvementService,
               private modalService: BsModalService,
-              private changeDetection: ChangeDetectorRef) {
+              private changeDetection: ChangeDetectorRef, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -35,11 +36,14 @@ export class ChantierDetailsComponent implements OnInit {
   }
 
   async getChantierById(id: number) {
+    this.spinner.show();
     await this.chantierService.getChantierById(id).then(chantier => {
       this.chantier = chantier;
-      this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita]
+      this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
     }).catch(err => {
       console.log(err);
+    }).finally(() => {
+      this.spinner.hide();
     });
   }
 

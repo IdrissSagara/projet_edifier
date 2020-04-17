@@ -6,6 +6,7 @@ import {ChantierModalComponent} from "./chantier-modal/chantier-modal.component"
 import {combineLatest, Subscription} from "rxjs";
 import {ModalDirective} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
+import {SpinnerService} from "../services/spinner.service";
 
 @Component({
   selector: 'app-chantier',
@@ -30,7 +31,7 @@ export class ChantierComponent implements OnInit {
   constructor(private chantierService: ChantierService,
               private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef,
-              private toastService: ToastrService) {
+              private toastService: ToastrService, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -38,7 +39,8 @@ export class ChantierComponent implements OnInit {
   }
 
   getAllChantiers(offset = 0) {
-    this.isLoading = true;
+    // this.isLoading = true;
+    this.spinner.show();
     this.chantiers = [];
     this.chantierService.getAllChantier(offset).then(res => {
       this.errorMessage = undefined;
@@ -52,7 +54,8 @@ export class ChantierComponent implements OnInit {
         tapToDismiss: false
       });
     }).finally(() => {
-      this.isLoading = false;
+      // this.isLoading = false;
+      this.spinner.hide();
     });
   }
 
@@ -139,6 +142,7 @@ export class ChantierComponent implements OnInit {
   }
 
   confirmSupprimerChantier(): void {
+    this.spinner.show();
     this.chantierService.deleteChantierById(this.delId).then(res => {
       this.getAllChantiers();
       this.dangerModal.hide();
@@ -161,6 +165,7 @@ export class ChantierComponent implements OnInit {
       });
     }).finally(() => {
       this.delId = undefined;
+      this.spinner.hide();
     });
   }
 
