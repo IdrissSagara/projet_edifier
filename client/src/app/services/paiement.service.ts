@@ -14,9 +14,9 @@ export class PaiementService {
   constructor(private http: HttpClient) {
   }
 
-  async getAllPaiement(): Promise<AllPaiementResponse> {
+  async getAllPaiement(offset = 0): Promise<AllPaiementResponse> {
     return new Promise<AllPaiementResponse>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}/all`, {responseType: 'text'}).toPromise().then(res => {
+      this.http.get(`${this.apiUrl}/all?offset=${offset}`, {responseType: 'text'}).toPromise().then(res => {
           resolve(JSON.parse(res));
         }, rej => {
           reject(rej);

@@ -3,6 +3,7 @@ import {PaiementService} from "../../../services/paiement.service";
 import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../../model/paiement";
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
+import {SpinnerService} from "../../../services/spinner.service";
 
 
 @Component({
@@ -20,17 +21,18 @@ export class PaiementsComponent implements OnInit {
   pdfUrl: SafeUrl;
 
   constructor(private paiementService: PaiementService, private toastService: ToastrService,
-              private sanitizer: DomSanitizer) {
+              private sanitizer: DomSanitizer, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
     this.getAllPaiement();
   }
 
-  getAllPaiement() {
-    this.isLoading = true;
+  getAllPaiement(offset = 0) {
+    // this.isLoading = true;
+    this.spinner.show();
     this.paiements = [];
-    this.paiementService.getAllPaiement().then(res => {
+    this.paiementService.getAllPaiement(offset).then(res => {
       this.errorMessage = undefined;
       this.paiements = res.rows;
       this.totalPages = res.count;
@@ -40,7 +42,8 @@ export class PaiementsComponent implements OnInit {
         progressBar: true,
       });
     }).finally(() => {
-      this.isLoading = false;
+      // this.isLoading = false;
+      this.spinner.hide();
     });
   }
 
@@ -53,6 +56,7 @@ export class PaiementsComponent implements OnInit {
   }
 
   imprimerFacture(paiement: Paiement): void {
+    this.spinner.show();
     this.paiementService.getPaimentFacture(paiement.id).subscribe((response: any) => {
       const pdf = new Blob([response], {type: 'application/pdf'});
 
@@ -66,20 +70,26 @@ export class PaiementsComponent implements OnInit {
       setTimeout(() => {
         const doc = this.pdfIframe.nativeElement.contentWindow || this.pdfIframe.nativeElement.contentDocument;
         this.pdfIframe.nativeElement.focus();
-        doc.document
+        this.spinner.hide();
         doc.print();
-        console.log("print ok")
 
         // nettoyage de l'url généré
         URL.revokeObjectURL(fileUrl);
       }, 1000);
 
     }, err => {
+      this.spinner.hide();
       console.log(err);
       const message = "erreur survenu lors de l'inpression";
       this.toastService.error(message, '', {
         progressBar: true,
       });
     });
+  }
+
+  pageChanged(event: any): void {
+    const offset = (event.page - 1) * 10;
+    console.log('want a ' + offset + 'offset');
+    this.getAllPaiement(offset);
   }
 }

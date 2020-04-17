@@ -65,9 +65,9 @@ export class ChantierModalComponent implements OnInit {
         this.spinner.hide();
       });
     } else {
+      this.spinner.show();
       await this.chantierService.addChantier(this.chantier).then(data => {
         this.chantierModalRef.hide();
-        this.spinner.show();
         this.toastService.success('Le chantier à été ajouter avec succes', '', {
           progressBar: true,
           closeButton: true,
@@ -86,8 +86,8 @@ export class ChantierModalComponent implements OnInit {
    * Must be search clients on the db
    */
   getAllClients() {
+    this.spinner.show();
     this.clientService.getAllClient().then((res) => {
-      this.spinner.show();
       this.clients = res.rows;
     }).catch((err) => {
       console.log(err);

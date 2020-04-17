@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import {SpinnerService} from "../../services/spinner.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,8 @@ export class LoginComponent implements OnInit {
   password;
   errorMessage;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private spinner: SpinnerService) {
+  }
 
   ngOnInit() {
     if (this.authService.isloggedIn()) {
@@ -23,15 +25,15 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.errorMessage = '';
+    this.spinner.show();
     this.authService.login(this.username, this.password).then(r => {
-      console.log("this is the result of login");
-      console.log(r);
-      // if the returned body is not empty then redirect otherwise do nothing
       this.router.navigate(['dashboard']);
     }).catch(err => {
       console.log('oops during login');
       console.log(err);
       this.errorMessage = err.error.error;
+    }).finally(() => {
+      this.spinner.hide();
     });
   }
 }

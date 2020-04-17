@@ -145,7 +145,6 @@ export class ChantierComponent implements OnInit {
     this.spinner.show();
     this.chantierService.deleteChantierById(this.delId).then(res => {
       this.getAllChantiers();
-      this.dangerModal.hide();
       this.toastService.success('Chantier suppimer avec succes ', '', {
         progressBar: true,
         closeButton: true,
@@ -157,7 +156,6 @@ export class ChantierComponent implements OnInit {
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
         message = 'Cet chantier contient des mouvements vous ne pouvez pas le supprimer';
       }
-      this.dangerModal.hide();
       this.toastService.error(message, '', {
         progressBar: true,
         closeButton: true,
@@ -165,6 +163,7 @@ export class ChantierComponent implements OnInit {
       });
     }).finally(() => {
       this.delId = undefined;
+      this.dangerModal.hide();
       this.spinner.hide();
     });
   }

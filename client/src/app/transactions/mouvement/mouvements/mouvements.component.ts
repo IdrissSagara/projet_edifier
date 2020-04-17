@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MouvementService} from "../../../services/mouvement.service";
+import {SpinnerService} from "../../../services/spinner.service";
 
 @Component({
   selector: 'app-mv-entrant',
@@ -9,19 +10,27 @@ import {MouvementService} from "../../../services/mouvement.service";
 export class MouvementsComponent implements OnInit {
   mouvements;
   errorMessage: String;
-  isLoading: Boolean;
   totalPages: number;
   currentPage: number;
 
-  constructor(private mouvementService: MouvementService) {
+  constructor(private mouvementService: MouvementService, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
     this.getAllMouvements();
   }
 
+  get isLoading() {
+    return this.spinner.iterationOfShow > 0;
+  }
+
+  pageChandeg(event: any): void {
+    const offset = (event.page - 1) * 10;
+    this.getAllMouvements(offset);
+  }
+
   getAllMouvements(offset = 0) {
-    this.isLoading = true;
+    this.spinner.show();
     this.mouvements = [];
     this.mouvementService.getAllMouvement(offset).then(res => {
       this.errorMessage = undefined;
@@ -30,13 +39,8 @@ export class MouvementsComponent implements OnInit {
     }).catch(err => {
       this.errorMessage = "erreur de chargement des données";
     }).finally(() => {
-      this.isLoading = false;
+      this.spinner.hide();
     });
-  }
-
-  pageChandeg(event: any): void {
-    const offset = (event.page - 1) * 10;
-    this.getAllMouvements(offset);
   }
 
 }
