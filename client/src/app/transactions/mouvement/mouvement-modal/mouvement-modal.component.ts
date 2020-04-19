@@ -5,6 +5,7 @@ import {Mouvement} from "../../../model/mouvement";
 import {Chantier} from "../../../model/chantier";
 import {ChantierService} from "../../../services/chantier.service";
 import {SpinnerService} from "../../../services/spinner.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-mouvement-modal',
@@ -18,7 +19,8 @@ export class MouvementModalComponent implements OnInit {
   chantier: Chantier;
 
   constructor(public mouvementModalRef: BsModalRef, private mouvementService: MouvementService,
-              private chantierService: ChantierService, private spinner: SpinnerService) {
+              private chantierService: ChantierService, private spinner: SpinnerService,
+              private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -28,11 +30,17 @@ export class MouvementModalComponent implements OnInit {
 
   getAllChantier() {
     this.spinner.show();
-    this.chantierService.getAllChantier().then((res) => {
+    this.chantierService.getAllChantier().subscribe((res) => {
       this.chantiers = res.rows;
-    }).catch((err) => {
+      this.spinner.hide();
+    }, (err) => {
       console.log(err);
-    }).finally(() => {
+      this.toastService.error(`Une erreur est survenue lors de la
+      récupération de la liste des chantiers`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
       this.spinner.hide();
     });
   }

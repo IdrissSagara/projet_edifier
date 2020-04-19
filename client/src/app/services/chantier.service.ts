@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Chantier} from '../model/chantier';
 import {AllChantierResponse} from "../model/responses/AllChantierResponse";
+import {catchError} from "rxjs/operators";
+import {Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,74 +18,49 @@ export class ChantierService {
   /*
   * recuperation des chantiers
    */
-  async getAllChantier(offset = 0): Promise<AllChantierResponse> {
-    return new Promise<AllChantierResponse>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}?offset=${offset}`, {responseType: 'text'}).toPromise().then(res => {
-          resolve(JSON.parse(res));
-        }, rej => {
-          reject(rej);
-        }
-      );
-    }));
+  getAllChantier(offset = 0) {
+    return this.http.get<AllChantierResponse>(`${this.apiUrl}?offset=${offset}`);
   }
 
-  async getChantierById(id: number): Promise<any> {
-    return new Promise<any>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}/${id}`, {responseType: 'text'}).toPromise().then(
-        res => {
-          resolve(JSON.parse(res));
-        }, rej => {
-          reject(rej);
-        }
-      );
-    }));
+  getChantierById(id: number): Observable<Chantier> {
+    return this.http.get<Chantier>(`${this.apiUrl}/${id}`);
   }
 
   /**
    * service de suppression d'un chantier par son id
    * @param id
    */
-  deleteChantierById(id: number): Promise<Chantier> {
-    return new Promise<Chantier>(((resolve, reject) => {
-      this.http.delete(`${this.apiUrl}/${id}`, {responseType: 'text'}).toPromise().then(
-        res => {
-          resolve(JSON.parse(res));
-        }, rej => {
-          reject(rej);
-        }
-      );
-    }));
+  deleteChantierById(id: number) {
+    return this.http.delete<Chantier>(`${this.apiUrl}/${id}`);
   }
 
   /**
    * service de modification d'un chantier
-   * @param params
+   * @param chantier
    */
-  updateChantier(params): Promise<HttpResponse<string>> {
-    const P = new HttpParams({fromObject: params});
-    return this.http.put(`${this.apiUrl}`, P, {
-      observe: 'response',
-      responseType: 'text',
-      headers: {'content-type': 'application/x-www-form-urlencoded'}
-    }).toPromise();
+  updateChantier(chantier): Observable<Chantier> {
+    return this.http.put<Chantier>(`${this.apiUrl}`, chantier);
   }
-
-
-
 
   /**
    * Ajout d'un chantier
-   * @param params
+   * @param chantier
    */
-  addChantier(params): Promise<HttpResponse<string>> {
-    const P = new HttpParams( {fromObject: params} );
-    return this.http.post(`${this.apiUrl}`, P, {
-      observe: 'response',
-      responseType: 'text',
-      headers: {'content-type': 'application/x-www-form-urlencoded'}
-    }).toPromise();
+  addChantier(chantier: Chantier): Observable<Chantier> {
+    return this.http.post<Chantier>(`${this.apiUrl}`, chantier)
+      .pipe(catchError<any, any>(this.handleError));
   }
 
-
-
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+  }
 }

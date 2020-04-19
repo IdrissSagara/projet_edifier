@@ -52,31 +52,39 @@ export class ChantierModalComponent implements OnInit {
     if (this.modeModification()) {
       this.chantierModalRef.hide();
       this.spinner.show();
-      await this.chantierService.updateChantier(this.chantier).then(chantier => {
+      await this.chantierService.updateChantier(this.chantier).subscribe(chantier => {
         const message = `Modification du chantier ${this.chantier.id} effectuer avec succes`;
         this.toastService.success(message, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-      }).catch(err => {
-
-      }).finally(() => {
         this.spinner.hide();
-      });
-    } else {
-      this.spinner.show();
-      await this.chantierService.addChantier(this.chantier).then(data => {
-        this.chantierModalRef.hide();
-        this.toastService.success('Le chantier à été ajouter avec succes', '', {
+      }, err => {
+        this.spinner.hide();
+        this.toastService.error(`Une erreur est survenue lors de la mise à jour du chantier`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-      }).catch(err => {
-        const erreur = JSON.parse(err.error);
-        console.log(erreur);
-      }).finally(() => {
+      });
+    } else {
+      this.spinner.show();
+      this.chantierService.addChantier(this.chantier).subscribe(data => {
+        this.chantierModalRef.hide();
+        this.toastService.success('Le chantier à été ajouté avec succes', '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+        this.spinner.hide();
+      }, error => {
+        console.log(error);
+        this.toastService.error(`Une erreur est survenue lors de l'ajout du chantier`, '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
         this.spinner.hide();
       });
     }
