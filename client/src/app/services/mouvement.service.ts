@@ -1,7 +1,9 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {AllMouvementResponse} from "../model/responses/AllMouvementResponse";
+import {Observable} from "rxjs";
+import {Mouvement} from "../model/mouvement";
 
 @Injectable({
   providedIn: 'root'
@@ -12,36 +14,15 @@ export class MouvementService {
   constructor(private http: HttpClient) {
   }
 
-  async getAllMouvement(offset = 0): Promise<AllMouvementResponse> {
-    return new Promise<AllMouvementResponse>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}?offset=${offset}`, {responseType: 'text'}).toPromise().then(res => {
-          resolve(JSON.parse(res));
-        }, rej => {
-          reject(rej);
-        }
-      );
-    }));
+  getAllMouvement(offset = 0): Observable<AllMouvementResponse> {
+    return this.http.get<AllMouvementResponse>(`${this.apiUrl}?offset=${offset}`);
   }
 
-
-  async getMouvementById(id: number): Promise<any> {
-    return new Promise<any>(((resolve, reject) => {
-      this.http.get(`${this.apiUrl}/${id}`, {responseType: 'text'}).toPromise().then(
-        res => {
-          resolve(JSON.parse(res));
-        }, rej => {
-          reject(rej);
-        }
-      );
-    }));
+  getMouvementById(id: number) {
+    return this.http.get<Mouvement>(`${this.apiUrl}/${id}`);
   }
 
-  addMouvement(params): Promise<HttpResponse<string>> {
-    const P = new HttpParams({fromObject: params});
-    return this.http.post(`${this.apiUrl}`, P, {
-      observe: 'response',
-      responseType: 'text',
-      headers: {'content-type': 'application/x-www-form-urlencoded'}
-    }).toPromise();
+  addMouvement(mouvement): Observable<Mouvement> {
+    return this.http.post<Mouvement>(`${this.apiUrl}`, mouvement);
   }
 }

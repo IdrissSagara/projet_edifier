@@ -47,12 +47,22 @@ export class MouvementModalComponent implements OnInit {
 
   async addMouvement() {
     this.spinner.show();
-    await this.mouvementService.addMouvement(this.mouvement).then(data => {
+    await this.mouvementService.addMouvement(this.mouvement).subscribe(data => {
       this.mouvementModalRef.hide();
-    }).catch(err => {
-      console.log(err);
-    }).finally(() => {
       this.spinner.hide();
+      this.toastService.success(`Le mouvement a été ajouté avec succès`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    }, err => {
+      console.log(err);
+      this.spinner.hide();
+      this.toastService.error(`Une erreur est survenue lors de l'ajout du mouvement`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
     });
   }
 }
