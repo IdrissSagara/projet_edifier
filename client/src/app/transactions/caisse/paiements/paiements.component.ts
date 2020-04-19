@@ -32,17 +32,16 @@ export class PaiementsComponent implements OnInit {
     // this.isLoading = true;
     this.spinner.show();
     this.paiements = [];
-    this.paiementService.getAllPaiement(offset).then(res => {
+    this.paiementService.getAllPaiement(offset).subscribe(res => {
       this.errorMessage = undefined;
       this.paiements = res.rows;
       this.totalPages = res.count;
-    }).catch(err => {
+      this.spinner.hide();
+    }, err => {
       const message = "erreur de chargement des données";
       this.toastService.error(message, '', {
         progressBar: true,
       });
-    }).finally(() => {
-      // this.isLoading = false;
       this.spinner.hide();
     });
   }

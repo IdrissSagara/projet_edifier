@@ -3,6 +3,7 @@ import {BsModalRef} from "ngx-bootstrap";
 import {ClientModel} from "../../../model/clientModel";
 import {ClientService} from "../../../services/client.service";
 import {SpinnerService} from "../../../services/spinner.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-client-modal',
@@ -13,7 +14,8 @@ export class ClientModalComponent implements OnInit {
   title: string;
   client: ClientModel;
 
-  constructor(public clientModalRef: BsModalRef, private clientService: ClientService, private spinner: SpinnerService) {
+  constructor(public clientModalRef: BsModalRef, private clientService: ClientService,
+              private spinner: SpinnerService, private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -24,12 +26,17 @@ export class ClientModalComponent implements OnInit {
 
   async confirm() {
     this.spinner.show();
-    await this.clientService.addClient(this.client).then(res => {
+    await this.clientService.addClient(this.client).subscribe(res => {
       this.clientModalRef.hide();
-    }).catch((err) => {
+      this.spinner.hide();
+    }, (err) => {
       const erreur = JSON.parse(err.error);
       console.log(erreur);
-    }).finally(() => {
+      this.toastService.error('Une erreur est survenue lors de la création du client', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
       this.spinner.hide();
     });
   }

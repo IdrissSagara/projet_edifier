@@ -8,6 +8,7 @@ import {combineLatest, Subscription} from "rxjs";
 import {Mouvement} from "../../model/mouvement";
 import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-modal/mouvement-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-chantier-details',
@@ -19,6 +20,7 @@ export class ChantierDetailsComponent implements OnInit {
   mouvement: Mouvement;
   subscriptions: Subscription[] = [];
   mouvementModalRef: BsModalRef;
+  showError: boolean = false;
 
   // graph pie
   public pieChartLabels: string[] = ['Cout du chantier', 'yereta', 'walita'];
@@ -27,7 +29,7 @@ export class ChantierDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private chantierService: ChantierService,
               private mouvementService: MouvementService,
-              private modalService: BsModalService,
+              private modalService: BsModalService, private toastService: ToastrService,
               private changeDetection: ChangeDetectorRef, private spinner: SpinnerService) {
   }
 
@@ -37,12 +39,20 @@ export class ChantierDetailsComponent implements OnInit {
 
   async getChantierById(id: number) {
     this.spinner.show();
-    await this.chantierService.getChantierById(id).then(chantier => {
+    this.chantierService.getChantierById(id).subscribe(chantier => {
+      this.showError = false;
       this.chantier = chantier;
       this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
-    }).catch(err => {
+      this.spinner.hide();
+    }, (err) => {
       console.log(err);
-    }).finally(() => {
+      // afficher une alerte bootstrap
+      this.showError = true;
+      this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
       this.spinner.hide();
     });
   }
@@ -94,6 +104,9 @@ export class ChantierDetailsComponent implements OnInit {
 
     this.mouvementModalRef = this.modalService.show(MouvementModalComponent, {initialState});
     this.mouvementModalRef.content.closeBtnName = 'Close';
+  }
 
+  refresh() {
+    this.init();
   }
 }

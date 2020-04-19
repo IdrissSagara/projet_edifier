@@ -14,7 +14,7 @@ import {SpinnerService} from "../services/spinner.service";
   styleUrls: ['./chantier.component.css']
 })
 export class ChantierComponent implements OnInit {
-  chantiers;
+  chantiers: Chantier[] = [];
   chantier: Chantier;
   chantierModalRef: BsModalRef;
   isLoading: Boolean;
@@ -41,20 +41,18 @@ export class ChantierComponent implements OnInit {
   getAllChantiers(offset = 0) {
     // this.isLoading = true;
     this.spinner.show();
-    this.chantiers = [];
-    this.chantierService.getAllChantier(offset).then(res => {
+    this.chantierService.getAllChantier(offset).subscribe(res => {
       this.errorMessage = undefined;
       this.chantiers = res.rows;
       this.totalItems = res.count;
-    }).catch(err => {
+      this.spinner.hide();
+    }, err => {
       this.errorMessage = "data loading error";
       this.toastService.error('Une erreur est survenu lors de la récuperation des chantiers', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-    }).finally(() => {
-      // this.isLoading = false;
       this.spinner.hide();
     });
   }
@@ -143,14 +141,18 @@ export class ChantierComponent implements OnInit {
 
   confirmSupprimerChantier(): void {
     this.spinner.show();
-    this.chantierService.deleteChantierById(this.delId).then(res => {
+    this.chantierService.deleteChantierById(this.delId).subscribe(res => {
       this.getAllChantiers();
-      this.toastService.success('Chantier suppimer avec succes ', '', {
+      this.toastService.success('Chantier suppimer avec succes', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-    }).catch(err => {
+
+      this.delId = undefined;
+      this.dangerModal.hide();
+      this.spinner.hide();
+    }, (err) => {
       const e = JSON.parse(err.error);
       let message = 'Une erreur est survenu lors de la suppression du chantier';
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
@@ -161,7 +163,7 @@ export class ChantierComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-    }).finally(() => {
+
       this.delId = undefined;
       this.dangerModal.hide();
       this.spinner.hide();

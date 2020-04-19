@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from "@angular/forms";
 import {
+  AlertModule,
   BsModalRef,
   CollapseModule,
   ModalModule,
@@ -42,7 +43,8 @@ import {NgxSpinnerModule} from "ngx-spinner";
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    AlertModule.forRoot(),
   ],
   providers: [
     BsModalRef,
