@@ -56,6 +56,35 @@ async function getAll(fields, offset, limit, order) {
     });
 }
 
+async function getById(id) {
+    return models.User.findOne({
+        where: {id: id}
+    }).catch(err => {
+        return {
+            status: 'error',
+            message: 'erreur de recuperation d\'un utilisateur'
+        };
+    });
+}
+
+async function updateUser(user) {
+    return models.User.update({
+            id: user.id,
+            nom: user.nom,
+            prenom: user.prenom,
+            username: user.username,
+        },
+        {
+            where: {id: user.id}
+        }).catch((err) => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when updating user'
+        };
+    });
+}
+
 module.exports = {
-    getByUsername, pwdCompare, save, update, destroy, getAll
+    getByUsername, pwdCompare, save, update, destroy, getAll, getById, updateUser
 };
