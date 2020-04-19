@@ -5,6 +5,7 @@ import {ClientModel} from "../../model/clientModel";
 import {combineLatest, Subscription} from "rxjs";
 import {ClientModalComponent} from "./client-modal/client-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-client',
@@ -21,7 +22,8 @@ export class ClientComponent implements OnInit {
   currentPage: number;
 
   constructor(private clientService: ClientService, private modalService: BsModalService,
-              private changeDetection: ChangeDetectorRef, private spinner: SpinnerService) {
+              private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
+              private toastService: ToastrService,) {
   }
 
   ngOnInit(): void {
@@ -78,13 +80,17 @@ export class ClientComponent implements OnInit {
   getAllClients(offset = 0) {
     // this.isLoading = true;
     this.spinner.show();
-    this.clientService.getAllClient(offset).then((res) => {
+    this.clientService.getAllClient(offset).subscribe((res) => {
       this.clients = res.rows;
       this.totalPages = res.count;
-    }).catch((err) => {
+      this.spinner.hide();
+    }, (err) => {
       console.log(err);
-    }).finally(() => {
-      // this.isLoading = false;
+      this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
       this.spinner.hide();
     });
   }

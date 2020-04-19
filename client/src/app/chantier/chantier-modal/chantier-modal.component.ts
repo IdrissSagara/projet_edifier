@@ -95,11 +95,16 @@ export class ChantierModalComponent implements OnInit {
    */
   getAllClients() {
     this.spinner.show();
-    this.clientService.getAllClient().then((res) => {
+    this.clientService.getAllClient().subscribe((res) => {
       this.clients = res.rows;
-    }).catch((err) => {
+      this.spinner.hide();
+    }, (err) => {
       console.log(err);
-    }).finally(() => {
+      this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
       this.spinner.hide();
     });
   }
