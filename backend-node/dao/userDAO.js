@@ -39,6 +39,23 @@ async function destroy(username) {
     })
 }
 
+
+async function getAll(fields, offset, limit, order) {
+
+    return models.User.findAndCountAll({
+        order: [(order != null) ? order.split(':') : ['createdAt', 'ASC']],
+        attributes: ['id', 'nom', 'prenom', 'username', 'createdAt', 'updatedAt'],
+        limit: (!isNaN(limit) ? limit : 10),
+        offset: (!isNaN(offset) ? offset : null),
+    }).catch(err => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when get Users'
+        };
+    });
+}
+
 module.exports = {
-    getByUsername, pwdCompare, save, update, destroy
+    getByUsername, pwdCompare, save, update, destroy, getAll
 };
