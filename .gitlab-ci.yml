@@ -1,0 +1,26 @@
+# see https://docs.gitlab.com/ce/ci/yaml/README.html for all available options
+image: trion/ng-cli-karma
+
+before_script:
+  - apt-get update -qq
+  - apt-get install -qq git
+  # Setup SSH deploy keys
+  - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+
+deploy_staging:
+  stage: deploy
+  environment:
+    name: staging
+    url: https://app.digital-faso.tech
+  only:
+    - deploy
+  script:
+    - cd ./client/
+    - rm ./package-lock.json
+    - npm install
+    - ./node_modules/@angular/cli/bin/ng build -prod --progress false
+    - cd dist/ && scp * edifier@app.digital-faso.tech:/httpdocs/

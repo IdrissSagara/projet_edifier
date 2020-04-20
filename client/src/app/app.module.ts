@@ -39,6 +39,10 @@ const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
 
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -59,9 +63,7 @@ const APP_CONTAINERS = [
     NgxSpinnerModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: function tokenGetter() {
-          return localStorage.getItem('token');
-        },
+        tokenGetter: tokenGetter,
         whitelistedDomains: ['localhost:3000'],
         blacklistedRoutes: ['http://localhost:3000/auth/login']
       }
