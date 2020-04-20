@@ -23,7 +23,7 @@ export class ClientComponent implements OnInit {
 
   constructor(private clientService: ClientService, private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
-              private toastService: ToastrService,) {
+              private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
