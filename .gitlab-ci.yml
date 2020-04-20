@@ -1,4 +1,5 @@
 # see https://docs.gitlab.com/ce/ci/yaml/README.html for all available options
+# https://medium.com/@hfally/a-gitlab-ci-config-to-deploy-to-your-server-via-ssh-43bf3cf93775
 image: node:latest
 
 cache:

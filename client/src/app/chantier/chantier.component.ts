@@ -1,10 +1,9 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ChantierService} from "../services/chantier.service";
 import {Chantier} from "../model/chantier";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {ChantierModalComponent} from "./chantier-modal/chantier-modal.component";
 import {combineLatest, Subscription} from "rxjs";
-import {ModalDirective} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../services/spinner.service";
 
