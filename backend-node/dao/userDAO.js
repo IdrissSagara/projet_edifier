@@ -44,7 +44,7 @@ async function getAll(fields, offset, limit, order) {
 
     return models.User.findAndCountAll({
         order: [(order != null) ? order.split(':') : ['createdAt', 'ASC']],
-        attributes: ['id', 'nom', 'prenom', 'username', 'createdAt', 'updatedAt'],
+        attributes: ['id', 'nom', 'prenom', 'username', 'role', 'createdAt', 'updatedAt'],
         limit: (!isNaN(limit) ? limit : 10),
         offset: (!isNaN(offset) ? offset : null),
     }).catch(err => {
