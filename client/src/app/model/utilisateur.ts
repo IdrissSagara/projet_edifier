@@ -1,8 +1,9 @@
-export interface Utilisateur {
+export class Utilisateur {
   id: number;
   nom: string;
   prenom: string;
-  roles: string;
+  username: string;
+  role: string;
   createdAt: string;
   updatedAt: string;
 }
