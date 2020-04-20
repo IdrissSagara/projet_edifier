@@ -20,7 +20,6 @@ deploy_staging:
     - deploy
   script:
     - cd ./client/
-    - rm ./package-lock.json
     - npm install
     - ./node_modules/@angular/cli/bin/ng build -prod --progress false
     - cd dist/ && scp * edifier@app.digital-faso.tech:/httpdocs/
