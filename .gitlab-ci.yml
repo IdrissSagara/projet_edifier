@@ -21,5 +21,6 @@ deploy_staging:
   script:
     - cd ./client/
     - npm install
-    - ./node_modules/@angular/cli/bin/ng build -prod --progress false
-    - cd dist/ && scp * edifier@app.digital-faso.tech:/httpdocs/
+    - ./node_modules/@angular/cli/bin/ng build -prod --progress true
+    - cd dist/ && ls -la
+    - scp * edifier@app.digital-faso.tech:/httpdocs/
