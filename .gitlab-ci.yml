@@ -1,6 +1,10 @@
 # see https://docs.gitlab.com/ce/ci/yaml/README.html for all available options
 image: trion/ng-cli-karma
 
+cache:
+  paths:
+    - ./client/node_modules/
+
 before_script:
   - apt-get update -qq
   - apt-get install -qq git
@@ -22,5 +26,5 @@ deploy_staging:
     - cd ./client/
     - npm install
     - ./node_modules/@angular/cli/bin/ng build -prod --progress true
-    - cd dist/ && ls -la
+    - cd ./dist/ && ls -la
     - scp * edifier@app.digital-faso.tech:/httpdocs/
