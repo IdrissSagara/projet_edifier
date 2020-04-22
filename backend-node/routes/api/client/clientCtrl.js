@@ -246,4 +246,4 @@ function getChantiers(req, res) {
 
 module.exports = {
     save, getAll, getById, getChantiers, update, destroy
-}
+};

@@ -19,11 +19,11 @@ function save(req, res) {
         emplacement: req.body.emplacement,
         cout: req.body.cout,
         date_debut: req.body.date_debut,
-        date_fin: null,
-        walita: 0,
-        yereta: req.body.cout,
-        montant_dispo: req.body.cout,
-    }
+        date_fin: req.body.date_fin || null,
+        walita: req.body.walita || 0,
+        yereta: req.body.yereta || req.body.montant_dispo,
+        montant_dispo: req.body.montant_dispo,
+    };
 
     models.Client.findOne({
         where: {id: chantier.ClientId}
