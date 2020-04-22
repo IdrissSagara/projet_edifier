@@ -217,6 +217,24 @@ async function affect(req, res) {
     return res.status(500).json(affection);
 }
 
+async function getOuvrierWithChantiers(req, res) {
+    const id = req.params.id;
+
+    let ouvrier = await ouvrierDao.getOuvrierWithChantiers(id);
+
+    if (!ouvrier) {
+        return res.status(404).json({
+            message: 'no ouvrier found with id ' + id
+        });
+    }
+
+    if (ouvrier.status === 'error') {
+        return res.status(500).json(ouvrier);
+    }
+
+    return res.status(200).json(ouvrier);
+}
+
 module.exports = {
-    save, getAll, getById, update, destroy, affect
+    save, getAll, getById, update, destroy, affect, getOuvrierWithChantiers
 };

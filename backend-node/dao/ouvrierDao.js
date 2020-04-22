@@ -23,6 +23,16 @@ async function getById(id) {
     });
 }
 
+async function getOuvrierWithChantiers(id) {
+    return models.Ouvrier.findOne({
+        where: {id: id},
+        include: {
+            model: models.ChantierOuvrier,
+            include: models.Chantier
+        }
+    });
+}
+
 module.exports = {
-    affecterAChantier, getById
+    affecterAChantier, getById, getOuvrierWithChantiers
 };

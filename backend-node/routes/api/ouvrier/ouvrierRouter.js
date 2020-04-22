@@ -30,6 +30,11 @@ router.post('/:id/affecter',
     accessControl.canAccess([roles.ALL]),
     ouvrierCtrl.affect);
 
+router.get('/:id/chantiers',
+    ouvrierValidator.validate('getById'), validate,
+    accessControl.canAccess([roles.ALL]),
+    ouvrierCtrl.getOuvrierWithChantiers);
+
 //edit a ouvrier
 router.put('/',
     ouvrierValidator.validate('getById'),
