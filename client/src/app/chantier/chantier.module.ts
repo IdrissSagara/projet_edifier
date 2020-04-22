@@ -16,7 +16,7 @@ import {PopoverModule} from "ngx-bootstrap/popover";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {BsModalRef, ModalModule} from "ngx-bootstrap/modal";
 import {AlertModule} from "ngx-bootstrap/alert";
-
+import {NgxSelectModule} from "ngx-select-ex";
 
 @NgModule({
   declarations: [
@@ -34,13 +34,14 @@ import {AlertModule} from "ngx-bootstrap/alert";
     ChantierRoutingModule,
     TabsModule,
     MouvementModule,
+    NgxSpinnerModule,
+    NgxSelectModule,
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    NgxSpinnerModule,
     AlertModule.forRoot(),
   ],
   providers: [

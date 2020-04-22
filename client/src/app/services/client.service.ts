@@ -22,4 +22,8 @@ export class ClientService {
   addClient(chantier): Observable<Client> {
     return this.httpClient.post<Client>(`${this.apiUrl}`, chantier);
   }
+
+  search(nom): Observable<AllClientsResponse> {
+    return this.httpClient.get<AllClientsResponse>(`${this.apiUrl}/search?nom=${nom}`);
+  }
 }
