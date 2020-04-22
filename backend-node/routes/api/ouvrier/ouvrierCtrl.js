@@ -152,7 +152,7 @@ function destroy(req, res, next) {
       return;
     }
 
-    var id = req.body.id;
+    var id = req.params.id;
 
     ouvrierModel.findByPk(id).then((ouvrierFound) => {
         if (!ouvrierFound) {

@@ -30,7 +30,7 @@ router.put('/',
     accessControl.canAccess([roles.ALL]),
     ouvrierCtrl.update);
 
-router.delete('/',
+router.delete('/:id',
     ouvrierValidator.validate('getById'),
     accessControl.deniedRoles([roles.BASIC]),
     ouvrierCtrl.destroy);
