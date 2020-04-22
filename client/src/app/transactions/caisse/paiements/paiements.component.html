@@ -1,10 +1,8 @@
-<script src="mouvements.component.ts"></script>
-<script src="../../../services/mouvement.service.ts"></script>
 <div class="animated fadeIn">
   <div class="col-lg-12 col-sm-offset-8">
     <div class="card">
       <div class="card-header">
-        <span class="pull-left"><i class="icon-credit-card"></i> Mouvements</span>
+        <span class="pull-left"><i class="icon-credit-card"></i> Paiements</span>
         <div class="pull-right">
           <span>
             <button (click)="getAllPaiement()" [disabled]="isLoading"
@@ -47,7 +45,7 @@
                 <button (click)="confirmationSuppressionDialog()"
                         class="btn btn-danger  btn-icon" tooltip="Supprimer le paiement"><i
                   class="icon-trash"></i></button>
-                <button [routerLink]=""
+                <button (click)="imprimerFacture(paiement)"
                         class="btn btn-link bg-success btn-icon" tooltip="Voir les details de la factuer"><i
                   class="icon-doc"></i></button>
               </div>
@@ -64,8 +62,8 @@
           </tbody>
         </table>
         <div class="col-xs-12 col-12">
-          <pagination [(ngModel)]="currentPage" [boundaryLinks]="true"
-                      [maxSize]="9" [totalItems]="totalPages" class="pagination"
+          <pagination (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage" [boundaryLinks]="true"
+                      [maxSize]="6" [totalItems]="totalPages" class="pagination"
                       firstText="&laquo;" lastText="&raquo;" nextText="&rsaquo;" previousText="&lsaquo;">
 
           </pagination>
@@ -75,3 +73,5 @@
     </div>
   </div>
 </div>
+<iframe #pdfIframe *ngIf="pdfUrl" [src]="pdfUrl">
+</iframe>

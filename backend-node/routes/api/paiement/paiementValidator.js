@@ -2,7 +2,7 @@ const { body, check } = require('express-validator');
 
 function isPositive(number) {
     try {
-        return parseInt(number) > 0;
+        return parseInt(number) >= 0;
     } catch (e) {
         return false;
     }
@@ -68,12 +68,13 @@ exports.validate = (operation) => {
         case 'getAllPaiements': {
             return [
                 check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
-                check('offset', 'invalid value for offset').optional()
+                /*check('offset', 'invalid value for offset').optional()
                     .isNumeric().custom(offset => {
                         if (!isPositive(offset)) {
                             throw new Error('Offset must be positive');
                         }
-                }).bail().trim().escape(),
+                }).bail().trim().escape(),*/
+                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
                 check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
                 check('order', 'invalid value for order').optional()
                 //.isIn(['ASC', 'DESC', 'asc', 'desc']).withMessage('must be ASC or DESC')

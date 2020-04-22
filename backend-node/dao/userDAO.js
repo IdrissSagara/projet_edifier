@@ -39,6 +39,52 @@ async function destroy(username) {
     })
 }
 
+
+async function getAll(fields, offset, limit, order) {
+
+    return models.User.findAndCountAll({
+        order: [(order != null) ? order.split(':') : ['createdAt', 'ASC']],
+        attributes: ['id', 'nom', 'prenom', 'username', 'role', 'createdAt', 'updatedAt'],
+        limit: (!isNaN(limit) ? limit : 10),
+        offset: (!isNaN(offset) ? offset : null),
+    }).catch(err => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when get Users'
+        };
+    });
+}
+
+async function getById(id) {
+    return models.User.findOne({
+        where: {id: id}
+    }).catch(err => {
+        return {
+            status: 'error',
+            message: 'erreur de recuperation d\'un utilisateur'
+        };
+    });
+}
+
+async function updateUser(user) {
+    return models.User.update({
+            id: user.id,
+            nom: user.nom,
+            prenom: user.prenom,
+            username: user.username,
+        },
+        {
+            where: {id: user.id}
+        }).catch((err) => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'An error occured when updating user'
+        };
+    });
+}
+
 module.exports = {
-    getByUsername, pwdCompare, save, update, destroy
+    getByUsername, pwdCompare, save, update, destroy, getAll, getById, updateUser
 };

@@ -1,11 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {ChantierService} from "../services/chantier.service";
 import {Chantier} from "../model/chantier";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {ChantierModalComponent} from "./chantier-modal/chantier-modal.component";
 import {combineLatest, Subscription} from "rxjs";
-import {ModalDirective} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
+import {SpinnerService} from "../services/spinner.service";
 
 @Component({
   selector: 'app-chantier',
@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./chantier.component.css']
 })
 export class ChantierComponent implements OnInit {
-  chantiers;
+  chantiers: Chantier[] = [];
   chantier: Chantier;
   chantierModalRef: BsModalRef;
   isLoading: Boolean;
@@ -30,7 +30,7 @@ export class ChantierComponent implements OnInit {
   constructor(private chantierService: ChantierService,
               private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef,
-              private toastService: ToastrService) {
+              private toastService: ToastrService, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -38,21 +38,21 @@ export class ChantierComponent implements OnInit {
   }
 
   getAllChantiers(offset = 0) {
-    this.isLoading = true;
-    this.chantiers = [];
-    this.chantierService.getAllChantier(offset).then(res => {
+    // this.isLoading = true;
+    this.spinner.show();
+    this.chantierService.getAllChantier(offset).subscribe(res => {
       this.errorMessage = undefined;
       this.chantiers = res.rows;
       this.totalItems = res.count;
-    }).catch(err => {
+      this.spinner.hide();
+    }, err => {
       this.errorMessage = "data loading error";
       this.toastService.error('Une erreur est survenu lors de la récuperation des chantiers', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-    }).finally(() => {
-      this.isLoading = false;
+      this.spinner.hide();
     });
   }
 
@@ -139,28 +139,33 @@ export class ChantierComponent implements OnInit {
   }
 
   confirmSupprimerChantier(): void {
-    this.chantierService.deleteChantierById(this.delId).then(res => {
+    this.spinner.show();
+    this.chantierService.deleteChantierById(this.delId).subscribe(res => {
       this.getAllChantiers();
-      this.dangerModal.hide();
-      this.toastService.success('Chantier suppimer avec succes ', '', {
+      this.toastService.success('Chantier suppimer avec succes', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-    }).catch(err => {
+
+      this.delId = undefined;
+      this.dangerModal.hide();
+      this.spinner.hide();
+    }, (err) => {
       const e = JSON.parse(err.error);
       let message = 'Une erreur est survenu lors de la suppression du chantier';
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
         message = 'Cet chantier contient des mouvements vous ne pouvez pas le supprimer';
       }
-      this.dangerModal.hide();
       this.toastService.error(message, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-    }).finally(() => {
+
       this.delId = undefined;
+      this.dangerModal.hide();
+      this.spinner.hide();
     });
   }
 

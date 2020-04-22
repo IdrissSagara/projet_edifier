@@ -4,20 +4,16 @@ import {ClientComponent} from './client/client.component';
 import {OuvriersComponent} from './ouvriers/ouvriers.component';
 import {UtilisateursComponent} from './utilisateurs/utilisateurs.component';
 import {FormsModule} from "@angular/forms";
-import {
-  BsDropdownModule,
-  BsModalService,
-  CarouselModule,
-  CollapseModule,
-  ModalModule,
-  PaginationModule,
-  PopoverModule,
-  ProgressbarModule,
-  TabsModule,
-  TooltipModule
-} from "ngx-bootstrap";
+import {TabsModule} from "ngx-bootstrap/tabs";
+import {CollapseModule} from "ngx-bootstrap/collapse";
+import {TooltipModule} from "ngx-bootstrap/tooltip";
+import {PaginationModule} from "ngx-bootstrap/pagination";
+import {PopoverModule} from "ngx-bootstrap/popover";
+import {ProgressbarModule} from "ngx-bootstrap/progressbar";
+import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {PersonnesRoutingModule} from "./personnes.routing.module";
 import {ClientModalComponent} from "./client/client-modal/client-modal.component";
+import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 
 @NgModule({
   declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent],
@@ -30,7 +26,6 @@ import {ClientModalComponent} from "./client/client-modal/client-modal.component
     PersonnesRoutingModule,
     BsDropdownModule.forRoot(),
     TabsModule,
-    CarouselModule.forRoot(),
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),

@@ -1,9 +1,11 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {ClientService} from "../../services/client.service";
 import {ClientModel} from "../../model/clientModel";
 import {combineLatest, Subscription} from "rxjs";
 import {ClientModalComponent} from "./client-modal/client-modal.component";
+import {SpinnerService} from "../../services/spinner.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-client',
@@ -14,31 +16,22 @@ export class ClientComponent implements OnInit {
   clients: ClientModel[];
   newClient: ClientModel;
   clientModalRef: BsModalRef;
-  isLoading: Boolean;
   errorMessage: String;
   totalPages: number;
   subscriptions: Subscription[] = [];
   currentPage: number;
 
-  constructor(private clientService: ClientService, private modalService: BsModalService, private changeDetection: ChangeDetectorRef) {
+  constructor(private clientService: ClientService, private modalService: BsModalService,
+              private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
+              private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
     this.getAllClients();
   }
 
-  getAllClients(offset = 0) {
-    this.isLoading = true;
-    this.clientService.getAllClient(offset).then((res) => {
-      this.clients = res.rows;
-      this.totalPages = res.count;
-      this.isLoading = true;
-    }).catch((err) => {
-      this.isLoading = false;
-      console.log(err);
-    }).finally(() => {
-      this.isLoading = false;
-    });
+  get isLoading() {
+    return this.spinner.iterationOfShow > 0;
   }
 
   showAddClientDialog() {
@@ -82,5 +75,23 @@ export class ClientComponent implements OnInit {
   pageChanged(event: any): void {
     const offset = (event.page - 1) * 10;
     this.getAllClients(offset);
+  }
+
+  getAllClients(offset = 0) {
+    // this.isLoading = true;
+    this.spinner.show();
+    this.clientService.getAllClient(offset).subscribe((res) => {
+      this.clients = res.rows;
+      this.totalPages = res.count;
+      this.spinner.hide();
+    }, (err) => {
+      console.log(err);
+      this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.spinner.hide();
+    });
   }
 }

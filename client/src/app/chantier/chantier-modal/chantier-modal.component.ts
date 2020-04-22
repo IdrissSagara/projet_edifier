@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef} from "ngx-bootstrap";
+import {BsModalRef} from "ngx-bootstrap/modal";
 import {Chantier} from "../../model/chantier";
 import {ClientService} from "../../services/client.service";
 import {ChantierService} from "../../services/chantier.service";
 import {ClientModel} from "../../model/clientModel";
 import {ToastrService} from "ngx-toastr";
+import {SpinnerService} from "../../services/spinner.service";
 
 @Component({
   selector: 'app-chantier-modal',
@@ -26,7 +27,8 @@ export class ChantierModalComponent implements OnInit {
   // titreModal: String;
 
   constructor(public chantierModalRef: BsModalRef, private clientService: ClientService,
-              private chantierService: ChantierService, private toastService: ToastrService) {
+              private chantierService: ChantierService, private toastService: ToastrService,
+              private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -49,41 +51,61 @@ export class ChantierModalComponent implements OnInit {
 
     if (this.modeModification()) {
       this.chantierModalRef.hide();
-      await this.chantierService.updateChantier(this.chantier).then(chantier => {
+      this.spinner.show();
+      await this.chantierService.updateChantier(this.chantier).subscribe(chantier => {
         const message = `Modification du chantier ${this.chantier.id} effectuer avec succes`;
         this.toastService.success(message, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-      }).catch(err => {
-
-      });
-    } else {
-      await this.chantierService.addChantier(this.chantier).then(data => {
-        this.chantierModalRef.hide();
-        this.toastService.success('Le chantier à été ajouter avec succes', '', {
+        this.spinner.hide();
+      }, err => {
+        this.spinner.hide();
+        this.toastService.error(`Une erreur est survenue lors de la mise à jour du chantier`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-      }).catch(err => {
-        const erreur = JSON.parse(err.error);
-        console.log(erreur);
-      }).finally(() => {
-
+      });
+    } else {
+      this.spinner.show();
+      this.chantierService.addChantier(this.chantier).subscribe(data => {
+        this.chantierModalRef.hide();
+        this.toastService.success('Le chantier à été ajouté avec succes', '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+        this.spinner.hide();
+      }, error => {
+        console.log(error);
+        this.toastService.error(`Une erreur est survenue lors de l'ajout du chantier`, '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+        this.spinner.hide();
       });
     }
-
-
   }
 
   /**
    * Must be search clients on the db
    */
   getAllClients() {
-    this.clientService.getAllClient().then((res) => {
+    this.spinner.show();
+    this.clientService.getAllClient().subscribe((res) => {
       this.clients = res.rows;
+      this.spinner.hide();
+    }, (err) => {
+      console.log(err);
+      this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.spinner.hide();
     });
   }
 

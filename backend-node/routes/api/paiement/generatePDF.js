@@ -84,12 +84,15 @@ async function sendFacturePDF(req, res, next) {
     let template_path = path.join(__dirname, 'facture_template.html');
     let pdf = await genPDF(printOptions, template_path, data, './facture.pdf');
 
-    let stream = fs.createReadStream(pdf.filename);
+    /*let stream = fs.createReadStream(pdf.filename);
     stream.pipe(res).once("close", function () {
         stream.destroy(); // makesure stream closed, not close if download aborted.
         deleteFile(pdf.filename);
         return;
-    });
+    });*/
+
+    let file = fs.readFileSync(pdf.filename);
+    return res.status(200).download(pdf.filename);
 }
 
 function deleteFile(file) {

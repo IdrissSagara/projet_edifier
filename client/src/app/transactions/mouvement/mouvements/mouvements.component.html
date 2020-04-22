@@ -25,7 +25,7 @@
             <th style="padding-left: 50px">Action</th>
           </tr>
           </thead>
-          <tbody *ngIf="!isLoading">
+          <tbody *ngIf="!isLoading" class="text-center">
           <tr *ngFor="let mouvement of mouvements; let i = index">
             <td>{{mouvement.source }} </td>
             <td>{{mouvement.destination }}</td>
@@ -33,7 +33,7 @@
             <td>{{mouvement.commentaire }}</td>
             <td>{{mouvement.createdAt | date: 'dd/MM/yyyy'}}</td>
             <td>
-              <div class="btn-group" id="button_action">
+              <div class="btn-group">
                 <button [routerLink]=""
                         class="btn btn-info  btn-icon" tooltip="Voir les détails du mouvement"><i
                   class="icon-eye"></i></button>
@@ -43,10 +43,8 @@
           <tr *ngIf="errorMessage">
             <td class="text-center" colspan="5">{{errorMessage}}</td>
           </tr>
-          </tbody>
-          <tbody *ngIf="isLoading">
-          <tr>
-            <td class="text-center" colspan="5"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
+          <tr *ngIf="mouvements.length === 0">
+            <td class="text-center" colspan="6">Aucun mouvement trouvé</td>
           </tr>
           </tbody>
         </table>
@@ -54,9 +52,7 @@
           <pagination (pageChanged)="pageChandeg($event)" [(ngModel)]="currentPage" [boundaryLinks]="true"
                       [maxSize]="9" [totalItems]="totalPages" class="pagination"
                       firstText="&laquo;" lastText="&raquo;" nextText="&rsaquo;" previousText="&lsaquo;">
-
           </pagination>
-
         </div>
       </div>
     </div>

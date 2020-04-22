@@ -49,6 +49,9 @@
           <tr *ngIf="errorMessage">
             <td class="text-center" colspan="5">{{errorMessage}}</td>
           </tr>
+          <tr *ngIf="chantiers.length === 0">
+            <td class="text-center" colspan="6">Aucun mouvement trouvé</td>
+          </tr>
           </tbody>
           <tbody *ngIf="isLoading">
           <tr>

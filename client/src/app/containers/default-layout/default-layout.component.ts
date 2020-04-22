@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {navItems} from '../../_nav';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
+import {SpinnerService} from "../../services/spinner.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ export class DefaultLayoutComponent {
   public sidebarMinimized = false;
   public navItems = navItems;
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(private authService: AuthService, private router: Router, private spinner: SpinnerService) {
   }
 
   toggleMinimize(e) {
@@ -19,7 +20,9 @@ export class DefaultLayoutComponent {
   }
 
   logOut() {
+    this.spinner.show();
     this.authService.logout();
+    this.spinner.hide();
     this.router.navigate(['/login']);
   }
 }

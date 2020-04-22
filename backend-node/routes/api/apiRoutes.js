@@ -5,6 +5,7 @@ const chantierRouter = require('./chantier/chantieRouter');
 const ouvrierRouter = require('./ouvrier/ouvrierRouter');
 const paiementRouter = require('./paiement/paiementRouter');
 const mouvementRouter = require('./mouvement/mouvementRouter');
+const utilisateurRouter = require('./utilisateur/utilisateurRouter');
 
 /**
  *Available roles 'basic-user', 'medium-user', 'advanced-user', 'admin'
@@ -22,13 +23,8 @@ exports.router = (function() {
     apiRouter.use('/paiement', paiementRouter);
 
     apiRouter.use('/mouvement', mouvementRouter);
-    /**
-     * Routes to manage the factures
-     */
 
-    /**
-     * Routes to manage the mouvements
-     */
+    apiRouter.use('/utilisateur', utilisateurRouter);
 
     return apiRouter;
 })();

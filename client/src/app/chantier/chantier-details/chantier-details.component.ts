@@ -3,10 +3,12 @@ import {ActivatedRoute} from "@angular/router";
 import {ChantierService} from "../../services/chantier.service";
 import {Chantier} from "../../model/chantier";
 import {MouvementService} from "../../services/mouvement.service";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {combineLatest, Subscription} from "rxjs";
 import {Mouvement} from "../../model/mouvement";
 import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-modal/mouvement-modal.component";
+import {SpinnerService} from "../../services/spinner.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-chantier-details',
@@ -18,6 +20,7 @@ export class ChantierDetailsComponent implements OnInit {
   mouvement: Mouvement;
   subscriptions: Subscription[] = [];
   mouvementModalRef: BsModalRef;
+  showError: boolean = false;
 
   // graph pie
   public pieChartLabels: string[] = ['Cout du chantier', 'yereta', 'walita'];
@@ -26,8 +29,8 @@ export class ChantierDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private chantierService: ChantierService,
               private mouvementService: MouvementService,
-              private modalService: BsModalService,
-              private changeDetection: ChangeDetectorRef) {
+              private modalService: BsModalService, private toastService: ToastrService,
+              private changeDetection: ChangeDetectorRef, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
@@ -35,11 +38,22 @@ export class ChantierDetailsComponent implements OnInit {
   }
 
   async getChantierById(id: number) {
-    await this.chantierService.getChantierById(id).then(chantier => {
+    this.spinner.show();
+    this.chantierService.getChantierById(id).subscribe(chantier => {
+      this.showError = false;
       this.chantier = chantier;
-      this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita]
-    }).catch(err => {
+      this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
+      this.spinner.hide();
+    }, (err) => {
       console.log(err);
+      // afficher une alerte bootstrap
+      this.showError = true;
+      this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.spinner.hide();
     });
   }
 
@@ -90,6 +104,9 @@ export class ChantierDetailsComponent implements OnInit {
 
     this.mouvementModalRef = this.modalService.show(MouvementModalComponent, {initialState});
     this.mouvementModalRef.content.closeBtnName = 'Close';
+  }
 
+  refresh() {
+    this.init();
   }
 }
