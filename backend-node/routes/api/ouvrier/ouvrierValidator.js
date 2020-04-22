@@ -27,8 +27,8 @@ exports.validate = (operation) => {
             ]   
         }
         case 'getById': {
-            return [ 
-                body('id', 'invalid ouvrier id')
+            return [
+                check('id', 'invalid ouvrier id')
                     .exists().withMessage('parameter id not found')
                     .isNumeric().withMessage('parameter id is not numeric')
                     .trim().escape(),

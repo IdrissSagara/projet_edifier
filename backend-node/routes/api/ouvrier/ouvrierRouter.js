@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 let ouvrierValidator = require('./ouvrierValidator');
+const validate = require('../validationCtrl').validate;
 const accessControl = require('../../auth/accessControl');
 let ouvrierCtrl = require('./ouvrierCtrl');
 const roles = accessControl.roles;
@@ -23,6 +24,11 @@ router.get('/:id',
     ouvrierValidator.validate('getById'),
     accessControl.canAccess([roles.ALL]),
     ouvrierCtrl.getById);
+
+router.post('/:id/affecter',
+    ouvrierValidator.validate('getById'), validate,
+    accessControl.canAccess([roles.ALL]),
+    ouvrierCtrl.affect);
 
 //edit a ouvrier
 router.put('/',

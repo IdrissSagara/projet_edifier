@@ -1,4 +1,6 @@
 var ouvrierModel = require('../../../models').Ouvrier;
+const ouvrierDao = require('../../../dao/ouvrierDao');
+const chantierDao = require('../../../dao/chantierDao');
 const { validationResult } = require('express-validator');
 
 /**
@@ -19,7 +21,7 @@ function save(req, res) {
         prenom: req.body.prenom,
         telephone: req.body.telephone,
         type: req.body.type,
-    }
+    };
 
     ouvrierModel.findOne({
         where: {telephone: ouvrier.telephone}
@@ -63,7 +65,7 @@ function getAll(req, res, next) {
 
     ouvrierModel.findAndCountAll({
         order: [(order != null) ? order.split(':'): ['nom', 'ASC']],
-        attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
+        attributes: (fields !== '*' && fields != null) ? fields.split(';') : null,
         limit: (!isNaN(limit) ? limit : 10),
         offset: (!isNaN(offset) ? offset : null),  
     }).then((ouvrierFound) => {
@@ -180,6 +182,41 @@ function destroy(req, res, next) {
     });
 }
 
+async function affect(req, res) {
+    const idOuvrier = req.params.id;
+    const idChantier = req.query.idChantier;
+
+    let chantier = await chantierDao.getChantierById(idChantier);
+    if (!chantier) {
+        return res.status(400).json({
+            message: 'no chantier found with id ' + idChantier
+        });
+    }
+
+    if (chantier.status === 'error') {
+        return res.status(500).json(chantier);
+    }
+
+    let ouvrier = await ouvrierDao.getById(idOuvrier);
+    if (!ouvrier) {
+        return res.status(404).json({
+            message: 'no ouvrier found with id ' + idOuvrier
+        });
+    }
+
+    if (ouvrier.status === 'error') {
+        return res.status(500).json(ouvrier);
+    }
+
+    let affection = await ouvrierDao.affecterAChantier(idOuvrier, idChantier);
+
+    if (affection.status === 'error') {
+        return res.status(500).json(affection);
+    }
+
+    return res.status(500).json(affection);
+}
+
 module.exports = {
-    save, getAll, getById, update, destroy
+    save, getAll, getById, update, destroy, affect
 };
