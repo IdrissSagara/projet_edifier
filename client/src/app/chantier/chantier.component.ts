@@ -152,7 +152,9 @@ export class ChantierComponent implements OnInit {
       this.dangerModal.hide();
       this.spinner.hide();
     }, (err) => {
-      const e = JSON.parse(err.error);
+      this.dangerModal.hide();
+      this.spinner.hide();
+      const e = err.error;
       let message = 'Une erreur est survenu lors de la suppression du chantier';
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
         message = 'Cet chantier contient des mouvements vous ne pouvez pas le supprimer';
@@ -164,8 +166,7 @@ export class ChantierComponent implements OnInit {
       });
 
       this.delId = undefined;
-      this.dangerModal.hide();
-      this.spinner.hide();
+
     });
   }
 
