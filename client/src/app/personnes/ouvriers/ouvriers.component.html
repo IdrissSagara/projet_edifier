@@ -46,7 +46,8 @@
                   class="icon-eye"></i></button>
                 <button class="btn btn-warning  btn-icon" tooltip="Modifier l'ouvrier"><i
                   class="icon-pencil"></i></button>
-                <button class="btn btn-danger btn-icon" tooltip="Supprimer l'ouvrier"><i
+                <button (click)="confirmationSuppressionDialog(ouvrier)"
+                        class="btn btn-danger btn-icon" tooltip="Supprimer l'ouvrier"><i
                   class="icon-trash"></i></button>
               </div>
             </td>
@@ -71,3 +72,26 @@
     </div>
   </div>
 </div>
+
+<!-- Dialog de suppression d'un ouvrier -->
+
+<div #dangerModal="bs-modal" aria-hidden="true" aria-labelledby="myModalLabel" bsModal class="modal fade" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Confirmation de suppression de l'ouvier {{this.deletedId}}</h4>
+        <button (click)="dangerModal.hide()" aria-label="Close" class="close" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous vraiment supprimer l'ouvrier : {{this.deltedName}}</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="declineSupprimeOuvrier()" class="btn btn-secondary" type="button">Non</button>
+        <button (click)="confirmSupprimerOuvrier()" class="btn btn-danger" type="button">Oui</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

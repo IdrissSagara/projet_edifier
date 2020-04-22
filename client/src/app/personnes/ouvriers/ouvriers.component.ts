@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {OuvrierService} from "../../services/ouvrier.service";
 import {Ouvrier} from "../../model/ouvrier";
 import {ToastrService} from "ngx-toastr";
@@ -6,6 +6,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {combineLatest, Subscription} from "rxjs";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {OuvrierModalComponent} from "./ouvrier-modal/ouvrier-modal.component";
+import {ModalDirective} from "ngx-bootstrap/modal";
 
 @Component({
   selector: 'app-ouvriers',
@@ -19,6 +20,10 @@ export class OuvriersComponent implements OnInit {
   errorMessage: String;
   subscriptions: Subscription[] = [];
   ouvrierModalRef: BsModalRef;
+  deletedId: number;
+  deltedName: string;
+
+  @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
   constructor(private ouvrierService: OuvrierService, private toastService: ToastrService,
               private spinner: SpinnerService,
@@ -87,5 +92,42 @@ export class OuvriersComponent implements OnInit {
       subscription.unsubscribe();
     });
     this.subscriptions = [];
+  }
+
+
+  confirmationSuppressionDialog(ouvrier: Ouvrier) {
+    this.deletedId = ouvrier.id;
+    this.deltedName = ouvrier.nom + " " + ouvrier.prenom;
+    this.dangerModal.show();
+  }
+
+
+  declineSupprimeOuvrier() {
+    this.dangerModal.hide();
+  }
+
+  confirmSupprimerOuvrier() {
+    this.spinner.show();
+    this.ouvrierService.deleteOuvrierById(this.deletedId).subscribe(res => {
+      this.getAllOuvrier();
+      this.toastService.success('Ouvrier suppimer avec succes', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.deletedId = undefined;
+      this.dangerModal.hide();
+      this.spinner.hide();
+    }, (err) => {
+      this.dangerModal.hide();
+      this.spinner.hide();
+      let message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
+      this.toastService.error(message, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.deletedId = undefined;
+    });
   }
 }

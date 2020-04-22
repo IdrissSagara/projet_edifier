@@ -33,6 +33,10 @@ export class OuvrierService {
       .pipe(catchError<any, any>(this.handleError));
   }
 
+  deleteOuvrierById(id: number) {
+    return this.http.delete<Ouvrier>(`${this.apiUrl}/${id}`);
+  }
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
