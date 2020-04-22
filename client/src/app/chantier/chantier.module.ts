@@ -50,3 +50,4 @@ import {NgxSelectModule} from "ngx-select-ex";
 })
 export class ChantierModule {
 }
+

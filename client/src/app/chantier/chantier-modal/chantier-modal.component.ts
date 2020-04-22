@@ -94,7 +94,7 @@ export class ChantierModalComponent implements OnInit {
   getAllClients() {
     this.spinner.show();
     this.clientService.getAllClient().subscribe((res) => {
-      this.clients = [];
+      this.clients = [Object.assign([])];
       res.rows.map(c => {
         const elt = {id: c.id, text: c.nom + " " + c.prenom};
         if (this.clients.indexOf(elt) === -1) {
@@ -120,7 +120,7 @@ export class ChantierModalComponent implements OnInit {
 
     this.spinner.show();
     this.clientService.search($event).subscribe((res) => {
-      this.clients = [];
+      this.clients = [Object.assign([])];
       res.rows.map(c => {
         const elt = {id: c.id, text: c.nom + " " + c.prenom};
         if (this.clients.indexOf(elt) === -1) {
