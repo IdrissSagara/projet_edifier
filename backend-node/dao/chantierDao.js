@@ -10,6 +10,9 @@ async function getChantierById(id, include_client = true) {
         include: [{
             model: models.Client,
             attributes: ['nom', 'prenom', 'telephone']
+        }, {
+            model: models.ChantierOuvrier,
+            include: models.Ouvrier
         }]
     });
 }
@@ -36,6 +39,16 @@ async function update(chantier, transaction) {
     });
 }
 
+async function getChantierWithOuvriers(id) {
+    return models.Chantier.findOne({
+        where: {id: id},
+        include: {
+            model: models.ChantierOuvrier,
+            include: models.Ouvrier
+        }
+    });
+}
+
 module.exports = {
-    getChantierById, update
+    getChantierById, update, getChantierWithOuvriers
 };

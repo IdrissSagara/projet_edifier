@@ -34,6 +34,15 @@ describe("getChantierById", () => {
     });
 });
 
+describe("getChantierWithOuvriers", () => {
+    it("Should return the chantier with the id 3", async () => {
+        const result = await chantierDAO.getChantierWithOuvriers(3);
+        console.log(result);
+        assert.isDefined(result);
+        assert(result.id === 3, 'Le chantier retourné ne correspond pas');
+    });
+});
+
 describe("update chantier", () => {
     let chantier = {
         id: 3,
