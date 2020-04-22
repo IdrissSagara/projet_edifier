@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   jwt_token_name: 'token',
-  api_url: '/api/',
+  backend_base: 'http://localhost:3000',
+  api_url: '/dev/',
 };
