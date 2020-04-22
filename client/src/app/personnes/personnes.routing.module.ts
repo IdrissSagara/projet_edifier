@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {OuvriersComponent} from "./ouvriers/ouvriers.component";
 import {ClientComponent} from "./client/client.component";
 import {UtilisateursComponent} from "./utilisateurs/utilisateurs.component";
+import {OuvrierDetailsComponent} from "./ouvriers/ouvrier-details/ouvrier-details.component";
 
 const routes: Routes = [
   {
@@ -33,7 +34,13 @@ const routes: Routes = [
         data: {
           title: 'Utilisateurs'
         }
-      },
+      }, {
+        path: 'details/:id',
+        component: OuvrierDetailsComponent,
+        data: {
+          title: 'Detail de l\'ouvrier'
+        }
+      }
     ]
   }
 ];

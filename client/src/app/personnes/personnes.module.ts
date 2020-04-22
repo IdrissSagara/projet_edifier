@@ -19,9 +19,10 @@ import {
 import {PersonnesRoutingModule} from "./personnes.routing.module";
 import {ClientModalComponent} from "./client/client-modal/client-modal.component";
 import {OuvrierModalComponent} from "./ouvriers/ouvrier-modal/ouvrier-modal.component";
+import {OuvrierDetailsComponent} from './ouvriers/ouvrier-details/ouvrier-details.component';
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent],
+  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent],
   entryComponents: [
     ClientModalComponent,
     OuvrierModalComponent
