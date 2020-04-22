@@ -1,0 +1,52 @@
+<!--<div aria-hidden="true" aria-labelledby="myModalLabel" bsModal class="modal fade" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog" role="document">-->
+<script src="ouvrier-modal.component.ts"></script>
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button (click)="ouvrierModalRel.hide()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="nom">Nom</label>
+        <input [(ngModel)]="ouvrier.nom" autocomplete="text" class="form-control" id="nom"
+               name="nom" placeholder="Entrez le nom..." required type="text">
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prenom</label>
+        <input [(ngModel)]="ouvrier.prenom" class="form-control" id="prenom" name="prenom"
+               placeholder="Entrez le prenom..." required type="text">
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone</label>
+        <input [(ngModel)]="ouvrier.telephone" class="form-control" id="telephone" name="telephone"
+               placeholder="Entrez le numéro de téléphone..." required type="number">
+      </div>
+      <div class="form-group">
+        <label for="type">Type</label>
+        <select [(ngModel)]="ouvrier.type" class="form-control" id="type" name="type">
+
+          <option selected value="undefined">--Selectionnez le type d'ouvrier--</option>
+          <option *ngFor="let type of typeOuvrier" value="{{type}}">{{type}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="form.reset()" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
+      Nettoyer
+    </button>
+    <button (click)="addOuvrier()" [disabled]="form.invalid"
+            class="btn btn-primary" type="button">Enregistrer
+    </button>
+    <button (click)="ouvrierModalRel.hide()" class="btn btn-secondary" type="button">Fermer</button>
+  </div>
+  <!--<pre>{{form.value | json}}</pre>-->
+</div>
+<!--</div>
+</div>
+-->

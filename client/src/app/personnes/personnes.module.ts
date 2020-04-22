@@ -18,11 +18,13 @@ import {
 } from "ngx-bootstrap";
 import {PersonnesRoutingModule} from "./personnes.routing.module";
 import {ClientModalComponent} from "./client/client-modal/client-modal.component";
+import {OuvrierModalComponent} from './ouvriers/ouvrier-modal/ouvrier-modal.component';
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent],
+  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent],
   entryComponents: [
     ClientModalComponent,
+    OuvrierModalComponent
   ],
   imports: [
     CommonModule,

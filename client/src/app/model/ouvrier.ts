@@ -7,3 +7,4 @@ export class Ouvrier {
   createdAt: string;
   updatedAt: string;
 }
+
