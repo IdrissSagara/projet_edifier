@@ -19,7 +19,7 @@ export class UtilisateursComponent implements OnInit {
   currentPage: number;
 
   constructor(private utilisateurService: UtilisateurService, private toastService: ToastrService,
-              private spinner: SpinnerService,) {
+              private spinner: SpinnerService) {
   }
 
   get isLoading() {
