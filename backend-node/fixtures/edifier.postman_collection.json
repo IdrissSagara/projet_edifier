@@ -212,12 +212,12 @@
 								},
 								{
 									"key": "nom",
-									"value": "unNom",
+                                  "value": "Mallé",
 									"type": "text"
 								},
 								{
 									"key": "prenom",
-									"value": "unPrenom",
+                                  "value": "Ousmane",
 									"type": "text"
 								},
 								{
@@ -330,6 +330,69 @@
 					"response": []
 				},
 				{
+                  "name": "localhost:3000/api/client/search",
+                  "request": {
+                    "auth": {
+                      "type": "bearer",
+                      "bearer": [
+                        {
+                          "key": "token",
+                          "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg3NTU3NDEyLCJleHAiOjE1ODgyNDg2MTJ9.6XabCAt7tYRyOhgnCtrum19ZpGBEJOj-iELkitOP-zg",
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/x-www-form-urlencoded",
+                        "type": "text"
+                      }
+                    ],
+                    "url": {
+                      "raw": "localhost:3000/api/client/search?nom=madou",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "3000",
+                      "path": [
+                        "api",
+                        "client",
+                        "search"
+                      ],
+                      "query": [
+                        {
+                          "key": "fields",
+                          "value": "nom;prenom;id",
+                          "disabled": true
+                        },
+                        {
+                          "key": "offset",
+                          "value": "",
+                          "disabled": true
+                        },
+                        {
+                          "key": "limit",
+                          "value": "",
+                          "disabled": true
+                        },
+                        {
+                          "key": "order",
+                          "value": "telephone:desc",
+                          "disabled": true
+                        },
+                        {
+                          "key": "nom",
+                          "value": "madou"
+                        }
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+              {
 					"name": "localhost:3000/api/client",
 					"request": {
 						"auth": {
@@ -337,7 +400,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg2MTA1MTc4LCJleHAiOjE1ODY3OTYzNzh9.FViBsnoqqc2VQuNgjvpSaarTjTKYhCCNVZaEd5gFkto",
+                                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg3NTU3NDEyLCJleHAiOjE1ODgyNDg2MTJ9.6XabCAt7tYRyOhgnCtrum19ZpGBEJOj-iELkitOP-zg",
 									"type": "string"
 								}
 							]
@@ -657,7 +720,7 @@
 							}
 						],
 						"url": {
-							"raw": "localhost:3000/api/chantier",
+                          "raw": "localhost:3000/api/chantier?offset=0",
 							"host": [
 								"localhost"
 							],
@@ -674,12 +737,11 @@
 								},
 								{
 									"key": "offset",
-									"value": "",
-									"disabled": true
+                                  "value": "0"
 								},
 								{
 									"key": "limit",
-									"value": "1",
+                                  "value": "10",
 									"disabled": true
 								},
 								{
@@ -746,6 +808,44 @@
 						}
 					},
 					"response": []
+                },
+              {
+                "name": "localhost:3000/api/chantier/1/ouvriers",
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg3NTU3NDEyLCJleHAiOjE1ODgyNDg2MTJ9.6XabCAt7tYRyOhgnCtrum19ZpGBEJOj-iELkitOP-zg",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "GET",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "name": "Content-Type",
+                      "value": "application/x-www-form-urlencoded",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "localhost:3000/api/chantier/1/ouvriers",
+                    "host": [
+                      "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                      "api",
+                      "chantier",
+                      "1",
+                      "ouvriers"
+                    ]
+                  }
+                },
+                "response": []
 				}
 			],
 			"protocolProfileBehavior": {}
@@ -761,7 +861,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+                                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg3NTU3NDEyLCJleHAiOjE1ODgyNDg2MTJ9.6XabCAt7tYRyOhgnCtrum19ZpGBEJOj-iELkitOP-zg",
 									"type": "string"
 								}
 							]
@@ -789,6 +889,116 @@
 									"type": "text"
 								},
 								{
+                                  "key": "telephone",
+                                  "value": "00000001",
+                                  "type": "text"
+                                },
+                              {
+                                "key": "type",
+                                "value": "maçon",
+                                "type": "text"
+                              }
+                            ]
+                        },
+                      "url": {
+                        "raw": "localhost:3000/api/ouvrier",
+                        "host": [
+                          "localhost"
+                        ],
+                        "port": "3000",
+                        "path": [
+                          "api",
+                          "ouvrier"
+                        ]
+                      }
+                    },
+                  "response": []
+                },
+              {
+                "name": "localhost:3000/api/ouvrier/1/affecter?idChantier=3",
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg3NTU3NDEyLCJleHAiOjE1ODgyNDg2MTJ9.6XabCAt7tYRyOhgnCtrum19ZpGBEJOj-iELkitOP-zg",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "POST",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "name": "Content-Type",
+                      "value": "application/x-www-form-urlencoded",
+                      "type": "text"
+                    }
+                  ],
+                  "url": {
+                    "raw": "localhost:3000/api/ouvrier/1/affecter?idChantier=3",
+                    "host": [
+                      "localhost"
+                    ],
+                    "port": "3000",
+                    "path": [
+                      "api",
+                      "ouvrier",
+                      "1",
+                      "affecter"
+                    ],
+                    "query": [
+                      {
+                        "key": "idChantier",
+                        "value": "3"
+                      }
+                    ]
+                  }
+                },
+                "response": []
+              },
+              {
+                "name": "localhost:3000/api/ouvrier",
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "PUT",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "name": "Content-Type",
+                      "value": "application/x-www-form-urlencoded",
+                      "type": "text"
+                    }
+                  ],
+                  "body": {
+                    "mode": "urlencoded",
+                    "urlencoded": [
+                      {
+                        "key": "id",
+                        "value": "1",
+                        "type": "text"
+                      },
+                      {
+                        "key": "nom",
+                        "value": "changé",
+                        "type": "text"
+                      },
+                      {
+                        "key": "prenom",
+                        "value": "de nom",
+                        "type": "text"
+                      },
+                      {
 									"key": "telephone",
 									"value": "00000001",
 									"type": "text"
@@ -881,7 +1091,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+                                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg3NTU3NDEyLCJleHAiOjE1ODgyNDg2MTJ9.6XabCAt7tYRyOhgnCtrum19ZpGBEJOj-iELkitOP-zg",
 									"type": "string"
 								}
 							]
@@ -933,19 +1143,19 @@
 					"response": []
 				},
 				{
-					"name": "localhost:3000/api/ouvrier",
+                  "name": "localhost:3000/api/ouvrier/1/affecter?idChantier=3",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsInJvbGUiOiJiYXNpYy11c2VyIiwiaWF0IjoxNTc4ODQwNjU0LCJleHAiOjE1Nzk1MzE4NTR9.TBHH9o1M1xDWFyai7Z-ASch8X6CiDab_nD6PRDYiM0k",
+                                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg3NTU3NDEyLCJleHAiOjE1ODgyNDg2MTJ9.6XabCAt7tYRyOhgnCtrum19ZpGBEJOj-iELkitOP-zg",
 									"type": "string"
 								}
 							]
 						},
-						"method": "PUT",
+                      "method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -954,45 +1164,17 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "urlencoded",
-							"urlencoded": [
-								{
-									"key": "id",
-									"value": "1",
-									"type": "text"
-								},
-								{
-									"key": "nom",
-									"value": "changé",
-									"type": "text"
-								},
-								{
-									"key": "prenom",
-									"value": "de nom",
-									"type": "text"
-								},
-								{
-									"key": "telephone",
-									"value": "00000001",
-									"type": "text"
-								},
-								{
-									"key": "type",
-									"value": "maçon",
-									"type": "text"
-								}
-							]
-						},
 						"url": {
-							"raw": "localhost:3000/api/ouvrier",
+                          "raw": "localhost:3000/api/ouvrier/1/chantiers",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"api",
-								"ouvrier"
+                              "ouvrier",
+                              "1",
+                              "chantiers"
 							]
 						}
 					},
@@ -1103,7 +1285,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg0NTU3OTIyLCJleHAiOjE1ODUyNDkxMjJ9.a9eHJMTP3Jv0lWK0pEU8PaKN2kqmknHlpgXepr2ghog",
+                                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsIm5vbSI6ImFkbWluIiwicHJlbm9tIjoiYWRtaW4iLCJ1c2VybmFtZSI6ImFkbWluIiwiY3JlYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwidXBkYXRlZEF0IjoiMjAyMC0wMi0yOVQyMzoxNTozMC4wMDBaIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNTg2NTE2NDE0LCJleHAiOjE1ODcyMDc2MTR9.m_HLeYePgxq60-F6PZuLEFjP7q0pvCQtZMkY4Zb0sYk",
 									"type": "string"
 								}
 							]
@@ -1188,6 +1370,11 @@
 					"response": []
 				}
 			],
+          "protocolProfileBehavior": {}
+        },
+      {
+        "name": "mouvement",
+        "item": [],
 			"protocolProfileBehavior": {}
 		}
 	],
