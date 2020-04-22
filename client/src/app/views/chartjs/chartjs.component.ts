@@ -94,4 +94,7 @@ export class ChartJSComponent {
     console.log(e);
   }
 
+  chartClicked($event: { event?: MouseEvent; active?: {}[] }) {
+
+  }
 }

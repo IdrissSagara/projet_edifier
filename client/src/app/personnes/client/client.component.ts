@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {ClientService} from "../../services/client.service";
 import {ClientModel} from "../../model/clientModel";
 import {combineLatest, Subscription} from "rxjs";

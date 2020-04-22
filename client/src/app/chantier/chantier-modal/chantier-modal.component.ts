@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef} from "ngx-bootstrap";
+import {BsModalRef} from "ngx-bootstrap/modal";
 import {Chantier} from "../../model/chantier";
 import {ClientService} from "../../services/client.service";
 import {ChantierService} from "../../services/chantier.service";
-import {ClientModel} from "../../model/clientModel";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";
 
@@ -20,7 +19,7 @@ import {SpinnerService} from "../../services/spinner.service";
 export class ChantierModalComponent implements OnInit {
   title: string;
   chantier: Chantier;
-  clients: ClientModel[];
+  clients: [{ id: number, text: string }];
   advanced: Boolean = false;
 
 
@@ -38,7 +37,6 @@ export class ChantierModalComponent implements OnInit {
       this.chantier.date_debut = new Date().toISOString().split('T')[0];
       this.chantier.date_fin = new Date().toISOString().split('T')[0];
     }
-
     this.getAllClients();
   }
 
@@ -96,7 +94,13 @@ export class ChantierModalComponent implements OnInit {
   getAllClients() {
     this.spinner.show();
     this.clientService.getAllClient().subscribe((res) => {
-      this.clients = res.rows;
+      this.clients = [];
+      res.rows.map(c => {
+        const elt = {id: c.id, text: c.nom + " " + c.prenom};
+        if (this.clients.indexOf(elt) === -1) {
+          this.clients.push(elt);
+        }
+      });
       this.spinner.hide();
     }, (err) => {
       console.log(err);
@@ -105,6 +109,27 @@ export class ChantierModalComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
+      this.spinner.hide();
+    });
+  }
+
+  search($event) {
+    if ($event.length < 3) {
+      return;
+    }
+
+    this.spinner.show();
+    this.clientService.search($event).subscribe((res) => {
+      this.clients = [];
+      res.rows.map(c => {
+        const elt = {id: c.id, text: c.nom + " " + c.prenom};
+        if (this.clients.indexOf(elt) === -1) {
+          this.clients.push(elt);
+        }
+      });
+      this.spinner.hide();
+    }, (err) => {
+      console.log(err);
       this.spinner.hide();
     });
   }

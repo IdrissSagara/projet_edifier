@@ -3,7 +3,7 @@ import {ActivatedRoute} from "@angular/router";
 import {ChantierService} from "../../services/chantier.service";
 import {Chantier} from "../../model/chantier";
 import {MouvementService} from "../../services/mouvement.service";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {combineLatest, Subscription} from "rxjs";
 import {Mouvement} from "../../model/mouvement";
 import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-modal/mouvement-modal.component";

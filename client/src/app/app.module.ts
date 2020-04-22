@@ -30,6 +30,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {JwtModule} from "@auth0/angular-jwt";
 import {ToastrModule} from "ngx-toastr";
 import {NgxSpinnerModule} from "ngx-spinner";
+import {environment} from "../environments/environment";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -38,6 +39,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
+
+export function tokenGetter() {
+  return localStorage.getItem(environment.jwt_token_name);
+}
 
 @NgModule({
   imports: [
@@ -59,11 +64,9 @@ const APP_CONTAINERS = [
     NgxSpinnerModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: function tokenGetter() {
-          return localStorage.getItem('token');
-        },
-        whitelistedDomains: ['localhost:3000'],
-        blacklistedRoutes: ['http://localhost:3000/auth/login']
+        tokenGetter: tokenGetter,
+        whitelistedDomains: [environment.backend_base],
+        blacklistedRoutes: [environment.backend_base + '/auth/login']
       }
     })
   ],

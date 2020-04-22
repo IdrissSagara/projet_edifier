@@ -46,6 +46,15 @@ exports.validate = (operation) => {
                     .trim().escape(),
             ]   
         }
+        case 'search': {
+            return [
+                check('nom', 'invalid client nom')
+                    .exists().withMessage('parameter nom not found').bail()
+                    .isString().withMessage('nom is not alpha')
+                    .isLength({min: 3}).withMessage('nom is too short')
+                    .trim().escape(),
+            ]
+        }
         case 'getChantiers': {
             return [ 
                 check('id', 'invalid client id').exists().isNumeric().trim().escape(),

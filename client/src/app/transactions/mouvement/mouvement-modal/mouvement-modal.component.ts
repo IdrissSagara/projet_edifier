@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef} from "ngx-bootstrap";
+import {BsModalRef} from "ngx-bootstrap/modal";
 import {MouvementService} from "../../../services/mouvement.service";
 import {Mouvement} from "../../../model/mouvement";
 import {Chantier} from "../../../model/chantier";
