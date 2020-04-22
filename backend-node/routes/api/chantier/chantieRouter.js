@@ -55,6 +55,11 @@ router.get('/:id/client',
     accessControl.canAccess([roles.ALL]),
     chantierCtrl.getClient);
 
+router.get('/:id/ouvriers',
+    chantierValidator.validate('getChantier'),
+    accessControl.canAccess([roles.ALL]),
+    chantierCtrl.getChantierWithOuvriers);
+
 //save a chantier
 router.post('/',
     chantierValidator.validate('saveChantier'),

@@ -1,4 +1,5 @@
 var models = require('../../../models');
+const chantierDao = require('../../../dao/chantierDao');
 const { validationResult } = require('express-validator');
 
 /**
@@ -274,6 +275,24 @@ function getClient(req, res) {
     });
 }
 
-module.exports = {
-    save, getAll, getById, getClient, update, destroy
+async function getChantierWithOuvriers(req, res) {
+    const id = req.params.id;
+
+    let chantiers = await chantierDao.getChantierWithOuvriers(id);
+
+    if (!chantiers) {
+        return res.status(404).json({
+            message: 'no chantier found with id ' + id
+        });
+    }
+
+    if (chantiers.status === 'error') {
+        return res.status(500).json(chantiers);
+    }
+
+    return res.status(200).json(chantiers);
 }
+
+module.exports = {
+    save, getAll, getById, getClient, update, destroy, getChantierWithOuvriers
+};
