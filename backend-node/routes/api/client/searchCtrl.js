@@ -1,27 +1,17 @@
-var models = require('../../../models');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const models = require('../../../models');
+const clientDao = require('../../../dao/clientDao');
 
-function search(req, res) {
+async function search(req, res) {
     let nom = req.query.nom;
 
-    models.Client.findAll({
-        where: {
-            [Op.or]: [
-                {
-                    nom: {[Op.like]: '%' + nom + '%'}
-                },
-                {
-                    prenom: {[Op.like]: '%' + nom + '%'}
-                }
-            ]
-        }
-    }).then((clients) => {
-        return res.status(200).json(clients);
-    }).catch((err) => {
-        console.log(err);
-        return res.status(500).json(err);
-    });
+    let clients = await clientDao.search(nom);
+
+    if (clients.status === 'error') {
+        console.log(clients);
+        return res.status(500).json(clients);
+    }
+
+    return res.status(200).json(clients);
 }
 
 module.exports = {

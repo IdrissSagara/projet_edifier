@@ -51,7 +51,7 @@ exports.validate = (operation) => {
                 check('nom', 'invalid client nom')
                     .exists().withMessage('parameter nom not found').bail()
                     .isString().withMessage('nom is not alpha')
-                    .isLength({min: 4}).withMessage('nom is too short')
+                    .isLength({min: 3}).withMessage('nom is too short')
                     .trim().escape(),
             ]
         }
