@@ -6,6 +6,8 @@ module.exports = (sequelize, DataTypes) => {
     montant_restant: DataTypes.INTEGER,
     type: DataTypes.STRING,
     commentaire: DataTypes.STRING,
+      createdBy: DataTypes.INTEGER,
+      updatedBy: DataTypes.INTEGER,
   }, {});
   Paiement.associate = function(models) {
     // associations can be defined here

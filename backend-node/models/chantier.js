@@ -36,7 +36,9 @@ module.exports = (sequelize, DataTypes) => {
     date_fin: DataTypes.DATE,
     walita: DataTypes.INTEGER,
     yereta: DataTypes.INTEGER,
-    montant_dispo: DataTypes.INTEGER
+      montant_dispo: DataTypes.INTEGER,
+      createdBy: DataTypes.INTEGER,
+      updatedBy: DataTypes.INTEGER,
   }, {});
   Chantier.associate = function(models) {
     // associations can be defined here

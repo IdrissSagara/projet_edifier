@@ -27,7 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     nom: DataTypes.STRING,
     prenom: DataTypes.STRING,
     telephone: DataTypes.STRING,
-    type: DataTypes.STRING
+      type: DataTypes.STRING,
+      createdBy: DataTypes.INTEGER,
+      updatedBy: DataTypes.INTEGER,
   }, {});
   Ouvrier.associate = function(models) {
     // associations can be defined here
