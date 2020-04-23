@@ -35,6 +35,7 @@ function canAccess(authorisedRoles = []) {
                 });
             }
 
+            req.user = authInfo;
             next();
         }
     ]
@@ -62,6 +63,7 @@ function deniedRoles(deniedRoles = []) {
                 });
             }
 
+            req.user = authInfo;
             next();
         }
     ]

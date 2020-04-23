@@ -16,11 +16,13 @@ function save(req, res) {
       return;
     }
 
-    var ouvrier = {
+    const ouvrier = {
         nom: req.body.nom,
         prenom: req.body.prenom,
         telephone: req.body.telephone,
         type: req.body.type,
+        updatedBy: req.user.userId,
+        createdBy: req.user.userId,
     };
 
     ouvrierModel.findOne({
@@ -116,12 +118,14 @@ function update(req, res, next) {
       return;
     }
 
-    var ouvrier = {
+    const ouvrier = {
         id: req.body.id,
         nom: req.body.nom,
         prenom: req.body.prenom,
         telephone: req.body.telephone,
-        type: req.body.type
+        type: req.body.type,
+        updatedBy: req.user.userId,
+        createdBy: req.user.userId,
     };
 
     ouvrierModel.findByPk(ouvrier.id).then((ouvrierFound) => {
@@ -183,13 +187,17 @@ function destroy(req, res, next) {
 }
 
 async function affect(req, res) {
-    const idOuvrier = req.params.id;
-    const idChantier = req.query.idChantier;
+    const affectation = {
+        OuvrierId: req.params.id,
+        ChantierId: req.query.idChantier,
+        updatedBy: req.user.userId,
+        createdBy: req.user.userId,
+    };
 
-    let chantier = await chantierDao.getChantierById(idChantier);
+    let chantier = await chantierDao.getChantierById(affectation.ChantierId);
     if (!chantier) {
         return res.status(400).json({
-            message: 'no chantier found with id ' + idChantier
+            message: 'no chantier found with id ' + affectation.ChantierId
         });
     }
 
@@ -197,10 +205,10 @@ async function affect(req, res) {
         return res.status(500).json(chantier);
     }
 
-    let ouvrier = await ouvrierDao.getById(idOuvrier);
+    let ouvrier = await ouvrierDao.getById(affectation.OuvrierId);
     if (!ouvrier) {
         return res.status(404).json({
-            message: 'no ouvrier found with id ' + idOuvrier
+            message: 'no ouvrier found with id ' + affectation.OuvrierId
         });
     }
 
@@ -208,7 +216,7 @@ async function affect(req, res) {
         return res.status(500).json(ouvrier);
     }
 
-    let affection = await ouvrierDao.affecterAChantier(idOuvrier, idChantier);
+    let affection = await ouvrierDao.affecterAChantier(affectation);
 
     if (affection.status === 'error') {
         return res.status(500).json(affection);

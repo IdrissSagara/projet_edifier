@@ -1,13 +1,11 @@
 const models = require('../models');
 
-async function affecterAChantier(idOuvrier, idChantier) {
-    return models.ChantierOuvrier.create({
-        ChantierId: idChantier,
-        OuvrierId: idOuvrier
-    }).catch((err) => {
+async function affecterAChantier(affectation) {
+    console.log(affectation);
+    return models.ChantierOuvrier.create(affectation).catch((err) => {
         return {
             status: 'error',
-            message: 'cannot affect ouvrier ' + idOuvrier + ' to chantier ' + idChantier,
+            message: 'cannot affect ouvrier ' + affectation.idOuvrier + ' to chantier ' + affectation.idChantier,
             details: err.errors
         };
     });
