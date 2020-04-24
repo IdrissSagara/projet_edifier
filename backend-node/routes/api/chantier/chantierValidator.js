@@ -21,6 +21,10 @@ exports.validate = (operation) => {
                 body('date_debut', 'invalid date_debut')
                     .exists().withMessage('parameter date_debut not found')
                     .toDate(),
+                body('montant_dispo', 'invalid montant_dispo')
+                    .exists().withMessage('parameter montant_dispo not found').bail()
+                    .isNumeric().withMessage('montant_dispo is not numeric')
+                    .trim().escape(),
                 body('date_fin', 'invalid phone number').optional()
                     .toDate(),
                 body('walita', 'invalid walita').optional()
@@ -28,9 +32,6 @@ exports.validate = (operation) => {
                     .trim().escape(),
                 body('yereta', 'invalid yereta').optional()
                     .isNumeric().withMessage('yereta is not numeric')
-                    .trim().escape(),
-                body('montant_dispo', 'invalid montant_dispo').optional()
-                    .isNumeric().withMessage('montant_dispo is not numeric')
                     .trim().escape(),
             ]   
         }

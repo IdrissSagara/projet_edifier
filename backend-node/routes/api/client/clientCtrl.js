@@ -78,16 +78,20 @@ function save(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      res.status(422).json({ errors: errors.array() });
-      return;
+        res.status(422).json({errors: errors.array()});
+        return;
     }
 
-    var nom = req.body.nom;
-    var prenom = req.body.prenom;
-    var telephone = req.body.telephone;
+    const client = {
+        nom: req.body.nom,
+        prenom: req.body.prenom,
+        telephone: req.body.telephone,
+        createdBy: req.user.userId,
+        updatedBy: req.user.userId,
+    };
 
     models.Client.findOne({
-        where: {telephone: telephone}
+        where: {telephone: client.telephone}
     }).then((clientFound) => {
         if (clientFound) {
             return res.status(400).json({
@@ -95,11 +99,7 @@ function save(req, res) {
             });
         }
 
-        models.Client.create({
-            nom: nom,
-            prenom: prenom,
-            telephone: telephone,
-        }).then((newClient) => {
+        models.Client.create(client).then((newClient) => {
             if (newClient) {
                 return res.status(201).json(newClient);
             } else {
@@ -133,11 +133,12 @@ function update(req, res) {
       return;
     }
 
-    var client = {
+    const client = {
         id: req.body.id,
         nom: req.body.nom,
         prenom: req.body.prenom,
-        telephone: req.body.telephone
+        telephone: req.body.telephone,
+        updatedBy: req.user.userId,
     };
 
     models.Client.findByPk(client.id).then((clientFound) => {

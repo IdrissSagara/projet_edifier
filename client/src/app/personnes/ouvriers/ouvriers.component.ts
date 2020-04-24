@@ -130,4 +130,8 @@ export class OuvriersComponent implements OnInit {
       this.deletedId = undefined;
     });
   }
+
+  ajouterOuvrierAuChantier(ouvrier: Ouvrier) {
+
+  }
 }

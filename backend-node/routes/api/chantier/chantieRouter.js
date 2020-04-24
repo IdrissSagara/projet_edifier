@@ -2,6 +2,7 @@ let express = require('express');
 let router = express.Router();
 
 let chantierValidator = require('./chantierValidator');
+const validate = require('../validationCtrl').validate;
 const accessControl = require('../../auth/accessControl');
 let chantierCtrl = require('./chantierCtrl');
 const roles = accessControl.roles;
@@ -54,6 +55,11 @@ router.get('/:id/client',
     chantierValidator.validate('getChantier'),
     accessControl.canAccess([roles.ALL]),
     chantierCtrl.getClient);
+
+router.get('/:id/ouvriers',
+    chantierValidator.validate('getChantier'), validate,
+    accessControl.canAccess([roles.ALL]),
+    chantierCtrl.getChantierWithOuvriers);
 
 //save a chantier
 router.post('/',

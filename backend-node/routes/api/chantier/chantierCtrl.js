@@ -1,5 +1,6 @@
 var models = require('../../../models');
-const { validationResult } = require('express-validator');
+const chantierDao = require('../../../dao/chantierDao');
+const {validationResult} = require('express-validator');
 
 /**
  * 
@@ -14,7 +15,7 @@ function save(req, res) {
       return;
     }
 
-    chantier = {
+    let chantier = {
         ClientId: req.body.ClientId,
         emplacement: req.body.emplacement,
         cout: req.body.cout,
@@ -23,22 +24,15 @@ function save(req, res) {
         walita: req.body.walita || 0,
         yereta: req.body.yereta || req.body.montant_dispo,
         montant_dispo: req.body.montant_dispo,
+        createdBy: req.user.userId,
+        updatedBy: req.user.userId
     };
 
     models.Client.findOne({
         where: {id: chantier.ClientId}
     }).then((clientFound) => {
-        if (clientFound) {            
-            models.Chantier.create({
-                ClientId: clientFound.id,
-                emplacement: chantier.emplacement,
-                cout: chantier.cout,
-                date_debut: chantier.date_debut,
-                date_fin: chantier.date_fin,
-                walita: chantier.walita,
-                yereta: chantier.yereta,
-                montant_dispo: chantier.montant_dispo
-            }).then((newChantier) => {
+        if (clientFound) {
+            models.Chantier.create(chantier).then((newChantier) => {
                 if (newChantier) {
                     return res.status(201).json(newChantier);
                 } else {
@@ -83,6 +77,7 @@ function update(req, res) {
         walita: req.body.walita,
         yereta: req.body.yereta,
         montant_dispo: req.body.montant_dispo,
+        updatedBy: req.user.userId,
     };
 
     models.Chantier.findByPk(chantier.id).then((chantierFound) => {
@@ -268,12 +263,30 @@ function getClient(req, res) {
             return res.status(404).json({
                 'error': 'no chantier found with id ' + id
             });
-        }        
+        }
     }).catch((err) => {
         return res.status(500).json(err.errors);
     });
 }
 
-module.exports = {
-    save, getAll, getById, getClient, update, destroy
+async function getChantierWithOuvriers(req, res) {
+    const id = req.params.id;
+
+    let chantiers = await chantierDao.getChantierWithOuvriers(id);
+
+    if (!chantiers) {
+        return res.status(404).json({
+            message: 'no chantier found with id ' + id
+        });
+    }
+
+    if (chantiers.status === 'error') {
+        return res.status(500).json(chantiers);
+    }
+
+    return res.status(200).json(chantiers);
 }
+
+module.exports = {
+    save, getAll, getById, getClient, update, destroy, getChantierWithOuvriers
+};

@@ -14,13 +14,14 @@ exports.validate = (operation) => {
                     .not().isEmpty().withMessage('destination cannot be empty').bail()
                     .isNumeric().withMessage('destination is not numeric')
                     .trim().escape(),
+                body('montant', 'invalid montant')
+                    .exists().withMessage('parameter montant not found').bail()
+                    .not().isEmpty().withMessage('montant cannot be empty').bail()
+                    .isNumeric().withMessage('montant is not numeric')
+                    .trim().escape(),
                 body('commentaire', 'invalid commentaire').optional()
                     .isString().withMessage('commentaire is not alpha').bail()
                     .isLength({min: 10}).withMessage('commentaire is too short')
-                    .trim().escape(),
-                body('montant', 'invalid montant')
-                    .exists().withMessage('parameter montant not found').bail()
-                    .isNumeric().withMessage('montant is not numeric')
                     .trim().escape(),
             ]
         }

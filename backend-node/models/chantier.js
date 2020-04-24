@@ -30,13 +30,15 @@
  */
 module.exports = (sequelize, DataTypes) => {
   const Chantier = sequelize.define('Chantier', {
-    emplacement: DataTypes.STRING,
-    cout: DataTypes.INTEGER,
-    date_debut: DataTypes.DATE,
-    date_fin: DataTypes.DATE,
-    walita: DataTypes.INTEGER,
-    yereta: DataTypes.INTEGER,
-    montant_dispo: DataTypes.INTEGER
+      emplacement: DataTypes.STRING,
+      cout: DataTypes.INTEGER,
+      date_debut: DataTypes.DATE,
+      date_fin: DataTypes.DATE,
+      walita: DataTypes.INTEGER,
+      yereta: DataTypes.INTEGER,
+      montant_dispo: DataTypes.INTEGER,
+      createdBy: DataTypes.INTEGER,
+      updatedBy: DataTypes.INTEGER,
   }, {});
   Chantier.associate = function(models) {
     // associations can be defined here

@@ -1,10 +1,12 @@
 var ouvrierModel = require('../../../models').Ouvrier;
-const { validationResult } = require('express-validator');
+const ouvrierDao = require('../../../dao/ouvrierDao');
+const chantierDao = require('../../../dao/chantierDao');
+const {validationResult} = require('express-validator');
 
 /**
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 function save(req, res) {
     const errors = validationResult(req);
@@ -14,12 +16,14 @@ function save(req, res) {
       return;
     }
 
-    var ouvrier = {
+    const ouvrier = {
         nom: req.body.nom,
         prenom: req.body.prenom,
         telephone: req.body.telephone,
         type: req.body.type,
-    }
+        updatedBy: req.user.userId,
+        createdBy: req.user.userId,
+    };
 
     ouvrierModel.findOne({
         where: {telephone: ouvrier.telephone}
@@ -62,10 +66,10 @@ function getAll(req, res, next) {
     var order = req.query.order;
 
     ouvrierModel.findAndCountAll({
-        order: [(order != null) ? order.split(':'): ['nom', 'ASC']],
-        attributes: (fields != '*' && fields != null) ? fields.split(';') : null,
+        order: [(order != null) ? order.split(':') : ['nom', 'ASC']],
+        attributes: (fields !== '*' && fields != null) ? fields.split(';') : null,
         limit: (!isNaN(limit) ? limit : 10),
-        offset: (!isNaN(offset) ? offset : null),  
+        offset: (!isNaN(offset) ? offset : null),
     }).then((ouvrierFound) => {
         if (ouvrierFound) {
             return res.status(200).json(ouvrierFound);
@@ -114,12 +118,13 @@ function update(req, res, next) {
       return;
     }
 
-    var ouvrier = {
+    const ouvrier = {
         id: req.body.id,
         nom: req.body.nom,
         prenom: req.body.prenom,
         telephone: req.body.telephone,
-        type: req.body.type
+        type: req.body.type,
+        updatedBy: req.user.userId,
     };
 
     ouvrierModel.findByPk(ouvrier.id).then((ouvrierFound) => {
@@ -176,10 +181,67 @@ function destroy(req, res, next) {
 
     }).catch((err) => {
         console.error(err);
-            return res.status(500).json(err.errors);
+        return res.status(500).json(err.errors);
     });
 }
 
+async function affect(req, res) {
+    const affectation = {
+        OuvrierId: req.params.id,
+        ChantierId: req.query.idChantier,
+        updatedBy: req.user.userId,
+        createdBy: req.user.userId,
+    };
+
+    let chantier = await chantierDao.getChantierById(affectation.ChantierId);
+    if (!chantier) {
+        return res.status(400).json({
+            message: 'no chantier found with id ' + affectation.ChantierId
+        });
+    }
+
+    if (chantier.status === 'error') {
+        return res.status(500).json(chantier);
+    }
+
+    let ouvrier = await ouvrierDao.getById(affectation.OuvrierId);
+    if (!ouvrier) {
+        return res.status(404).json({
+            message: 'no ouvrier found with id ' + affectation.OuvrierId
+        });
+    }
+
+    if (ouvrier.status === 'error') {
+        return res.status(500).json(ouvrier);
+    }
+
+    let affection = await ouvrierDao.affecterAChantier(affectation);
+
+    if (affection.status === 'error') {
+        return res.status(500).json(affection);
+    }
+
+    return res.status(500).json(affection);
+}
+
+async function getOuvrierWithChantiers(req, res) {
+    const id = req.params.id;
+
+    let ouvrier = await ouvrierDao.getOuvrierWithChantiers(id);
+
+    if (!ouvrier) {
+        return res.status(404).json({
+            message: 'no ouvrier found with id ' + id
+        });
+    }
+
+    if (ouvrier.status === 'error') {
+        return res.status(500).json(ouvrier);
+    }
+
+    return res.status(200).json(ouvrier);
+}
+
 module.exports = {
-    save, getAll, getById, update, destroy
+    save, getAll, getById, update, destroy, affect, getOuvrierWithChantiers
 };
