@@ -1,1 +1,98 @@
-<p>ouvrier-details works!</p>
+<div class="animated fadeIn">
+  <div class="card">
+    <div *ngIf="ouvrier" class="card-header" id="title">
+      <div class="pull-left">
+        <h2>Details de l'ouvrier : {{ouvrier?.nom}} {{ouvrier?.prenom}}</h2>
+      </div>
+      <div class="pull-right" id="btn_add_mouv">
+        <button
+          class="btn btn-pill btn-block btn-primary" type="button">Effectuer un mouvment
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="showError" class="card-header" id="">
+      <alert type="danger">
+        <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
+          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
+      </alert>
+    </div>
+
+  </div>
+</div>
+
+<div *ngIf="ouvrier" class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <strong>Infos sur <i>l'ouvrier </i></strong>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td><strong>Identifiant de l'ouvrier :</strong></td>
+            <td>{{ouvrier.id}}</td>
+          </tr>
+          <tr>
+            <td><strong>Nom :</strong></td>
+            <td>{{ouvrier.nom}}</td>
+          </tr>
+          <tr>
+            <td><strong>Prenom :</strong></td>
+            <td>{{ouvrier.prenom}}</td>
+          </tr>
+          <tr>
+            <td><strong>Téléphone :</strong></td>
+            <td>{{ouvrier.telephone}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <hr>
+        <br>
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td><strong>Ouvrier créer le :</strong></td>
+            <td>{{ouvrier.createdAt | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Ouvrier modifier le :</strong></td>
+            <td>{{ouvrier.updatedAt | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="t" class="col-md-6">
+    <div class="card">
+      <div chiffre_title class="card-header">
+        <strong>Chantier sur le quel il à travailler </strong>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td><strong>Chantier emplacement :</strong></td>
+            <td>{{t.ChantierOuvriers[0].Chantier.emplacement}}</td>
+          </tr>
+          <tr>
+            <td><strong>Montant disponible :</strong></td>
+            <td> Fcfa</td>
+          </tr>
+          <tr>
+            <td><strong>Montant emprunter sur un autre chantier :</strong></td>
+            <td>Fcfa</td>
+          </tr>
+          <tr>
+            <td><strong>Montant de cet chantier :</strong></td>
+            <td>Fcfa</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,7 @@ import {OuvrierModalComponent} from "./ouvriers/ouvrier-modal/ouvrier-modal.comp
 import {OuvrierDetailsComponent} from './ouvriers/ouvrier-details/ouvrier-details.component';
 import {AddOuvrierToChantierModalComponent} from './ouvriers/add-ouvrier-to-chantier-modal/add-ouvrier-to-chantier-modal.component';
 import {NgxSelectModule} from "ngx-select-ex";
+import {AlertModule} from "ngx-bootstrap/alert";
 
 @NgModule({
   declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent],
@@ -43,6 +44,7 @@ import {NgxSelectModule} from "ngx-select-ex";
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    AlertModule.forRoot(),
     NgxSelectModule
   ],
   providers: [

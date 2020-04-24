@@ -13,6 +13,9 @@ import {ToastrService} from "ngx-toastr";
 export class OuvrierDetailsComponent implements OnInit {
 
   ouvrier: Ouvrier
+  ouvrierByChantier: any;
+  showError: boolean = false;
+  t: any;
 
   constructor(private route: ActivatedRoute, private ouvrierService: OuvrierService,
               private spinner: SpinnerService, private toastService: ToastrService,) {
@@ -20,6 +23,22 @@ export class OuvrierDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.init();
+  }
+
+  getOuvrierByChantier(id: number) {
+    this.spinner.show();
+    this.ouvrierService.getChantierByOuvrier(id).subscribe((response) => {
+      let test = JSON.stringify(response);
+      this.ouvrierByChantier = JSON.parse(test);
+      this.spinner.hide();
+    }, error => {
+      this.toastService.error(`Une erreur est survenue lors de la récupération des ouvrier par chantier`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.spinner.hide();
+    });
   }
 
   getOuvrierById(id: number) {
@@ -37,10 +56,14 @@ export class OuvrierDetailsComponent implements OnInit {
     });
   }
 
+  refresh() {
+    this.init();
+  }
+
   private init(): void {
     this.route.params.subscribe(params => {
       this.getOuvrierById(params['id']);
+      this.getOuvrierByChantier(params['id']);
     });
   }
-
 }

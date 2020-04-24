@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {AllOuvrierResponse} from "../model/responses/AllOuvrierResponse";
 import {environment} from "../../environments/environment";
-import {Ouvrier} from "../model/ouvrier";
+import {Ouvrier, OuvrierByChantier} from "../model/ouvrier";
 import {catchError} from "rxjs/operators";
 
 @Injectable({
@@ -41,6 +41,10 @@ export class OuvrierService {
 
   deleteOuvrierById(id: number) {
     return this.http.delete<Ouvrier>(`${this.apiUrl}/${id}`);
+  }
+
+  getChantierByOuvrier(idOuvrier: number): Observable<any> {
+    return this.http.get<OuvrierByChantier>(`${this.apiUrl}/${idOuvrier}/chantiers`);
   }
 
   handleError(error) {
