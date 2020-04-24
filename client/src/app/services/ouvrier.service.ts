@@ -13,6 +13,7 @@ export class OuvrierService {
 
   apiUrl = environment.api_url + 'api/ouvrier';
 
+
   constructor(private http: HttpClient) {
   }
 
@@ -30,6 +31,11 @@ export class OuvrierService {
 
   addOuvrier(ouvrier: Ouvrier): Observable<Ouvrier> {
     return this.http.post<Ouvrier>(`${this.apiUrl}`, ouvrier)
+      .pipe(catchError<any, any>(this.handleError));
+  }
+
+  addOuvrierInChantier(idOuvrier: number, idChantier: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/${idOuvrier}/affecter?idChantier=${idChantier}`, '')
       .pipe(catchError<any, any>(this.handleError));
   }
 
