@@ -31,6 +31,18 @@ async function getOuvrierWithChantiers(id) {
     });
 }
 
+const sequelize = require('sequelize');
+
+async function getChantiersOfOuvrier(id) {
+    return models.sequelize.query("select Chantiers.* " +
+        "       from ChantierOuvriers join ouvriers on ChantierOuvriers.OuvrierId = Ouvriers.id " +
+        "       join Chantiers on ChantierOuvriers.ChantierId = Chantiers.id where OuvrierId = ?",
+        {
+            replacements: [id],
+            type: sequelize.QueryTypes.SELECT
+        });
+}
+
 module.exports = {
-    affecterAChantier, getById, getOuvrierWithChantiers
+    affecterAChantier, getById, getOuvrierWithChantiers, getChantiersOfOuvrier
 };

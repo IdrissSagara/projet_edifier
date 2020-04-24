@@ -224,10 +224,10 @@ async function affect(req, res) {
     return res.status(201).json(affection);
 }
 
-async function getOuvrierWithChantiers(req, res) {
+async function getChantiersOfOuvrier(req, res) {
     const id = req.params.id;
 
-    let ouvrier = await ouvrierDao.getOuvrierWithChantiers(id);
+    let ouvrier = await ouvrierDao.getChantiersOfOuvrier(id);
 
     if (!ouvrier) {
         return res.status(404).json({
@@ -243,5 +243,5 @@ async function getOuvrierWithChantiers(req, res) {
 }
 
 module.exports = {
-    save, getAll, getById, update, destroy, affect, getOuvrierWithChantiers
+    save, getAll, getById, update, destroy, affect, getChantiersOfOuvrier
 };
