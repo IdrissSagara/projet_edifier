@@ -53,7 +53,7 @@ async function sendFacturePDF(req, res, next) {
                 message: paiement
             });
         }
-        paiement = paiement.get({plain: true});
+        paiement.p = paiement.get({plain: true});
 
         chantier = await chantierDAO.getChantierById(paiement.ChantierId);
         if (!chantier) {
@@ -72,11 +72,13 @@ async function sendFacturePDF(req, res, next) {
         chantier = chantier.get({plain: true});
         paiement.ch = chantier;
     } else {
-        paiement = infosPaiement.p;
+        paiement = infosPaiement;
     }
 
+    console.log(paiement);
+
     let data = {
-        paiement: paiement,
+        paiement: paiement.p,
         client: paiement.ch.Client,
         chantier: paiement.ch
     };

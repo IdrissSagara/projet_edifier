@@ -125,7 +125,6 @@ function update(req, res, next) {
         telephone: req.body.telephone,
         type: req.body.type,
         updatedBy: req.user.userId,
-        createdBy: req.user.userId,
     };
 
     ouvrierModel.findByPk(ouvrier.id).then((ouvrierFound) => {

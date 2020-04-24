@@ -15,7 +15,7 @@ function save(req, res) {
       return;
     }
 
-    chantier = {
+    let chantier = {
         ClientId: req.body.ClientId,
         emplacement: req.body.emplacement,
         cout: req.body.cout,
@@ -24,22 +24,15 @@ function save(req, res) {
         walita: req.body.walita || 0,
         yereta: req.body.yereta || req.body.montant_dispo,
         montant_dispo: req.body.montant_dispo,
+        createdBy: req.user.userId,
+        updatedBy: req.user.userId
     };
 
     models.Client.findOne({
         where: {id: chantier.ClientId}
     }).then((clientFound) => {
-        if (clientFound) {            
-            models.Chantier.create({
-                ClientId: clientFound.id,
-                emplacement: chantier.emplacement,
-                cout: chantier.cout,
-                date_debut: chantier.date_debut,
-                date_fin: chantier.date_fin,
-                walita: chantier.walita,
-                yereta: chantier.yereta,
-                montant_dispo: chantier.montant_dispo
-            }).then((newChantier) => {
+        if (clientFound) {
+            models.Chantier.create(chantier).then((newChantier) => {
                 if (newChantier) {
                     return res.status(201).json(newChantier);
                 } else {
@@ -84,6 +77,7 @@ function update(req, res) {
         walita: req.body.walita,
         yereta: req.body.yereta,
         montant_dispo: req.body.montant_dispo,
+        updatedBy: req.user.userId,
     };
 
     models.Chantier.findByPk(chantier.id).then((chantierFound) => {

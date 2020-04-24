@@ -26,7 +26,8 @@ async function update(chantier, transaction) {
             date_fin: chantier.date_fin,
             walita: chantier.walita,
             yereta: chantier.yereta,
-            montant_dispo: chantier.montant_dispo
+            montant_dispo: chantier.montant_dispo,
+            updatedBy: chantier.updatedBy
         },
         {
             where: {id: chantier.id}

@@ -115,11 +115,15 @@ async function save(req, res, next) {
         return res.status(500).json(chantierFound);
     }
 
-    let cout = parseFloat(chantierFound.cout);
-    let montant = parseFloat(req.body.montant);
-    let date_paiement = req.body.date_paiement;
-    let type = req.body.type;
-    let commentaire = req.body.commentaire;
+    let paiement = {
+        cout: parseFloat(chantierFound.cout),
+        montant: parseFloat(req.body.montant),
+        date_paiement: req.body.date_paiement,
+        type: req.body.type,
+        commentaire: req.body.commentaire,
+        createdBy: req.user.userId,
+        updatedBy: req.user.userId,
+    };
 
     //sum up the earlier paiements
     let allPaiements = await paiementDAO.getAll({
@@ -146,7 +150,7 @@ async function save(req, res, next) {
     allPaiements.map(i => {
         return total_amount += parseFloat(i.total_amount);
     });
-    let montant_restant = cout - (total_amount + montant);
+    let montant_restant = paiement.cout - (total_amount + paiement.montant);
 
     if (montant_restant < 0) {
         return res.status(400).json({
@@ -156,14 +160,11 @@ async function save(req, res, next) {
 
     let transaction = await models.sequelize.transaction({autocommit: false});
     try {
-        let newPaiement = await paiementDAO.save({
-            date_paiement: (date_paiement != null) ? date_paiement : new Date(),
-            montant: montant,
-            montant_restant: montant_restant,
-            type: type,
-            commentaire: commentaire,
-            ChantierId: chantierFound.id,
-        }, transaction);
+        paiement.date_paiement = (paiement.date_paiement != null) ? paiement.date_paiement : new Date();
+        paiement.ChantierId = chantierFound.id;
+        paiement.montant_restant = montant_restant;
+
+        let newPaiement = await paiementDAO.save(paiement, transaction);
 
         if (!newPaiement) {
             await transaction.rollback();
@@ -174,12 +175,16 @@ async function save(req, res, next) {
             });
         }
 
-        //validate transact
-        await transaction.commit();
+        if (newPaiement.status === 'error') {
+            await transaction.rollback();
+            return res.status(500).json(newPaiement);
+        }
 
+        //validate transact
         let ch = chantierFound.get({plain: true});
         let p = newPaiement.get({plain: true});
         req.infosFacture = {ch, p};
+        await transaction.rollback();
         next();
     } catch (e) {
         console.log(e);

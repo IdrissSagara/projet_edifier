@@ -16,13 +16,15 @@ async function save(req, res) {
         source: req.body.source,
         destination: req.body.destination,
         commentaire: req.body.commentaire,
+        createdBy: req.user.userId,
+        updatedBy: req.user.userId,
     };
 
     let chantierDepart = await chantierDao.getChantierById(mouvement.source);
 
     if (!chantierDepart) {
         return res.status(400).json({
-            'error': 'no chantier found with id = ' + mouvement.source
+            'error': 'no source chantier found with for id ' + mouvement.source
         })
     }
 
@@ -30,7 +32,7 @@ async function save(req, res) {
 
     if (!chantierDestination) {
         return res.status.json({
-            'error': 'no chantier found with id = ' + mouvement.destination
+            'error': 'no destination chantier found with for id ' + mouvement.destination
         })
 
     }
@@ -41,9 +43,13 @@ async function save(req, res) {
         });
     }
 
+    chantierDepart.updatedBy = mouvement.createdBy;
+    chantierDestination.updatedBy = mouvement.createdBy;
+
     //transaction
     chantierDepart.montant_dispo = parseInt(chantierDepart.montant_dispo) - parseInt(mouvement.montant);
     chantierDestination.montant_dispo = parseInt(chantierDestination.montant_dispo) + parseInt(mouvement.montant);
+    chantierDestination.walita = parseInt(chantierDestination.walita) + parseInt(mouvement.montant);
 
     let transaction = await models.sequelize.transaction({autocommit: false});
     try {
