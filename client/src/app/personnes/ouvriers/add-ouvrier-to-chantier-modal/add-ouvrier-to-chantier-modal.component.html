@@ -1,0 +1,33 @@
+<!--<div aria-hidden="true" aria-labelledby="myModalLabel" bsModal class="modal fade" role="dialog"
+     tabindex="-1">
+  <div class="modal-dialog" role="document">-->
+<script src="ouvrier-modal.component.ts"></script>
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button (click)="ouvrierModalRel.hide()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="chantier">Chantier</label>
+        <ngx-select [(ngModel)]="chantierId" [items]="chantiers" id="chantier"
+                    name="chantier" noResultsFound="Aucun Chantier trouvé"
+                    placeholder="Selectionnez un chantier">
+        </ngx-select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="addOuvrierToChantier()" [disabled]="form.invalid"
+            class="btn btn-primary" type="button">Enregistrer
+    </button>
+    <button (click)="ouvrierModalRel.hide()" class="btn btn-secondary" type="button">Fermer</button>
+  </div>
+  <!--<pre>{{form.value | json}}</pre>-->
+</div>
+<!--</div>
+</div>
+-->

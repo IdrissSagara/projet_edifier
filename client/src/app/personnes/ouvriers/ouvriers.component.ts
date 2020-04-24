@@ -7,6 +7,7 @@ import {combineLatest, Subscription} from "rxjs";
 import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {OuvrierModalComponent} from "./ouvrier-modal/ouvrier-modal.component";
 import {ModalDirective} from "ngx-bootstrap/modal";
+import {AddOuvrierToChantierModalComponent} from "./add-ouvrier-to-chantier-modal/add-ouvrier-to-chantier-modal.component";
 
 @Component({
   selector: 'app-ouvriers',
@@ -131,7 +132,35 @@ export class OuvriersComponent implements OnInit {
     });
   }
 
-  ajouterOuvrierAuChantier(ouvrier: Ouvrier) {
+  ajouterOuvrierAuChantier(id: number) {
+    const initialState = {
+      ouvrierId: id,
+      title: `Ajouter un ouvrier au chantier `
+    };
 
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllOuvrier();
+        }
+
+        this.unsubscribe();
+      })
+    );
+
+    this.subscriptions.push(_combine);
+
+    this.ouvrierModalRef = this.modalService.show(AddOuvrierToChantierModalComponent, {initialState});
+    this.ouvrierModalRef.content.closeBtnName = 'Close';
   }
 }

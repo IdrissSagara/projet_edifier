@@ -20,12 +20,15 @@ import {PersonnesRoutingModule} from "./personnes.routing.module";
 import {ClientModalComponent} from "./client/client-modal/client-modal.component";
 import {OuvrierModalComponent} from "./ouvriers/ouvrier-modal/ouvrier-modal.component";
 import {OuvrierDetailsComponent} from './ouvriers/ouvrier-details/ouvrier-details.component';
+import {AddOuvrierToChantierModalComponent} from './ouvriers/add-ouvrier-to-chantier-modal/add-ouvrier-to-chantier-modal.component';
+import {NgxSelectModule} from "ngx-select-ex";
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent],
+  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent],
   entryComponents: [
     ClientModalComponent,
-    OuvrierModalComponent
+    OuvrierModalComponent,
+    AddOuvrierToChantierModalComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +42,8 @@ import {OuvrierDetailsComponent} from './ouvriers/ouvrier-details/ouvrier-detail
     PopoverModule.forRoot(),
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    NgxSelectModule
   ],
   providers: [
     BsModalService
