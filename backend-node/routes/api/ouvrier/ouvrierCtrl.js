@@ -221,7 +221,7 @@ async function affect(req, res) {
         return res.status(500).json(affection);
     }
 
-    return res.status(500).json(affection);
+    return res.status(201).json(affection);
 }
 
 async function getOuvrierWithChantiers(req, res) {
