@@ -4,6 +4,9 @@ import {OuvrierService} from "../../../services/ouvrier.service";
 import {SpinnerService} from "../../../services/spinner.service";
 import {Ouvrier} from "../../../model/ouvrier";
 import {ToastrService} from "ngx-toastr";
+import {ChantierWithOuvrier} from "../../../model/chantierOuvrier";
+import {UtilisateurService} from "../../../services/utilisateur.service";
+import {Utilisateur} from "../../../model/utilisateur";
 
 @Component({
   selector: 'app-ouvrier-details',
@@ -13,12 +16,15 @@ import {ToastrService} from "ngx-toastr";
 export class OuvrierDetailsComponent implements OnInit {
 
   ouvrier: Ouvrier
-  ouvrierByChantier: any;
+  chantier: ChantierWithOuvrier[];
   showError: boolean = false;
-  t: any;
+  updatedById: number;
+  createdById: number;
+  user: Utilisateur;
 
   constructor(private route: ActivatedRoute, private ouvrierService: OuvrierService,
-              private spinner: SpinnerService, private toastService: ToastrService,) {
+              private spinner: SpinnerService, private toastService: ToastrService,
+              private utilisateurService: UtilisateurService) {
   }
 
   ngOnInit(): void {
@@ -28,8 +34,7 @@ export class OuvrierDetailsComponent implements OnInit {
   getOuvrierByChantier(id: number) {
     this.spinner.show();
     this.ouvrierService.getChantierByOuvrier(id).subscribe((response) => {
-      let test = JSON.stringify(response);
-      this.ouvrierByChantier = JSON.parse(test);
+      this.chantier = response;
       this.spinner.hide();
     }, error => {
       this.toastService.error(`Une erreur est survenue lors de la récupération des ouvrier par chantier`, '', {
@@ -45,7 +50,12 @@ export class OuvrierDetailsComponent implements OnInit {
     this.spinner.show();
     this.ouvrierService.getOuvrierById(id).subscribe((response) => {
       this.ouvrier = response;
+      this.updatedById = response.updatedBy;
+      this.createdById = response.createdBy;
       this.spinner.hide();
+      this.getUtilisateur(this.updatedById);
+      this.getUtilisateur(this.createdById);
+
     }, error => {
       this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', {
         progressBar: true,
@@ -53,6 +63,13 @@ export class OuvrierDetailsComponent implements OnInit {
         tapToDismiss: false
       });
       this.spinner.hide();
+    });
+  }
+
+  getUtilisateur(id: number) {
+    this.utilisateurService.getUserById(id).subscribe((res) => {
+      this.user = res;
+    }, error => {
     });
   }
 
