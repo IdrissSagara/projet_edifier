@@ -3,8 +3,9 @@ import {HttpClient} from "@angular/common/http";
 import {Observable, throwError} from "rxjs";
 import {AllOuvrierResponse} from "../model/responses/AllOuvrierResponse";
 import {environment} from "../../environments/environment";
-import {Ouvrier, OuvrierByChantier} from "../model/ouvrier";
+import {Ouvrier} from "../model/ouvrier";
 import {catchError} from "rxjs/operators";
+import {ChantierWithOuvrier} from "../model/chantierOuvrier";
 
 @Injectable({
   providedIn: 'root'
@@ -44,7 +45,7 @@ export class OuvrierService {
   }
 
   getChantierByOuvrier(idOuvrier: number): Observable<any> {
-    return this.http.get<OuvrierByChantier>(`${this.apiUrl}/${idOuvrier}/chantiers`);
+    return this.http.get<ChantierWithOuvrier>(`${this.apiUrl}/${idOuvrier}/chantiers`);
   }
 
   handleError(error) {

@@ -1,24 +1,15 @@
-import {Ouvrier} from "./ouvrier";
-import {Chantier} from "./chantier";
-
-export class ChantierByOuvrierModel {
+export class ChantierWithOuvrier {
   id: number;
-  ChantierId: number;
-  OuvrierId: number;
+  clientId: number;
+  emplacement: number;
+  cout: number;
+  date_debut: number;
+  date_fin: number;
+  walita: number;
+  yereta: number;
+  montant_dispo: number;
   createdBy: number;
   updatedBy: number;
   createdAt: string;
   updatedAt: string;
-  Ouvrier: Ouvrier;
-}
-
-export class OuvrierByChantierModel {
-  id: number;
-  ChantierId: number;
-  OuvrierId: number;
-  createdBy: number;
-  updatedBy: number;
-  createdAt: string;
-  updatedAt: string;
-  Chantier: Chantier;
 }

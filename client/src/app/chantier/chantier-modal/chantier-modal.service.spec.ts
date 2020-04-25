@@ -1,5 +1,5 @@
 import {TestBed} from '@angular/core/testing';
-
+// @ts-ignore
 import {ChantierModalService} from './chantier-modal.service';
 
 describe('ChantierModalService', () => {
