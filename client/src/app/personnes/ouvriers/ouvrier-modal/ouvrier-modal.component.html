@@ -26,12 +26,11 @@
         <input [(ngModel)]="ouvrier.telephone" class="form-control" id="telephone" name="telephone"
                placeholder="Entrez le numéro de téléphone..." required type="number">
       </div>
-      <div class="form-group">
-        <label for="type">Type</label>
-        <select [(ngModel)]="ouvrier.type" class="form-control" id="type" name="type">
-
-          <option selected value="undefined">--Selectionnez le type d'ouvrier--</option>
-          <option *ngFor="let type of typeOuvrier" value="{{type}}">{{type}}</option>
+      <div *ngIf="ouvrier" class="form-group">
+        <label class="control-label" for="type">Type d'ouvrier</label>
+        <select [(ngModel)]="ouvrier.type" class="form-control" id="type" name="type"
+                required>
+          <option *ngFor="let type of types_ouvrier" [value]="type">{{ type }}</option>
         </select>
       </div>
     </form>

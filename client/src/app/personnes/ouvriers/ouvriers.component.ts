@@ -163,4 +163,36 @@ export class OuvriersComponent implements OnInit {
     this.ouvrierModalRef = this.modalService.show(AddOuvrierToChantierModalComponent, {initialState});
     this.ouvrierModalRef.content.closeBtnName = 'Close';
   }
+
+  showUpdateOuvrierDialog(ouvrier: Ouvrier) {
+    const initialState = {
+      ouvrier: this.ouvriers = ouvrier,
+      title: `Modifier l'ouvrier : ${this.ouvriers.nom + ' ' + this.ouvriers.prenom}`
+    };
+
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllOuvrier();
+        }
+
+        this.unsubscribe();
+      })
+    );
+
+    this.subscriptions.push(_combine);
+
+    this.ouvrierModalRef = this.modalService.show(OuvrierModalComponent, {initialState});
+    this.ouvrierModalRef.content.closeBtnName = 'Close';
+  }
 }
