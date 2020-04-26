@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {AllClientsResponse} from "../model/responses/AllClientsResponse";
 import {Observable} from "rxjs";
 import {Client} from "../../../../backend-node/models/client";
+import {ClientModel} from "../model/clientModel";
 
 
 @Injectable({
@@ -26,4 +27,9 @@ export class ClientService {
   search(nom): Observable<AllClientsResponse> {
     return this.httpClient.get<AllClientsResponse>(`${this.apiUrl}/search?nom=${nom}`);
   }
+
+  getClientById(id: number) {
+    return this.httpClient.get<ClientModel>(`${this.apiUrl}/${id}`);
+  }
+
 }

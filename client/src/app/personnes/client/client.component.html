@@ -35,7 +35,8 @@
             <td>{{client.telephone}}</td>
             <td>
               <div class="btn-group">
-                <button class="btn btn-info btn-outline-info btn-icon" tooltip="Voir les détails du client"><i
+                <button [routerLink]="['/clients/detail', client.id]"
+                        class="btn btn-info btn-outline-info btn-icon" tooltip="Voir les détails du client"><i
                   class="icon-eye"></i></button>
                 <button class="btn btn-warning btn-outline-warning btn-icon" tooltip="Modifier le client"><i
                   class="icon-pencil"></i></button>

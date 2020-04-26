@@ -4,6 +4,7 @@ import {OuvriersComponent} from "./ouvriers/ouvriers.component";
 import {ClientComponent} from "./client/client.component";
 import {UtilisateursComponent} from "./utilisateurs/utilisateurs.component";
 import {OuvrierDetailsComponent} from "./ouvriers/ouvrier-details/ouvrier-details.component";
+import {ClientDetailsComponent} from "./client/client-details/client-details.component";
 
 const routes: Routes = [
   {
@@ -39,6 +40,13 @@ const routes: Routes = [
         component: OuvrierDetailsComponent,
         data: {
           title: 'Detail de l\'ouvrier'
+        }
+      },
+      {
+        path: 'detail/:id',
+        component: ClientDetailsComponent,
+        data: {
+          title: 'Detail du client'
         }
       }
     ]
