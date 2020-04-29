@@ -15,13 +15,18 @@ export class ClientService {
 
   constructor(private httpClient: HttpClient) {
   }
+
   // recuperation des clients
   getAllClient(offset = 0): Observable<AllClientsResponse> {
     return this.httpClient.get<AllClientsResponse>(`${this.apiUrl}?offset=${offset}`);
   }
 
-  addClient(chantier): Observable<Client> {
-    return this.httpClient.post<Client>(`${this.apiUrl}`, chantier);
+  addClient(client): Observable<Client> {
+    return this.httpClient.post<Client>(`${this.apiUrl}`, client);
+  }
+
+  updateClient(client): Observable<Client> {
+    return this.httpClient.put<Client>(`${this.apiUrl}`, client);
   }
 
   search(nom): Observable<AllClientsResponse> {

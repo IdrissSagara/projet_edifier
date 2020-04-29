@@ -94,4 +94,35 @@ export class ClientComponent implements OnInit {
       this.spinner.hide();
     });
   }
+
+  showUpdateClientDialog(client: ClientModel) {
+    const initialState = {
+      client: this.newClient = client,
+      title: `Modifier le client ${client.nom}  ${client.prenom}`
+    };
+
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllClients();
+        }
+        this.unsubscribe();
+      })
+    );
+
+    this.subscriptions.push(_combine);
+
+    this.clientModalRef = this.modalService.show(ClientModalComponent, {initialState});
+    this.clientModalRef.content.closeBtnName = 'Close';
+  }
 }

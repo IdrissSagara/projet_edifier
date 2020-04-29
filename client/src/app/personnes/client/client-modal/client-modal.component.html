@@ -6,21 +6,55 @@
     </button>
   </div>
   <div class="modal-body">
-    <form #form="ngForm">
-      <div class="form-group">
-        <label for="nom">Nom</label>
-        <input [(ngModel)]="client.nom" autocomplete="text" class="form-control" id="nom"
-               minlength="2" name="nom" placeholder="Entrez le nom..." required type="text">
+    <form #form="ngForm" role="form">
+      <div [ngClass]="{'has-error': inputEnErreur(nom)}" class="form-group">
+        <label class="control-label" for="nom">Nom<span class="requis">*</span>:</label>
+        <input #nom="ngModel" [(ngModel)]="client.nom" class="form-control" id="nom" name="nom"
+               placeholder="Nom" required
+               type="text"/>
+        <div *ngIf="inputEnErreur(nom)" class="alert alert-danger">
+
+          <div *ngIf="nom.errors?.required">
+            Le nom du client est requis.
+          </div>
+
+          <div *ngFor="let erreur of erreursServeur?.nom">
+            {{erreur}}
+          </div>
+        </div>
       </div>
-      <div class="form-group">
+      <div [ngClass]="{'has-error': inputEnErreur(prenom)}" class="form-group">
         <label for="prenom">Prénom</label>
         <input [(ngModel)]="client.prenom" class="form-control" id="prenom" minlength="2"
-               name="prenom" placeholder="Entrez le prénom..." required type="text">
+               #prenom="ngModel" name="prenom" placeholder="Entrez le prénom..."
+               required type="text"/>
+        <div *ngIf="inputEnErreur(prenom)" class="alert alert-danger">
+
+          <div *ngIf="prenom.errors?.required">
+            Le prenom du client est requis.
+          </div>
+
+          <div *ngFor="let erreur of erreursServeur?.prenom">
+            {{erreur}}
+          </div>
+        </div>
       </div>
-      <div class="form-group">
+      <div [ngClass]="{'has-error': inputEnErreur(telephone)}" class="form-group">
         <label for="telephone">Téléphone</label>
         <input [(ngModel)]="client.telephone" class="form-control" id="telephone" name="telephone"
-               placeholder="Entrez le numéro de téléphone..." required type="phone">
+               #telephone="ngModel" placeholder="Entrez le numéro de téléphone..." required
+               type="phone">
+        <div *ngIf="inputEnErreur(telephone)" class="alert alert-danger">
+
+          <div *ngIf="telephone.errors?.required">
+            Le numero de téléphone du client est requis.
+          </div>
+
+          <div *ngFor="let erreur of erreursServeur?.telephone">
+            {{erreur}}
+          </div>
+        </div>
+
       </div>
     </form>
   </div>

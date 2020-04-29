@@ -45,11 +45,27 @@ export class UtilService {
     return new Headers({'Content-Type': 'application/json', 'Accept': 'application/json'});
   }
 
-  /**
-   * Renvoie les RequestOptions par défaut
-   * @returns {RequestOptions}
-   */
-  /*public static getDefaultRequestOptions(): RequestOptions {
-    return new RequestOptions({headers: UtilService.getDefaultHeaders()});
-  }*/
+  public static flattenObject(object: any): any {
+    const toReturn: any = {};
+
+    for (const i in object) {
+      if (!object.hasOwnProperty(i)) {
+        continue;
+      }
+
+      if ((typeof object[i]) === 'object' && !(object[i] instanceof Array)) {
+        const flatObject = UtilService.flattenObject(object[i]);
+        for (const x in flatObject) {
+          if (!flatObject.hasOwnProperty(x)) {
+            continue;
+          }
+
+          toReturn[i + '_' + x] = flatObject[x];
+        }
+      } else {
+        toReturn[i] = object[i];
+      }
+    }
+    return toReturn;
+  }
 }
