@@ -174,7 +174,7 @@ function destroy(req, res) {
       return;
     }
 
-    var id = req.body.id;
+    var id = req.params.id;
 
     models.Client.findByPk(id).then((clientFound) => {
         if (!clientFound) {

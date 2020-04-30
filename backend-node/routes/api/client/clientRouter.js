@@ -42,7 +42,7 @@ router.put('/',
     clientCtrl.update);
 
 //delete a client
-router.delete('/',
+router.delete('/:id',
     clientValidator.validate('getClient'),
     accessControl.deniedRoles([roles.BASIC]),
     clientCtrl.destroy);
