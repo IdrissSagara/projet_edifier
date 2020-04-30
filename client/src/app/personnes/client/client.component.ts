@@ -1,5 +1,5 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ClientService} from "../../services/client.service";
 import {ClientModel} from "../../model/clientModel";
 import {combineLatest, Subscription} from "rxjs";
@@ -20,6 +20,11 @@ export class ClientComponent implements OnInit {
   totalPages: number;
   subscriptions: Subscription[] = [];
   currentPage: number;
+  deletedId: number;
+  deltedName: string;
+
+  @ViewChild('dangerModal') public dangerModal: ModalDirective;
+
 
   constructor(private clientService: ClientService, private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
@@ -37,29 +42,29 @@ export class ClientComponent implements OnInit {
   showAddClientDialog() {
     const initialState = {
       client: this.newClient,
-        title: 'Ajouter un nouveau client'
-      };
+      title: 'Ajouter un nouveau client'
+    };
 
-      const _combine = combineLatest(
-        this.modalService.onShown,
-        this.modalService.onHidden
-      ).subscribe(() => this.changeDetection.markForCheck());
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
 
-      this.subscriptions.push(
-        this.modalService.onShown.subscribe((reason: string) => {
-          // initialisa
-        })
-      );
-      this.subscriptions.push(
-        this.modalService.onHidden.subscribe((reason: string) => {
-          if (reason === null) {
-            this.getAllClients();
-          }
-          this.unsubscribe();
-        })
-      );
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllClients();
+        }
+        this.unsubscribe();
+      })
+    );
 
-      this.subscriptions.push(_combine);
+    this.subscriptions.push(_combine);
 
     this.clientModalRef = this.modalService.show(ClientModalComponent, {initialState});
     this.clientModalRef.content.closeBtnName = 'Close';
@@ -124,5 +129,40 @@ export class ClientComponent implements OnInit {
 
     this.clientModalRef = this.modalService.show(ClientModalComponent, {initialState});
     this.clientModalRef.content.closeBtnName = 'Close';
+  }
+
+  showDeleteClientDialog(client: ClientModel) {
+    this.deletedId = client.id;
+    this.deltedName = client.nom + " " + client.prenom;
+    this.dangerModal.show();
+  }
+
+  declineSupprimeOuvrier() {
+    this.dangerModal.hide();
+  }
+
+  confirmSupprimerOuvrier() {
+    this.spinner.show();
+    this.clientService.deleteClientById(this.deletedId).subscribe(res => {
+      this.getAllClients();
+      this.toastService.success('Ouvrier suppimer avec succes', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.deletedId = undefined;
+      this.dangerModal.hide();
+      this.spinner.hide();
+    }, (err) => {
+      this.dangerModal.hide();
+      this.spinner.hide();
+      const message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
+      this.toastService.error(message, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.deletedId = undefined;
+    });
   }
 }
