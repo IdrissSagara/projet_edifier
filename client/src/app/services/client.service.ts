@@ -25,6 +25,10 @@ export class ClientService {
     return this.httpClient.post<Client>(`${this.apiUrl}`, client);
   }
 
+  deleteClientById(id: number) {
+    return this.httpClient.delete<ClientModel>(`${this.apiUrl}/${id}`);
+  }
+
   updateClient(client): Observable<Client> {
     return this.httpClient.put<Client>(`${this.apiUrl}`, client);
   }
