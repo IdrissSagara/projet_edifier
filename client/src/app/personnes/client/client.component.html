@@ -28,12 +28,13 @@
           </tr>
           </thead>
           <tbody *ngIf="!isLoading">
-          <tr *ngFor="let client of clients; let i = index">
+          <tr *ngFor="let client of clients; let i = index" [routerLink]="['/clients/detail', client.id]"
+              id="clickable-row">
             <td>{{i + 1}}</td>
             <td>{{client.prenom | titlecase}}</td>
             <td>{{client.nom | titlecase}}</td>
             <td>{{client.telephone}}</td>
-            <td>
+            <td (click)="$event.stopPropagation()" id="unclickable-row">
               <div class="btn-group">
                 <button [routerLink]="['/clients/detail', client.id]"
                         class="btn btn-info btn-outline-info btn-icon" tooltip="Voir les détails du client"><i

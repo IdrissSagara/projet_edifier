@@ -5,3 +5,11 @@
 td, th {
   text-align: center;
 }
+
+#clickable-row {
+  cursor: pointer;
+}
+
+#unclickable-row {
+  cursor: default;
+}
