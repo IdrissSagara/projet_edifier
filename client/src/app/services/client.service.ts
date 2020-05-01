@@ -42,7 +42,7 @@ export class ClientService {
     return this.httpClient.get<ClientModel>(`${this.apiUrl}/${id}`);
   }
 
-  getChantierOfClient(idClient: number) {
+  getChantierOfClient(idClient: number): Observable<any> {
     return this.httpClient.get<Chantier>(`${this.apiUrl}/${idClient}/chantiers`);
   }
 

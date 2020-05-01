@@ -6,6 +6,7 @@ import {UtilisateurService} from "../../../services/utilisateur.service";
 import {Utilisateur} from "../../../model/utilisateur";
 import {ClientService} from "../../../services/client.service";
 import {ClientModel} from "../../../model/clientModel";
+import {Chantier} from "../../../model/chantier";
 
 @Component({
   selector: 'app-client-details',
@@ -19,6 +20,7 @@ export class ClientDetailsComponent implements OnInit {
   updatedById: number;
   createdById: number;
   user: Utilisateur;
+  chantiers: Chantier[];
 
   constructor(private route: ActivatedRoute, private clientService: ClientService,
               private spinner: SpinnerService, private toastService: ToastrService,
@@ -49,9 +51,30 @@ export class ClientDetailsComponent implements OnInit {
     });
   }
 
+  getChantierOfClient(id: number) {
+    this.spinner.show();
+    this.clientService.getChantierOfClient(id).subscribe((response) => {
+      this.chantiers = response;
+      // this.updatedById = response.updatedBy;
+      // this.createdById = response.createdBy;
+      this.spinner.hide();
+      // this.getUtilisateur(this.updatedById);
+      // this.getUtilisateur(this.createdById);
+
+    }, error => {
+      this.toastService.error(`Une erreur est survenue lors de la récupération des chantier du client`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.spinner.hide();
+    });
+  }
+
   init(): void {
     this.route.params.subscribe(params => {
       this.getClientById(params['id']);
+      this.getChantierOfClient(params['id']);
     });
   }
 
