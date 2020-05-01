@@ -1,6 +1,6 @@
 var models = require('../../../models');
-const { validationResult } = require('express-validator');
-
+const {validationResult} = require('express-validator');
+const clientDao = require('../../../dao/clientDao');
 /**
  * 
  * @param {*} req 
@@ -245,6 +245,22 @@ function getChantiers(req, res) {
     });
 }
 
+async function getChantiersOfClient(req, res) {
+    const id = req.params.id;
+    const client = await clientDao.getChantierofClient(id);
+    if (!client) {
+        return res.status(404).json({
+            message: 'no client found with id ' + id
+        });
+    }
+
+    if (client.status === 'error') {
+        return res.status(500).json(client);
+    }
+
+    return res.status(200).json(client);
+}
+
 module.exports = {
-    save, getAll, getById, getChantiers, update, destroy
+    save, getAll, getById, getChantiers, update, destroy, getChantiersOfClient
 };

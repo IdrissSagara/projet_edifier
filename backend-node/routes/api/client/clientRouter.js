@@ -27,7 +27,7 @@ router.get('/:id',
 router.get('/:id/chantiers',
     clientValidator.validate('getChantiers'),
     accessControl.canAccess(['advanced-user', 'admin']),
-    clientCtrl.getChantiers);
+    clientCtrl.getChantiersOfClient);
 
 //save a client
 router.post('/',

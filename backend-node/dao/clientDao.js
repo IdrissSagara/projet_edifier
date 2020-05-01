@@ -23,7 +23,15 @@ async function search(nom) {
     });
 }
 
+async function getChantierofClient(id) {
+    return models.sequelize.query("select Chantiers.* from Chantiers join Clients C on Chantiers.clientId = C.id where C.id = ?",
+        {
+            replacements: [id],
+            type: models.sequelize.QueryTypes.SELECT
+        });
+}
+
 module.exports = {
-    search
+    search, getChantierofClient,
 };
 
