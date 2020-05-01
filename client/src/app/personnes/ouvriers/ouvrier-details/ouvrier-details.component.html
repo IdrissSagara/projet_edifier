@@ -80,7 +80,8 @@
               <tr *ngFor="let c of chantier; let i = index" class="text-center">
                 <td>{{i + 1}}</td>
                 <td>
-                  <span class="badge badge-success ">{{c.clientId}}</span>
+                  <span [routerLink]="['/clients/detail', c.clientId]"
+                        class="badge badge-success " id="clickable-row">{{c.clientId}}</span>
                 </td>
                 <td>{{c.emplacement}}</td>
                 <td>{{c.cout}}</td>

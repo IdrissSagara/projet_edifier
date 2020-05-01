@@ -9,3 +9,12 @@
 #btn_add_mouv {
 }
 
+#clickable-row {
+  cursor: pointer;
+}
+
+#unclickable-row {
+  cursor: default;
+}
+
+
