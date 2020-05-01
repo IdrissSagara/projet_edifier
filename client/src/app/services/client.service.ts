@@ -5,6 +5,7 @@ import {AllClientsResponse} from "../model/responses/AllClientsResponse";
 import {Observable} from "rxjs";
 import {Client} from "../../../../backend-node/models/client";
 import {ClientModel} from "../model/clientModel";
+import {Chantier} from "../model/chantier";
 
 
 @Injectable({
@@ -39,6 +40,10 @@ export class ClientService {
 
   getClientById(id: number) {
     return this.httpClient.get<ClientModel>(`${this.apiUrl}/${id}`);
+  }
+
+  getChantierOfClient(idClient: number) {
+    return this.httpClient.get<Chantier>(`${this.apiUrl}/${idClient}/chantiers`);
   }
 
 }
