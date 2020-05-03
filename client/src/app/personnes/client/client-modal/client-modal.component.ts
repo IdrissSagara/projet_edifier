@@ -44,6 +44,9 @@ export class ClientModalComponent implements OnInit {
         this.clientModalRef.hide();
         this.spinner.hide();
       }, err => {
+        console.log(err.error.errors[0].msg);
+        // console.log(JSON.parse(err));
+        // console.log(JSON.stringify(err));
         if (err.status === 422) {
           const responseJSON = JSON.stringify(err);
           this.erreursServeur = UtilService.flattenObject(responseJSON);

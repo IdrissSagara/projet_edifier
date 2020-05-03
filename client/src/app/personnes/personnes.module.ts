@@ -24,13 +24,15 @@ import {AddOuvrierToChantierModalComponent} from './ouvriers/add-ouvrier-to-chan
 import {NgxSelectModule} from "ngx-select-ex";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {ClientDetailsComponent} from './client/client-details/client-details.component';
+import {UtilisateurModalComponent} from './utilisateurs/utilisateur-modal/utilisateur-modal.component';
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent, ClientDetailsComponent],
+  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent, ClientDetailsComponent, UtilisateurModalComponent],
   entryComponents: [
     ClientModalComponent,
     OuvrierModalComponent,
-    AddOuvrierToChantierModalComponent
+    AddOuvrierToChantierModalComponent,
+    UtilisateurModalComponent,
   ],
   imports: [
     CommonModule,
