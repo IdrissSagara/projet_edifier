@@ -40,35 +40,32 @@ async function sendFacturePDF(req, res, next) {
     let infosPaiement = req.infosFacture;
     if (!infosPaiement) {
         paiement = await paiementDAO.getPaiementById(req.params.id);
+
         if (!paiement) {
             return res.status(404).json({
                 status: 'error',
-                message: 'no paiement found with id ' + req.params.id
+                message: `Aucun paiement trouvé avec l'identifiant ` + req.params.id
             });
         }
 
         if (paiement.status === 'error') {
-            return res.status(500).json({
-                status: 'error',
-                message: paiement
-            });
+            return res.status(500).json(paiement);
         }
         paiement.p = paiement.get({plain: true});
 
         chantier = await chantierDAO.getChantierById(paiement.ChantierId);
+
         if (!chantier) {
             return res.status(404).json({
                 status: 'error',
-                message: 'no chantier found with id ' + paiement.ChantierId
+                message: `Auncun chantier trouvé avec l'identifiant ` + paiement.ChantierId
             });
         }
 
         if (chantier.status === 'error') {
-            return res.status(500).json({
-                status: 'error',
-                message: chantier
-            });
+            return res.status(500).json(chantier);
         }
+
         chantier = chantier.get({plain: true});
         paiement.ch = chantier;
     } else {
@@ -102,7 +99,7 @@ function deleteFile(file) {
         if (err) {
             console.error(err.toString());
         } else {
-            console.warn(file + ' deleted');
+            console.warn(file + ' supprimé');
         }
     });
 }

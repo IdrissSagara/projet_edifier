@@ -16,22 +16,25 @@ async function loginCtrl(req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
-    let userFound = await userDao.getByUsername(username).catch((err) => {
-        console.error(err);
-        return res.status(500).json(err.errors);
-    });
+    let userFound = await userDao.getByUsername(username);
 
     if (!userFound) {
         return res.status(404).json({
-            'error': 'no user found with username ' + username
+            status: 'error',
+            message: `Aucun utilisateur trouvé avec le nom d'utilisateur ` + username
         });
+    }
+
+    if (userFound.status === 'error') {
+        return res.status(500).json(userFound);
     }
 
     let authed = userDao.pwdCompare(userFound.password, password);
 
     if (!authed) {
         return res.status(403).json({
-            'error': 'invalid password'
+            status: 'error',
+            message: `Mot de passe invalide`
         });
     }
 

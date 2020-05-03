@@ -23,12 +23,17 @@ function getById(req, res) {
             return res.status(200).json(clientFound);
         } else {
             return res.status(404).json({
-                'message': 'no client found with id ' + id
+                status: 'error',
+                message: `Aucun client trouvé avec l'identifiant ` + id
             })
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors)
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du client',
+            details: err.errors
+        })
     });
 }
 
@@ -60,12 +65,17 @@ function getAll(req, res) {
             return res.status(200).json(client);
         } else {
             return res.status(404).json({
-                'error': 'no client found'
+                status: 'error',
+                message: `Aucun client trouvé`
             });
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors)
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération des clients',
+            details: err.errors
+        })
     })
 }
 
@@ -95,7 +105,8 @@ function save(req, res) {
     }).then((clientFound) => {
         if (clientFound) {
             return res.status(400).json({
-                'error': 'a client with this phone number already exists'
+                status: 'error',
+                message: `Un client possède déjà ce numéro de téléphone`
             });
         }
 
@@ -104,17 +115,24 @@ function save(req, res) {
                 return res.status(201).json(newClient);
             } else {
                 return res.status(500).json({
-                    'err': 'couldn\'t post client'
+                    status: 'error',
+                    message: `Impossible d'enregistrer le client`
                 });
             }
         }).catch((err) => {
             console.error(err);
-            return res.status(500).json(err.errors);
+            return res.status(500).json({
+                status: 'error',
+                message: `Une erreur interne est survenue lors de l'enregistement du client`,
+                details: err.errors
+            });
         });
     }).catch((err) => {
         console.error(err);
         return res.status(500).json({
-            'error': 'unable to check client validity'
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du client',
+            details: err.errors
         });
     })
 
@@ -144,7 +162,8 @@ function update(req, res) {
     models.Client.findByPk(client.id).then((clientFound) => {
         if (!clientFound) {
             return res.status(404).json({
-                'error': 'no client found with ' +client.id
+                status: 'error',
+                message: `Aucun client trouvé avec l'identifiant ` + client.id
             })
         }
 
@@ -153,16 +172,26 @@ function update(req, res) {
                     return res.status(200).json(clientUpdated);
                 } else {
                     return res.status(403).json({
-                        'message': 'cannot update the client'
+                        status: 'error',
+                        message: `Impossible de mettre à jour le client`
                     })
                 }
             }).catch((err) => {
                 console.error(err);
-                return res.status(500).json(err.errors);
+            return res.status(500).json({
+                    status: 'error',
+                    message: 'Une erreur interne est survenue lors de la mise à jour du client',
+                    details: err.errors
+                }
+            );
             })
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du client',
+            details: err.errors
+        });
     });
 }
 
@@ -179,27 +208,38 @@ function destroy(req, res) {
     models.Client.findByPk(id).then((clientFound) => {
         if (!clientFound) {
             return res.status(404).json({
-                'error': 'no client found with ' +id
+                status: 'error',
+                message: `Aucun client trouvé avec l'identifiant ` + id
             })
         }
 
         clientFound.destroy().then((clientDestroyed) => {
             if (clientDestroyed) {
                 return res.status(200).json({
-                    'message': 'client ' +id+ ' deleted'
+                    status: 'error',
+                    message: 'client ' + id + ' deleted'
                 })
             } else {
                 return res.status(403).json({
-                    'error': 'cannot delete client with id ' + id
+                    status: 'error',
+                    message: `Impossible de supprimer le client avec l'identifiant ` + id
                 })
             }
         }).catch((err) => {
             console.error(err);
-            return res.status(500).json(err.errors);
+            return res.status(500).json({
+                status: 'error',
+                message: 'Une erreur interne est survenue lors de la suppression du client',
+                details: err.errors
+            });
         });
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du client',
+            details: err.errors
+        });
     });
 }
 
@@ -227,21 +267,31 @@ function getChantiers(req, res) {
                     return res.status(200).json(chantiersFound);
                 } else {
                     return res.status(404).json({
-                        'error': 'no chantier found'
+                        status: 'error',
+                        message: `Aucun chantier trouvé`
                     })
                 }
             }).catch((err) => {
                 console.error(err);
-                return res.status(500).json(err.errors);
+                return res.status(500).json({
+                    status: 'error',
+                    message: 'Une erreur interne est survenue lors de la récupération du client',
+                    details: err.errors
+                });
             })
         } else {
             return res.status(404).json({
-                'error': 'no client found for id ' + id
+                status: 'error',
+                message: `Aucun client trouvé avec l'identifiant ` + id
             })
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du chantier',
+            details: err.errors
+        });
     });
 }
 

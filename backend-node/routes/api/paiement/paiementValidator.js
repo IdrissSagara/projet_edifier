@@ -12,73 +12,64 @@ exports.validate = (operation) => {
     switch (operation) {
         case 'save': {
             return [
-                check('id', 'invalid chantier id')
-                    .exists().withMessage('parameter id not found')
-                    .isNumeric().withMessage('parameter id is not numeric')
+                check('id', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id est introuvable')
+                    .isNumeric().withMessage('Le Paramètre id doit être numérique')
                     .trim().escape(),
-                body('montant', 'invalid montant')
-                    .exists().withMessage('parameter montant not found').bail()
-                    .isNumeric().withMessage('montant is not numeric').bail()
+                body('montant', 'Champ montant invalide')
+                    .exists().withMessage('Le Paramètre montant est introuvable').bail()
+                    .isNumeric().withMessage('Le Paramètre montant doit être numérique').bail()
                     .trim().escape(),
-                body('commentaire', 'invalid commentaire')
-                    .optional().isString().withMessage('prenom is not alpha')
-                    .isLength({min: 2}).withMessage('commentaire is too short')
+                body('commentaire', 'Champ commentaire invalide')
+                    .optional().isString().withMessage('Le Paramètre commentaire doit être alphabétique')
+                    .isLength({min: 10}).withMessage('Le Paramètre commentaire doit avoir au moins 10 caractères')
                     .trim().escape(),
-                body('type', 'invalid type number')
-                    .exists().withMessage('parameter type not found').bail()
-                    .isString().withMessage('type is not alpha')
-                    .isLength({min: 2}).withMessage('type is too short')
+                body('type', 'Champ type invalide')
+                    .exists().withMessage('Le Paramètre type est introuvable').bail()
+                    .isString().withMessage('Le Paramètre type doit être alphabétique').bail()
+                    .isLength({min: 6}).withMessage('Le Paramètre type doit').bail()
+                    .isIn(['cheque', 'virement', 'especes']).withMessage('Le Paramètre order doit être un parmi cheque, virement, especes')
                     .trim().escape(),
-                body('date_paiement', 'invalid date_paiement date')
+                body('date_paiement', 'Champ date_paiement invalide')
                     .optional().toDate(),
             ]
         }
         case 'getById': {
             return [
-                check('id', 'invalid paiement id')
-                    .exists().withMessage('parameter id not found')
-                    .isNumeric().withMessage('parameter id is not numeric')
+                check('id', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id est introuvable')
+                    .isNumeric().withMessage('Le Paramètre id doit être numérique')
                     .trim().escape(),
-                check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
-                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
-                check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
-                check('order', 'invalid value for order').optional()
+                check('fields', 'Valeur invalide pour le champ fields').optional().not().isNumeric().trim().escape(),
+                check('offset', 'Valeur invalide pour le champ offset').optional().isNumeric().trim().escape(),
+                check('limit', 'Valeur invalide pour le champ limit').optional().isNumeric().trim().escape(),
+                check('order', 'Valeur invalide pour le champ order').optional().optional().trim().escape(),
                 //.isIn(['ASC', 'DESC', 'asc', 'desc']).withMessage('must be ASC or DESC')
-                    .trim().escape(),
             ]
         }
         case 'getOnePaieOfChan': {
             return [
-                check('id_paiement', 'invalid paiement id')
-                    .exists().withMessage('parameter id_paiement not found')
-                    .isNumeric().withMessage('parameter id id_paiement not numeric')
+                check('id_paiement', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id_paiement est introuvable')
+                    .isNumeric().withMessage('Le Paramètre id id_paiement not numeric')
                     .trim().escape(),
-                check('id_chantier', 'invalid chantier id')
-                    .exists().withMessage('parameter id_chantier not found')
-                    .isNumeric().withMessage('parameter id_chantier is not numeric')
+                check('id_chantier', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id_chantier est introuvable')
+                    .isNumeric().withMessage('Le Paramètre id_chantier doit être numérique')
                     .trim().escape(),
-                check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
-                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
-                check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
-                check('order', 'invalid value for order').optional()
+                check('fields', 'Valeur invalide pour le champ fields').optional().not().isNumeric().trim().escape(),
+                check('offset', 'Valeur invalide pour le champ offset').optional().isNumeric().trim().escape(),
+                check('limit', 'Valeur invalide pour le champ limit').optional().isNumeric().trim().escape(),
+                check('order', 'Valeur invalide pour le champ order').optional().optional().trim().escape(),
                 //.isIn(['ASC', 'DESC', 'asc', 'desc']).withMessage('must be ASC or DESC')
-                    .trim().escape(),
             ]
         }
         case 'getAllPaiements': {
             return [
-                check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
-                /*check('offset', 'invalid value for offset').optional()
-                    .isNumeric().custom(offset => {
-                        if (!isPositive(offset)) {
-                            throw new Error('Offset must be positive');
-                        }
-                }).bail().trim().escape(),*/
-                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
-                check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
-                check('order', 'invalid value for order').optional()
-                //.isIn(['ASC', 'DESC', 'asc', 'desc']).withMessage('must be ASC or DESC')
-                    .trim().escape(),
+                check('fields', 'Valeur invalide pour le champ fields').optional().not().isNumeric().trim().escape(),
+                check('offset', 'Valeur invalide pour le champ offset').optional().isNumeric().trim().escape(),
+                check('limit', 'Valeur invalide pour le champ limit').optional().isNumeric().trim().escape(),
+                check('order', 'Valeur invalide pour le champ order').optional().optional().trim().escape(),
             ]
         }
         default:

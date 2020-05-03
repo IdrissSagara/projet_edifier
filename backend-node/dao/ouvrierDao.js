@@ -5,7 +5,8 @@ async function affecterAChantier(affectation) {
     return models.ChantierOuvrier.create(affectation).catch((err) => {
         return {
             status: 'error',
-            message: 'cannot affect ouvrier ' + affectation.idOuvrier + ' to chantier ' + affectation.idChantier,
+            message_: 'cannot affect ouvrier ' + affectation.idOuvrier + ' to chantier ' + affectation.idChantier,
+            message: `Impossible d'affecter l'ouvrier ` + affectation.idOuvrier + ` au chantier ` + affectation.idChantier,
             details: err.errors
         };
     });
@@ -15,7 +16,7 @@ async function getById(id) {
     return models.Ouvrier.findByPk(id).catch((err) => {
         return {
             status: 'error',
-            message: 'cannot ouvier with id ' + id,
+            message: `Une erreur est servenue lors de récupérer l'ouvrier avec l'id ` + id,
             details: err.errors
         };
     });
@@ -28,6 +29,12 @@ async function getOuvrierWithChantiers(id) {
             model: models.ChantierOuvrier,
             include: models.Chantier
         }
+    }).catch((err) => {
+        return {
+            status: 'error',
+            message: `Une erreur est servenue lors de récupérer l'ouvrier avec l'id ` + id,
+            details: err.errors
+        };
     });
 }
 

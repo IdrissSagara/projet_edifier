@@ -1,4 +1,3 @@
-let models = require('../../models');
 let userDao = require('../../dao/userDAO');
 let bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
@@ -20,28 +19,39 @@ async function register(req, res) {
         role: req.body.role
     };
 
-    let userFound = await userDao.getByUsername(user.username).catch((err) => {
-        console.error(err);
-        return res.status(500).json(err.errors);
-    });
+    let userFound = await userDao.getByUsername(user.username);
 
-    if (userFound) {
+    if (!userFound) {
+        return res.status(404).json({
+            status: 'error',
+            message: `Aucun utilisateur trouvé avec le nom d'utilisateur ` + user.username
+        });
+    }
+
+    if (userFound.status === 'error') {
+        return res.status(500).json(userFound);
+    }
+
+    if (userFound.username) {
         return res.status(403).json({
-            'message': 'a user already exists with the username ' + user.username
+            status: 'error',
+            message: `Un utilisateur possède déjà le nom d'utilisateur ` + user.username
         });
     }
 
     //save the user with its pwd hashed
     user.password = bcrypt.hashSync(user.password, SALT_FACTOR);
-    let userCreated = await userDao.save(user).catch((err) => {
-        console.error(err);
-        return res.status(500).json(err.errors);
-    });
+    let userCreated = await userDao.save(user);
 
     if (!userCreated) {
         return res.status(401).json({
-            'message': 'can\'t return the user created'
+            status: 'error',
+            message: `Impossible d'enregistrer l'utilisateur`
         });
+    }
+
+    if (userCreated.status === 'error') {
+        return
     }
 
     return res.status(201).json(userCreated);

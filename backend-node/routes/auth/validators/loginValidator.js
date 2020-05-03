@@ -3,14 +3,14 @@ const { body } = require('express-validator');
 exports.validate = (operation) => {
     switch (operation) {
         case 'login': {
-            return [ 
-                body('username', 'invalid username')
-                    .exists().withMessage('parameter username not found').bail()
-                    .isLength({min: 2}).withMessage('username is too short')
+            return [
+                body('username', 'Champ username invalide')
+                    .exists().withMessage('Le Paramètre username est introuvable').bail()
+                    .isLength({min: 2}).withMessage('Le Paramètre username doit avoir au moins 2 caractères')
                     .trim().escape(),
-                body('password', 'invalid password')
-                    .exists().withMessage('parameter password not found').bail()
-                    .isLength({min: 4}).withMessage('prenom is too short')
+                body('password', 'Champ password invalide')
+                    .exists().withMessage('Le Paramètre password est introuvable').bail()
+                    .isLength({min: 4}).withMessage('Le Paramètre password doit avoir au moins 4 caractères')
                     .trim().escape(),
             ]
         }

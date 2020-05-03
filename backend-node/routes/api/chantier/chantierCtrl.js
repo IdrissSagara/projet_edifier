@@ -37,21 +37,29 @@ function save(req, res) {
                     return res.status(201).json(newChantier);
                 } else {
                     return res.status(500).json({
-                        'error': 'couldn\'t post chantier'
+                        status: 'error',
+                        message: `Impossible d'enregistrer le chantier`
                     });
                 }
             }).catch((err) => {
                 console.error(err);
-                return res.status(500).json(err.errors);
+                return res.status(500).json({
+                    status: 'error',
+                    message: err.errors
+                });
             });
         } else {
             return res.status(404).json({
-                'message': 'no client found with id ' + chantier.ClientId
+                status: 'error',
+                message: `Aucun client trouvé avec l'identifiant ` + chantier.ClientId
             })
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: err.errors
+        });
     });   
 }
 
@@ -83,25 +91,33 @@ function update(req, res) {
     models.Chantier.findByPk(chantier.id).then((chantierFound) => {
         if (!chantierFound) {
             return res.status(404).json({
-                'error': 'no client found with ' +chantier.id
+                status: 'error',
+                message: `Aucun chantier trouvé avec l'identifiant ` + chantier.id
             })
         }
 
-        chantierFound.update(chantier).then((clientUpdated) => {
-                if (clientUpdated) {
-                    return res.status(200).json(clientUpdated);
+        chantierFound.update(chantier).then((chantierUpdated) => {
+            if (chantierUpdated) {
+                return res.status(200).json(chantierUpdated);
                 } else {
                     return res.status(403).json({
-                        'message': 'cannot update the client'
+                        status: 'error',
+                        message: 'Impossible de mettre à jour le chantier '
                     })
                 }
             }).catch((err) => {
                 console.error(err);
-                return res.status(500).json(err.errors);
+            return res.status(500).json({
+                status: 'error',
+                message: err.errors
+            });
             })
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: err.errors
+        });
     });
 }
 /**
@@ -122,18 +138,21 @@ function destroy(req, res) {
     models.Chantier.findByPk(id).then((chantierFound) => {
         if (!chantierFound) {
             return res.status(404).json({
-                'error': 'no chantier found with ' +id
+                status: 'error',
+                message: `Aucun chantier trouvé avec l'identifiant ` + id
             })
         }
 
         chantierFound.destroy().then((chantierDestroyed) => {
             if (chantierDestroyed) {
                 return res.status(200).json({
-                    'message': 'chantier ' + id + ' deleted'
+                    status: 'success',
+                    'message': `Le chantier avec l'identifiant ` + id + ' a été supprimé'
                 })
             } else {
                 return res.status(403).json({
-                    'error': 'cannot delete chantier with id ' + id
+                    status: 'error',
+                    message: `Impossible de supprimer le chantier avec l'identifiant ` + id
                 })
             }
         }).catch((err) => {
@@ -141,14 +160,19 @@ function destroy(req, res) {
             return res.status(500).json({
                 status: 'error',
                 code: 'ER_ROW_IS_REFERENCED_2',
-                message: 'cannot delete chantier due to internal error'
+                message: `Une erreur interne est survenue lors de la suppression du chantier`,
+                details: err.errors
             });
         });
     }).catch((err) => {
         //find out where errors come from
         //https://stackoverflow.com/a/47002994
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération des informations du chantier',
+            details: err.errors
+        });
     });
 }
 
@@ -184,12 +208,17 @@ function getAll(req, res) {
             return res.status(200).json(chantier);
         } else {
             return res.status(404).json({
-                'error': 'no chantier found '
+                status: 'error',
+                message: `Aucun chantier trouvé`
             });
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération des chantiers',
+            details: err.errors
+        });
     }) 
 }
 
@@ -219,15 +248,20 @@ function getById(req, res) {
             return res.status(200).json(chantierFound);
         } else {
             return res.status(404).json({
-                'error': 'no chantier found with id ' + idChantier
+                status: 'error',
+                message: `Aucun chantier trouvé avec l'identifiant ` + idChantier
             });
         }
     }).catch((err) => {
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du chantier ' + idChantier,
+            details: err.errors
+        });
     });
 }
 
-function getClient(req, res) {
+function getClientOfChantier(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -239,10 +273,6 @@ function getClient(req, res) {
 
     models.Chantier.findOne({
         where: {id: id},
-        include: [{
-            model: models.Client,
-            attributes: ['nom', 'prenom', 'telephone']
-        }]
     }).then((chantierFound) => {
         if (chantierFound) {
             models.Client.findOne({
@@ -252,7 +282,8 @@ function getClient(req, res) {
                     return res.status(200).json(clientFound);
                 } else {                    
                     return res.status(404).json({
-                        'error': 'no client found'
+                        status: 'error',
+                        message: `Aucun client trouvé`
                     });
                 }    
             }).catch((err) => {
@@ -261,11 +292,16 @@ function getClient(req, res) {
             });
         } else {
             return res.status(404).json({
-                'error': 'no chantier found with id ' + id
+                status: 'error',
+                message: `Aucun chantier trouvé avec l'identifiant ` + id
             });
         }
     }).catch((err) => {
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du chantier',
+            details: err.errors
+        });
     });
 }
 
@@ -276,7 +312,7 @@ async function getChantierWithOuvriers(req, res) {
 
     if (!chantiers) {
         return res.status(404).json({
-            message: 'no chantier found with id ' + id
+            message: `Aucun chantier avec l'identifiant ` + id
         });
     }
 
@@ -288,5 +324,5 @@ async function getChantierWithOuvriers(req, res) {
 }
 
 module.exports = {
-    save, getAll, getById, getClient, update, destroy, getChantierWithOuvriers
+    save, getAll, getById, getClientOfChantier, update, destroy, getChantierWithOuvriers
 };

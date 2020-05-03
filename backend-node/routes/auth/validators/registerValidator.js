@@ -3,46 +3,47 @@ const { body } = require('express-validator');
 exports.validate = (operation) => {
     switch (operation) {
         case 'register': {
-            return [ 
-                body('nom', 'invalid nom')
-                    .exists().withMessage('parameter nom not found')
-                    .isString().withMessage('nom is not a string')
-                    .isLength({min: 2}).withMessage('nom is too short')
+            return [
+                body('nom', 'Champ nom invalide')
+                    .exists().withMessage('Le Paramètre nom est introuvable')
+                    .isString().withMessage('Le Paramètre nom doit être alphabétique')
+                    .isLength({min: 2}).withMessage('Le Paramètre nom doit avoir au moins 2 caractères')
                     .trim().escape(),
-                body('prenom', 'invalid prenom')
-                    .exists().withMessage('parameter prenom not found')
-                    .isString().withMessage('prenom is not a string')
-                    .isLength({min: 2}).withMessage('prenom is too short')
+                body('prenom', 'Champ prenom invalide')
+                    .exists().withMessage('Le Paramètre prenom est introuvable')
+                    .isString().withMessage('Le Paramètre prenom doit être alphabétique')
+                    .isLength({min: 2}).withMessage('Le Paramètre prenom doit avoir au moins 2 caractères')
                     .trim().escape(),
-                body('username', 'invalid username')
-                    .exists().withMessage('parameter username not found')
-                    .isString().withMessage('username is not alpha')
-                    .isLength({min: 2}).withMessage('username is too short')
+                body('username', 'Champ username invalide')
+                    .exists().withMessage('Le Paramètre username est introuvable')
+                    .isString().withMessage('Le Paramètre username doit être alphabétique')
+                    .isLength({min: 2}).withMessage('Le Paramètre username doit avoir au moins 2 caractères')
                     .trim().escape(),
-                body('password', 'invalid password')
-                    .exists().withMessage('parameter password not found')
-                    .isLength({min: 4}).withMessage('password must be at least 4 long')
+                body('password', 'Champ password invalide')
+                    .exists().withMessage('Le Paramètre password est introuvable')
+                    .isLength({min: 4}).withMessage('Le Paramètre password doit avoir au moins 4 caractères')
                     .trim().escape(),
-                body('role', 'invalid role')
-                    .exists().withMessage('parameter role not found')
-                    .isIn(['admin', 'basic-user', 'medium-user', 'advanced-user']).withMessage('role must be one of admin, basic-user, medium-user, advanced-user')
+                body('role', 'Champ role invalide')
+                    .exists().withMessage('Le Paramètre role est introuvable')
+                    .isIn(['admin', 'basic-user', 'medium-user', 'advanced-user'])
+                    .withMessage('Le Paramètre role doit être un de la liste admin, basic-user, medium-user, advanced-user')
                     .trim().escape(),
             ]   
         }
         case 'resetPwd': {
             return [
-                body('username', 'invalid username')
-                    .exists().withMessage('parameter username not found')
-                    .isString().withMessage('username is not alpha')
-                    .isLength({min: 2}).withMessage('username is too short')
+                body('username', 'Champ username invalide')
+                    .exists().withMessage('Le Paramètre username est introuvable')
+                    .isString().withMessage('Le Paramètre username doit être numérique')
+                    .isLength({min: 2}).withMessage('Le Paramètre username doit avoir au moins 2 caractères')
                     .trim().escape(),
-                body('oldPassword', 'invalid oldPassword')
-                    .exists().withMessage('parameter oldPassword not found')
-                    .isLength({min: 4}).withMessage('oldPassword must be at least 4 long')
+                body('oldPassword', 'Champ oldPassword invalide')
+                    .exists().withMessage('Le Paramètre oldPassword est introuvable')
+                    .isLength({min: 4}).withMessage('Le Paramètre oldPassword doit avoir au moins 4 caractères')
                     .trim().escape(),
-                body('newPassword', 'invalid newPassword confirmation')
-                    .exists().withMessage('parameter newPassword not found')
-                    .isLength({min: 4}).withMessage('newPassword must be at least 4 long')
+                body('newPassword', 'Champ newPassword invalide')
+                    .exists().withMessage('Le Paramètre newPassword est introuvable')
+                    .isLength({min: 4}).withMessage('Le Paramètre newPassword doit avoir au moins 4 caractères')
                     .trim().escape(),
             ]
         }

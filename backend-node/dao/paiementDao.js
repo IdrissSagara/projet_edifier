@@ -6,7 +6,7 @@ async function save(paiement, transaction) {
     }).catch((err) => {
         return {
             status: 'error',
-            message: 'cannot save paiement',
+            message: `Une erreur est survenue lors de l'enregistrement du paiement`,
             details: err.errors
         };
     });
@@ -21,7 +21,7 @@ async function getPaiementById(id_paiement) {
     return models.Paiement.findByPk(id_paiement).catch((err) => {
         return {
             status: 'error',
-            message: 'cannot get paiement ' + id_paiement,
+            message: `Impossible de récupérer le paiement ` + id_paiement,
             details: err.errors
         };
     });
@@ -37,7 +37,7 @@ async function destroy(paiement, transaction) {
     return paiement.destroy({transaction: transaction}).catch((err) => {
         return {
             status: 'error',
-            message: 'cannot destroy paiement ' + paiement.id,
+            message: `Impossible de supprimer le paiment avec l'id ` + paiement.id,
             details: err.errors
         };
     });
@@ -48,7 +48,7 @@ async function getAll(options) {
         console.error(err);
         return {
             status: 'error',
-            message: 'cannot get all paiements'
+            message: `Une erreur est survenue lors de l'enregistrement des paiements`
         };
     });
 }

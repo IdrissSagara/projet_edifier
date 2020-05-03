@@ -2,7 +2,14 @@ var models = require('../models');
 
 async function getChantierById(id, include_client = true) {
     if (!include_client) {
-        return models.Chantier.findByPk(id);
+        return models.Chantier.findByPk(id).catch((err) => {
+            console.error(err);
+            return {
+                status: 'error',
+                message: 'Une erreur est survenue lors de la récupération du chantier',
+                details: err.errors
+            };
+        });
     }
 
     return models.Chantier.findOne({
@@ -14,7 +21,15 @@ async function getChantierById(id, include_client = true) {
             model: models.ChantierOuvrier,
             include: models.Ouvrier
         }]
+    }).catch((err) => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'Une erreur est survenue lors de la récupération du chantier',
+            details: err.errors
+        };
     });
+    ;
 }
 
 async function update(chantier, transaction) {
@@ -35,7 +50,8 @@ async function update(chantier, transaction) {
         console.error(err);
         return {
             status: 'error',
-            message: 'An error occured when updating chantier'
+            message: 'Une erreur est survenue lors de la mise à jour du chantier',
+            details: err.errors
         };
     });
 }
@@ -47,6 +63,13 @@ async function getChantierWithOuvriers(id) {
             model: models.ChantierOuvrier,
             include: models.Ouvrier
         }
+    }).catch((err) => {
+        console.error(err);
+        return {
+            status: 'error',
+            message: 'Une erreur est survenue lors de la récupération du chantier avec ses ouvriers',
+            details: err.errors
+        };
     });
 }
 

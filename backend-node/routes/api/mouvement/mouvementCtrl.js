@@ -24,7 +24,8 @@ async function save(req, res) {
 
     if (!chantierDepart) {
         return res.status(400).json({
-            'error': 'no source chantier found with for id ' + mouvement.source
+            status: 'error',
+            message: `Le chantier source dont l'id est ` + mouvement.source + ` est introuvable`
         })
     }
 
@@ -32,14 +33,16 @@ async function save(req, res) {
 
     if (!chantierDestination) {
         return res.status.json({
-            'error': 'no destination chantier found with for id ' + mouvement.destination
+            status: 'error',
+            message: `Le chantier source dont l'id est ` + mouvement.destination + ` est introuvable`
         })
 
     }
 
     if ((chantierDepart.montant_dispo - mouvement.montant) <= 0) {
         return res.status(400).json({
-            'error': 'montant to move is greater than montant_dispo in chantier ' + mouvement.source
+            status: 'error',
+            message: `Le montant a transferer est plus grand que le montant disponible dans le chantier ` + mouvement.source
         });
     }
 
@@ -64,7 +67,8 @@ async function save(req, res) {
         await transaction.rollback();
         return res.status(500).json({
             status: 'error',
-            message: e.errors,
+            message: `Impossible d'enregistrer le mouvement`,
+            details: e.errors,
         });
     }
 }
@@ -82,12 +86,14 @@ async function getAll(req, res) {
     let limit = parseInt(req.query.limit);
     let order = req.query.order;
 
-    let mvts = await mvtDao.getAll(fields, offset, limit, order).catch((err) => {
-        return res.status(500).json({
+    let mvts = await mvtDao.getAll(fields, offset, limit, order);
+
+    if (!mvts) {
+        return res.status(404).json({
             status: 'error',
-            message: 'error while getting the mouvements'
-        });
-    });
+            message: `Aucun mouvement trouvé`
+        })
+    }
 
     if (mvts.status === 'error') {
         return res.status(500).json(mvts);
@@ -106,19 +112,20 @@ async function getById(req, res) {
 
     var id = req.params.id;
 
-    let mvts = await mvtDao.getById(id).catch((err) => {
-        return res.status(500).json({
+    let mvts = await mvtDao.getById(id);
+
+    if (!mvts) {
+        return res.status(404).json({
             status: 'error',
-            message: 'erreur en essayant de recupperer le movement par id'
-        });
-    });
+            message: `Aucun mouvement trouvé avec l'identifiant ` + id
+        })
+    }
 
     if (mvts.status === 'error') {
         return res.status(500).json(mvts);
     }
 
     return res.status(200).json(mvts);
-
 }
 
 
@@ -135,24 +142,30 @@ function destroy(req, res) {
     models.Mouvement.findByPk(id).then((mouvementFound) => {
         if (!mouvementFound) {
             return res.status(404).json({
-                'error': 'no mouvement found with ' + id
+                status: 'error',
+                message: `Aucun mouvement trouvé avec l'identifiant ` + id
             })
         }
 
         mouvementFound.destroy().then((mouvementDestroyed) => {
             if (mouvementDestroyed) {
                 return res.status(200).json({
-                    'message': 'mouvement ' + id + ' deleted'
+                    message: `Le mouvement avec l'identifiant ` + id + ' a été supprimé'
                 })
             } else {
                 return res.status(403).json({
-                    'error': 'cannot delete mouvement with id ' + id
+                    status: 'error',
+                    message: `Impossible de supprimer le mouvement avec l'identifiant ` + id
                 })
             }
         });
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la suppression du mouvement',
+            details: err.errors
+        });
     });
 }
 
@@ -177,12 +190,17 @@ function getMouvement(req, res) {
             return res.status(200).json(mouvementrFound);
         } else {
             return res.status(404).json({
-                'error': 'no mouvement found '
+                status: 'error',
+                message: `Aucun mouvement trouvé`
             });
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération du mouvement',
+            details: err.errors
+        });
     });
 }
 

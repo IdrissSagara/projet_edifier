@@ -10,54 +10,53 @@ const { body, check } = require('express-validator');
 exports.validate = (operation) => {
     switch (operation) {
         case 'saveClient': {
-            return [ 
-                body('nom', 'invalid nom')
-                    .exists().withMessage('parameter nom not found').bail()
-                    .isString().withMessage('nom is not alpha')
+            return [
+                body('nom', 'Champ nom invalide')
+                    .exists().withMessage('Le Paramètre nom est introuvable').bail()
+                    .isString().withMessage('Le Paramètre nom doit être numérique')
                     .isLength({min: 2}).withMessage('nom is too short')
                     .trim().escape(),
-                body('prenom', 'invalid prenom')
-                    .exists().withMessage('parameter prenom not found').bail()
-                    .isString().withMessage('prenom is not alpha')
-                    .isLength({min: 2}).withMessage('prenom is too short')
+                body('prenom', 'Champ prenom invalide')
+                    .exists().withMessage('Le Paramètre prenom est introuvable').bail()
+                    .isString().withMessage('Le Paramètre prenom doit être numérique')
+                    .isLength({min: 2}).withMessage('Le Paramètre prenom doit avoir au moins 2 caratères')
                     .trim().escape(),
-                body('telephone', 'invalid phone number')
-                    .exists().withMessage('parameter telephone not found').bail()
-                    .isNumeric().withMessage('not numeric phone number')
-                    .isLength({min: 8}).withMessage('telephone is too short')
+                body('telephone', 'Champ telephone invalide')
+                    .exists().withMessage('Le Paramètre telephone est introuvable').bail()
+                    .isNumeric().withMessage('Le Paramètre telephone doit être numérique')
+                    .isLength({min: 8}).withMessage('Le Paramètre telephone doit avoir au moins 8 chiffres')
                     .trim().escape(),
             ]   
         }
         case 'getClient': {
-            return [ 
-                check('id', 'invalid client id')
-                    .exists().withMessage('parameter id not found')
-                    .isNumeric().withMessage('parameter id is not numeric')
+            return [
+                check('id', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id est introuvable')
+                    .isNumeric().withMessage('Le Paramètre id doit être numérique')
                     .trim().escape(),
             ] 
         }
         case 'getAllClients': {
-            return [ 
-                check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
-                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
-                check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
-                check('order', 'invalid value for order').optional()
+            return [
+                check('fields', 'Valeur invalide pour le champ fields').optional().not().isNumeric().trim().escape(),
+                check('offset', 'Valeur invalide pour le champ offset').optional().isNumeric().trim().escape(),
+                check('limit', 'Valeur invalide pour le champ limit').optional().isNumeric().trim().escape(),
+                check('order', 'Valeur invalide pour le champ order').optional().optional().trim().escape(),
                     //.isIn(['ASC', 'DESC', 'asc', 'desc']).withMessage('must be ASC or DESC')
-                    .trim().escape(),
             ]   
         }
         case 'search': {
             return [
-                check('nom', 'invalid client nom')
-                    .exists().withMessage('parameter nom not found').bail()
-                    .isString().withMessage('nom is not alpha')
-                    .isLength({min: 3}).withMessage('nom is too short')
+                check('nom', 'Champ nom invalide')
+                    .exists().withMessage('Le Paramètre nom est introuvable').bail()
+                    .isString().withMessage('Le Paramètre nom doit être alphabétique')
+                    .isLength({min: 3}).withMessage('Le Paramètre nom doit avoir au moins 3 caractères')
                     .trim().escape(),
             ]
         }
         case 'getChantiers': {
-            return [ 
-                check('id', 'invalid client id').exists().isNumeric().trim().escape(),
+            return [
+                check('id', 'Champ id invalide').exists().isNumeric().trim().escape(),
             ]   
         }
         default:

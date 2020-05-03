@@ -19,7 +19,7 @@ function genToken(userData) {
     },
     JWT_SIGN_SECRET,
     {
-        expiresIn: EXPRIRES_IN /* /!\/!\/!\/!\/!\/!\/!\ */
+        expiresIn: EXPRIRES_IN
     })
 }
 
@@ -56,7 +56,7 @@ function getUserInfo(authorization) {
             user.status = err;
         }
     } else {
-        user.status = 'No jwt Token found';
+        user.status = 'Aucun token jwt trouvé';
     }
 
     return user;
