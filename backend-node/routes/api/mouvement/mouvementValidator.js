@@ -4,42 +4,42 @@ exports.validate = (operation) => {
     switch (operation) {
         case 'save': {
             return [
-                body('source', 'invalid source')
-                    .exists().withMessage('parameter source not found').bail()
-                    .not().isEmpty().withMessage('source cannot be empty').bail()
-                    .isNumeric().withMessage('source is not numeric')
+                body('source', 'Champ source invalid')
+                    .exists().withMessage('Le Paramètre source est introuvable').bail()
+                    .not().isEmpty().withMessage('Le Paramètre source ne peut pas être vide').bail()
+                    .isNumeric().withMessage('Le Paramètre source doit être numérique')
                     .trim().escape(),
-                body('destination', 'invalid destination')
-                    .exists().withMessage('parameter destination not found').bail()
-                    .not().isEmpty().withMessage('destination cannot be empty').bail()
-                    .isNumeric().withMessage('destination is not numeric')
+                body('destination', 'Champ destination invalid')
+                    .exists().withMessage('Le Paramètre destination introuvable').bail()
+                    .not().isEmpty().withMessage('Le Paramètre destination ne peut pas être vide').bail()
+                    .isNumeric().withMessage('Le Paramètre destination doit être numérique')
                     .trim().escape(),
-                body('montant', 'invalid montant')
-                    .exists().withMessage('parameter montant not found').bail()
-                    .not().isEmpty().withMessage('montant cannot be empty').bail()
-                    .isNumeric().withMessage('montant is not numeric')
+                body('montant', 'Champ montant invalide')
+                    .exists().withMessage('Le Paramètre parameter est introuvable').bail()
+                    .not().isEmpty().withMessage('Le Paramètre montant ne peut pas être vide').bail()
+                    .isNumeric().withMessage('Le Paramètre montant doit être numérique')
                     .trim().escape(),
-                body('commentaire', 'invalid commentaire').optional()
-                    .isString().withMessage('commentaire is not alpha').bail()
-                    .isLength({min: 10}).withMessage('commentaire is too short')
+                body('commentaire', 'Champ commentaire').optional()
+                    .isString().withMessage('Le Paramètre commentaire doit être alphabétique').bail()
+                    .isLength({min: 10}).withMessage('Le Paramètre commentaire doit avoir au moins 10 caratères')
                     .trim().escape(),
             ]
         }
         case 'getAllMouvement': {
             return [
-                check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
-                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
-                check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
-                check('order', 'invalid value for order').optional().optional().trim().escape(),
+                check('fields', 'Valeur invalide pour le champ fields').optional().not().isNumeric().trim().escape(),
+                check('offset', 'Valeur invalide pour le champ offset').optional().isNumeric().trim().escape(),
+                check('limit', 'Valeur invalide pour le champ limit').optional().isNumeric().trim().escape(),
+                check('order', 'Valeur invalide pour le champ order').optional().optional().trim().escape(),
             ]
         }
         case 'getMouvement': {
             return [
-                check('id', 'invalid mouvement id')
-                    .exists().withMessage('parameter id not found').bail()
-                    .isNumeric().withMessage('parameter id is not numeric')
+                check('id', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id est introuvable').bail()
+                    .isNumeric().withMessage('Le Paramètre id doit être numérique')
                     .trim().escape(),
             ]
         }
     }
-}
+};

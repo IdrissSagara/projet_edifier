@@ -10,7 +10,8 @@ async function getAll(fields, offset, limit, order) {
         console.error(err);
         return {
             status: 'error',
-            message: 'An error occured when get mouvements'
+            message: `Une erreur est survenue lors de la récupération du mouvement`,
+            details: err
         };
     });
 }
@@ -22,7 +23,8 @@ async function getById(id) {
         console.error(err);
         return {
             status: 'error',
-            message: 'An error occured when get mouvements'
+            message: `Une erreur est survenue lors de la récupération du mouvement`,
+            details: err
         };
     });
 }
@@ -37,7 +39,8 @@ async function save(mouvement, transaction) {
         console.error(err);
         return {
             status: 'error',
-            message: 'An error occured when creating mouvement'
+            message: `Une erreur est survenue lors de l'enregistrement du mouvement`,
+            details: err
         };
     });
 }
