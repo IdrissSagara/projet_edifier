@@ -4,56 +4,56 @@ exports.validate = (operation) => {
     switch (operation) {
         case 'saveChantier': {
             return [
-                body('ClientId', 'invalid clientId')
-                    .exists().withMessage('parameter clientId not found').bail()
-                    .not().isEmpty().withMessage('clientId cannot be empty')
-                    .isNumeric().withMessage('clientId is not numeric')
+                body('ClientId', 'Champ clientId invalide')
+                    .exists().withMessage('Le Paramètre clientId est introuvable').bail()
+                    .not().isEmpty().withMessage('Le Paramètre clientId ne peut pas être vide')
+                    .isNumeric().withMessage(`Le Paramètre clientId doit être numérique`)
                     .trim().escape(),
-                body('emplacement', 'invalid emplacement')
-                    .exists().withMessage('parameter emplacement not found').bail()
-                    .isString().withMessage('emplacement is not alpha')
-                    .isLength({min: 2}).withMessage('emplacement is too short')
+                body('emplacement', 'Champ emplacement invalide')
+                    .exists().withMessage('Le Paramètre emplacement est introuvable').bail()
+                    .isString().withMessage(`Le Paramètre emplacement doit être alphabétique`)
+                    .isLength({min: 2}).withMessage('Le Paramètre emplacement est trop court')
                     .trim().escape(),
-                body('cout', 'invalid cout')
-                    .exists().withMessage('parameter cout not found').bail()
-                    .isNumeric().withMessage('cout is not numeric')
+                body('cout', 'Champ cout invalide(')
+                    .exists().withMessage('Le Paramètre cout est introuvable').bail()
+                    .isNumeric().withMessage('Le Paramètre cout doit être numériquen')
                     .trim().escape(),
-                body('date_debut', 'invalid date_debut')
-                    .exists().withMessage('parameter date_debut not found')
+                body('date_debut', 'Champ date_debut invalide')
+                    .exists().withMessage('Le Paramètre date_debut est introuvable')
                     .toDate(),
-                body('montant_dispo', 'invalid montant_dispo')
-                    .exists().withMessage('parameter montant_dispo not found').bail()
-                    .isNumeric().withMessage('montant_dispo is not numeric')
+                body('montant_dispo', 'Champ montant_dispo invalide')
+                    .exists().withMessage('Le Paramètre montant_dispo est introuvable').bail()
+                    .isNumeric().withMessage('Le Paramètre montant_dispo doit être numérique')
                     .trim().escape(),
-                body('date_fin', 'invalid phone number').optional()
+                body('date_fin', 'Champ date_fin invalide').optional()
                     .toDate(),
-                body('walita', 'invalid walita').optional()
-                    .isNumeric().withMessage('walita is not numeric')
+                body('walita', 'Champ walita invalide').optional()
+                    .isNumeric().withMessage('Le Paramètre walita doit être numérique')
                     .trim().escape(),
-                body('yereta', 'invalid yereta').optional()
-                    .isNumeric().withMessage('yereta is not numeric')
+                body('yereta', 'Champ yereta invalide').optional()
+                    .isNumeric().withMessage('Le Paramètre yereta doit être numérique')
                     .trim().escape(),
             ]   
         }
         case 'getChantier': {
-            return [ 
-                check('id', 'invalid chantier id')
-                    .exists().withMessage('parameter id not found').bail()
-                    .isNumeric().withMessage('parameter id is not numeric')
+            return [
+                check('id', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id est introuvable').bail()
+                    .isNumeric().withMessage('Le Paramètre id doit être numérique')
                     .trim().escape(),
             ] 
         }
         case 'getAllChantiers': {
-            return [ 
-                check('fields', 'invalid value for fields').optional().not().isNumeric().trim().escape(),
-                check('offset', 'invalid value for offset').optional().isNumeric().trim().escape(),
-                check('limit', 'invalid value for limit').optional().isNumeric().trim().escape(),
-                check('order', 'invalid value for order').optional().optional().trim().escape(),
+            return [
+                check('fields', 'Valeur invalide pour le champ fields').optional().not().isNumeric().trim().escape(),
+                check('offset', 'Valeur invalide pour le champ offset').optional().isNumeric().trim().escape(),
+                check('limit', 'Valeur invalide pour le champ limit').optional().isNumeric().trim().escape(),
+                check('order', 'Valeur invalide pour le champ order').optional().optional().trim().escape(),
             ]   
         }
         case 'getClient': {
-            return [ 
-                check('id', 'invalid client id').exists().isNumeric().trim().escape(),
+            return [
+                check('id', 'Champ id invalide').exists().isNumeric().trim().escape(),
             ]   
         }
         default:
@@ -62,4 +62,4 @@ exports.validate = (operation) => {
                     .exists()
             ]
     }
-}
+};
