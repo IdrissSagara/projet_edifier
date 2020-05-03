@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {AllUsersResponse} from "../model/responses/AllUsersResponse";
 import {Utilisateur} from "../model/utilisateur";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilisateurService {
   apiUrl = environment.api_url + 'api/utilisateur';
+  urlSaveUser = environment.api_url + 'auth/register';
 
   constructor(private http: HttpClient) {
   }
@@ -26,4 +28,21 @@ export class UtilisateurService {
     return this.http.put<Utilisateur>(`${this.apiUrl}`, utilisateur);
   }
 
+  createUser(utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.urlSaveUser}`, utilisateur)
+      .pipe(catchError<any, any>(this.handleError));
+  }
+
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    console.log(errorMessage);
+    return throwError(errorMessage);
+  }
 }
