@@ -30,7 +30,8 @@ function save(req, res) {
     }).then((ouvrierFound) => {
         if (ouvrierFound) {
             return res.status(400).json({
-                'error': 'Un ouvrier avec le même numéro de téléphone existe déjà'
+                status: 'error',
+                message: 'Un ouvrier avec le même numéro de téléphone existe déjà'
             });
         }
 
@@ -39,16 +40,25 @@ function save(req, res) {
                 return res.status(201).json(newOuvrier);
             } else {
                 return res.status(500).json({
-                    err: 'Impossible d\'enregistrer l\'ouvrier'
+                    status: 'error',
+                    message: `Impossible d'enregistrer l'ouvrier`
                 });
             }
         }).catch((err) => {
             console.error(err);
-            return res.status(500).json(err.errors);
+            return res.status(500).json({
+                status: 'error',
+                message: `Une erreur interne est survenue lors de l'enregistrement de l'ouvrier`,
+                details: err.errors
+            });
         });
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: `Une erreur interne est survenue lors de la récupération de l'ouvrier`,
+            details: err.errors
+        });
     });
 }
 
@@ -75,12 +85,17 @@ function getAll(req, res, next) {
             return res.status(200).json(ouvrierFound);
         } else {
             return res.status(404).json({
-                error: 'Ouvrier trouvé'
+                status: 'error',
+                message: 'Aucun ouvrier trouvé'
             })
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors)
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération des ouvriers',
+            details: err.errors
+        })
     });
 }
 
@@ -101,12 +116,16 @@ function getById(req, res, next) {
             return res.status(200).json(ouvrierFound);
         } else {
             return res.status(404).json({
-                message: 'Aucun ouvrier trouvé avec l\'id ' + id
+                message: `Aucun ouvrier trouvé avec l'id ` + id
             })
         }
     }).catch((err) => {
         console.error(err);
-        return res.status(500).json(err.errors)
+        return res.status(500).json({
+            status: 'error',
+            message: `Une erreur interne est survenue lors de la récupération de l'ouvrier`,
+            details: err.errors
+        })
     });
 }
 
@@ -144,7 +163,11 @@ function update(req, res, next) {
             }
         }).catch((err) => {
             console.error(err);
-            return res.status(500).json(err.errors);
+            return res.status(500).json({
+                status: 'error',
+                message: `Une erreur interne est survenue lors de la mise à jour de l'ouvrier`,
+                details: err.errors
+            });
         });
     })
 }
@@ -170,7 +193,7 @@ function destroy(req, res, next) {
             if (destroyedOuvrier) {
                 return res.status(200).json({
                     id: destroyedOuvrier.id,
-                    message: 'ouvrier ' + id + ' supprimé'
+                    message: `L'ouvrier avec l'id ` + id + ` a été supprimé`
                 })
             } else {
                 return res.status(403).json({
@@ -181,7 +204,11 @@ function destroy(req, res, next) {
 
     }).catch((err) => {
         console.error(err);
-            return res.status(500).json(err.errors);
+        return res.status(500).json({
+            status: 'error',
+            message: `Une erreur interne est survenue lors de la récupération de l'ouvrier`,
+            details: err.errors
+        });
     });
 }
 
@@ -196,7 +223,8 @@ async function affect(req, res) {
     let chantier = await chantierDao.getChantierById(affectation.ChantierId);
     if (!chantier) {
         return res.status(400).json({
-            message: 'no chantier found with id ' + affectation.ChantierId
+            status: 'error',
+            message: `Aucun chantier trouvé avec l'id ` + affectation.ChantierId
         });
     }
 
@@ -207,7 +235,8 @@ async function affect(req, res) {
     let ouvrier = await ouvrierDao.getById(affectation.OuvrierId);
     if (!ouvrier) {
         return res.status(404).json({
-            message: 'no ouvrier found with id ' + affectation.OuvrierId
+            status: 'error',
+            message: `Aucun ouvrier trouvé avec l'id ` + affectation.ChantierId
         });
     }
 
@@ -221,7 +250,7 @@ async function affect(req, res) {
         return res.status(500).json(affection);
     }
 
-    return res.status(500).json(affection);
+    return res.status(200).json(affection);
 }
 
 async function getOuvrierWithChantiers(req, res) {
@@ -231,7 +260,7 @@ async function getOuvrierWithChantiers(req, res) {
 
     if (!ouvrier) {
         return res.status(404).json({
-            message: 'no ouvrier found with id ' + id
+            message: `Aucun ouvier trouvé avec l'identifiant ` + id
         });
     }
 
