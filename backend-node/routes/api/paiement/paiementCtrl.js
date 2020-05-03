@@ -154,7 +154,8 @@ async function save(req, res, next) {
 
     if (montant_restant < 0) {
         return res.status(400).json({
-            'err': 'Cannot process to paiement due to negative montant_restant'
+            status: 'error',
+            message: `Impossible de proceder au paiement à cause d'un montant restant négatif après le paiement`,
         });
     }
 
@@ -170,8 +171,7 @@ async function save(req, res, next) {
             await transaction.rollback();
             return res.status(403).json({
                 status: 'error',
-                message: 'couldn\'t add paiement to chantier ' + id +
-                    'operations are rolled back'
+                message: `Impossible d'ajouter le paiement au chantier ` + id
             });
         }
 
@@ -184,14 +184,15 @@ async function save(req, res, next) {
         let ch = chantierFound.get({plain: true});
         let p = newPaiement.get({plain: true});
         req.infosFacture = {ch, p};
-        await transaction.rollback();
+        await transaction.commit();
         next();
     } catch (e) {
         console.log(e);
         await transaction.rollback();
         return res.status(500).json({
             status: 'error',
-            message: e.errors,
+            message: `Impossible de terminer l'opération`,
+            details: e.errors,
         });
     }
 }
