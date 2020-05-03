@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
   username;
   password;
   errorMessage;
+  submitting: boolean = false;
 
   constructor(private authService: AuthService, private router: Router, private spinner: SpinnerService,
               private route: ActivatedRoute) {
@@ -40,6 +41,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.errorMessage = '';
     this.spinner.show();
+    this.submitting = true;
     this.authService.login(this.username, this.password).then(r => {
       // login successful so redirect to return url
       this.router.navigateByUrl(this.returnUrl);
@@ -49,6 +51,7 @@ export class LoginComponent implements OnInit {
       this.errorMessage = err.error.error;
     }).finally(() => {
       this.spinner.hide();
+      this.submitting = false;
     });
   }
 }

@@ -31,6 +31,7 @@ import {JwtModule} from "@auth0/angular-jwt";
 import {ToastrModule} from "ngx-toastr";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {environment} from "../environments/environment";
+import {AlertModule} from "ngx-bootstrap";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -59,6 +60,7 @@ export function tokenGetter() {
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
     ToastrModule.forRoot(),
+    AlertModule.forRoot(),
     ChartsModule,
     FormsModule,
     NgxSpinnerModule,
@@ -68,7 +70,7 @@ export function tokenGetter() {
         whitelistedDomains: [environment.backend_base],
         blacklistedRoutes: [environment.backend_base + '/auth/login']
       }
-    })
+    }),
   ],
   declarations: [
     AppComponent,
