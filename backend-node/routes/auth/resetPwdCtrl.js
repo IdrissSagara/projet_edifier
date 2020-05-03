@@ -17,48 +17,52 @@ async function resetPwd(req, res) {
     let oldPassword = req.body.oldPassword;
     let newPassword = req.body.newPassword;
 
-    let userFound = await userDao.getByUsername(username).catch((err) => {
-        console.error(err);
-        return res.status(500).json(err.errors);
-    });
+    let userFound = await userDao.getByUsername(username);
 
     if (!userFound) {
         return res.status(404).json({
-            error: 'no user found with username ' + username
+            status: 'error',
+            message: `Aucun utilisateur trouvé avec le nom d'utilisateur ` + username
         });
+    }
+
+    if (userFound.status === 'error') {
+        return res.status(500).json(userFound);
     }
 
     if (!userDao.pwdCompare(userFound.password, oldPassword)) {
         return res.status(403).json({
-            error: 'invalid old password'
+            error: `Ancien mot de passe invalide`
         });
     }
 
     if (userDao.pwdCompare(userFound.password, newPassword)) {
         return res.status(400).json({
-            message: 'The old and the new password are identical'
+            message: `L'ancien et le nouveau mot de passe doivent être differents`
         });
     }
 
     let hashedPwd = bcrypt.hashSync(newPassword, SALT_FACTOR);
     let user = await userDao.update(
         {password: hashedPwd}, userFound.username
-    ).catch((err) => {
-        console.error(err);
-        return res.status(500).json(err.errors);
-    });
+    );
 
     if (!user) {
         return res.status(500).json({
-            error: `user could not be modified`
+            status: 'error',
+            message: `Impossible de modifier l'utilisateur`
         })
+    }
+
+    if (user.status === 'error') {
+        return res.status(500).json(user);
     }
 
     //regen a token to keep user logged in the front side
     userFound.password = hashedPwd;
     let token = jwtUtils.genToken(userFound);
     return res.status(200).json({
-        message: "Password successfully modified",
+        message: `Mot de passe modifié avec succès`,
         token: token
     });
 }
