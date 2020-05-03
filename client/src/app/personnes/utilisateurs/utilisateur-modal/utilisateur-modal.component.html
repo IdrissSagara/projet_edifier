@@ -1,0 +1,52 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button (click)="utilisateurModalRel.hide()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div class="form-group">
+        <label for="nom">Nom</label>
+        <input [(ngModel)]="utilisateur.nom" autocomplete="text" class="form-control" id="nom"
+               name="nom" placeholder="Entrez le nom..." required type="text">
+      </div>
+      <div class="form-group">
+        <label for="prenom">Prenom</label>
+        <input [(ngModel)]="utilisateur.prenom" class="form-control" id="prenom" name="prenom"
+               placeholder="Entrez le prenom..." required type="text">
+      </div>
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input [(ngModel)]="utilisateur.username" class="form-control" id="username" name="username"
+               placeholder="Entrez le nom d'utilisateur..." required type="text">
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input [(ngModel)]="utilisateur.password" class="form-control" id="password" name="password"
+               placeholder="Entrez votre mot de passe..." required type="text">
+      </div>
+      <div *ngIf="utilisateur" class="form-group">
+        <label class="control-label" for="role">Le role de l'utilisateur</label>
+        <select [(ngModel)]="utilisateur.role" class="form-control" id="role" name="role"
+                required>
+          <option *ngFor="let role of roleUtilisateur" [value]="role">{{ role }}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="form.reset()" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
+      Nettoyer
+    </button>
+    <button (click)="addUtilisateur()" [disabled]="form.invalid"
+            class="btn btn-primary" type="button">Enregistrer
+    </button>
+    <button (click)="utilisateurModalRel.hide()" class="btn btn-secondary" type="button">Fermer</button>
+  </div>
+  <!--<pre>{{form.value | json}}</pre>-->
+</div>
+<!--</div>
+</div>
+-->
