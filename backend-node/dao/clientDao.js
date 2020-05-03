@@ -17,7 +17,7 @@ async function search(nom) {
     }).catch((err) => {
         return {
             status: 'error',
-            message: 'cannot get clients who names like ' + nom,
+            message: `Impossible de trouver des noms de clients avec ` + nom,
             details: err.errors
         };
     });
