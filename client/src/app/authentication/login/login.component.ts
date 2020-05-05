@@ -48,7 +48,9 @@ export class LoginComponent implements OnInit {
     }).catch(err => {
       console.log('oops during login');
       console.log(err);
-      this.errorMessage = err.error.error;
+      this.errorMessage = err.error.message;
+      console.log("this.errorMessage");
+      console.log(this.errorMessage);
     }).finally(() => {
       this.spinner.hide();
       this.submitting = false;
