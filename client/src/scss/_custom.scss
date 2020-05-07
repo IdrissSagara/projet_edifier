@@ -1,1 +1,66 @@
 // Here you can add other styles
+
+.table td, .table th {
+  vertical-align: middle;
+  padding: 0.5rem;
+}
+
+.custom-responsive-table .ui-column-title {
+  display: none;
+}
+
+//example of table responsive
+// from https://css-tricks.com/responsive-data-tables/
+@media only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px) {
+
+  /* Force table to not be like tables anymore */
+  .custom-responsive-table table, .custom-responsive-table thead,
+  .custom-responsive-table tbody, .custom-responsive-table th,
+  .custom-responsive-table td, .custom-responsive-table tr {
+    display: block;
+  }
+
+  /* Hide table headers (but not display: none;, for accessibility) */
+  .custom-responsive-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .table-bordered th, .table-bordered td {
+    border: none;
+  }
+
+  .custom-responsive-table td {
+    /* Behave  like a "row" */
+    border-top: 1px solid #c8ced3 !important;
+    /*border-bottom: 1px solid #eee;*/
+    position: relative;
+    text-align: right !important;
+    /*padding-left: 50%;*/
+  }
+
+  .custom-responsive-table td:before {
+    /* Now like a table header */
+    position: absolute;
+    /* Top/left values mimic padding */
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  .custom-responsive-table .ui-column-title {
+    padding: .4em;
+    display: inline-block;
+    margin: -.4em 1em -.4em -.4em;
+    font-weight: bold;
+    float: left;
+  }
+
+  .custom-responsive-table .empty-msg {
+    text-align: center !important;
+  }
+}

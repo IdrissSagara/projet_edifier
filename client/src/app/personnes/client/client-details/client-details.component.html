@@ -1,4 +1,3 @@
-<script src="ouvrier-details.component.ts"></script>
 <div class="animated fadeIn">
   <div class="card">
     <div *ngIf="client" class="card-header" id="title">
@@ -66,7 +65,7 @@
             <strong>les chantiers du client</strong>
           </div>
           <div class="card-body">
-            <table class="table">
+            <table class="table table-striped custom-responsive-table">
               <thead>
               <tr class="text-center">
                 <th>#</th>
@@ -79,15 +78,33 @@
               </thead>
               <tbody *ngIf="chantiers" class="text-center">
               <tr *ngFor="let c of chantiers; let i = index" class="text-center">
-                <td>{{i + 1}}</td>
-                <td>{{c.emplacement}}</td>
-                <td>{{c.cout}}</td>
-                <td>{{c.montant_dispo}}</td>
-                <td>{{c.date_debut | date: 'dd/MM/yyyy'}}</td>
-                <td>{{c.date_fin | date: 'dd/MM/yyyy'}}</td>
+                <td>
+                  <span class="ui-column-title">#</span>
+                  {{i + 1}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Emplacement</span>
+                  {{c.emplacement | titlecase}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Coût</span>
+                  {{c.cout}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Montant dispo</span>
+                  {{c.montant_dispo}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Date debut</span>
+                  {{c.date_debut | date: 'dd/MM/yyyy'}}
+                </td>
+                <td>
+                  <span class="ui-column-title">Date fin</span>
+                  {{c.date_fin | date: 'dd/MM/yyyy'}}
+                </td>
               </tr>
               <tr *ngIf="chantiers.length === 0">
-                <td class="text-center" colspan="6">Aucun chantier associé à ce client</td>
+                <td class="empty-msg" colspan="6">Aucun chantier associé à ce client</td>
               </tr>
               </tbody>
             </table>
