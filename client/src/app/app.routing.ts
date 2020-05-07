@@ -62,6 +62,9 @@ export const routes: Routes = [
       }, {
         path: 'clients',
         loadChildren: () => import('./personnes/personnes.module').then(m => m.PersonnesModule)
+      }, {
+        path: 'users',
+        loadChildren: () => import('./personnes/personnes.module').then(m => m.PersonnesModule)
       },
       {
         path: 'transactions',

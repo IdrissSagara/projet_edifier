@@ -25,9 +25,10 @@ import {NgxSelectModule} from "ngx-select-ex";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {ClientDetailsComponent} from './client/client-details/client-details.component';
 import {UtilisateurModalComponent} from './utilisateurs/utilisateur-modal/utilisateur-modal.component';
+import {DetailUtilisateurComponent} from './utilisateurs/detail-utilisateur/detail-utilisateur.component';
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent, ClientDetailsComponent, UtilisateurModalComponent],
+  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent, ClientDetailsComponent, UtilisateurModalComponent, DetailUtilisateurComponent],
   entryComponents: [
     ClientModalComponent,
     OuvrierModalComponent,
@@ -48,7 +49,7 @@ import {UtilisateurModalComponent} from './utilisateurs/utilisateur-modal/utilis
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    NgxSelectModule
+    NgxSelectModule,
   ],
   providers: [
     BsModalService
