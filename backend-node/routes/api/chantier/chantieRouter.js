@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+let photoRouter = require('./photo/photoRouter');
 
 let chantierValidator = require('./chantierValidator');
 const validate = require('../validationCtrl').validate;
@@ -78,5 +79,7 @@ router.delete('/:id',
     chantierValidator.validate('getChantier'),
     accessControl.deniedRoles([roles.BASIC]),
     chantierCtrl.destroy);
+
+router.use('/photo', photoRouter);
 
 module.exports = router;
