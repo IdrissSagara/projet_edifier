@@ -12,6 +12,21 @@ async function savePhoto(photo, transaction) {
     });
 }
 
+async function getAllPhotos(chantierId) {
+    return models.Photo.findAndCountAll({
+        where: {
+            chantier: chantierId,
+            type: 'chantier'
+        }
+    }).catch((err) => {
+        return {
+            status: 'error',
+            message: `Une erreur est survenue lors de la recupération des photos du chantier ` + chantierId,
+            details: err.errors
+        };
+    });
+}
+
 module.exports = {
-    savePhoto
+    savePhoto, getAllPhotos,
 };

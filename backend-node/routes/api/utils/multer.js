@@ -20,7 +20,20 @@ const diskStorage = multer.diskStorage({
     }
 });
 
-const saveToUploads = multer({storage: diskStorage});
+// multer filter example https://stackoverflow.com/a/38692588
+const saveToUploads = multer({
+    storage: diskStorage,
+    fileFilter: function (req, file, callback) {
+        var ext = path.extname(file.originalname);
+        if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
+            return callback(new Error('Only images are allowed'))
+        }
+        callback(null, true)
+    },
+    limits: {
+        fileSize: 1024 * 1024
+    }
+});
 
 module.exports = {
     saveToUploads: saveToUploads.single('image')

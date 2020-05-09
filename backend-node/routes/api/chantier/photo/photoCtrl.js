@@ -33,6 +33,26 @@ async function getPhoto(req, res) {
     })
 }
 
+async function getAllPhotos(req, res) {
+    let chantier = req.params.id;
+
+    // check if the chantier exists first
+
+    let photosFound = await photoDao.getAllPhotos(chantier);
+
+    if (!photosFound) {
+        return res.status(404).json({
+            message: `Aucune photo trouvée pour le chantier ` + chantier
+        })
+    }
+
+    if (photosFound.status === 'error') {
+        return res.status(500).json(photosFound);
+    }
+
+    return res.status(200).json(photosFound);
+}
+
 module.exports = {
-    savePhoto, getPhoto
+    savePhoto, getPhoto, getAllPhotos
 };
