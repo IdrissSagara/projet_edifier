@@ -31,3 +31,4 @@ benchmarks/graphs
 /.idea/
 !/config/config.json
 /config/config.json
+/uploads/

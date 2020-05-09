@@ -23,7 +23,8 @@
     "morgan": "~1.9.1",
     "mysql2": "^2.1.0",
     "pdf-creator-node": "^1.4.1",
-    "sequelize": "^5.21.3"
+    "sequelize": "^5.21.3",
+    "multer": "latest"
   },
   "devDependencies": {
     "sequelize-cli": "^5.5.1"
