@@ -1,5 +1,6 @@
 let express = require('express');
 let router = express.Router();
+let photoRouter = require('./photo/photoRouter');
 
 let utilisateurValidator = require('./utilisateurValidator');
 const accessControl = require('../../auth/accessControl');
@@ -20,5 +21,7 @@ router.put('/',
     utilisateurValidator.validate('update'),
     accessControl.canAccess([roles.ALL]),
     utilisateurCtrl.updateUser);
+
+router.use('/photo', photoRouter);
 
 module.exports = router;

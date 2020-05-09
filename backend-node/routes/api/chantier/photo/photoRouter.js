@@ -6,12 +6,11 @@ const roles = accessControl.roles;
 let photoCtrl = require('./photoCtrl');
 let multer = require('../../utils/multer');
 
-router.post('/:id', multer.saveToUploads, (req, res, next) => {
-    console.log(req.file);
+router.post('/:id', multer.saveToUploads,
+    accessControl.canAccess(roles.ALL),
+    photoCtrl.savePhoto);
 
-    return res.json('photos of chantier ' + req.params.id + ' saved at ' + req.file.path);
-});
-
-router.post('/', photoCtrl.savePhoto);
+router.get('/:id', accessControl.canAccess(roles.ALL),
+    photoCtrl.getPhoto);
 
 module.exports = router;
