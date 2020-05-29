@@ -8,7 +8,7 @@ const diskStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         let id = req.params.id;
         req.params.type = (req.originalUrl.indexOf('chantier') === -1) ? 'user' : 'chantier';
-        let dirName = path.join(__dirname, '../../../uploads/' + req.params.type + '/' + id);
+        let dirName = path.join(__dirname, '../../../public/uploads/' + req.params.type + '/' + id);
 
         if (!fs.existsSync(dirName)) {
             fs.mkdirSync(dirName, {recursive: true});
