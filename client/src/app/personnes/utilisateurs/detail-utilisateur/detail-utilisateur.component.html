@@ -13,9 +13,9 @@
   <div *ngIf="utilisateur " class="row justify-content-md-center">
     <div class="col-lg-8 col-sm-offset-8">
       <div class="row">
-        <div class="col-xs-12 col-lg-12 m-b-xs">
+        <div class="col-xs-12 col-lg-12 m-b-xs" id="cadre_boutton">
           <div class="pull-right">
-            <button class="btn bg-success" title="Modifier votre mot de passe"
+            <button *ngIf="modeProfil()" class="btn bg-success" title="Modifier votre mot de passe"
                     type="button">
               Modifier votre mot de passe
             </button>

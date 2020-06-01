@@ -12,7 +12,15 @@ import {UtilisateurService} from "../../../services/utilisateur.service";
 })
 export class DetailUtilisateurComponent implements OnInit {
 
+  /**
+   * Instance de l'utilisateur dont on affiche les détails
+   */
   utilisateur: Utilisateur;
+
+  /**
+   * Utilisateur courant de l'application
+   */
+  utilisateurCourant: Utilisateur;
   showError: boolean = false;
 
   constructor(private route: ActivatedRoute, private spinner: SpinnerService, private toastService: ToastrService,
@@ -35,6 +43,13 @@ export class DetailUtilisateurComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.getUtilisateur(params['id']);
     });
+  }
+
+  modeProfil() {
+    if (typeof this.utilisateur.id !== undefined) {
+      return this.utilisateur.id;
+    }
+    return false;
   }
 
 }
