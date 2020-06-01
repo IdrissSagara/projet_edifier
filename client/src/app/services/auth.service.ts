@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {UtilService} from './util.service';
 import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {Utilisateur} from "../model/utilisateur";
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,16 @@ export class AuthService {
   jsonHelp = new JwtHelperService();
   get_token_endpoint = environment.api_url + 'auth/login/';
 
+  private _utilisateurCourant: Utilisateur;
+
   /**
    * Instance de l'utilisateur courant qui sera renvoyé lorsque l'utilisateur a déjà été renvoyé une fois.
    * Permet d'éviter des appels
    */
   // private _utilisateurCourant: Utilisateur;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   /**
    * Effectue le login de l'utilisateur
@@ -35,8 +39,8 @@ export class AuthService {
 
     // let request_body = JSON.stringify(credentials);
 
-    const P = new HttpParams( {fromObject: credentials} );
-    return this.http.post( this.get_token_endpoint, P, {
+    const P = new HttpParams({fromObject: credentials});
+    return this.http.post(this.get_token_endpoint, P, {
       observe: 'response',
       responseType: 'json',
       headers: {'content-type': 'application/x-www-form-urlencoded'}
@@ -88,5 +92,9 @@ export class AuthService {
     // TODO: Faire un truc coté serveur ou pas du tout
     localStorage.removeItem(environment.jwt_token_name);
     // this._utilisateurCourant = null;
+  }
+
+  public getMe(): Observable<Utilisateur> {
+    return this.http.get<Utilisateur>(environment.api_url + 'api/utilisateur/whoami');
   }
 }

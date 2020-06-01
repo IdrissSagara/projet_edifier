@@ -16,7 +16,7 @@
         <div class="col-xs-12 col-lg-12 m-b-xs" id="cadre_boutton">
           <div class="pull-right">
             <button *ngIf="modeProfil()" class="btn bg-success" title="Modifier votre mot de passe"
-                    type="button">
+                    (click)="updatePassword(utilisateur)" type="button">
               Modifier votre mot de passe
             </button>
           </div>

@@ -4,6 +4,7 @@ export class Utilisateur {
   prenom: string;
   username: string;
   password: string;
+  userId: number;
   role: string;
   createdAt: string;
   updatedAt: string;
