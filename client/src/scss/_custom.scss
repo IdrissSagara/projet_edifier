@@ -64,3 +64,8 @@
     text-align: center !important;
   }
 }
+
+label.requis:after {
+  content: '*';
+  color: red;
+}
