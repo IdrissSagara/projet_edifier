@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SpinnerService} from "../../services/spinner.service";
+import {ShowHidePasswordDirective} from "../show-hide-password.directive";
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,10 @@ export class LoginComponent implements OnInit {
   password;
   errorMessage;
   submitting: boolean = false;
+
+  showPassword = false;
+  @ViewChild(ShowHidePasswordDirective) input: ShowHidePasswordDirective;
+  @ViewChild('toggler') myToggler: ElementRef;
 
   constructor(private authService: AuthService, private router: Router, private spinner: SpinnerService,
               private route: ActivatedRoute) {
@@ -55,5 +60,21 @@ export class LoginComponent implements OnInit {
       this.spinner.hide();
       this.submitting = false;
     });
+  }
+
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+    let iElt;
+    if (this.showPassword) {
+      this.input.changeType('text');
+      iElt = this.myToggler.nativeElement.childNodes[0];
+      iElt.classList.replace('fa-eye', 'fa-eye-slash');
+      iElt.parentNode.parentNode.setAttribute('title', 'Cacher');
+    } else {
+      this.input.changeType('password');
+      iElt = this.myToggler.nativeElement.childNodes[0];
+      iElt.classList.replace('fa-eye-slash', 'fa-eye');
+      iElt.parentNode.parentNode.setAttribute('title', 'Afficher');
+    }
   }
 }

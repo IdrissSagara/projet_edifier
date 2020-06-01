@@ -32,6 +32,7 @@ import {ToastrModule} from "ngx-toastr";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {environment} from "../environments/environment";
 import {AlertModule} from "ngx-bootstrap";
+import {ShowHidePasswordDirective} from './authentication/show-hide-password.directive';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -79,6 +80,7 @@ export function tokenGetter() {
     P500Component,
     LoginComponent,
     RegisterComponent,
+    ShowHidePasswordDirective,
   ],
   providers: [{
     provide: LocationStrategy,

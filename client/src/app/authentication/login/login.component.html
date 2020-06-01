@@ -24,7 +24,10 @@
                       <span class="input-group-text"><i class="icon-lock"></i></span>
                     </div>
                     <input name="password" [(ngModel)]="password" class="form-control" placeholder="Password" required
-                           minlength="3" type="password">
+                           minlength="3" showHidePassword type="password">
+                    <div (click)="toggleShowPassword()" class="input-group-append" title="Afficher">
+                      <span #toggler class="input-group-text"><i class="fa fa-fw fa-eye" title="Afficher"></i></span>
+                    </div>
                   </div>
                   <div class="row">
                     <div class="col-6">
