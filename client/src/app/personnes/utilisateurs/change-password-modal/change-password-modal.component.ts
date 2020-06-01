@@ -99,4 +99,20 @@ export class ChangePasswordModalComponent implements OnInit {
       iElt.parentNode.parentNode.setAttribute('title', 'Afficher');
     }
   }
+
+  toggleShowPassword1() {
+    this.showPassword = !this.showPassword;
+    let iElt;
+    if (this.showPassword) {
+      this.input.changeType('text');
+      iElt = this.myToggler.nativeElement.childNodes[0];
+      iElt.classList.replace('fa-eye', 'fa-eye-slash');
+      iElt.parentNode.parentNode.setAttribute('title', 'Cacher');
+    } else {
+      this.input.changeType('password');
+      iElt = this.myToggler.nativeElement.childNodes[0];
+      iElt.classList.replace('fa-eye-slash', 'fa-eye');
+      iElt.parentNode.parentNode.setAttribute('title', 'Afficher');
+    }
+  }
 }
