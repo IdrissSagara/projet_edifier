@@ -32,7 +32,7 @@ import {ToastrModule} from "ngx-toastr";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {environment} from "../environments/environment";
 import {AlertModule} from "ngx-bootstrap";
-import {ShowHidePasswordDirective} from './authentication/show-hide-password.directive';
+import {ShowHideModule} from "./authentication/show-hide/show-hide.module";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -65,6 +65,7 @@ export function tokenGetter() {
     ChartsModule,
     FormsModule,
     NgxSpinnerModule,
+    ShowHideModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
@@ -80,7 +81,6 @@ export function tokenGetter() {
     P500Component,
     LoginComponent,
     RegisterComponent,
-    ShowHidePasswordDirective,
   ],
   providers: [{
     provide: LocationStrategy,

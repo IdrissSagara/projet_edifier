@@ -27,9 +27,22 @@ import {ClientDetailsComponent} from './client/client-details/client-details.com
 import {UtilisateurModalComponent} from './utilisateurs/utilisateur-modal/utilisateur-modal.component';
 import {DetailUtilisateurComponent} from './utilisateurs/detail-utilisateur/detail-utilisateur.component';
 import {ChangePasswordModalComponent} from './utilisateurs/change-password-modal/change-password-modal.component';
+import {ShowHideModule} from "../authentication/show-hide/show-hide.module";
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent, ClientDetailsComponent, UtilisateurModalComponent, DetailUtilisateurComponent, ChangePasswordModalComponent],
+  declarations: [
+    ClientComponent,
+    OuvriersComponent,
+    UtilisateursComponent,
+    ClientModalComponent,
+    OuvrierModalComponent,
+    OuvrierDetailsComponent,
+    AddOuvrierToChantierModalComponent,
+    ClientDetailsComponent,
+    UtilisateurModalComponent,
+    DetailUtilisateurComponent,
+    ChangePasswordModalComponent,
+  ],
   entryComponents: [
     ClientModalComponent,
     OuvrierModalComponent,
@@ -52,6 +65,7 @@ import {ChangePasswordModalComponent} from './utilisateurs/change-password-modal
     ModalModule.forRoot(),
     AlertModule.forRoot(),
     NgxSelectModule,
+    ShowHideModule,
   ],
   providers: [
     BsModalService

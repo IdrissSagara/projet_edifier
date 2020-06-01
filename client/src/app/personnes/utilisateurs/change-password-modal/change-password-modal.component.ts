@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap";
 import {UtilisateurService} from "../../../services/utilisateur.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
 import {Utilisateur} from "../../../model/utilisateur";
 import {NgModel} from "@angular/forms";
+import {ShowHidePasswordDirective} from "../../../authentication/show-hide-password.directive";
 
 @Component({
   selector: 'app-change-password-modal',
@@ -13,12 +14,13 @@ import {NgModel} from "@angular/forms";
 })
 export class ChangePasswordModalComponent implements OnInit {
   title: string;
-
   utilisateur: Utilisateur;
-
   erreursServeurs: any = {};
-
   ancienMotDePasse: string;
+
+  showPassword = false;
+  @ViewChild(ShowHidePasswordDirective) input: ShowHidePasswordDirective;
+  @ViewChild('toggler') myToggler: ElementRef;
 
   /**
    * Utilisée pour vérifier que la confirmation du mot de passe est identique au mot de passe
@@ -82,4 +84,19 @@ export class ChangePasswordModalComponent implements OnInit {
   }
 
 
+  toggleShowPassword() {
+    this.showPassword = !this.showPassword;
+    let iElt;
+    if (this.showPassword) {
+      this.input.changeType('text');
+      iElt = this.myToggler.nativeElement.childNodes[0];
+      iElt.classList.replace('fa-eye', 'fa-eye-slash');
+      iElt.parentNode.parentNode.setAttribute('title', 'Cacher');
+    } else {
+      this.input.changeType('password');
+      iElt = this.myToggler.nativeElement.childNodes[0];
+      iElt.classList.replace('fa-eye-slash', 'fa-eye');
+      iElt.parentNode.parentNode.setAttribute('title', 'Afficher');
+    }
+  }
 }
