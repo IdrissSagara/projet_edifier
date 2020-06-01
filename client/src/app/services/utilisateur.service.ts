@@ -12,6 +12,7 @@ import {catchError} from "rxjs/operators";
 export class UtilisateurService {
   apiUrl = environment.api_url + 'api/utilisateur';
   urlSaveUser = environment.api_url + 'auth/register';
+  passwordUpdateUrl = environment.api_url + 'auth/reset-password'
 
   constructor(private http: HttpClient) {
   }
@@ -31,6 +32,10 @@ export class UtilisateurService {
   createUser(utilisateur): Observable<Utilisateur> {
     return this.http.post<Utilisateur>(`${this.urlSaveUser}`, utilisateur)
       .pipe(catchError<any, any>(this.handleError));
+  }
+
+  changePassword(utilisateur): Observable<Utilisateur> {
+    return this.http.post<Utilisateur>(`${this.passwordUpdateUrl}`, utilisateur)
   }
 
   handleError(error) {

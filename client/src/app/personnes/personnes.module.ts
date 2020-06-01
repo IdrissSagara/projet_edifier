@@ -26,14 +26,16 @@ import {AlertModule} from "ngx-bootstrap/alert";
 import {ClientDetailsComponent} from './client/client-details/client-details.component';
 import {UtilisateurModalComponent} from './utilisateurs/utilisateur-modal/utilisateur-modal.component';
 import {DetailUtilisateurComponent} from './utilisateurs/detail-utilisateur/detail-utilisateur.component';
+import {ChangePasswordModalComponent} from './utilisateurs/change-password-modal/change-password-modal.component';
 
 @NgModule({
-  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent, ClientDetailsComponent, UtilisateurModalComponent, DetailUtilisateurComponent],
+  declarations: [ClientComponent, OuvriersComponent, UtilisateursComponent, ClientModalComponent, OuvrierModalComponent, OuvrierDetailsComponent, AddOuvrierToChantierModalComponent, ClientDetailsComponent, UtilisateurModalComponent, DetailUtilisateurComponent, ChangePasswordModalComponent],
   entryComponents: [
     ClientModalComponent,
     OuvrierModalComponent,
     AddOuvrierToChantierModalComponent,
     UtilisateurModalComponent,
+    ChangePasswordModalComponent
   ],
   imports: [
     CommonModule,

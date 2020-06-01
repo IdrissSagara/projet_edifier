@@ -8,6 +8,8 @@ export class Utilisateur {
   role: string;
   createdAt: string;
   updatedAt: string;
+  oldPassword: string;
+  newPassword: string;
 
   constructor() {
     this.role = BASICUSER;
