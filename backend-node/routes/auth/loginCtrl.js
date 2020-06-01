@@ -46,18 +46,7 @@ async function loginCtrl(req, res) {
 }
 
 function isAuthenticated(req) {
-    let user = {
-        isAuth: false,
-        userId: -1,
-        nom: "",
-        prenom: "",
-        username: "",
-        createdAt: "",
-        updatedAt: "",
-        role: ""
-    };
-
-    user = jwtUtils.getUserInfo(req.headers['authorization']);
+    let user = jwtUtils.getUserInfo(req.headers['authorization']);
 
     (user.userId !== -1) ? user.isAuth = true : user.isAuth = false;
 

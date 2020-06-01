@@ -80,7 +80,12 @@ async function updateUser(req, res) {
     return res.status(200).json(user);
 }
 
+async function whoAmI(req, res) {
+    let user = req.user;
+    delete user.isAuth;
+    return res.status(200).json(user);
+}
 
 module.exports = {
-    getAll, getUserById, updateUser
+    getAll, getUserById, updateUser, whoAmI
 };
