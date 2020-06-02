@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Ouvrier, TYPES_OUVRIER} from "../../../model/ouvrier";
-import {BsModalRef} from "ngx-bootstrap";
+import {BsModalRef} from "ngx-bootstrap/modal";
 import {OuvrierService} from "../../../services/ouvrier.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";

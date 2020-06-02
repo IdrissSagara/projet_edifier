@@ -31,8 +31,8 @@ import {JwtModule} from "@auth0/angular-jwt";
 import {ToastrModule} from "ngx-toastr";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {environment} from "../environments/environment";
-import {AlertModule} from "ngx-bootstrap";
 import {ShowHideModule} from "./authentication/show-hide/show-hide.module";
+import {AlertModule} from "ngx-bootstrap/alert";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true

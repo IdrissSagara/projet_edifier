@@ -4,9 +4,8 @@ import {Ouvrier} from "../../model/ouvrier";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";
 import {combineLatest, Subscription} from "rxjs";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
 import {OuvrierModalComponent} from "./ouvrier-modal/ouvrier-modal.component";
-import {ModalDirective} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {AddOuvrierToChantierModalComponent} from "./add-ouvrier-to-chantier-modal/add-ouvrier-to-chantier-modal.component";
 
 @Component({
