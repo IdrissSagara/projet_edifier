@@ -5,7 +5,7 @@ import {SpinnerService} from "../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {UtilisateurService} from "../../../services/utilisateur.service";
 import {AuthService} from "../../../services/auth.service";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {combineLatest, Subscription} from "rxjs";
 import {ChangePasswordModalComponent} from "../change-password-modal/change-password-modal.component";
 

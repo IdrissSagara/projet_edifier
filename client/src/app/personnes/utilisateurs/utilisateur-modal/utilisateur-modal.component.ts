@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ROLES, Utilisateur} from "../../../model/utilisateur";
-import {BsModalRef} from "ngx-bootstrap";
+import {BsModalRef} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
 import {UtilisateurService} from "../../../services/utilisateur.service";

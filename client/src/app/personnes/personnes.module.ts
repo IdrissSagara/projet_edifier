@@ -4,18 +4,6 @@ import {ClientComponent} from './client/client.component';
 import {OuvriersComponent} from './ouvriers/ouvriers.component';
 import {UtilisateursComponent} from './utilisateurs/utilisateurs.component';
 import {FormsModule} from "@angular/forms";
-import {
-  BsDropdownModule,
-  BsModalService,
-  CarouselModule,
-  CollapseModule,
-  ModalModule,
-  PaginationModule,
-  PopoverModule,
-  ProgressbarModule,
-  TabsModule,
-  TooltipModule
-} from "ngx-bootstrap";
 import {PersonnesRoutingModule} from "./personnes.routing.module";
 import {ClientModalComponent} from "./client/client-modal/client-modal.component";
 import {OuvrierModalComponent} from "./ouvriers/ouvrier-modal/ouvrier-modal.component";
@@ -28,6 +16,15 @@ import {UtilisateurModalComponent} from './utilisateurs/utilisateur-modal/utilis
 import {DetailUtilisateurComponent} from './utilisateurs/detail-utilisateur/detail-utilisateur.component';
 import {ChangePasswordModalComponent} from './utilisateurs/change-password-modal/change-password-modal.component';
 import {ShowHideModule} from "../authentication/show-hide/show-hide.module";
+import {BsDropdownModule} from "ngx-bootstrap/dropdown";
+import {TabsModule} from "ngx-bootstrap/tabs";
+import {CarouselModule} from "ngx-bootstrap/carousel";
+import {CollapseModule} from "ngx-bootstrap/collapse";
+import {PaginationModule} from "ngx-bootstrap/pagination";
+import {PopoverModule} from "ngx-bootstrap/popover";
+import {ProgressbarModule} from "ngx-bootstrap/progressbar";
+import {TooltipModule} from "ngx-bootstrap/tooltip";
+import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 
 @NgModule({
   declarations: [

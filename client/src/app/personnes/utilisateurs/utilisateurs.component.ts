@@ -4,7 +4,7 @@ import {Utilisateur} from "../../model/utilisateur";
 import {combineLatest, Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";
-import {BsModalRef, BsModalService} from "ngx-bootstrap";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {UtilisateurModalComponent} from "./utilisateur-modal/utilisateur-modal.component";
 
 @Component({
