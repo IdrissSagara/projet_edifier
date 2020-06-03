@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {navItems} from '../../_nav';
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
@@ -8,11 +8,21 @@ import {SpinnerService} from "../../services/spinner.service";
   selector: 'app-dashboard',
   templateUrl: './default-layout.component.html'
 })
-export class DefaultLayoutComponent {
+export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems = navItems;
+  currentUser;
 
   constructor(private authService: AuthService, private router: Router, private spinner: SpinnerService) {
+  }
+
+  ngOnInit(): void {
+    this.currentUser = this.authService.getMe().subscribe((res) => {
+      this.currentUser = res;
+      console.log(res);
+    }, error => {
+      console.error("Cannont get Me");
+    });
   }
 
   toggleMinimize(e) {
