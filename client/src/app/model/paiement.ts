@@ -1,4 +1,4 @@
-export interface Paiement {
+export class Paiement {
   id: number;
   ChantierId: number;
   date_paiement: string;
@@ -8,4 +8,14 @@ export interface Paiement {
   commentaire: string;
   createdAt: string;
   updatedAt: string;
+
+  constructor() {
+    this.type = ESPÈCE;
+  }
 }
+
+export const ESPÈCE = 'Espèce';
+export const CHEQUE = 'Chèque';
+export const VIREMENT_BANCAIRE = 'Virement bancaire';
+
+export const TYPES_PAIEMENTS = [ESPÈCE, CHEQUE, VIREMENT_BANCAIRE];

@@ -5,9 +5,13 @@
         <h2>Details du chantier : N° {{chantier?.id}} du
           client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
       </div>
-      <div class="pull-right" id="btn_add_mouv">
-        <button (click)="addMouvement()"
-                class="btn btn-pill btn-block btn-primary" type="button">Effectuer un mouvment
+      <div class="btn-group pull-right">
+        <button (click)="addMouvement()" class="btn btn-outline-secondary" tooltip="Effectuer un mouvement"
+                type="button"><i class="fa fa-reply"></i>
+        </button>
+
+        <button (click)="effectuerUnPaiement()" class="btn btn-outline-secondary" tooltip="Effectuer un paiement"
+                type="button"><i class="fa fa-credit-card"></i>
         </button>
       </div>
     </div>

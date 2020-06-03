@@ -17,15 +17,18 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {BsModalRef, ModalModule} from "ngx-bootstrap/modal";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {NgxSelectModule} from "ngx-select-ex";
+import {PaiementModalComponent} from './paiement-modal/paiement-modal.component';
 
 @NgModule({
   declarations: [
     ChantierComponent,
     ChantierModalComponent,
     ChantierDetailsComponent,
+    PaiementModalComponent,
   ],
   entryComponents: [
     ChantierModalComponent,
+    PaiementModalComponent,
   ],
   imports: [
     ChartsModule,

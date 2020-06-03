@@ -9,6 +9,8 @@ import {Mouvement} from "../../model/mouvement";
 import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-modal/mouvement-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
+import {Paiement} from "../../model/paiement";
+import {PaiementModalComponent} from "../paiement-modal/paiement-modal.component";
 
 @Component({
   selector: 'app-chantier-details',
@@ -18,6 +20,7 @@ import {ToastrService} from "ngx-toastr";
 export class ChantierDetailsComponent implements OnInit {
   chantier: Chantier;
   mouvement: Mouvement;
+  paiement: Paiement;
   subscriptions: Subscription[] = [];
   mouvementModalRef: BsModalRef;
   showError: boolean = false;
@@ -108,5 +111,39 @@ export class ChantierDetailsComponent implements OnInit {
 
   refresh() {
     this.init();
+  }
+
+  effectuerUnPaiement() {
+    const initialState = {
+      chantier: this.chantier,
+      paiement: this.paiement = new Paiement(),
+      title: 'Effectuer un paiement'
+    };
+
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.init();
+        }
+
+        this.unsubscribe();
+      })
+    );
+
+    this.subscriptions.push(_combine);
+
+    this.mouvementModalRef = this.modalService.show(PaiementModalComponent, {initialState});
+    this.mouvementModalRef.content.closeBtnName = 'Close';
+
   }
 }
