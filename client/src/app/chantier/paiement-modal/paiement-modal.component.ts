@@ -5,6 +5,7 @@ import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";
 import {Paiement, TYPES_PAIEMENTS} from "../../model/paiement";
 import {Chantier} from "../../model/chantier";
+import {NgModel} from "@angular/forms";
 
 @Component({
   selector: 'app-paiement-modal',
@@ -16,6 +17,7 @@ export class PaiementModalComponent implements OnInit {
   title: string;
   paiement: Paiement;
   chantier: Chantier;
+  erreursServeurs: any = {};
 
   types_paiements = TYPES_PAIEMENTS
 
@@ -47,6 +49,24 @@ export class PaiementModalComponent implements OnInit {
         tapToDismiss: false
       });
     });
+  }
+
+
+  /**
+   * Renvoie true si le input est en erreur
+   * @param input
+   * @returns {boolean}
+   */
+  inputEnErreur(input: NgModel): boolean {
+    // validation côté client (validation html)
+    if (input.invalid && input.touched) {
+      return true;
+    }
+
+    if (input.untouched && input.errors && !input.errors.required) {
+      return true;
+    }
+    return this.erreursServeurs.hasOwnProperty(input.name);
   }
 
 
