@@ -27,4 +27,8 @@ export class PaiementService {
     return this.http.get(`${this.apiUrl}/${idFacture}/facture`, {responseType: "arraybuffer"});
   }
 
+  addPaiement(idChantier: number, paiement: Paiement): Observable<Paiement> {
+    return this.http.post<Paiement>(`${this.apiUrl}/chantier/${idChantier}`, paiement);
+  }
+
 }

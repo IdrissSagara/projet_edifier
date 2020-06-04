@@ -117,7 +117,8 @@ export class ChantierDetailsComponent implements OnInit {
     const initialState = {
       chantier: this.chantier,
       paiement: this.paiement = new Paiement(),
-      title: 'Effectuer un paiement'
+      title: `Effectuer un paiement du client : ${this.chantier.Client.nom}
+      ${this.chantier.Client.prenom} pour le chantier ${this.chantier.id} à ${this.chantier.emplacement}`
     };
 
     const _combine = combineLatest(

@@ -14,7 +14,7 @@ import {Chantier} from "../../model/chantier";
 export class PaiementModalComponent implements OnInit {
 
   title: string;
-  paiemnt: Paiement;
+  paiement: Paiement;
   chantier: Chantier;
 
   types_paiements = TYPES_PAIEMENTS
@@ -24,10 +24,30 @@ export class PaiementModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.paiemnt = this.paiemnt;
   }
 
   addPaiement() {
-
+    this.spinner.show();
+    this.paiementService.addPaiement(this.chantier.id, this.paiement).subscribe((res) => {
+      // this.paiement = res;
+      console.log("ok bon----->")
+      const message = `Paiement de ${this.paiement.montant} effectuer avec succes`;
+      this.paiementModalRel.hide();
+      this.toastService.success(message, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.spinner.hide();
+    }, error => {
+      this.spinner.hide();
+      this.toastService.error(`Une erreur est survenue lors du paiement`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    });
   }
+
+
 }

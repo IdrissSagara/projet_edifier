@@ -14,8 +14,8 @@ export class Paiement {
   }
 }
 
-export const ESPÈCE = 'Espèce';
-export const CHEQUE = 'Chèque';
-export const VIREMENT_BANCAIRE = 'Virement bancaire';
+export const ESPÈCE = 'especes';
+export const CHEQUE = 'cheque';
+export const VIREMENT_BANCAIRE = 'virement';
 
 export const TYPES_PAIEMENTS = [ESPÈCE, CHEQUE, VIREMENT_BANCAIRE];

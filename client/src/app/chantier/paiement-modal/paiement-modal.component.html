@@ -7,17 +7,22 @@
   </div>
   <div class="modal-body">
     <form #form="ngForm">
-      <div *ngIf="paiemnt" class="form-group">
-        <label for="telephone">Montant</label>
-        <input [(ngModel)]="paiemnt.montant" class="form-control" id="telephone" name="telephone"
+      <div *ngIf="paiement" class="form-group">
+        <label for="montant">Montant</label>
+        <input [(ngModel)]="paiement.montant" class="form-control" id="montant" name="montant"
                placeholder="Entrez le montant à payer..." required type="number">
       </div>
-      <div *ngIf="paiemnt" class="form-group">
+      <div *ngIf="paiement" class="form-group">
         <label class="control-label" for="type">Type de paiement</label>
-        <select [(ngModel)]="paiemnt.type" class="form-control" id="type" name="type"
+        <select [(ngModel)]="paiement.type" class="form-control" id="type" name="type"
                 required>
           <option *ngFor="let type of types_paiements" [value]="type">{{ type }}</option>
         </select>
+      </div>
+      <div *ngIf="paiement" class="form-group">
+        <label for="commentaire">Commentaire</label>
+        <input [(ngModel)]="paiement.commentaire" class="form-control" id="commentaire" name="commentaire"
+               placeholder="Commentaire sur le paiement" required type="text">
       </div>
     </form>
   </div>
@@ -26,7 +31,7 @@
       Nettoyer
     </button>
     <button (click)="addPaiement()" [disabled]="form.invalid"
-            class="btn btn-primary" type="button">Enregistrer
+            class="btn btn-primary" type="button">Effectuer
     </button>
     <button (click)="paiementModalRel.hide()" class="btn btn-secondary" type="button">Fermer</button>
   </div>
