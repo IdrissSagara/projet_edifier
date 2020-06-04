@@ -185,6 +185,7 @@ async function save(req, res, next) {
         let p = newPaiement.get({plain: true});
         req.infosFacture = {ch, p};
         await transaction.commit();
+        return res.status(200).json(p);
         next();
     } catch (e) {
         console.log(e);
