@@ -5,7 +5,8 @@ let photoRouter = require('./photo/photoRouter');
 let chantierValidator = require('./chantierValidator');
 const validate = require('../validationCtrl').validate;
 const accessControl = require('../../auth/accessControl');
-let chantierCtrl = require('./chantierCtrl');
+const chantierCtrl = require('./chantierCtrl');
+const factureCtrl = require('../pdf_generation/factureCtrl');
 const roles = accessControl.roles;
 
 //get all the chantiers
@@ -30,6 +31,10 @@ router.get('/:id/ouvriers',
     chantierValidator.validate('getChantier'), validate,
     accessControl.canAccess([roles.ALL]),
     chantierCtrl.getChantierWithOuvriers);
+
+router.get('/:id/facture', chantierValidator.validate('getChantier'),
+    validate, accessControl.canAccess([roles.ALL]),
+    factureCtrl.sendFacturePDF);
 
 //save a chantier
 router.post('/',

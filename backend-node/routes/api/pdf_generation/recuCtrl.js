@@ -1,35 +1,14 @@
-/**
- * https://www.npmjs.com/package/pdf-creator-node
- *
- * Templates de facture
- * https://github.com/sparksuite/simple-html-invoice-template
- * https://bootsnipp.com/snippets/8MPnQ
- */
-const pdf = require("pdf-creator-node");
-const fs = require('fs');
 const path = require('path');
 
-const printOptions = require('../../../config/jwt_config').print_options;
+const printOptions = require('../../../config/jwt_config.json').print_options;
 const paiementDAO = require('../../../dao/paiementDao');
 const chantierDAO = require('../../../dao/chantierDao');
+const pdfUtil = require('./generatePDF');
+const fs = require('fs');
 
 const {validationResult} = require('express-validator');
 
-async function genPDF(options, template_path, data, output_path) {
-
-// Read HTML Template
-    let html_template = fs.readFileSync(template_path, 'utf8');
-
-    let document = {
-        html: html_template,
-        data,
-        path: output_path
-    };
-
-    return await pdf.create(document, options);
-}
-
-async function sendFacturePDF(req, res, next) {
+async function sendRecuPDF(req, res, next) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -80,8 +59,8 @@ async function sendFacturePDF(req, res, next) {
         chantier: paiement.ch
     };
 
-    let template_path = path.join(__dirname, 'facture_template.html');
-    let pdf = await genPDF(printOptions, template_path, data, './facture.pdf');
+    let template_path = path.join(__dirname, 'recu_template.html');
+    let pdf = await pdfUtil.genPDF(printOptions, template_path, data, './recu.pdf');
 
     /*let stream = fs.createReadStream(pdf.filename);
     stream.pipe(res).once("close", function () {
@@ -94,16 +73,6 @@ async function sendFacturePDF(req, res, next) {
     return res.status(200).download(pdf.filename);
 }
 
-function deleteFile(file) {
-    fs.unlink(file, function (err) {
-        if (err) {
-            console.error(err.toString());
-        } else {
-            console.warn(file + ' supprimé');
-        }
-    });
-}
-
 module.exports = {
-    genPDF, deleteFile, sendFacturePDF
+    sendRecuPDF,
 };

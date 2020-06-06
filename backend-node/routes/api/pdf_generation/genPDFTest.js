@@ -46,8 +46,8 @@ describe("generate PDF", () => {
             }
         };
 
-        let template_path = path.join(__dirname, 'facture_template.html');
-        let pdf = await genPDF.genPDF(options, template_path, data, './facture_' + data.facture.createdAt + '.pdf');
+        let template_path = path.join(__dirname, 'recu_template.html');
+        let pdf = await genPDF.genPDF(options, template_path, data, './facture_' + data.facture.id + '.pdf');
 
         console.log(pdf);
         assert.isDefined(pdf.filename);
