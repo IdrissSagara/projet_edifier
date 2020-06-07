@@ -30,9 +30,13 @@ import {HttpClientModule} from "@angular/common/http";
 import {JwtModule} from "@auth0/angular-jwt";
 import {ToastrModule} from "ngx-toastr";
 import {NgxSpinnerModule} from "ngx-spinner";
-import {environment} from "../environments/environment";
 import {ShowHideModule} from "./authentication/show-hide/show-hide.module";
 import {AlertModule} from "ngx-bootstrap/alert";
+import {StoreModule} from '@ngrx/store';
+import {metaReducers, reducers} from './store/reducers';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {environment} from "../environments/environment";
+import {EffectsModule} from "@ngrx/effects";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -73,6 +77,15 @@ export function tokenGetter() {
         blacklistedRoutes: [environment.backend_base + '/auth/login']
       }
     }),
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true,
+      }
+    }),
+    EffectsModule.forRoot(),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   declarations: [
     AppComponent,

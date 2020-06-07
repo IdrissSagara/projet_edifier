@@ -2,10 +2,13 @@ import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ClientService} from "../../services/client.service";
 import {ClientModel} from "../../model/clientModel";
-import {combineLatest, Subscription} from "rxjs";
+import {combineLatest, Observable, Subscription} from "rxjs";
 import {ClientModalComponent} from "./client-modal/client-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
+import {AppState} from "../../store/reducers";
+import {Store} from "@ngrx/store";
+import {getAllClients} from "./store/client.selectors";
 
 @Component({
   selector: 'app-client',
@@ -14,6 +17,7 @@ import {ToastrService} from "ngx-toastr";
 })
 export class ClientComponent implements OnInit {
   clients: ClientModel[];
+  clients$: Observable<ClientModel[]>;
   newClient: ClientModel;
   clientModalRef: BsModalRef;
   errorMessage: String;
@@ -28,11 +32,12 @@ export class ClientComponent implements OnInit {
 
   constructor(private clientService: ClientService, private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
-              private toastService: ToastrService) {
+              private toastService: ToastrService, private store: Store<AppState>) {
   }
 
   ngOnInit(): void {
-    this.getAllClients();
+    // this.getAllClients();
+    this.clients$ = this.store.select(getAllClients);
   }
 
   get isLoading() {

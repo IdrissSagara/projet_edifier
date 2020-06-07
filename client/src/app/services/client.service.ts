@@ -3,7 +3,6 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {AllClientsResponse} from "../model/responses/AllClientsResponse";
 import {Observable} from "rxjs";
-import {Client} from "../../../../backend-node/models/client";
 import {ClientModel} from "../model/clientModel";
 import {Chantier} from "../model/chantier";
 
@@ -22,16 +21,16 @@ export class ClientService {
     return this.httpClient.get<AllClientsResponse>(`${this.apiUrl}?offset=${offset}`);
   }
 
-  addClient(client): Observable<Client> {
-    return this.httpClient.post<Client>(`${this.apiUrl}`, client);
+  addClient(client): Observable<ClientModel> {
+    return this.httpClient.post<ClientModel>(`${this.apiUrl}`, client);
   }
 
   deleteClientById(id: number) {
     return this.httpClient.delete<ClientModel>(`${this.apiUrl}/${id}`);
   }
 
-  updateClient(client): Observable<Client> {
-    return this.httpClient.put<Client>(`${this.apiUrl}`, client);
+  updateClient(client): Observable<ClientModel> {
+    return this.httpClient.put<ClientModel>(`${this.apiUrl}`, client);
   }
 
   search(nom): Observable<AllClientsResponse> {
