@@ -51,6 +51,10 @@ export class ChantierService {
       .pipe(catchError<any, any>(this.handleError));
   }
 
+  getChantierFacture(idFacture: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${idFacture}/facture`, {responseType: "arraybuffer"});
+  }
+
   handleError(error) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

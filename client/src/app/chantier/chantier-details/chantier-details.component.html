@@ -6,13 +6,16 @@
           client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
       </div>
       <div class="btn-group pull-right">
-        <button (click)="addMouvement()" class="btn btn-outline-secondary" tooltip="Effectuer un mouvement"
+        <button (click)="addMouvement()" class="btn btn-info btn-icon" tooltip="Effectuer un mouvement"
                 type="button"><i class="fa fa-reply"></i>
         </button>
 
         <button (click)="effectuerUnPaiement()" class="btn btn-outline-secondary" tooltip="Effectuer un paiement"
                 type="button"><i class="fa fa-credit-card"></i>
         </button>
+        <button (click)="genererFacture()"
+                class="btn btn-link bg-success btn-icon" tooltip="Imprimer une facture pour ce chantier"><i
+          class="cui-print"></i></button>
       </div>
     </div>
 
@@ -125,10 +128,11 @@
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
   </div><!--/.col-->
+  <iframe #pdfIframe *ngIf="pdfUrl" [src]="pdfUrl">
+  </iframe>
 </div><!--/.row-->
+
