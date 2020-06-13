@@ -36,7 +36,7 @@
             <td>{{paiement.createdAt | date: 'dd/MM/yyyy'}}</td>
             <td>
               <div class="btn-group" id="button_action">
-                <button [routerLink]=""
+                <button [routerLink]="['/paiement/detail', paiement.id]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails du paiement"><i
                   class="icon-eye"></i></button>
                 <button (click)="UpdatePaiementDialog()"

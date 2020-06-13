@@ -5,6 +5,7 @@ import {RecusComponent} from "./caisse/recus/recus.component";
 import {PaiementsComponent} from "./caisse/paiements/paiements.component";
 import {FacturesComponent} from "./caisse/factures/factures.component";
 import {MouvementsComponent} from "./mouvement/mouvements/mouvements.component";
+import {DetailPaiementComponent} from "./caisse/paiements/detail-paiement/detail-paiement.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,12 @@ const routes: Routes = [
           title: 'Budget'
         }
       }, {
+        path: 'detail/:id',
+        component: DetailPaiementComponent,
+        data: {
+          title: 'Detail du Paiements'
+        },
+      }, {
         path: 'caisse',
         data: {
           title: 'Caisse'
@@ -42,7 +49,7 @@ const routes: Routes = [
             component: PaiementsComponent,
             data: {
               title: 'Paiements'
-            }
+            },
           }, {
             path: 'recus',
             component: RecusComponent,
