@@ -8,4 +8,8 @@ export class P404Component {
   constructor() {
   }
 
+  goBack() {
+    window.history.back();
+  }
+
 }
