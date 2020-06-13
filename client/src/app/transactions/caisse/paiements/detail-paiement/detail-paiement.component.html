@@ -15,3 +15,61 @@
 
   </div>
 </div>
+
+
+<div *ngIf="paiement " class="row justify-content-md-center">
+  <div class="col-lg-8 col-sm-offset-8">
+    <div class="card">
+      <div class="card-header text-center">
+        <strong>Les informations du paiement</strong>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped">
+          <tbody>
+          <tr>
+            <td><strong>Identifiant du paiement :</strong></td>
+            <td>{{paiement.id}}</td>
+          </tr>
+          <tr>
+            <td><strong>Type de paiement :</strong></td>
+            <td>{{paiement.type}}</td>
+          </tr>
+          <tr>
+            <td><strong>Montant :</strong></td>
+            <td>{{paiement.montant}}</td>
+          </tr>
+          <tr>
+            <td><strong>Commentaire :</strong></td>
+            <td>{{paiement.commentaire}}</td>
+          </tr>
+          <tr>
+            <td><strong>Chantier :</strong></td>
+            <td>{{paiement.ChantierId}}</td>
+          </tr>
+          <tr>
+            <td><strong>Date de paiement :</strong></td>
+            <td>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Paiement créer le :</strong></td>
+            <td>{{paiement.createdAt | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Paiement modifier le :</strong></td>
+            <td>{{paiement.updatedAt | date: 'dd/MM/yyyy'}}</td>
+          </tr>
+          <tr>
+            <td><strong>Creer par :</strong></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>Modifié par :</strong></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>
