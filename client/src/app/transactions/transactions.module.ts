@@ -16,6 +16,7 @@ import {MouvementsComponent} from './mouvement/mouvements/mouvements.component';
 import {MouvementModule} from "./mouvement/mouvement.module";
 import {HttpClientModule} from "@angular/common/http";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
+import {DetailPaiementComponent} from './caisse/paiements/detail-paiement/detail-paiement.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {BsDropdownModule} from "ngx-bootstrap/dropdown";
     FacturesComponent,
     PaiementsComponent,
     RecusComponent,
-    MouvementsComponent],
+    MouvementsComponent,
+    DetailPaiementComponent],
   imports: [
     CommonModule,
     HttpClientModule,
