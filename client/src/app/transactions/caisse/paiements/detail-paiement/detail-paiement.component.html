@@ -44,7 +44,8 @@
           </tr>
           <tr>
             <td><strong>Chantier :</strong></td>
-            <td>{{paiement.ChantierId}}</td>
+            <td><span [routerLink]="['/chantiers/details', paiement.ChantierId]"
+                      class="badge badge-success " id="clickable-row">{{paiement.ChantierId}}</span></td>
           </tr>
           <tr>
             <td><strong>Date de paiement :</strong></td>
