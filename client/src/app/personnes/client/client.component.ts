@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ClientService} from "../../services/client.service";
 import {ClientModel} from "../../model/clientModel";
@@ -6,18 +6,18 @@ import {combineLatest, Observable, Subscription} from "rxjs";
 import {ClientModalComponent} from "./client-modal/client-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
-import {AppState} from "../../store/reducers";
-import {Store} from "@ngrx/store";
-import {getAllClients} from "./store/client.selectors";
+import {ClientState} from "./store/clientState";
+import {Select, Store} from "@ngxs/store";
+import {tap} from "rxjs/operators";
+import {GetClients} from "./store/client.actions";
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
   clients: ClientModel[];
-  clients$: Observable<ClientModel[]>;
   newClient: ClientModel;
   clientModalRef: BsModalRef;
   errorMessage: String;
@@ -28,16 +28,26 @@ export class ClientComponent implements OnInit {
   deltedName: string;
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
-
+  @Select(ClientState.getClients) clients$: Observable<ClientModel[]>;
+  @Select(ClientState.areClientsLoaded) areClientsLoaded$;
+  areCoursesLoadedSub: Subscription;
 
   constructor(private clientService: ClientService, private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
-              private toastService: ToastrService, private store: Store<AppState>) {
+              private toastService: ToastrService, private store: Store) {
   }
 
   ngOnInit(): void {
     // this.getAllClients();
-    this.clients$ = this.store.select(getAllClients);
+    this.areCoursesLoadedSub = this.areClientsLoaded$.pipe(
+      tap((areCoursesLoaded) => {
+        if (!areCoursesLoaded) {
+          this.store.dispatch(new GetClients());
+        }
+      })
+    ).subscribe(value => {
+      console.log(value);
+    });
   }
 
   get isLoading() {
@@ -169,5 +179,9 @@ export class ClientComponent implements OnInit {
       });
       this.deletedId = undefined;
     });
+  }
+
+  ngOnDestroy() {
+    this.areCoursesLoadedSub.unsubscribe();
   }
 }
