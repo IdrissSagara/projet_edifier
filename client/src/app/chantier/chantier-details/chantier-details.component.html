@@ -132,7 +132,6 @@
       </div>
     </div>
   </div><!--/.col-->
-  <iframe #pdfIframe *ngIf="pdfUrl" [src]="pdfUrl">
-  </iframe>
 </div><!--/.row-->
-
+<iframe #pdfIframe [src]="pdfUrl" style="visibility: hidden">
+</iframe>

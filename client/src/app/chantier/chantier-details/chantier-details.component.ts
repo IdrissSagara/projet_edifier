@@ -151,9 +151,9 @@ export class ChantierDetailsComponent implements OnInit {
 
   }
 
-  genererFacture() {
+  genererFacture(): void {
     this.spinner.show();
-    this.chantierService.getChantierFacture(this.chantier.id).subscribe((res) => {
+    this.chantierService.getChantierFacture(this.chantier.id).subscribe((res: any) => {
       const pdf = new Blob([res], {type: 'application/pdf'});
 
       // création d'une url locale avec le fichier pdf

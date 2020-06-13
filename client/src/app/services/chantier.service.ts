@@ -52,7 +52,7 @@ export class ChantierService {
   }
 
   getChantierFacture(idFacture: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/${idFacture}/facture`, {responseType: "arraybuffer"});
+    return this.http.get(`${this.apiUrl}/${idFacture}/facture`, {responseType: "blob"});
   }
 
   handleError(error) {
