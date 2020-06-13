@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BsModalRef} from "ngx-bootstrap";
+import {BsModalRef} from "ngx-bootstrap/modal";
 import {PaiementService} from "../../services/paiement.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";

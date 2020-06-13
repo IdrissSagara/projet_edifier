@@ -19,12 +19,12 @@ export class AuthGuard implements CanActivate {
         return true;
       } else { // user is auth but does not have accreditation to see this route
         this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}});
-        console.log('Vous n\'avez pas les droits nécessaires pour acceder à cette route');
+        // console.log('Vous n\'avez pas les droits nécessaires pour acceder à cette route');
         return false;
       }
     } else {
       this.router.navigate(['/login'], {queryParams: {returnUrl: state.url}}).then(r => {
-        console.error("Vous devez vous authentifier pour acceder à cette ressource");
+        // console.error("Vous devez vous authentifier pour acceder à cette ressource");
         // this.toastService.toastError("Vous devez vous authentifier pour acceder à cette ressource");
       });
       return false;

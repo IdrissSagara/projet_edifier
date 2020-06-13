@@ -6,13 +6,14 @@ import {ShowHidePasswordDirective} from "../show-hide-password.directive";
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: 'login.component.html'
+  templateUrl: 'login.component.html',
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
   returnUrl: string;
-  username;
-  password;
-  errorMessage;
+  username: string;
+  password: string;
+  errorMessage: string;
   submitting: boolean = false;
 
   showPassword = false;
@@ -28,18 +29,11 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams
       .subscribe(params => {
-        console.log(params); // {order: "popular"}
 
         this.returnUrl = params.returnUrl;
-        console.log(this.returnUrl); // popular
       });
-
-    // get return url from route parameters or default to '/'
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
-    console.log(this.returnUrl);
     if (this.authService.isloggedIn()) {
       this.router.navigateByUrl(this.returnUrl);
-      console.log('Vous êtes déjà authentifié');
     }
   }
 
@@ -51,15 +45,16 @@ export class LoginComponent implements OnInit {
       // login successful so redirect to return url
       this.router.navigateByUrl(this.returnUrl);
     }).catch(err => {
-      console.log('oops during login');
-      console.log(err);
+      this.password = '';
       this.errorMessage = err.error.message;
-      console.log("this.errorMessage");
-      console.log(this.errorMessage);
     }).finally(() => {
       this.spinner.hide();
       this.submitting = false;
     });
+  }
+
+  forgotPwd() {
+    alert("Merci de contacter Digital Faso à contact@digital-faso.com");
   }
 
   toggleShowPassword() {

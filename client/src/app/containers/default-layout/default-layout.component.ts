@@ -19,7 +19,6 @@ export class DefaultLayoutComponent implements OnInit {
   ngOnInit(): void {
     this.currentUser = this.authService.getMe().subscribe((res) => {
       this.currentUser = res;
-      console.log(res);
     }, error => {
       console.error("Cannont get Me");
     });

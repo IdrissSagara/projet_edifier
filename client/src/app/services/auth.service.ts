@@ -48,7 +48,6 @@ export class AuthService {
       const body = this.handleToken(res);
       return Promise.resolve(body);
     }).catch(err => {
-      console.error(err);
       return Promise.reject(err);
     });
   }
