@@ -1,1 +1,17 @@
-<p>detail-paiement works!</p>
+<div class="animated fadeIn">
+  <div class="card">
+    <div *ngIf="paiement" class="card-header" id="title">
+      <div class="pull-left">
+        <h2>Details du paiement pour le chantier: {{paiement.ChantierId}}</h2>
+      </div>
+    </div>
+
+    <div *ngIf="showError" class="card-header" id="">
+      <alert type="danger">
+        <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du paiement.
+          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
+      </alert>
+    </div>
+
+  </div>
+</div>

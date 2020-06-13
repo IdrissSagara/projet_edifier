@@ -17,6 +17,7 @@ import {MouvementModule} from "./mouvement/mouvement.module";
 import {HttpClientModule} from "@angular/common/http";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {DetailPaiementComponent} from './caisse/paiements/detail-paiement/detail-paiement.component';
+import {AlertModule} from "ngx-bootstrap";
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import {DetailPaiementComponent} from './caisse/paiements/detail-paiement/detail
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
     ProgressbarModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
+    AlertModule
   ]
 })
 export class TransactionsModule {

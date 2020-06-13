@@ -19,8 +19,8 @@ export class PaiementService {
     return this.http.get<AllPaiementResponse>(`${this.apiUrl}/all?offset=${offset}`);
   }
 
-  getPaimentById(id: number) {
-    return this.http.get<Paiement>(`${this.apiUrl}/chantier/${id}`);
+  getPaimentById(idPaiement: number, idChantier: number) {
+    return this.http.get<Paiement>(`${this.apiUrl}/${idPaiement}/chantier/${idChantier}`);
   }
 
   getPaimentFacture(idFacture: number): Observable<any> {

@@ -25,7 +25,7 @@ const routes: Routes = [
           title: 'Budget'
         }
       }, {
-        path: 'detail/:id',
+        path: 'detail/:id/:idChantier',
         component: DetailPaiementComponent,
         data: {
           title: 'Detail du Paiements'
