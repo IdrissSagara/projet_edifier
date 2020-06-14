@@ -9,7 +9,7 @@ import {ToastrService} from "ngx-toastr";
 import {ClientState} from "./store/clientState";
 import {Select, Store} from "@ngxs/store";
 import {tap} from "rxjs/operators";
-import {GetClients} from "./store/client.actions";
+import {DeleteClient, GetClients} from "./store/client.actions";
 
 @Component({
   selector: 'app-client',
@@ -24,7 +24,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   totalPages: number;
   subscriptions: Subscription[] = [];
   currentPage: number;
-  deletedId: number;
+  clientToDeleteId: number;
   deltedName: string;
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
@@ -73,7 +73,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string) => {
         if (reason === null) {
-          this.getAllClients();
+          // this.getAllClients();
         }
         this.unsubscribe();
       })
@@ -117,7 +117,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   showUpdateClientDialog(client: ClientModel) {
     const initialState = {
-      client: this.newClient = client,
+      client: Object.assign({}, client),
       title: `Modifier le client ${client.nom}  ${client.prenom}`
     };
 
@@ -134,7 +134,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string) => {
         if (reason === null) {
-          this.getAllClients();
+          // this.getAllClients();
         }
         this.unsubscribe();
       })
@@ -147,37 +147,34 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   showDeleteClientDialog(client: ClientModel) {
-    this.deletedId = client.id;
+    this.clientToDeleteId = client.id;
     this.deltedName = client.nom + " " + client.prenom;
     this.dangerModal.show();
   }
 
-  declineSupprimeOuvrier() {
+  declineSupprimeClient() {
     this.dangerModal.hide();
   }
 
-  confirmSupprimerOuvrier() {
+  confirmSupprimerClient() {
     this.spinner.show();
-    this.clientService.deleteClientById(this.deletedId).subscribe(res => {
-      this.getAllClients();
+    this.store.dispatch(new DeleteClient(this.clientToDeleteId)).toPromise().then((res) => {
       this.toastService.success('Ouvrier suppimer avec succes', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.deletedId = undefined;
-      this.dangerModal.hide();
-      this.spinner.hide();
-    }, (err) => {
-      this.dangerModal.hide();
-      this.spinner.hide();
+    }).catch((err) => {
       const message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
       this.toastService.error(message, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.deletedId = undefined;
+    }).finally(() => {
+      this.clientToDeleteId = undefined;
+      this.dangerModal.hide();
+      this.spinner.hide();
     });
   }
 

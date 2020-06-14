@@ -32,8 +32,7 @@ export class ClientState {
   // https://stackoverflow.com/a/51606330
   @Selector()
   static getClientById(state: ClientStateModel) {
-    return (id: number) => { // <--- Return a function from select
-      console.log("L'id du client " + id);
+    return (id: number) => {
       return state.clients.find((cl) => {
         return cl.id == id;
       });

@@ -86,7 +86,7 @@
   <div class="modal-dialog modal-danger" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Confirmation de suppression d'un client {{this.deletedId}}</h4>
+        <h4 class="modal-title">Confirmation de suppression d'un client {{this.clientToDeleteId}}</h4>
         <button (click)="dangerModal.hide()" aria-label="Close" class="close" type="button">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -95,8 +95,8 @@
         <p>Voulez-vous vraiment supprimer le client : {{this.deltedName}}</p>
       </div>
       <div class="modal-footer">
-        <button (click)="declineSupprimeOuvrier()" class="btn btn-secondary" type="button">Non</button>
-        <button (click)="confirmSupprimerOuvrier()" class="btn btn-danger" type="button">Oui</button>
+        <button (click)="declineSupprimeClient()" class="btn btn-secondary" type="button">Non</button>
+        <button (click)="confirmSupprimerClient()" class="btn btn-danger" type="button">Oui</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
