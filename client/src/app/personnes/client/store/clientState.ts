@@ -29,6 +29,17 @@ export class ClientState {
     return state.clients;
   }
 
+  // https://stackoverflow.com/a/51606330
+  @Selector()
+  static getClientById(state: ClientStateModel) {
+    return (id: number) => { // <--- Return a function from select
+      console.log("L'id du client " + id);
+      return state.clients.find((cl) => {
+        return cl.id == id;
+      });
+    };
+  }
+
   @Selector()
   static areClientsLoaded(state: ClientStateModel) {
     return state.areClientsLoaded;
@@ -80,7 +91,7 @@ export class ClientState {
   }
 
   @Action(AddClient)
-  addTodo({getState, patchState}: StateContext<ClientStateModel>, {payload}: AddClient) {
+  addClient({getState, patchState}: StateContext<ClientStateModel>, {payload}: AddClient) {
     return this.clientService.addClient(payload).pipe(tap((result) => {
       const state = getState();
       patchState({

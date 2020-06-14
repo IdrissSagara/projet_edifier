@@ -4,6 +4,13 @@ export class GetClients {
   static readonly type = '[Clients] Get Clients';
 }
 
+export class GetClientById {
+  static readonly type = '[Clients] Get Clients by id';
+
+  constructor(public id: number) {
+  }
+}
+
 export class AddClient {
   static readonly type = '[Client] Create Client';
 

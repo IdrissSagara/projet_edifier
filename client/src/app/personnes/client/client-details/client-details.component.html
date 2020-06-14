@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
   <div class="card">
-    <div *ngIf="client" class="card-header" id="title">
+    <div *ngIf="client$" class="card-header" id="title">
       <div class="pull-left">
         <h2>Details du client </h2>
       </div>
@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div *ngIf="client " class="row justify-content-md-center">
+<div *ngIf="(client$ | async) as client" class="row justify-content-md-center">
   <div class="col-lg-8 col-sm-offset-8">
     <div class="card">
       <div class="card-header text-center">
@@ -61,7 +61,7 @@
         </table>
         <hr>
         <div class="card">
-          <div chiffre_title class="card-header text-center">
+          <div class="card-header text-center">
             <strong>les chantiers du client</strong>
           </div>
           <div class="card-body">

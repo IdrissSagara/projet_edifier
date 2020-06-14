@@ -1,65 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {SpinnerService} from "../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
-import {UtilisateurService} from "../../../services/utilisateur.service";
 import {Utilisateur} from "../../../model/utilisateur";
 import {ClientService} from "../../../services/client.service";
 import {ClientModel} from "../../../model/clientModel";
 import {Chantier} from "../../../model/chantier";
+import {Select, Store} from "@ngxs/store";
+import {ClientState} from "../store/clientState";
+import {Observable, Subscription,} from "rxjs";
+import {map, tap} from "rxjs/operators";
+import {GetClients} from "../store/client.actions";
 
 @Component({
   selector: 'app-client-details',
   templateUrl: './client-details.component.html',
   styleUrls: ['./client-details.component.css']
 })
-export class ClientDetailsComponent implements OnInit {
+export class ClientDetailsComponent implements OnInit, OnDestroy {
 
-  client: ClientModel;
+  client$: Observable<ClientModel>;
   showError: boolean = false;
-  updatedById: number;
-  createdById: number;
   user: Utilisateur;
   chantiers: Chantier[];
+  @Select(ClientState.areClientsLoaded) areClientsLoaded$;
+  areCoursesLoadedSub: Subscription;
 
   constructor(private route: ActivatedRoute, private clientService: ClientService,
               private spinner: SpinnerService, private toastService: ToastrService,
-              private utilisateurService: UtilisateurService) {
+              private store: Store) {
   }
 
   ngOnInit(): void {
     this.init();
   }
 
-  getClientById(id: number) {
-    this.spinner.show();
-    this.clientService.getClientById(id).subscribe((response) => {
-      this.client = response;
-      // this.updatedById = response.updatedBy;
-      // this.createdById = response.createdBy;
-      this.spinner.hide();
-      // this.getUtilisateur(this.updatedById);
-      // this.getUtilisateur(this.createdById);
-
-    }, error => {
-      this.toastService.error(`Une erreur est survenue lors de la récupération du client`, '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
-      this.spinner.hide();
-    });
-  }
-
   getChantierOfClient(id: number) {
     this.spinner.show();
     this.clientService.getChantierOfClient(id).subscribe((response) => {
       this.chantiers = response;
-      // this.updatedById = response.updatedBy;
-      // this.createdById = response.createdBy;
       this.spinner.hide();
-      // this.getUtilisateur(this.updatedById);
-      // this.getUtilisateur(this.createdById);
 
     }, error => {
       this.toastService.error(`Une erreur est survenue lors de la récupération des chantier du client`, '', {
@@ -73,12 +53,34 @@ export class ClientDetailsComponent implements OnInit {
 
   init(): void {
     this.route.params.subscribe(params => {
-      this.getClientById(params['id']);
-      this.getChantierOfClient(params['id']);
+      const id = params['id'];
+
+      this.areCoursesLoadedSub = this.areClientsLoaded().subscribe(value => {
+        console.log(value);
+      });
+
+      this.client$ = this.store.select(ClientState.getClientById).pipe(
+        map(filterFn => filterFn(id))
+      );
+      this.getChantierOfClient(id);
     });
+  }
+
+  areClientsLoaded() {
+    return this.areClientsLoaded$.pipe(
+      tap((areCoursesLoaded) => {
+        if (!areCoursesLoaded) {
+          this.store.dispatch(new GetClients());
+        }
+      })
+    );
   }
 
   refresh() {
 
+  }
+
+  ngOnDestroy() {
+    this.areCoursesLoadedSub.unsubscribe();
   }
 }
