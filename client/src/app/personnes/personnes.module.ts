@@ -25,10 +25,6 @@ import {PopoverModule} from "ngx-bootstrap/popover";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {TooltipModule} from "ngx-bootstrap/tooltip";
 import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
-import {StoreModule} from "@ngrx/store";
-import {EffectsModule} from "@ngrx/effects";
-import {clientReducer} from "./client/store/client.reducers";
-import {ClientEffects} from "./client/store/client.effects";
 import {ClientResolver} from "./client/clients.resolver";
 
 @NgModule({
@@ -68,8 +64,6 @@ import {ClientResolver} from "./client/clients.resolver";
     AlertModule.forRoot(),
     NgxSelectModule,
     ShowHideModule,
-    StoreModule.forFeature('clients', clientReducer),
-    EffectsModule.forFeature([ClientEffects])
   ],
   providers: [
     BsModalService, ClientResolver

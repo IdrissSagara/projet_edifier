@@ -5,7 +5,8 @@ import {ClientService} from "../../../services/client.service";
 import {SpinnerService} from "../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {NgModel} from "@angular/forms";
-import {UtilService} from "../../../services/util.service";
+import {Store} from "@ngxs/store";
+import {AddClient, UpdateClient} from "../store/client.actions";
 
 @Component({
   selector: 'app-client-modal',
@@ -19,7 +20,8 @@ export class ClientModalComponent implements OnInit {
   @Input() erreursServeur: any = {};
 
   constructor(public clientModalRef: BsModalRef, private clientService: ClientService,
-              private spinner: SpinnerService, private toastService: ToastrService) {
+              private spinner: SpinnerService, private toastService: ToastrService,
+              private store: Store) {
   }
 
   ngOnInit(): void {
@@ -35,49 +37,38 @@ export class ClientModalComponent implements OnInit {
   async confirm() {
     if (this.modeModification()) {
       this.spinner.show();
-      await this.clientService.updateClient(this.client).subscribe(res => {
-        this.toastService.success(` Client modifier avec succes`, '', {
+      this.store.dispatch(new UpdateClient(this.client.id, this.client)).toPromise().then((res) => {
+        this.clientModalRef.hide();
+        this.toastService.success('Client modifié avec succès', '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-        this.clientModalRef.hide();
-        this.spinner.hide();
-      }, err => {
-        console.log(err.error.errors[0].msg);
-        // console.log(JSON.parse(err));
-        // console.log(JSON.stringify(err));
-        if (err.status === 422) {
-          const responseJSON = JSON.stringify(err);
-          this.erreursServeur = UtilService.flattenObject(responseJSON);
-          this.toastService.error(`le numero de telephone est trop court`, '', {
-            progressBar: true,
-            closeButton: true,
-            tapToDismiss: false
-          });
-        } else {
-          this.toastService.error(`Une erreur est survenu lors de la modification`, '', {
-            progressBar: true,
-            closeButton: true,
-            tapToDismiss: false
-          });
-        }
-        this.spinner.hide();
-      });
-
-    } else {
-      this.spinner.show();
-      await this.clientService.addClient(this.client).subscribe(res => {
-        this.clientModalRef.hide();
-        this.spinner.hide();
-      }, (err) => {
-        const erreur = JSON.parse(err.error);
-        console.log(erreur);
+      }).catch((err) => {
         this.toastService.error('Une erreur est survenue lors de la création du client', '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
+      }).finally(() => {
+        this.spinner.hide();
+      });
+    } else {
+      this.spinner.show();
+      this.store.dispatch(new AddClient(this.client)).toPromise().then((res) => {
+        this.clientModalRef.hide();
+        this.toastService.success('Le client a été ajouté avec succès', '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+      }).catch((err) => {
+        this.toastService.error('Une erreur est survenue lors de la création du client', '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+      }).finally(() => {
         this.spinner.hide();
       });
     }

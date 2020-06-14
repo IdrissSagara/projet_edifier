@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ClientService} from "../../services/client.service";
 import {ClientModel} from "../../model/clientModel";
@@ -6,38 +6,48 @@ import {combineLatest, Observable, Subscription} from "rxjs";
 import {ClientModalComponent} from "./client-modal/client-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
-import {AppState} from "../../store/reducers";
-import {Store} from "@ngrx/store";
-import {getAllClients} from "./store/client.selectors";
+import {ClientState} from "./store/clientState";
+import {Select, Store} from "@ngxs/store";
+import {tap} from "rxjs/operators";
+import {DeleteClient, GetClients} from "./store/client.actions";
 
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
   clients: ClientModel[];
-  clients$: Observable<ClientModel[]>;
   newClient: ClientModel;
   clientModalRef: BsModalRef;
   errorMessage: String;
   totalPages: number;
   subscriptions: Subscription[] = [];
   currentPage: number;
-  deletedId: number;
+  clientToDeleteId: number;
   deltedName: string;
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
-
+  @Select(ClientState.getClients) clients$: Observable<ClientModel[]>;
+  @Select(ClientState.areClientsLoaded) areClientsLoaded$;
+  areCoursesLoadedSub: Subscription;
 
   constructor(private clientService: ClientService, private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
-              private toastService: ToastrService, private store: Store<AppState>) {
+              private toastService: ToastrService, private store: Store) {
   }
 
   ngOnInit(): void {
     // this.getAllClients();
-    this.clients$ = this.store.select(getAllClients);
+    this.areCoursesLoadedSub = this.areClientsLoaded$.pipe(
+      tap((areCoursesLoaded) => {
+        if (!areCoursesLoaded) {
+          this.store.dispatch(new GetClients());
+        }
+      })
+    ).subscribe(value => {
+      console.log(value);
+    });
   }
 
   get isLoading() {
@@ -63,7 +73,7 @@ export class ClientComponent implements OnInit {
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string) => {
         if (reason === null) {
-          this.getAllClients();
+          // this.getAllClients();
         }
         this.unsubscribe();
       })
@@ -107,7 +117,7 @@ export class ClientComponent implements OnInit {
 
   showUpdateClientDialog(client: ClientModel) {
     const initialState = {
-      client: this.newClient = client,
+      client: Object.assign({}, client),
       title: `Modifier le client ${client.nom}  ${client.prenom}`
     };
 
@@ -124,7 +134,7 @@ export class ClientComponent implements OnInit {
     this.subscriptions.push(
       this.modalService.onHidden.subscribe((reason: string) => {
         if (reason === null) {
-          this.getAllClients();
+          // this.getAllClients();
         }
         this.unsubscribe();
       })
@@ -137,37 +147,38 @@ export class ClientComponent implements OnInit {
   }
 
   showDeleteClientDialog(client: ClientModel) {
-    this.deletedId = client.id;
+    this.clientToDeleteId = client.id;
     this.deltedName = client.nom + " " + client.prenom;
     this.dangerModal.show();
   }
 
-  declineSupprimeOuvrier() {
+  declineSupprimeClient() {
     this.dangerModal.hide();
   }
 
-  confirmSupprimerOuvrier() {
+  confirmSupprimerClient() {
     this.spinner.show();
-    this.clientService.deleteClientById(this.deletedId).subscribe(res => {
-      this.getAllClients();
+    this.store.dispatch(new DeleteClient(this.clientToDeleteId)).toPromise().then((res) => {
       this.toastService.success('Ouvrier suppimer avec succes', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.deletedId = undefined;
-      this.dangerModal.hide();
-      this.spinner.hide();
-    }, (err) => {
-      this.dangerModal.hide();
-      this.spinner.hide();
+    }).catch((err) => {
       const message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
       this.toastService.error(message, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.deletedId = undefined;
+    }).finally(() => {
+      this.clientToDeleteId = undefined;
+      this.dangerModal.hide();
+      this.spinner.hide();
     });
+  }
+
+  ngOnDestroy() {
+    this.areCoursesLoadedSub.unsubscribe();
   }
 }

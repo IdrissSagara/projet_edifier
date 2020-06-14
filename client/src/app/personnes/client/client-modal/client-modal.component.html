@@ -8,7 +8,7 @@
   <div class="modal-body">
     <form #form="ngForm" role="form">
       <div [ngClass]="{'has-error': inputEnErreur(nom)}" class="form-group">
-        <label class="control-label" for="nom">Nom<span class="requis">*</span>:</label>
+        <label class="control-label requis" for="nom">Nom</label>
         <input #nom="ngModel" [(ngModel)]="client.nom" class="form-control" id="nom" name="nom"
                placeholder="Nom" required
                type="text"/>
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div [ngClass]="{'has-error': inputEnErreur(prenom)}" class="form-group">
-        <label for="prenom">Prénom</label>
+        <label class="requis" for="prenom">Prénom</label>
         <input [(ngModel)]="client.prenom" class="form-control" id="prenom" minlength="2"
                #prenom="ngModel" name="prenom" placeholder="Entrez le prénom..."
                required type="text"/>
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div [ngClass]="{'has-error': inputEnErreur(telephone)}" class="form-group">
-        <label for="telephone">Téléphone</label>
+        <label class="requis" for="telephone">Téléphone</label>
         <input [(ngModel)]="client.telephone" class="form-control" id="telephone" name="telephone"
                #telephone="ngModel" placeholder="Entrez le numéro de téléphone..." required
                type="phone">
