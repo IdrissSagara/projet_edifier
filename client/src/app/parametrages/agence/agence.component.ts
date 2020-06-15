@@ -10,7 +10,7 @@ import {Agence} from "../../model/agence";
 export class AgenceComponent implements OnInit {
   showError: boolean = false;
   agence: Agence;
-  erreursServeur: an
+  erreursServeur: any
   y;
 
   constructor() {
