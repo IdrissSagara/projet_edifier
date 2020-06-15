@@ -19,30 +19,30 @@ export const navItems: INavData[] = [
   }, {
     title: true,
     name: 'Gestion Transactions'
-  }, {
+  }, /* {
     name: 'Budget',
     url: '/transactions/budget',
     icon: 'icon-credit-card'
-  }, {
+  },*/ {
     name: 'Caisse',
     url: '/caisse',
     icon: 'fa fa-money',
     children: [
-      {
+      /*{
         name: 'Facture',
         url: '/transactions/caisse/factures',
         icon: 'fa fa-file'
-      },
+      },*/
       {
         name: 'Paiements',
         url: '/transactions/caisse/paiements',
         icon: 'icon-puzzle'
       },
-      {
+      /*{
         name: 'Reçu',
         url: '/transactions/caisse/recus',
         icon: 'icon-puzzle'
-      },
+      },*/
     ]
   }, {
     name: 'Mouvements',
@@ -63,8 +63,19 @@ export const navItems: INavData[] = [
     name: 'Utilisateurs',
     url: '/personnes/utilisateurs',
     icon: 'fa fa-user-o'
+  }, {
+    title: true,
+    name: 'Parametrages'
+  }, {
+    name: 'Agence',
+    url: '/parametrage/agence',
+    icon: 'fa fa-wrench'
   },
 
+  {
+    title: true,
+    name: '------------------'
+  },
 
   {
     title: true,

@@ -72,6 +72,9 @@ export const routes: Routes = [
       }, {
         path: 'paiement',
         loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)
+      }, {
+        path: 'parametrage',
+        loadChildren: () => import('./parametrages/parametrage.module').then(m => m.ParametrageModule)
       },
 
 
