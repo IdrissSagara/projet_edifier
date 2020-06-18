@@ -17,12 +17,20 @@ exports.validate = (operation) => {
                     .not().isEmpty().withMessage('Le Paramètre telephone ne peut pas être vide'),
                 body('fax', 'fax saisi est invalide')
                     .optional().trim().escape(),
-                body('mail', 'Nom saisi est invalide')
+                body('mail', 'mail saisi est invalide')
                     .optional().trim().escape(),
-                body('adresse', 'Nom saisi est invalide')
+                body('adresse', 'adresse saisi est invalide')
                     .optional().trim().escape(),
                 body('logo', 'logo saisi est invalide')
                     .optional().trim().escape(),
+            ]
+        }
+        case 'getAgence': {
+            return [
+                check('id', 'Champ id invalide')
+                    .exists().withMessage('Le Paramètre id est introuvable')
+                    .isNumeric().withMessage('Le Paramètre id doit être numérique')
+                    .trim().escape(),
             ]
         }
     }

@@ -31,6 +31,7 @@ async function updateAgence(agence) {
             mail: agence.mail,
             adresse: agence.adresse,
             logo: agence.logo,
+            updatedBy: agence.updatedBy
         },
         {
             where: {id: agence.id}

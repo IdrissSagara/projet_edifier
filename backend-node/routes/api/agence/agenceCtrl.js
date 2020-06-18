@@ -68,6 +68,7 @@ async function updateAgence(req, res) {
         mail: req.body.mail,
         adresse: req.body.adresse,
         logo: req.body.logo,
+        updatedBy: req.body.userId,
     }
 
     let agenceUpdate = await agenceDao.updateAgence(agence);

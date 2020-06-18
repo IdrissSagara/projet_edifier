@@ -12,8 +12,12 @@ router.post('/',
     agenceCtrl.getOrCreateAgence);
 
 router.get('/:id',
-    agenceValidator.validate('save'),
+    agenceValidator.validate('getAgence'),
     accessControl.deniedRoles(roles.ADVANCED),
     agenceCtrl.getAgenceById);
+router.put('/',
+    agenceValidator.validate('save'),
+    accessControl.deniedRoles(roles.ADVANCED),
+    agenceCtrl.updateAgence);
 
 module.exports = router;
