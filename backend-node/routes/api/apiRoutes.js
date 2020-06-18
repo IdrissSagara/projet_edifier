@@ -6,12 +6,13 @@ const ouvrierRouter = require('./ouvrier/ouvrierRouter');
 const paiementRouter = require('./paiement/paiementRouter');
 const mouvementRouter = require('./mouvement/mouvementRouter');
 const utilisateurRouter = require('./utilisateur/utilisateurRouter');
+const agenceRouter = require('./agence/agenceRouter');
 
 /**
  *Available roles 'basic-user', 'medium-user', 'advanced-user', 'admin'
-*/
+ */
 
-exports.router = (function() {
+exports.router = (function () {
     var apiRouter = express.Router();
 
     apiRouter.use('/client', clientRouter);
@@ -25,6 +26,8 @@ exports.router = (function() {
     apiRouter.use('/mouvement', mouvementRouter);
 
     apiRouter.use('/utilisateur', utilisateurRouter);
+
+    apiRouter.use('/agence', agenceRouter);
 
     return apiRouter;
 })();
