@@ -19,31 +19,36 @@
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-sm-offset-8">
     <div class="modal-content">
-      <div class="modal-body">
-
-        <form #form="ngForm" (ngSubmit)="enregistrerFormulaire(logoInput)" role="form">
-
-          <div class="form-group">
-            <label class="control-label requis" for="">N° Rccm:</label>
-            <input class="form-control" id="rccmNum"
-                   name="rccmNu m" required/>
-
+      <div *ngIf="agence" class="modal-body">
+        <form #form="ngForm" (ngSubmit)="enregistrerFormulaire()" role="form">
+          <div [ngClass]="{'has-error': inputEnErreur(rccm)}" class="form-group">
+            <label class="control-label requis" for="rccm">N° Rccm:</label>
+            <input #rccm="ngModel" [(ngModel)]="agence.rccm" class="form-control" id="rccm" name="rccm"
+                   placeholder="rccm" required
+                   type="number"/>
+            <div *ngIf="inputEnErreur(rccm)" class="alert alert-danger">
+              <div *ngIf="rccm.errors?.required">
+                Le registre du commerce est requis.
+              </div>
+              <div *ngFor="let erreur of erreursServeur?.rccm">
+                {{erreur}}
+              </div>
+            </div>
           </div>
 
-          <div [ngClass]="{'has-error has-feedback': inputEnErreur(fiscalNum)}"
+          <div [ngClass]="{'has-error': inputEnErreur(fiscal)}"
                class="form-group">
-            <label class="control-label requis" for="fiscalNum">N° Fiscal:</label>
-            <input #fiscalNum="ngModel" [(ngModel)]="agence.fiscal" class="form-control" id="fiscalNum"
-                   min="0" name="fiscalNum" required type="number"/>
-            <span *ngIf="inputEnErreur(fiscalNum)"
-                  class="fa fa-times fa-2x form-control-feedback"></span>
+            <label class="control-label requis" for="fiscal">N° Fiscal:</label>
+            <input #fiscal="ngModel" [(ngModel)]="agence.fiscal" class="form-control" id="fiscal"
+                   min="0" name="fiscal" required type="number"/>
+            <span *ngIf="inputEnErreur(fiscal)" class="fa fa-times fa-2x form-control-feedback"></span>
 
-            <div *ngIf="inputEnErreur(fiscalNum)" class="alert alert-danger">
-              <div *ngIf="fiscalNum.errors?.required">Le numéro fiscal est requis.</div>
+            <div *ngIf="inputEnErreur(fiscal)" class="alert alert-danger">
+              <div *ngIf="fiscal.errors?.required">Le numéro fiscal est requis.</div>
 
-              <!--<div *ngFor="let erreur of erreursServeur?.fiscalNum">
+              <div *ngFor="let erreur of erreursServeur?.fiscal">
                 {{erreur}}
-              </div>-->
+              </div>
 
             </div>
           </div>
@@ -59,9 +64,9 @@
             <div *ngIf="inputEnErreur(libelle)" class="alert alert-danger">
               <div *ngIf="libelle.errors?.required">Le libellé de l'agence est requis.</div>
 
-              <!--<div *ngFor="let erreur of erreursServeur?.libelle">
+              <div *ngFor="let erreur of erreursServeur?.libelle">
                 {{erreur}}
-              </div>-->
+              </div>
             </div>
           </div>
 
@@ -78,9 +83,9 @@
                 Le numéro de téléphone de l'agence est requis.
               </div>
 
-              <!--<div *ngFor="let erreur of erreursServeur?.telephone">
+              <div *ngFor="let erreur of erreursServeur?.telephone">
                 {{erreur}}
-              </div>-->
+              </div>
             </div>
           </div>
 
@@ -89,7 +94,6 @@
             <input #fax="ngModel" [(ngModel)]="agence.fax" class="form-control" id="fax" name="fax"
                    type="tel"/>
           </div>
-
 
           <div [ngClass]="{'has-error has-feedback': inputEnErreur(mail)}"
                class="form-group">
@@ -104,9 +108,9 @@
                 L'email de contact de l'agence est requis.
               </div>
 
-              <!--<div *ngFor="let erreur of erreursServeur?.mail">
+              <div *ngFor="let erreur of erreursServeur?.mail">
                 {{erreur}}
-              </div>-->
+              </div>
             </div>
 
           </div>
@@ -125,6 +129,9 @@
                 L'adresse de l'agence est requise.
               </div>
 
+              <div *ngFor="let erreur of erreursServeur?.adresse">
+                {{erreur}}
+              </div>
             </div>
           </div>
 
@@ -137,6 +144,8 @@
               <input #logoInput accept="image/*" class="fileinput-image" name="..." type="file"/>
             </span>
           </div>
+
+
           <br>
           <button [disabled]="form.invalid" class="btn btn-primary block full-width m-b"
                   type="submit">Enregistrer
