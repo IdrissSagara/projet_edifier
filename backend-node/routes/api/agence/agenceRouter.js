@@ -11,6 +11,11 @@ router.post('/',
     accessControl.deniedRoles(roles.ADVANCED),
     agenceCtrl.getOrCreateAgence);
 
+router.get('/',
+    agenceValidator.validate('save'),
+    accessControl.deniedRoles(roles.ADVANCED),
+    agenceCtrl.getAgence);
+
 router.get('/:id',
     agenceValidator.validate('getAgence'),
     accessControl.deniedRoles(roles.ADVANCED),
