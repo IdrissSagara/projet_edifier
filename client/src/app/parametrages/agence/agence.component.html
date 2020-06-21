@@ -174,7 +174,9 @@
               <span class="fileinput-filename"></span>
             </div>
             <span class="input-group-addon btn btn-default btn-file">
-               <input #logoInput accept="image/*" class="fileinput-image" name="..." type="file"/>
+               <input #logoInput (change)="handleFileInput($event.target.files)" accept="image/*"
+                      class="fileinput-image" name="logo"
+                      type="file"/>
              </span>
           </div>
 

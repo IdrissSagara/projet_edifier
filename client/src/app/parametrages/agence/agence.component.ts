@@ -32,9 +32,9 @@ export class AgenceComponent implements OnInit {
   }
 
   enregistrerFormulaire() {
-    console.log(this.agence);
+    const formData = this.toFormData();
     this.spinner.show();
-    this.agenceService.insertOrUpdate(this.agence).pipe(first()).subscribe((response) => {
+    this.agenceService.insertOrUpdate(formData).pipe(first()).subscribe((response) => {
       const msg = response ? 'L\'information de l\'agence à été enregistré avec succes'
         : 'L\'information de l\'agence à été modifié avec succes';
       this.toastService.success(msg, '', {
@@ -54,6 +54,11 @@ export class AgenceComponent implements OnInit {
     });
   }
 
+  // save file from angular example https://stackoverflow.com/a/47938117
+  handleFileInput(files: FileList) {
+    this.agence.logo = files.item(0);
+  }
+
   inputEnErreur(input: NgModel): boolean {
 
     // validation côté client (validation html)
@@ -64,5 +69,19 @@ export class AgenceComponent implements OnInit {
     if (input.untouched && input.errors && !input.errors.required) {
       return true;
     }
+  }
+
+  private toFormData() {
+    const formData: FormData = new FormData();
+    formData.append('id', this.agence.id.toString());
+    formData.append('rccm', this.agence.rccm);
+    formData.append('fiscal', this.agence.fiscal);
+    formData.append('libelle', this.agence.libelle);
+    formData.append('telephone', this.agence.telephone);
+    formData.append('fax', this.agence.fax);
+    formData.append('mail', this.agence.mail);
+    formData.append('adresse', this.agence.adresse);
+    formData.append('logo', this.agence.logo);
+    return formData;
   }
 }

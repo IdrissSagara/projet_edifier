@@ -1,4 +1,5 @@
 export class Agence {
+  id: number;
   rccm: string;
   fiscal: string;
   libelle: string;
@@ -6,7 +7,7 @@ export class Agence {
   fax: string;
   mail: string;
   adresse: string;
-  logo: string;
+  logo: File;
   created_at: string;
   updated_at: string;
   created_by: string;
