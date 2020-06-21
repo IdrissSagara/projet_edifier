@@ -4,6 +4,7 @@ import {Agence} from "../../model/agence";
 import {AgenceService} from "../../services/agence.service";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-agence',
@@ -11,7 +12,6 @@ import {ToastrService} from "ngx-toastr";
   styleUrls: ['./agence.component.css']
 })
 export class AgenceComponent implements OnInit {
-  showError: boolean = false;
   agence: Agence;
   erreursServeur: any;
 
@@ -20,8 +20,8 @@ export class AgenceComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.agenceService.getAgence().subscribe((res) => {
-      this.agence = res;
+    this.agenceService.getAgence().pipe(first()).subscribe((res) => {
+      this.agence = res[0];
     }, error => {
       this.toastService.error(`Impossible de récupérer les informations de l'agence`, '', {
         progressBar: true,
@@ -32,10 +32,12 @@ export class AgenceComponent implements OnInit {
   }
 
   enregistrerFormulaire() {
+    console.log(this.agence);
     this.spinner.show();
-    this.agenceService.getOrCreateAgence(this.agence).subscribe((response) => {
-      this.agence = response;
-      this.toastService.success('L\'information de l\'agence à été enregistré avec succes', '', {
+    this.agenceService.insertOrUpdate(this.agence).pipe(first()).subscribe((response) => {
+      const msg = response ? 'L\'information de l\'agence à été enregistré avec succes'
+        : 'L\'information de l\'agence à été modifié avec succes';
+      this.toastService.success(msg, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false

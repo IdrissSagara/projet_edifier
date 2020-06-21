@@ -6,13 +6,6 @@
       </div>
     </div>
 
-    <div *ngIf="showError" class="card-header" id="">
-      <alert type="danger">
-        <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations de l'agence.
-          <button class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
-      </alert>
-    </div>
-
   </div>
 </div>
 
@@ -20,11 +13,51 @@
   <div class="col-lg-8 col-sm-offset-8">
     <div class="modal-content">
       <div *ngIf="agence" class="modal-body">
-        <form #form="ngForm" (ngSubmit)="enregistrerFormulaire()" role="form">
+        <!--<form #form="ngForm">
+          <div class="form-group">
+            <label for="rccm">N° rccm</label>
+            <input [(ngModel)]="agence.rccm" name="rccm" id="rccm" class="form-control"
+                   type="text">
+          </div>
+          <div class="form-group">
+            <label for="fiscal">N° fiscal</label>
+            <input [(ngModel)]="agence.fiscal" name="fiscal" id="fiscal" type="text"
+                   class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="libelle">Libelle</label>
+            <input [(ngModel)]="agence.libelle" name="libelle" id="libelle" type="text"
+                   class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="telephone">Telephone</label>
+            <input [(ngModel)]="agence.telephone" name="telephone" id="telephone" type="number"
+                   class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="fax">fax</label>
+            <input [(ngModel)]="agence.fax" name="fax" id="fax" type="number"
+                   class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="mail">mail</label>
+            <input [(ngModel)]="agence.mail" name="mail" id="mail" type="email"
+                   class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="adresse">adresse</label>
+            <input [(ngModel)]="agence.adresse" name="adresse" id="adresse" type="text"
+                   class="form-control">
+          </div>
+          <br>
+          <button [disabled]="form.invalid" class="btn btn-primary block full-width m-b"
+                  type="button" (click)="enregistrerFormulaire()">Enregistrer
+          </button>
+        </form>-->
+        <form #form="ngForm" role="form">
           <div [ngClass]="{'has-error': inputEnErreur(rccm)}" class="form-group">
             <label class="control-label requis" for="rccm">N° Rccm:</label>
-            <input #rccm="ngModel" [(ngModel)]="agence.rccm" class="form-control" id="rccm" name="rccm"
-                   placeholder="rccm" required
+            <input #rccm="ngModel" [(ngModel)]="agence.rccm" class="form-control" id="rccm" name="rccm" required
                    type="number"/>
             <div *ngIf="inputEnErreur(rccm)" class="alert alert-danger">
               <div *ngIf="rccm.errors?.required">
@@ -141,14 +174,14 @@
               <span class="fileinput-filename"></span>
             </div>
             <span class="input-group-addon btn btn-default btn-file">
-              <input #logoInput accept="image/*" class="fileinput-image" name="..." type="file"/>
-            </span>
+               <input #logoInput accept="image/*" class="fileinput-image" name="..." type="file"/>
+             </span>
           </div>
 
 
           <br>
-          <button [disabled]="form.invalid" class="btn btn-primary block full-width m-b"
-                  type="submit">Enregistrer
+          <button (click)="enregistrerFormulaire()" [disabled]="form.invalid"
+                  class="btn btn-primary block full-width m-b" type="button">Enregistrer
           </button>
         </form>
       </div>

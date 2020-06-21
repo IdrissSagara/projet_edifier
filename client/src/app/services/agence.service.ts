@@ -14,8 +14,8 @@ export class AgenceService {
   constructor(private httpClient: HttpClient) {
   }
 
-  getOrCreateAgence(agence): Observable<Agence> {
-    return this.httpClient.post<Agence>(`${this.apiUrl}`, agence);
+  insertOrUpdate(agence): Observable<boolean> {
+    return this.httpClient.post<boolean>(`${this.apiUrl}`, agence);
   }
 
   updateAgence(agence): Observable<Agence> {
