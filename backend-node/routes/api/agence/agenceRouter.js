@@ -5,24 +5,17 @@ const accessControl = require('../../auth/accessControl');
 const agenceCtrl = require('./agenceCtrl');
 const agenceValidator = require('./agenceValidator');
 const roles = accessControl.roles;
+let logoMulter = require('../utils/logo-multer');
 
 router.post('/',
-    agenceValidator.validate('save'),
-    accessControl.deniedRoles(roles.ADVANCED),
-    agenceCtrl.getOrCreateAgence);
+    //agenceValidator.validate('save'),
+    logoMulter.saveLogo,
+    accessControl.canAccess(roles.ADMIN),
+    agenceCtrl.insertOrUpdate);
 
 router.get('/',
-    agenceValidator.validate('save'),
-    accessControl.deniedRoles(roles.ADVANCED),
-    agenceCtrl.getAgence);
-
-router.get('/:id',
     agenceValidator.validate('getAgence'),
-    accessControl.deniedRoles(roles.ADVANCED),
-    agenceCtrl.getAgenceById);
-router.put('/',
-    agenceValidator.validate('save'),
-    accessControl.deniedRoles(roles.ADVANCED),
-    agenceCtrl.updateAgence);
+    accessControl.canAccess(roles.ADMIN),
+    agenceCtrl.getAgence);
 
 module.exports = router;
