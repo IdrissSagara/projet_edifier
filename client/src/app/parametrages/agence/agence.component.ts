@@ -20,6 +20,10 @@ export class AgenceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getAgence();
+  }
+
+  getAgence(): void {
     this.agenceService.getAgence().pipe(first()).subscribe((res) => {
       this.agence = res[0];
     }, error => {

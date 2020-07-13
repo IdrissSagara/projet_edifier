@@ -20,30 +20,34 @@ export class UtilisateursComponent implements OnInit {
   subscriptions: Subscription[] = [];
   utilisateurModalRef: BsModalRef;
   currentPage: number;
+  isLoading: Boolean;
 
   constructor(private utilisateurService: UtilisateurService, private toastService: ToastrService,
               private spinner: SpinnerService, private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef) {
   }
 
-  get isLoading() {
-    return this.spinner.iterationOfShow > 0;
-  }
+  // get isLoading() {
+  //   return this.spinner.iterationOfShow > 0;
+  // }
 
   ngOnInit(): void {
     this.getAllUtilisateur();
   }
 
   getAllUtilisateur() {
+    this.spinner.show();
     this.utilisateurService.getAllUsers().subscribe((response) => {
       this.utilisateur = response.rows;
       this.totalPages = response.count;
+      this.spinner.hide();
     }, (err) => {
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
+      this.spinner.hide();
     });
   }
 

@@ -19,14 +19,6 @@ export class AgenceService {
     return this.httpClient.post<boolean>(`${this.apiUrl}`, agence);
   }
 
-  updateAgence(agence): Observable<Agence> {
-    return this.httpClient.put<Agence>(`${this.apiUrl}`, agence);
-  }
-
-  getAgenceById(id: number) {
-    return this.httpClient.get<Agence>(`${this.apiUrl}/${id}`);
-  }
-
   getAgence(): Observable<Agence> {
     return this.httpClient.get<Agence>(`${this.apiUrl}`);
   }
