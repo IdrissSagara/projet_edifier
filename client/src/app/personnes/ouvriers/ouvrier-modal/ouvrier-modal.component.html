@@ -9,22 +9,22 @@
   <div class="modal-body">
     <form #form="ngForm">
       <div class="form-group">
-        <label for="nom">Nom</label>
+        <label class="requis" for="nom">Nom</label>
         <input [(ngModel)]="ouvrier.nom" autocomplete="text" class="form-control" id="nom"
                name="nom" placeholder="Entrez le nom..." required type="text">
       </div>
       <div class="form-group">
-        <label for="prenom">Prenom</label>
+        <label class="requis" for="prenom">Prenom</label>
         <input [(ngModel)]="ouvrier.prenom" class="form-control" id="prenom" name="prenom"
                placeholder="Entrez le prenom..." required type="text">
       </div>
       <div class="form-group">
-        <label for="telephone">Téléphone</label>
+        <label class="requis" for="telephone">Téléphone</label>
         <input [(ngModel)]="ouvrier.telephone" class="form-control" id="telephone" name="telephone"
                placeholder="Entrez le numéro de téléphone..." required type="number">
       </div>
       <div *ngIf="ouvrier" class="form-group">
-        <label class="control-label" for="type">Type d'ouvrier</label>
+        <label class="requis" for="type">Type d'ouvrier</label>
         <select [(ngModel)]="ouvrier.type" class="form-control" id="type" name="type"
                 required>
           <option *ngFor="let type of types_ouvrier" [value]="type">{{ type }}</option>
@@ -41,8 +41,4 @@
     </button>
     <button (click)="ouvrierModalRel.hide()" class="btn btn-secondary" type="button">Fermer</button>
   </div>
-  <!--<pre>{{form.value | json}}</pre>-->
 </div>
-<!--</div>
-</div>
--->

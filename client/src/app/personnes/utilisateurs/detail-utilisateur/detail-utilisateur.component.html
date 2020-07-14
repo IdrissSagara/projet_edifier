@@ -1,9 +1,8 @@
-<script src="ouvrier-details.component.ts"></script>
 <div class="animated fadeIn">
   <div class="card">
     <div *ngIf="utilisateur" class="card-header" id="title">
       <div class="pull-left">
-        <h2>Details de l'utilisateur : {{utilisateur.nom}} {{utilisateur.prenom}}</h2>
+        <h2>Details de l'utilisateur : {{utilisateur.nom | titlecase}} {{utilisateur.prenom | titlecase}}</h2>
       </div>
     </div>
 

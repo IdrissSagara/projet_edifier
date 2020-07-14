@@ -40,7 +40,7 @@
             <td>{{ouvrier.createdAt  | date: 'dd/MM/yyyy'}}</td>
             <td>{{ouvrier.updatedAt  | date: 'dd/MM/yyyy'}}</td>
             <td (click)="$event.stopPropagation()" id="unclickable-row">
-              <div class="btn-group" class="text-center ">
+              <div class="btn-group text-center">
                 <button [routerLink]="['/personnes/details', ouvrier.id]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails de l'ouvrier "><i
                   class="icon-eye"></i></button>
@@ -58,6 +58,9 @@
           </tr>
           <tr *ngIf="errorMessage">
             <td class="text-center" colspan="5">{{errorMessage}}</td>
+          </tr>
+          <tr *ngIf="ouvrier.length === 0">
+            <td class="text-center" colspan="5">Aucun ouvrier trouvé</td>
           </tr>
           </tbody>
         </table>

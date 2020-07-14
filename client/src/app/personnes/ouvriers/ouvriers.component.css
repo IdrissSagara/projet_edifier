@@ -1,3 +1,7 @@
+.btn {
+  color: black;
+}
+
 #clickable-row {
   cursor: pointer;
 }

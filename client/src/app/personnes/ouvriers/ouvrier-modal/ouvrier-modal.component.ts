@@ -4,6 +4,7 @@ import {BsModalRef} from "ngx-bootstrap/modal";
 import {OuvrierService} from "../../../services/ouvrier.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-ouvrier-modal',
@@ -31,7 +32,7 @@ export class OuvrierModalComponent implements OnInit {
   addOuvrier() {
     if (this.modeModification()) {
       this.spinner.show();
-      this.ouvrierService.updateOuvrier(this.ouvrier).subscribe((response) => {
+      this.ouvrierService.updateOuvrier(this.ouvrier).pipe(first()).subscribe((response) => {
         const message = `Modification de l'ouvier ${this.ouvrier.nom} ${this.ouvrier.prenom} effectuer avec succes`;
         this.ouvrierModalRel.hide();
         this.toastService.success(message, '', {
@@ -50,7 +51,7 @@ export class OuvrierModalComponent implements OnInit {
       });
     } else {
       this.spinner.show();
-      this.ouvrierService.addOuvrier(this.ouvrier).subscribe((response) => {
+      this.ouvrierService.addOuvrier(this.ouvrier).pipe(first()).subscribe((response) => {
         const message = `Ouvrier creer avec succes`;
         this.ouvrierModalRel.hide();
         this.toastService.success(message, '', {
