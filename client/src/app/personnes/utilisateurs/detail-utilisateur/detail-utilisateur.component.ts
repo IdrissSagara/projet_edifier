@@ -26,8 +26,6 @@ export class DetailUtilisateurComponent implements OnInit {
    */
   utilisateurCourant: Utilisateur;
 
-  showError: boolean = false;
-
   subscriptions: Subscription[] = [];
   utilisateurModalRef: BsModalRef;
 
@@ -39,13 +37,10 @@ export class DetailUtilisateurComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const idUtilisateur = params['id'];
-      console.log(idUtilisateur);
       if (typeof idUtilisateur === 'undefined') {
         // profile. On recupère l'utilisateur courant
         this.authService.getMe().subscribe((utilisateur) => {
           this.utilisateur = utilisateur;
-          console.log("this.utilisateur");
-          console.log(this.utilisateur);
         });
       } else {
         // on a accédé au composant par /utilisateurs/:id
@@ -68,11 +63,7 @@ export class DetailUtilisateurComponent implements OnInit {
 
 
   modeProfil(): boolean {
-    if (this.utilisateurCourant?.userId === this.utilisateur.id) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.utilisateurCourant?.userId === this.utilisateur.id;
   }
 
   unsubscribe() {

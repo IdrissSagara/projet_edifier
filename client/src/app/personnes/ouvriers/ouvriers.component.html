@@ -60,11 +60,6 @@
             <td class="text-center" colspan="5">{{errorMessage}}</td>
           </tr>
           </tbody>
-          <tbody *ngIf="isLoading">
-          <tr>
-            <td class="text-center" colspan="5"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
-          </tr>
-          </tbody>
         </table>
         <div class="col-xs-12 col-12">
           <pagination [boundaryLinks]="true" [maxSize]="6"

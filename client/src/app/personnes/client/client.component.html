@@ -27,7 +27,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let client of clients$ | async; let i = index" [routerLink]="['/clients/detail', client.id]"
+          <tr *ngFor="let client of clients$ | async; let i = index; trackBy: trackById"
+              [routerLink]="['/clients/detail', client.id]"
               id="clickable-row">
             <td>
               <span class="ui-column-title">#</span>
@@ -62,11 +63,6 @@
           </tr>
           <tr *ngIf="errorMessage">
             <td class="text-center" colspan="5">{{errorMessage}}</td>
-          </tr>
-          </tbody>
-          <tbody *ngIf="isLoading">
-          <tr>
-            <td class="text-center" colspan="5"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
           </tr>
           </tbody>
         </table>

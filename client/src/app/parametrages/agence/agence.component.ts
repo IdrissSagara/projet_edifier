@@ -14,6 +14,7 @@ import {first} from "rxjs/operators";
 export class AgenceComponent implements OnInit {
   agence: Agence;
   erreursServeur: any;
+  isLoading: boolean;
 
   constructor(private agenceService: AgenceService,
               private spinner: SpinnerService, private toastService: ToastrService) {
@@ -24,14 +25,19 @@ export class AgenceComponent implements OnInit {
   }
 
   getAgence(): void {
+    this.isLoading = true;
+    this.spinner.show();
     this.agenceService.getAgence().pipe(first()).subscribe((res) => {
-      this.agence = res[0];
+      this.agence = !!res ? res : new Agence();
     }, error => {
       this.toastService.error(`Impossible de récupérer les informations de l'agence`, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
+    }, () => {
+      this.spinner.hide();
+      this.isLoading = false;
     });
   }
 
@@ -39,8 +45,8 @@ export class AgenceComponent implements OnInit {
     const formData = this.toFormData();
     this.spinner.show();
     this.agenceService.insertOrUpdate(formData).pipe(first()).subscribe((response) => {
-      const msg = response ? 'L\'information de l\'agence à été enregistré avec succes'
-        : 'L\'information de l\'agence à été modifié avec succes';
+      const msg = response ? 'Les informations de la societé ont été enregistrées avec succes'
+        : 'Les informations de la societé ont été modifiées avec succes';
       this.toastService.success(msg, '', {
         progressBar: true,
         closeButton: true,
@@ -48,7 +54,6 @@ export class AgenceComponent implements OnInit {
       });
       this.spinner.hide();
     }, error => {
-      console.log(error);
       this.toastService.error(`Une erreur est survenue lors de l'enregistrement des informations de l'agence`, '', {
         progressBar: true,
         closeButton: true,

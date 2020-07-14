@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header" id="title">
       <div class="pull-left">
-        <h2>Informations de votre agence </h2>
+        <h2>Informations de votre societé </h2>
       </div>
     </div>
 
@@ -12,48 +12,7 @@
 <div class="row justify-content-md-center">
   <div class="col-lg-8 col-sm-offset-8">
     <div class="modal-content">
-      <div *ngIf="agence" class="modal-body">
-        <!--<form #form="ngForm">
-          <div class="form-group">
-            <label for="rccm">N° rccm</label>
-            <input [(ngModel)]="agence.rccm" name="rccm" id="rccm" class="form-control"
-                   type="text">
-          </div>
-          <div class="form-group">
-            <label for="fiscal">N° fiscal</label>
-            <input [(ngModel)]="agence.fiscal" name="fiscal" id="fiscal" type="text"
-                   class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="libelle">Libelle</label>
-            <input [(ngModel)]="agence.libelle" name="libelle" id="libelle" type="text"
-                   class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="telephone">Telephone</label>
-            <input [(ngModel)]="agence.telephone" name="telephone" id="telephone" type="number"
-                   class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="fax">fax</label>
-            <input [(ngModel)]="agence.fax" name="fax" id="fax" type="number"
-                   class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="mail">mail</label>
-            <input [(ngModel)]="agence.mail" name="mail" id="mail" type="email"
-                   class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="adresse">adresse</label>
-            <input [(ngModel)]="agence.adresse" name="adresse" id="adresse" type="text"
-                   class="form-control">
-          </div>
-          <br>
-          <button [disabled]="form.invalid" class="btn btn-primary block full-width m-b"
-                  type="button" (click)="enregistrerFormulaire()">Enregistrer
-          </button>
-        </form>-->
+      <div *ngIf="!isLoading" class="modal-body">
         <form #form="ngForm" role="form">
           <div [ngClass]="{'has-error': inputEnErreur(rccm)}" class="form-group">
             <label class="control-label requis" for="rccm">N° Rccm:</label>
@@ -95,7 +54,7 @@
                   class="fa fa-times fa-2x form-control-feedback"></span>
 
             <div *ngIf="inputEnErreur(libelle)" class="alert alert-danger">
-              <div *ngIf="libelle.errors?.required">Le libellé de l'agence est requis.</div>
+              <div *ngIf="libelle.errors?.required">Le libellé de la societé est requis.</div>
 
               <div *ngFor="let erreur of erreursServeur?.libelle">
                 {{erreur}}
@@ -113,7 +72,7 @@
 
             <div *ngIf="inputEnErreur(telephone)" class="alert alert-danger">
               <div *ngIf="telephone.errors?.required">
-                Le numéro de téléphone de l'agence est requis.
+                Le numéro de téléphone de la societé est requis.
               </div>
 
               <div *ngFor="let erreur of erreursServeur?.telephone">
@@ -138,7 +97,7 @@
 
             <div *ngIf="inputEnErreur(mail)" class="alert alert-danger">
               <div *ngIf="mail.errors?.required">
-                L'email de contact de l'agence est requis.
+                L'email de contact de la societé est requis.
               </div>
 
               <div *ngFor="let erreur of erreursServeur?.mail">
@@ -159,7 +118,7 @@
 
             <div *ngIf="inputEnErreur(adresse)" class="alert alert-danger">
               <div *ngIf="adresse.errors?.required">
-                L'adresse de l'agence est requise.
+                L'adresse de l'societé est requise.
               </div>
 
               <div *ngFor="let erreur of erreursServeur?.adresse">
@@ -170,7 +129,7 @@
 
           <div class="fileinput fileinput-new input-group" data-provides="fileinput">
             <div class="form-control" data-trigger="fileinput">
-              <i class="fa fa-image"></i>Logo de l'agence
+              <i class="fa fa-image"></i>Logo de la societé
               <span class="fileinput-filename"></span>
             </div>
             <span class="input-group-addon btn btn-default btn-file">

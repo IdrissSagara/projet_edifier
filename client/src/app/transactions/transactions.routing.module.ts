@@ -13,7 +13,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'budget'
+        redirectTo: 'mouvements'
       },
       {
         path: 'detail/:id/:idChantier',

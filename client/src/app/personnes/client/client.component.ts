@@ -38,7 +38,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.getAllClients();
     this.areCoursesLoadedSub = this.areClientsLoaded$.pipe(
       tap((areCoursesLoaded) => {
         if (!areCoursesLoaded) {
@@ -46,7 +45,6 @@ export class ClientComponent implements OnInit, OnDestroy {
         }
       })
     ).subscribe(value => {
-      console.log(value);
     });
   }
 
@@ -98,19 +96,17 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   getAllClients(offset = 0) {
-    // this.isLoading = true;
     this.spinner.show();
     this.clientService.getAllClient(offset).subscribe((res) => {
       this.clients = res.rows;
       this.totalPages = res.count;
-      this.spinner.hide();
     }, (err) => {
-      console.log(err);
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
+    }, () => {
       this.spinner.hide();
     });
   }
@@ -176,6 +172,10 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.dangerModal.hide();
       this.spinner.hide();
     });
+  }
+
+  trackById(_, client: ClientModel): number {
+    return client.id;
   }
 
   ngOnDestroy() {

@@ -56,7 +56,6 @@ export class ClientDetailsComponent implements OnInit, OnDestroy {
       const id = params['id'];
 
       this.areCoursesLoadedSub = this.areClientsLoaded().subscribe(value => {
-        console.log(value);
       });
 
       this.client$ = this.store.select(ClientState.getClientById).pipe(

@@ -7,6 +7,7 @@ import {combineLatest, Subscription} from "rxjs";
 import {OuvrierModalComponent} from "./ouvrier-modal/ouvrier-modal.component";
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {AddOuvrierToChantierModalComponent} from "./add-ouvrier-to-chantier-modal/add-ouvrier-to-chantier-modal.component";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-ouvriers',
@@ -41,7 +42,7 @@ export class OuvriersComponent implements OnInit {
 
   getAllOuvrier() {
     this.spinner.show();
-    this.ouvrierService.getAllOuvrier().subscribe((response) => {
+    this.ouvrierService.getAllOuvrier().pipe(first()).subscribe((response) => {
       this.ouvrier = response.rows;
       this.totalPage = response.count;
       this.spinner.hide();
@@ -108,7 +109,7 @@ export class OuvriersComponent implements OnInit {
 
   confirmSupprimerOuvrier() {
     this.spinner.show();
-    this.ouvrierService.deleteOuvrierById(this.deletedId).subscribe(res => {
+    this.ouvrierService.deleteOuvrierById(this.deletedId).pipe(first()).subscribe(res => {
       this.getAllOuvrier();
       this.toastService.success('Ouvrier suppimer avec succes', '', {
         progressBar: true,
