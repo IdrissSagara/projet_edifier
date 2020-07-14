@@ -14,7 +14,7 @@ export class AuthService {
   jsonHelp = new JwtHelperService();
   get_token_endpoint = environment.api_url + 'auth/login/';
 
-  private _utilisateurCourant: Utilisateur;
+  _utilisateurCourant: Utilisateur;
 
   /**
    * Instance de l'utilisateur courant qui sera renvoyé lorsque l'utilisateur a déjà été renvoyé une fois.

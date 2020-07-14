@@ -9,6 +9,7 @@ import {LoginComponent} from './authentication/login/login.component';
 import {RegisterComponent} from './authentication/register/register.component';
 import {AuthGuard} from "./authentication/authGuard/auth.guard";
 import {Role} from "./personnes/utilisateurs/user.roles";
+import {UserResolver} from "./resolvers/user.resolver";
 
 export const routes: Routes = [
   {
@@ -48,6 +49,9 @@ export const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     component: DefaultLayoutComponent,
+    resolve: {
+      currentUser: UserResolver
+    },
     data: {
       title: 'Home',
       roles: [Role.Admin, Role.BasicUser]

@@ -14,9 +14,9 @@
       </a>
       <div *dropdownMenu aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-header text-center">
-          <strong>{{currentUser.prenom | titlecase}} {{currentUser.nom | titlecase}}</strong>
+          <strong>{{authService._utilisateurCourant.prenom | titlecase}} {{authService._utilisateurCourant.nom | titlecase}}</strong>
         </div>
-        <a [routerLink]="['/users/detailsUser/', currentUser.userId]" class="dropdown-item">
+        <a [routerLink]="['/users/detailsUser/', authService._utilisateurCourant.userId]" class="dropdown-item">
           <i class="fa fa-user"></i> Profile
         </a>
         <a class="dropdown-item" routerLink="/personnes/utilisateurs"><i class="fa fa-wrench"></i> Utilisateurs</a>

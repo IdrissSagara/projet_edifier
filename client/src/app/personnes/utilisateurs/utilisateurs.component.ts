@@ -1,11 +1,12 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {UtilisateurService} from "../../services/utilisateur.service";
-import {Utilisateur} from "../../model/utilisateur";
+import {USER_ROLES, Utilisateur} from "../../model/utilisateur";
 import {combineLatest, Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/";
 import {UtilisateurModalComponent} from "./utilisateur-modal/utilisateur-modal.component";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-utilisateurs',
@@ -24,12 +25,8 @@ export class UtilisateursComponent implements OnInit {
 
   constructor(private utilisateurService: UtilisateurService, private toastService: ToastrService,
               private spinner: SpinnerService, private modalService: BsModalService,
-              private changeDetection: ChangeDetectorRef) {
+              private changeDetection: ChangeDetectorRef, private authService: AuthService) {
   }
-
-  // get isLoading() {
-  //   return this.spinner.iterationOfShow > 0;
-  // }
 
   ngOnInit(): void {
     this.getAllUtilisateur();
@@ -91,4 +88,7 @@ export class UtilisateursComponent implements OnInit {
   }
 
 
+  canEdit() {
+    return [USER_ROLES.ADMIN, USER_ROLES.ADVANCEDUSER].includes(this.authService._utilisateurCourant.role);
+  }
 }

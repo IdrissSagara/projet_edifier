@@ -10,30 +10,20 @@ export class Utilisateur {
   updatedAt: string;
   oldPassword: string;
   newPassword: string;
-
-  constructor() {
-    this.role = BASICUSER;
-  }
-
-  /**
-   * Renvoie vraie si l'utilisateur a les droits
-   * pour accéder au menu paramétrage
-   */
-  peutAccederAuParametrage(): boolean {
-    if (this.role === ADMIN) {
-      return true;
-    }
-  }
-
-
 }
 
 export const ADMIN = 'admin';
-export const BASICUSER = 'basic-user';
-export const MEDIUMUSER = 'medium-user';
 export const ADVANCEDUSER = 'advanced-user';
+export const MEDIUMUSER = 'medium-user';
+export const BASICUSER = 'basic-user';
 
-export const ROLES = [ADMIN, BASICUSER, MEDIUMUSER, ADVANCEDUSER]
+export const ROLES = [ADMIN, BASICUSER, MEDIUMUSER, ADVANCEDUSER];
 
+export const USER_ROLES = {
+  'ADMIN': ADMIN,
+  'BASICUSER': BASICUSER,
+  'MEDIUMUSER': MEDIUMUSER,
+  'ADVANCEDUSER': ADVANCEDUSER
+};
 
 

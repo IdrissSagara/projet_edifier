@@ -29,8 +29,8 @@ export class DetailUtilisateurComponent implements OnInit {
   subscriptions: Subscription[] = [];
   utilisateurModalRef: BsModalRef;
 
-  constructor(private route: ActivatedRoute, private spinner: SpinnerService, private toastService: ToastrService,
-              private utilisateurService: UtilisateurService, private authService: AuthService,
+  constructor(private route: ActivatedRoute, private activatedRoute: ActivatedRoute, private spinner: SpinnerService,
+              private toastService: ToastrService, private utilisateurService: UtilisateurService, private authService: AuthService,
               private modalService: BsModalService, private changeDetection: ChangeDetectorRef) {
   }
 
@@ -39,18 +39,14 @@ export class DetailUtilisateurComponent implements OnInit {
       const idUtilisateur = params['id'];
       if (typeof idUtilisateur === 'undefined') {
         // profile. On recupère l'utilisateur courant
-        this.authService.getMe().subscribe((utilisateur) => {
-          this.utilisateur = utilisateur;
-        });
+        this.utilisateur = this.authService._utilisateurCourant;
       } else {
         // on a accédé au composant par /utilisateurs/:id
         this.getUtilisateurById(params['id']);
       }
     });
 
-    this.authService.getMe().subscribe(utilisateur => {
-      this.utilisateurCourant = utilisateur;
-    });
+    this.utilisateurCourant = this.authService._utilisateurCourant;
   }
 
   getUtilisateurById(id: number) {
