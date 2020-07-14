@@ -14,7 +14,6 @@ import {UserResolver} from "../../resolvers/user.resolver";
 export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems = navItems;
-  currentUser: Utilisateur;
 
   constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
               private spinner: SpinnerService) {
