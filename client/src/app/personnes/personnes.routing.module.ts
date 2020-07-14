@@ -30,13 +30,29 @@ const routes: Routes = [
         data: {
           title: 'Clients'
         }
-      }, {
+      },
+      {
+        path: 'clients/detail/:id',
+        component: ClientDetailsComponent,
+        data: {
+          title: 'Details du client'
+        }
+      },
+      {
         path: 'ouvriers',
         component: OuvriersComponent,
         data: {
           title: 'Ouvriers'
         }
-      }, {
+      },
+      {
+        path: 'ouvriers/details/:id',
+        component: OuvrierDetailsComponent,
+        data: {
+          title: 'Details de l\'ouvrier'
+        }
+      },
+      {
         path: 'utilisateurs',
         component: UtilisateursComponent,
         canActivate: [UtilisateurGuard],
@@ -44,25 +60,12 @@ const routes: Routes = [
           title: 'Utilisateurs',
           roles: [Role.Admin, Role.AdvancedUser]
         },
-      }, {
-        path: 'details/:id',
-        component: OuvrierDetailsComponent,
-        data: {
-          title: 'Detail de l\'ouvrier'
-        }
       },
       {
-        path: 'detail/:id',
-        component: ClientDetailsComponent,
-        data: {
-          title: 'Detail du client'
-        }
-      },
-      {
-        path: 'detailsUser/:id',
+        path: 'utilisateurs/detailsUser/:id',
         component: DetailUtilisateurComponent,
         data: {
-          title: 'Detail de l\'utilisateur'
+          title: 'Details de l\'utilisateur'
         }
       }
     ]
