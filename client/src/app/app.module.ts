@@ -8,8 +8,8 @@ import {AppComponent} from './app.component';
 // Import containers
 import {DefaultLayoutComponent} from './containers';
 
-import {P404Component} from './views/error/404.component';
-import {P500Component} from './views/error/500.component';
+import {P404Component} from './error-pages/404.component';
+import {P500Component} from './error-pages/500.component';
 import {LoginComponent} from './authentication/login/login.component';
 import {RegisterComponent} from './authentication/register/register.component';
 import {

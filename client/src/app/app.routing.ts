@@ -3,8 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 // Import Containers
 import {DefaultLayoutComponent} from './containers';
 
-import {P404Component} from './views/error/404.component';
-import {P500Component} from './views/error/500.component';
+import {P404Component} from './error-pages/404.component';
+import {P500Component} from './error-pages/500.component';
 import {LoginComponent} from './authentication/login/login.component';
 import {RegisterComponent} from './authentication/register/register.component';
 import {AuthGuard} from "./authentication/authGuard/auth.guard";
@@ -54,9 +54,14 @@ export const routes: Routes = [
     },
     children: [
       {
+        path: 'dashboard',
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+      },
+      {
         path: 'chantiers',
         loadChildren: () => import('./chantier/chantier.module').then(m => m.ChantierModule)
-      }, {
+      },
+      {
         path: 'personnes',
         loadChildren: () => import('./personnes/personnes.module').then(m => m.PersonnesModule)
       }, {
@@ -69,47 +74,15 @@ export const routes: Routes = [
       {
         path: 'transactions',
         loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)
-      }, {
+      },
+      {
         path: 'paiement',
         loadChildren: () => import('./transactions/transactions.module').then(m => m.TransactionsModule)
-      }, {
+      },
+      {
         path: 'parametrage',
         loadChildren: () => import('./parametrages/parametrage.module').then(m => m.ParametrageModule)
       },
-
-
-      {
-        path: 'base',
-        loadChildren: () => import('./views/base/base.module').then(m => m.BaseModule)
-      },
-      {
-        path: 'buttons',
-        loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
-      },
-      {
-        path: 'charts',
-        loadChildren: () => import('./views/chartjs/chartjs.module').then(m => m.ChartJSModule)
-      },
-      {
-        path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/dashboard.module').then(m => m.DashboardModule)
-      },
-      {
-        path: 'icons',
-        loadChildren: () => import('./views/icons/icons.module').then(m => m.IconsModule)
-      },
-      {
-        path: 'notifications',
-        loadChildren: () => import('./views/notifications/notifications.module').then(m => m.NotificationsModule)
-      },
-      {
-        path: 'theme',
-        loadChildren: () => import('./views/theme/theme.module').then(m => m.ThemeModule)
-      },
-      {
-        path: 'widgets',
-        loadChildren: () => import('./views/widgets/widgets.module').then(m => m.WidgetsModule)
-      }
     ]
   },
   {path: '**', component: P404Component}
