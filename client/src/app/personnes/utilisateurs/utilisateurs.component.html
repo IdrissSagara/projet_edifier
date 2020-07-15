@@ -16,9 +16,9 @@
         </div>
       </div>
       <div class="card-body">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered custom-responsive-table text-center">
           <thead>
-          <tr class="text-center ">
+          <tr>
             <th>#</th>
             <th>Prénom</th>
             <th>Nom</th>
@@ -27,15 +27,16 @@
             <th>Actions</th>
           </tr>
           </thead>
-          <tbody *ngIf="!isLoading">
-          <tr *ngFor="let user of utilisateur; let i = index">
-            <td>{{i + 1}}</td>
-            <td>{{user.prenom | titlecase}}</td>
-            <td>{{user.nom | titlecase}}</td>
-            <td>{{user.username}}</td>
-            <td>{{user.role}}</td>
+          <tbody>
+          <tr *ngFor="let user of utilisateur; let i = index" [class.message]="user.username === curentUser.username">
+            <td><span class="ui-column-title">#</span>{{i + 1}}</td>
+            <td><span class="ui-column-title">Prénom</span>{{user.prenom | titlecase}}</td>
+            <td><span class="ui-column-title">Nom</span>{{user.nom | titlecase}}</td>
+            <td><span class="ui-column-title">Nom utilisateur</span>{{user.username}}</td>
+            <td><span class="ui-column-title">Role</span>{{user.role}}</td>
             <td>
-              <div class="btn-group">
+              <span class="ui-column-title">Actions</span>
+              <div class="btn-group text-center">
                 <button [routerLink]="['/personnes/utilisateurs/detailsUser', user.id]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails de l'utilisateur"><i
                   class="icon-eye"></i></button>

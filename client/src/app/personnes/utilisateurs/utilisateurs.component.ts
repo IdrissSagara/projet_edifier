@@ -22,6 +22,7 @@ export class UtilisateursComponent implements OnInit {
   utilisateurModalRef: BsModalRef;
   currentPage: number;
   isLoading: Boolean;
+  curentUser: Utilisateur;
 
   constructor(private utilisateurService: UtilisateurService, private toastService: ToastrService,
               private spinner: SpinnerService, private modalService: BsModalService,
@@ -37,6 +38,7 @@ export class UtilisateursComponent implements OnInit {
     this.utilisateurService.getAllUsers().subscribe((response) => {
       this.utilisateur = response.rows;
       this.totalPages = response.count;
+      this.curentUser = this.authService._utilisateurCourant;
       this.spinner.hide();
     }, (err) => {
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
