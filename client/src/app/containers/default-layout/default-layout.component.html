@@ -17,7 +17,8 @@
         <div class="dropdown-header text-center">
           <strong>{{authService._utilisateurCourant.prenom | titlecase}} {{authService._utilisateurCourant.nom | titlecase}}</strong>
         </div>
-        <a [routerLink]="['/users/details/', authService._utilisateurCourant.userId]" class="dropdown-item">
+        <a [routerLink]="['/personnes/utilisateurs/details', authService._utilisateurCourant.userId]"
+           class="dropdown-item">
           <i class="fa fa-user"></i> Profile
         </a>
         <a class="dropdown-item" routerLink="/personnes/utilisateurs"><i class="fa fa-wrench"></i> Utilisateurs</a>
