@@ -91,4 +91,8 @@ export class UtilisateursComponent implements OnInit {
   canEdit() {
     return [USER_ROLES.ADMIN, USER_ROLES.ADVANCEDUSER].includes(this.authService.getRole());
   }
+
+  canDelete() {
+    return [USER_ROLES.ADMIN].includes(this.authService.getRole());
+  }
 }
