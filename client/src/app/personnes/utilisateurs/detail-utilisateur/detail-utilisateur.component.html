@@ -1,12 +1,10 @@
-<div class="animated fadeIn px-4">
+<div class="animated fadeIn px-3">
   <div class="card">
     <div *ngIf="utilisateur" class="card-header" id="title">
       <div class="pull-left">
         <h2>Details de l'utilisateur : {{utilisateur.nom | titlecase}} {{utilisateur.prenom | titlecase}}</h2>
       </div>
     </div>
-
-
   </div>
 
   <div *ngIf="utilisateur " class="row justify-content-md-center">
@@ -14,8 +12,8 @@
       <div class="row">
         <div class="col-xs-12 col-lg-12 m-b-xs" id="cadre_boutton">
           <div class="pull-right">
-            <button *ngIf="modeProfil()" class="btn bg-success" title="Modifier votre mot de passe"
-                    (click)="updatePassword(utilisateur)" type="button">
+            <button (click)="updatePassword(utilisateur)" *ngIf="modeProfil()" class="btn bg-success"
+                    title="Modifier votre mot de passe" type="button">
               Modifier votre mot de passe
             </button>
           </div>
@@ -47,51 +45,18 @@
               <td>{{utilisateur.role}}</td>
             </tr>
             <tr>
-              <td><strong>Utilisateur créer le :</strong></td>
+              <td><strong>Utilisateur créé le :</strong></td>
               <td>{{utilisateur.createdAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td><strong>Utilisateur modifier le :</strong></td>
+              <td><strong>Utilisateur modifié le :</strong></td>
               <td>{{utilisateur.updatedAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             </tbody>
           </table>
           <hr>
-          <!--<div class="card">
-            <div chiffre_title class="card-header text-center">
-              <strong>Chantier sur le quel il à travailler </strong>
-            </div>
-            <div class="card-body">
-              <table class="table">
-                <thead>
-                <tr class="text-center">
-                  <th>#</th>
-                  <th>Identifiant client</th>
-                  <th>emplacement</th>
-                  <th>Cout</th>
-                  <th>Montant dispo</th>
-                </tr>
-                </thead>
-                <tbody *ngIf="chantier" class="text-center">
-                <tr *ngFor="let c of chantier; let i = index" class="text-center">
-                  <td>{{i + 1}}</td>
-                  <td>
-                    <span [routerLink]="['/clients/detail', c.clientId]"
-                          class="badge badge-success " id="clickable-row">{{c.clientId}}</span>
-                  </td>
-                  <td>{{c.emplacement}}</td>
-                  <td>{{c.cout}}</td>
-                  <td>{{c.montant_dispo}}</td>
-                </tr>
-                <tr *ngIf="chantier.length === 0">
-                  <td class="text-center" colspan="6">Aucun chantier associé à cet ouvrier</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>-->
         </div>
-
       </div>
     </div>
   </div>
+</div>

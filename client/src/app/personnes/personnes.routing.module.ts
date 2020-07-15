@@ -7,7 +7,7 @@ import {OuvrierDetailsComponent} from "./ouvriers/ouvrier-details/ouvrier-detail
 import {ClientDetailsComponent} from "./client/client-details/client-details.component";
 import {DetailUtilisateurComponent} from "./utilisateurs/detail-utilisateur/detail-utilisateur.component";
 import {ClientResolver} from "./client/clients.resolver";
-import {UtilisateurGuard} from "../authentication/userGuard/utilisateur.guard";
+import {RoleGuard} from "../authentication/guards/role.guard";
 import {Role} from "./utilisateurs/user.roles";
 
 const routes: Routes = [
@@ -55,14 +55,14 @@ const routes: Routes = [
       {
         path: 'utilisateurs',
         component: UtilisateursComponent,
-        canActivate: [UtilisateurGuard],
+        canActivate: [RoleGuard],
         data: {
           title: 'Utilisateurs',
           roles: [Role.Admin, Role.AdvancedUser]
         },
       },
       {
-        path: 'utilisateurs/detailsUser/:id',
+        path: 'utilisateurs/details/:id',
         component: DetailUtilisateurComponent,
         data: {
           title: 'Details de l\'utilisateur'

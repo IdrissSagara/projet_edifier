@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {AgenceComponent} from "./agence/agence.component";
+import {Role} from "../personnes/utilisateurs/user.roles";
+import {RoleGuard} from "../authentication/guards/role.guard";
 
 const routes: Routes = [
   {
@@ -16,8 +18,10 @@ const routes: Routes = [
       {
         path: 'agence',
         component: AgenceComponent,
+        canActivate: [RoleGuard],
         data: {
-          title: 'Agence'
+          title: 'Agence',
+          roles: [Role.Admin, Role.AdvancedUser]
         }
       }
     ]

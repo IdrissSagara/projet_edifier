@@ -31,7 +31,6 @@ export class UtilisateursComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAllUtilisateur();
-
   }
 
   getAllUtilisateur() {
