@@ -25,7 +25,7 @@ import {PopoverModule} from "ngx-bootstrap/popover";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {TooltipModule} from "ngx-bootstrap/tooltip";
 import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
-import {ClientResolver} from "./client/clients.resolver";
+import {ClientResolver} from "../resolvers/clients.resolver";
 
 @NgModule({
   declarations: [

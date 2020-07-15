@@ -4,7 +4,7 @@ import {BsModalRef} from "ngx-bootstrap/modal";
 import {OuvrierService} from "../../../services/ouvrier.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
-import {first} from "rxjs/operators";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-ouvrier-modal',
@@ -32,17 +32,15 @@ export class OuvrierModalComponent implements OnInit {
   addOuvrier() {
     if (this.modeModification()) {
       this.spinner.show();
-      this.ouvrierService.updateOuvrier(this.ouvrier).pipe(first()).subscribe((response) => {
-        const message = `Modification de l'ouvier ${this.ouvrier.nom} ${this.ouvrier.prenom} effectuer avec succes`;
+      this.ouvrierService.updateOuvrier(this.ouvrier).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
+        const message = `Modification de l'ouvrier ${this.ouvrier.nom} ${this.ouvrier.prenom} effectuée avec succès`;
         this.ouvrierModalRel.hide();
         this.toastService.success(message, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-        this.spinner.hide();
       }, error => {
-        this.spinner.hide();
         this.toastService.error(`Une erreur est survenue lors de la modification de l'ouvrier`, '', {
           progressBar: true,
           closeButton: true,
@@ -51,18 +49,16 @@ export class OuvrierModalComponent implements OnInit {
       });
     } else {
       this.spinner.show();
-      this.ouvrierService.addOuvrier(this.ouvrier).pipe(first()).subscribe((response) => {
-        const message = `Ouvrier creer avec succes`;
+      this.ouvrierService.addOuvrier(this.ouvrier).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
+        const message = `Ouvrier créé avec succès`;
         this.ouvrierModalRel.hide();
         this.toastService.success(message, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-        this.spinner.hide();
       }, error => {
-        this.spinner.hide();
-        this.toastService.error(`Une erreur est survenue lors de l'ajout d'un ouvrier`, '', {
+        this.toastService.error(`Une erreur est survenue lors de l'ajout  l'ouvrier`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false

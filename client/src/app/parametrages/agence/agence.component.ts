@@ -4,7 +4,7 @@ import {Agence} from "../../model/agence";
 import {AgenceService} from "../../services/agence.service";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
-import {first} from "rxjs/operators";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-agence',
@@ -27,7 +27,7 @@ export class AgenceComponent implements OnInit {
   getAgence(): void {
     this.isLoading = true;
     this.spinner.show();
-    this.agenceService.getAgence().pipe(first()).subscribe((res) => {
+    this.agenceService.getAgence().pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
       this.agence = !!res ? res : new Agence();
     }, error => {
       this.toastService.error(`Impossible de récupérer les informations de l'agence`, '', {
@@ -44,7 +44,7 @@ export class AgenceComponent implements OnInit {
   enregistrerFormulaire() {
     const formData = this.toFormData();
     this.spinner.show();
-    this.agenceService.insertOrUpdate(formData).pipe(first()).subscribe((response) => {
+    this.agenceService.insertOrUpdate(formData).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       const msg = response ? 'Les informations de la societé ont été enregistrées avec succes'
         : 'Les informations de la societé ont été modifiées avec succes';
       this.toastService.success(msg, '', {
@@ -52,14 +52,12 @@ export class AgenceComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     }, error => {
       this.toastService.error(`Une erreur est survenue lors de l'enregistrement des informations de l'agence`, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 

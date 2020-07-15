@@ -15,7 +15,7 @@ export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems = navItems;
 
-  constructor(private authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
+  constructor(readonly authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
               private spinner: SpinnerService) {
   }
 

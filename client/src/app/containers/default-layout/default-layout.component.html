@@ -1,7 +1,8 @@
 <app-header
   [asideMenuToggler]="false"
+  [mobileAsideMenuToggler]="false"
   [fixed]="true"
-  [navbarBrandFull]="{src: 'assets/img/brand/logo.svg', width: 89, height: 25, alt: 'Edifier'}"
+  [navbarBrandFull]="{src: 'localhost:3000/uploads/logo.jpg', width: 89, height: 25, alt: 'Edifier'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'Edifier'}"
   [navbarBrandRouterLink]="['/dashboard']"
   [sidebarToggler]="'lg'">
@@ -16,7 +17,7 @@
         <div class="dropdown-header text-center">
           <strong>{{authService._utilisateurCourant.prenom | titlecase}} {{authService._utilisateurCourant.nom | titlecase}}</strong>
         </div>
-        <a [routerLink]="['/users/detailsUser/', authService._utilisateurCourant.userId]" class="dropdown-item">
+        <a [routerLink]="['/users/details/', authService._utilisateurCourant.userId]" class="dropdown-item">
           <i class="fa fa-user"></i> Profile
         </a>
         <a class="dropdown-item" routerLink="/personnes/utilisateurs"><i class="fa fa-wrench"></i> Utilisateurs</a>

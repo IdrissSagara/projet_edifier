@@ -8,8 +8,8 @@ import {ClientModel} from "../../../model/clientModel";
 import {Chantier} from "../../../model/chantier";
 import {Select, Store} from "@ngxs/store";
 import {ClientState} from "../store/clientState";
-import {Observable, Subscription,} from "rxjs";
-import {map, tap} from "rxjs/operators";
+import {Observable, Subscription} from "rxjs";
+import {finalize, first, map, tap} from "rxjs/operators";
 import {GetClients} from "../store/client.actions";
 
 @Component({
@@ -37,17 +37,14 @@ export class ClientDetailsComponent implements OnInit, OnDestroy {
 
   getChantierOfClient(id: number) {
     this.spinner.show();
-    this.clientService.getChantierOfClient(id).subscribe((response) => {
+    this.clientService.getChantierOfClient(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.chantiers = response;
-      this.spinner.hide();
-
     }, error => {
-      this.toastService.error(`Une erreur est survenue lors de la récupération des chantier du client`, '', {
+      this.toastService.error(`Une erreur est survenue lors de la récupération des chantiers du client`, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 

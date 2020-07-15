@@ -7,7 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {ChantierWithOuvrier} from "../../../model/chantierOuvrier";
 import {UtilisateurService} from "../../../services/utilisateur.service";
 import {Utilisateur} from "../../../model/utilisateur";
-import {first} from "rxjs/operators";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-ouvrier-details',
@@ -16,7 +16,7 @@ import {first} from "rxjs/operators";
 })
 export class OuvrierDetailsComponent implements OnInit {
 
-  ouvrier: Ouvrier
+  ouvrier: Ouvrier;
   chantier: ChantierWithOuvrier[];
   showError: boolean = false;
   updatedById: number;
@@ -34,26 +34,23 @@ export class OuvrierDetailsComponent implements OnInit {
 
   getOuvrierByChantier(id: number) {
     this.spinner.show();
-    this.ouvrierService.getChantierByOuvrier(id).pipe(first()).subscribe((response) => {
+    this.ouvrierService.getChantierByOuvrier(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.chantier = response;
-      this.spinner.hide();
     }, error => {
       this.toastService.error(`Une erreur est survenue lors de la récupération des ouvrier par chantier`, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
   getOuvrierById(id: number) {
     this.spinner.show();
-    this.ouvrierService.getOuvrierById(id).pipe(first()).subscribe((response) => {
+    this.ouvrierService.getOuvrierById(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.ouvrier = response;
       this.updatedById = response.updatedBy;
       this.createdById = response.createdBy;
-      this.spinner.hide();
       this.getUtilisateur(this.updatedById);
       this.getUtilisateur(this.createdById);
 
@@ -63,12 +60,12 @@ export class OuvrierDetailsComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
   getUtilisateur(id: number) {
-    this.utilisateurService.getUserById(id).pipe(first()).subscribe((res) => {
+    this.spinner.show();
+    this.utilisateurService.getUserById(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
       this.user = res;
     }, error => {
     });

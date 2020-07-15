@@ -6,6 +6,7 @@ import {combineLatest, Subscription} from "rxjs";
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../services/spinner.service";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-chantier',
@@ -40,11 +41,10 @@ export class ChantierComponent implements OnInit {
   getAllChantiers(offset = 0) {
     // this.isLoading = true;
     this.spinner.show();
-    this.chantierService.getAllChantier(offset).subscribe(res => {
+    this.chantierService.getAllChantier(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       this.errorMessage = undefined;
       this.chantiers = res.rows;
       this.totalItems = res.count;
-      this.spinner.hide();
     }, err => {
       this.errorMessage = "data loading error";
       this.toastService.error('Une erreur est survenu lors de la récuperation des chantiers', '', {
@@ -52,7 +52,6 @@ export class ChantierComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
@@ -120,7 +119,6 @@ export class ChantierComponent implements OnInit {
     this.chantierModalRef.content.closeBtnName = 'Close';
   }
 
-
   unsubscribe() {
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
@@ -140,7 +138,7 @@ export class ChantierComponent implements OnInit {
 
   confirmSupprimerChantier(): void {
     this.spinner.show();
-    this.chantierService.deleteChantierById(this.delId).subscribe(res => {
+    this.chantierService.deleteChantierById(this.delId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       this.getAllChantiers();
       this.toastService.success('Chantier suppimer avec succes', '', {
         progressBar: true,
@@ -150,10 +148,7 @@ export class ChantierComponent implements OnInit {
 
       this.delId = undefined;
       this.dangerModal.hide();
-      this.spinner.hide();
     }, (err) => {
-      this.dangerModal.hide();
-      this.spinner.hide();
       const e = err.error;
       let message = 'Une erreur est survenu lors de la suppression du chantier';
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {

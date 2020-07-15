@@ -6,7 +6,7 @@ import {UtilisateursComponent} from "./utilisateurs/utilisateurs.component";
 import {OuvrierDetailsComponent} from "./ouvriers/ouvrier-details/ouvrier-details.component";
 import {ClientDetailsComponent} from "./client/client-details/client-details.component";
 import {DetailUtilisateurComponent} from "./utilisateurs/detail-utilisateur/detail-utilisateur.component";
-import {ClientResolver} from "./client/clients.resolver";
+import {ClientResolver} from "../resolvers/clients.resolver";
 import {RoleGuard} from "../authentication/guards/role.guard";
 import {Role} from "./utilisateurs/user.roles";
 

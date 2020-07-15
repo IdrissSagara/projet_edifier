@@ -30,7 +30,8 @@
           </tr>
           </thead>
           <tbody *ngIf="!isLoading">
-          <tr *ngFor="let ouvrier of ouvrier; let i = index" [routerLink]="['/personnes/details', ouvrier.id]"
+          <tr *ngFor="let ouvrier of ouvrier; let i = index; trackBy: trackById"
+              [routerLink]="['/personnes/ouvriers/details', ouvrier.id]"
               id="clickable-row">
             <td>{{i + 1}}</td>
             <td>{{ouvrier.nom | titlecase}}</td>

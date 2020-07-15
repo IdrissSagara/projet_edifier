@@ -12,6 +12,7 @@ import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../model/paiement";
 import {PaiementModalComponent} from "../paiement-modal/paiement-modal.component";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-chantier-details',
@@ -45,11 +46,10 @@ export class ChantierDetailsComponent implements OnInit {
 
   async getChantierById(id: number) {
     this.spinner.show();
-    this.chantierService.getChantierById(id).subscribe(chantier => {
+    this.chantierService.getChantierById(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe(chantier => {
       this.showError = false;
       this.chantier = chantier;
       this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
-      this.spinner.hide();
     }, (err) => {
       console.log(err);
       // afficher une alerte bootstrap
@@ -59,7 +59,6 @@ export class ChantierDetailsComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
@@ -153,7 +152,7 @@ export class ChantierDetailsComponent implements OnInit {
 
   genererFacture(): void {
     this.spinner.show();
-    this.chantierService.getChantierFacture(this.chantier.id).subscribe((res: any) => {
+    this.chantierService.getChantierFacture(this.chantier.id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res: any) => {
       const pdf = new Blob([res], {type: 'application/pdf'});
 
       // création d'une url locale avec le fichier pdf
@@ -166,14 +165,12 @@ export class ChantierDetailsComponent implements OnInit {
       setTimeout(() => {
         const doc = this.pdfIframe.nativeElement.contentWindow || this.pdfIframe.nativeElement.contentDocument;
         this.pdfIframe.nativeElement.focus();
-        this.spinner.hide();
         doc.print();
         // nettoyage de l'url généré
         URL.revokeObjectURL(fileUrl);
       }, 1000);
 
     }, error => {
-      this.spinner.hide();
       console.log(error);
       const message = "erreur survenu lors de l'inpression";
       this.toastService.error(message, '', {

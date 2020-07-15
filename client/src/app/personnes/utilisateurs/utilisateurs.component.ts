@@ -7,6 +7,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {UtilisateurModalComponent} from "./utilisateur-modal/utilisateur-modal.component";
 import {AuthService} from "../../services/auth.service";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-utilisateurs',
@@ -35,18 +36,16 @@ export class UtilisateursComponent implements OnInit {
 
   getAllUtilisateur() {
     this.spinner.show();
-    this.utilisateurService.getAllUsers().subscribe((response) => {
+    this.utilisateurService.getAllUsers().pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.utilisateurs = response.rows;
       this.totalPages = response.count;
       this.curentUser = this.authService._utilisateurCourant;
-      this.spinner.hide();
     }, (err) => {
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
@@ -88,7 +87,6 @@ export class UtilisateursComponent implements OnInit {
     this.utilisateurModalRef = this.modalService.show(UtilisateurModalComponent, {initialState});
     this.utilisateurModalRef.content.closeBtnName = 'Close';
   }
-
 
   canEdit() {
     return [USER_ROLES.ADMIN, USER_ROLES.ADVANCEDUSER].includes(this.authService.getRole());

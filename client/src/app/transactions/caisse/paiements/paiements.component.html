@@ -21,12 +21,12 @@
             <th>Type Paiement</th>
             <th>Commentaire</th>
             <th>Chantier id</th>
-            <th>Creer le</th>
+            <th>Créé le</th>
             <th style="padding-left: 50px">Action</th>
           </tr>
           </thead>
           <tbody *ngIf="!isLoading">
-          <tr *ngFor="let paiement of paiements; let i = index">
+          <tr *ngFor="let paiement of paiements; let i = index; trackBy: trackById">
             <td>{{i + 1}} </td>
             <td>{{paiement.montant }}</td>
             <td>{{paiement.montant_restant }}</td>

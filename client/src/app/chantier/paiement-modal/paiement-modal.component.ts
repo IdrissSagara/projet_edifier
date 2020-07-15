@@ -6,6 +6,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {Paiement, TYPES_PAIEMENTS} from "../../model/paiement";
 import {Chantier} from "../../model/chantier";
 import {NgModel} from "@angular/forms";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-paiement-modal',
@@ -30,9 +31,8 @@ export class PaiementModalComponent implements OnInit {
 
   addPaiement() {
     this.spinner.show();
-    this.paiementService.addPaiement(this.chantier.id, this.paiement).subscribe((res) => {
-      // this.paiement = res;
-      console.log("ok bon----->")
+    this.paiementService.addPaiement(this.chantier.id, this.paiement).pipe(
+      first(), finalize(() => this.spinner.hide())).subscribe((res) => {
       const message = `Paiement de ${this.paiement.montant} effectuer avec succes`;
       this.paiementModalRel.hide();
       this.toastService.success(message, '', {
@@ -40,9 +40,7 @@ export class PaiementModalComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     }, error => {
-      this.spinner.hide();
       this.toastService.error(`Une erreur est survenue lors du paiement`, '', {
         progressBar: true,
         closeButton: true,

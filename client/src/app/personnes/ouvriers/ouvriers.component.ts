@@ -7,7 +7,7 @@ import {combineLatest, Subscription} from "rxjs";
 import {OuvrierModalComponent} from "./ouvrier-modal/ouvrier-modal.component";
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {AddOuvrierToChantierModalComponent} from "./add-ouvrier-to-chantier-modal/add-ouvrier-to-chantier-modal.component";
-import {first} from "rxjs/operators";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-ouvriers',
@@ -42,17 +42,15 @@ export class OuvriersComponent implements OnInit {
 
   getAllOuvrier() {
     this.spinner.show();
-    this.ouvrierService.getAllOuvrier().pipe(first()).subscribe((response) => {
+    this.ouvrierService.getAllOuvrier().pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.ouvrier = response.rows;
       this.totalPage = response.count;
-      this.spinner.hide();
     }, error => {
       this.toastService.error('Une erreur est survenu lors de la recupération des ouvriers', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
@@ -109,7 +107,7 @@ export class OuvriersComponent implements OnInit {
 
   confirmSupprimerOuvrier() {
     this.spinner.show();
-    this.ouvrierService.deleteOuvrierById(this.deletedId).pipe(first()).subscribe(res => {
+    this.ouvrierService.deleteOuvrierById(this.deletedId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       this.getAllOuvrier();
       this.toastService.success('Ouvrier suppimer avec succes', '', {
         progressBar: true,
@@ -118,11 +116,9 @@ export class OuvriersComponent implements OnInit {
       });
       this.deletedId = undefined;
       this.dangerModal.hide();
-      this.spinner.hide();
     }, (err) => {
       this.dangerModal.hide();
-      this.spinner.hide();
-      let message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
+      const message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
       this.toastService.error(message, '', {
         progressBar: true,
         closeButton: true,
@@ -194,5 +190,9 @@ export class OuvriersComponent implements OnInit {
 
     this.ouvrierModalRef = this.modalService.show(OuvrierModalComponent, {initialState});
     this.ouvrierModalRef.content.closeBtnName = 'Close';
+  }
+
+  trackById(_, ouvrier: Ouvrier): number {
+    return ouvrier.id;
   }
 }

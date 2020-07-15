@@ -4,6 +4,7 @@ import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../../model/paiement";
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {SpinnerService} from "../../../services/spinner.service";
+import {finalize, first} from "rxjs/operators";
 
 
 @Component({
@@ -32,17 +33,15 @@ export class PaiementsComponent implements OnInit {
     // this.isLoading = true;
     this.spinner.show();
     this.paiements = [];
-    this.paiementService.getAllPaiement(offset).subscribe(res => {
+    this.paiementService.getAllPaiement(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       this.errorMessage = undefined;
       this.paiements = res.rows;
       this.totalPages = res.count;
-      this.spinner.hide();
     }, err => {
       const message = "erreur de chargement des données";
       this.toastService.error(message, '', {
         progressBar: true,
       });
-      this.spinner.hide();
     });
   }
 
@@ -56,7 +55,7 @@ export class PaiementsComponent implements OnInit {
 
   imprimerFacture(paiement: Paiement): void {
     this.spinner.show();
-    this.paiementService.getPaimentFacture(paiement.id).subscribe((response: any) => {
+    this.paiementService.getPaimentFacture(paiement.id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response: any) => {
       const pdf = new Blob([response], {type: 'application/pdf'});
 
       // création d'une url locale avec le fichier pdf
@@ -69,7 +68,6 @@ export class PaiementsComponent implements OnInit {
       setTimeout(() => {
         const doc = this.pdfIframe.nativeElement.contentWindow || this.pdfIframe.nativeElement.contentDocument;
         this.pdfIframe.nativeElement.focus();
-        this.spinner.hide();
         doc.print();
 
         // nettoyage de l'url généré
@@ -77,7 +75,6 @@ export class PaiementsComponent implements OnInit {
       }, 1000);
 
     }, err => {
-      this.spinner.hide();
       console.log(err);
       const message = "erreur survenu lors de l'inpression";
       this.toastService.error(message, '', {
@@ -88,7 +85,10 @@ export class PaiementsComponent implements OnInit {
 
   pageChanged(event: any): void {
     const offset = (event.page - 1) * 10;
-    console.log('want a ' + offset + 'offset');
     this.getAllPaiement(offset);
+  }
+
+  trackById(_, paiement: Paiement): number {
+    return paiement.id;
   }
 }

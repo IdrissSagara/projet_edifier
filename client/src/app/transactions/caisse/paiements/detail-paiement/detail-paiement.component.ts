@@ -4,7 +4,7 @@ import {PaiementService} from "../../../../services/paiement.service";
 import {Paiement} from "../../../../model/paiement";
 import {SpinnerService} from "../../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
-import {ChantierService} from "../../../../services/chantier.service";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-detail-paiement',
@@ -17,8 +17,7 @@ export class DetailPaiementComponent implements OnInit {
   showError: boolean = false;
 
   constructor(private route: ActivatedRoute, private paiementService: PaiementService,
-              private spinner: SpinnerService, private toastService: ToastrService,
-              private chantierService: ChantierService) {
+              private spinner: SpinnerService, private toastService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -32,7 +31,8 @@ export class DetailPaiementComponent implements OnInit {
   }
 
   getPaiementById(id: number, idChantier: number) {
-    this.paiementService.getPaimentById(id, idChantier).subscribe((response) => {
+    this.spinner.show();
+    this.paiementService.getPaimentById(id, idChantier).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.paiement = response;
     }, (error) => {
       this.toastService.error(`Une erreur est survenue lors de la récupération du paiement`, '', {

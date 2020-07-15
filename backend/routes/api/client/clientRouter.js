@@ -26,7 +26,7 @@ router.get('/:id',
 //get all the chantiers of a client
 router.get('/:id/chantiers',
     clientValidator.validate('getChantiers'),
-    accessControl.canAccess(['advanced-user', 'admin']),
+    accessControl.canAccess([roles.ALL]),
     clientCtrl.getChantiersOfClient);
 
 //save a client

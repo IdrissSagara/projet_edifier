@@ -4,6 +4,7 @@ import {OuvrierService} from "../../../services/ouvrier.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
 import {ChantierService} from "../../../services/chantier.service";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-ouvrier-to-chantier-modal',
@@ -29,13 +30,12 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
 
   addOuvrierToChantier() {
     this.spinner.show();
-    this.ouvrierService.addOuvrierInChantier(this.ouvrierId, this.chantierId).subscribe(res => {
+    this.ouvrierService.addOuvrierInChantier(this.ouvrierId, this.chantierId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       this.toastService.success('L\'ouvrier à été ajouté avec succes', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
       this.ouvrierModalRel.hide();
     }, error => {
       console.log(error);
@@ -44,7 +44,6 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
       this.ouvrierModalRel.hide();
     });
 
@@ -52,7 +51,7 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
 
   getAllChantier(offset = 0) {
     this.spinner.show();
-    this.chantierService.getAllChantier(offset).subscribe((chantier) => {
+    this.chantierService.getAllChantier(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe((chantier) => {
 
       this.chantiers = [Object.assign({})];
       chantier.rows.map(c => {
@@ -64,7 +63,6 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
           this.chantiers.push(elt);
         }
       });
-      this.spinner.hide();
     }, err => {
       // this.errorMessage = "data loading error";
       this.toastService.error('Une erreur est survenu lors de la récuperation des chantiers', '', {
@@ -72,7 +70,6 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 }

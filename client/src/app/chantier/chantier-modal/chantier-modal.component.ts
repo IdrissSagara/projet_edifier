@@ -5,6 +5,7 @@ import {ClientService} from "../../services/client.service";
 import {ChantierService} from "../../services/chantier.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-chantier-modal',
@@ -50,32 +51,31 @@ export class ChantierModalComponent implements OnInit {
     if (this.modeModification()) {
       this.chantierModalRef.hide();
       this.spinner.show();
-      await this.chantierService.updateChantier(this.chantier).subscribe(chantier => {
+      await this.chantierService.updateChantier(this.chantier).pipe(first()).subscribe(chantier => {
         const message = `Modification du chantier ${this.chantier.id} effectuer avec succes`;
         this.toastService.success(message, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-        this.spinner.hide();
       }, err => {
-        this.spinner.hide();
         this.toastService.error(`Une erreur est survenue lors de la mise à jour du chantier`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
+      }, () => {
+        this.spinner.hide();
       });
     } else {
       this.spinner.show();
-      this.chantierService.addChantier(this.chantier).subscribe(data => {
+      this.chantierService.addChantier(this.chantier).pipe(first(), finalize(() => this.spinner.hide())).subscribe(data => {
         this.chantierModalRef.hide();
-        this.toastService.success('Le chantier à été ajouté avec succes', '', {
+        this.toastService.success('Le chantier à été ajouté avec succès', '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-        this.spinner.hide();
       }, error => {
         console.log(error);
         this.toastService.error(`Une erreur est survenue lors de l'ajout du chantier`, '', {
@@ -83,7 +83,6 @@ export class ChantierModalComponent implements OnInit {
           closeButton: true,
           tapToDismiss: false
         });
-        this.spinner.hide();
       });
     }
   }
@@ -93,7 +92,7 @@ export class ChantierModalComponent implements OnInit {
    */
   getAllClients() {
     this.spinner.show();
-    this.clientService.getAllClient().subscribe((res) => {
+    this.clientService.getAllClient().pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
       this.clients = [Object.assign([])];
       res.rows.map(c => {
         const elt = {id: c.id, text: c.nom + " " + c.prenom};
@@ -101,7 +100,6 @@ export class ChantierModalComponent implements OnInit {
           this.clients.push(elt);
         }
       });
-      this.spinner.hide();
     }, (err) => {
       console.log(err);
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
@@ -109,7 +107,6 @@ export class ChantierModalComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
@@ -119,7 +116,7 @@ export class ChantierModalComponent implements OnInit {
     }
 
     this.spinner.show();
-    this.clientService.search($event).subscribe((res) => {
+    this.clientService.search($event).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
       this.clients = [Object.assign([])];
       res.rows.map(c => {
         const elt = {id: c.id, text: c.nom + " " + c.prenom};
@@ -127,10 +124,8 @@ export class ChantierModalComponent implements OnInit {
           this.clients.push(elt);
         }
       });
-      this.spinner.hide();
     }, (err) => {
       console.log(err);
-      this.spinner.hide();
     });
   }
 

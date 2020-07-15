@@ -6,6 +6,7 @@ import {Chantier} from "../../../model/chantier";
 import {ChantierService} from "../../../services/chantier.service";
 import {SpinnerService} from "../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-mouvement-modal',
@@ -30,9 +31,8 @@ export class MouvementModalComponent implements OnInit {
 
   getAllChantier() {
     this.spinner.show();
-    this.chantierService.getAllChantier().subscribe((res) => {
+    this.chantierService.getAllChantier().pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
       this.chantiers = res.rows;
-      this.spinner.hide();
     }, (err) => {
       console.log(err);
       this.toastService.error(`Une erreur est survenue lors de la
@@ -41,15 +41,13 @@ export class MouvementModalComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
     });
   }
 
   async addMouvement() {
     this.spinner.show();
-    await this.mouvementService.addMouvement(this.mouvement).subscribe(data => {
+    await this.mouvementService.addMouvement(this.mouvement).pipe(first(), finalize(() => this.spinner.hide())).subscribe(data => {
       this.mouvementModalRef.hide();
-      this.spinner.hide();
       this.toastService.success(`Le mouvement a été ajouté avec succès`, '', {
         progressBar: true,
         closeButton: true,
@@ -57,7 +55,6 @@ export class MouvementModalComponent implements OnInit {
       });
     }, err => {
       console.log(err);
-      this.spinner.hide();
       this.toastService.error(`Une erreur est survenue lors de l'ajout du mouvement`, '', {
         progressBar: true,
         closeButton: true,

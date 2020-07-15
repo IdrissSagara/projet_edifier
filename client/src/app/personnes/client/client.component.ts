@@ -8,7 +8,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {ClientState} from "./store/clientState";
 import {Select, Store} from "@ngxs/store";
-import {tap} from "rxjs/operators";
+import {finalize, first, tap} from "rxjs/operators";
 import {DeleteClient, GetClients} from "./store/client.actions";
 
 @Component({
@@ -97,7 +97,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   getAllClients(offset = 0) {
     this.spinner.show();
-    this.clientService.getAllClient(offset).subscribe((res) => {
+    this.clientService.getAllClient(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
       this.clients = res.rows;
       this.totalPages = res.count;
     }, (err) => {
@@ -106,8 +106,6 @@ export class ClientComponent implements OnInit, OnDestroy {
         closeButton: true,
         tapToDismiss: false
       });
-    }, () => {
-      this.spinner.hide();
     });
   }
 

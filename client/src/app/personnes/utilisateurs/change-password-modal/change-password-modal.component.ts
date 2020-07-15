@@ -6,6 +6,7 @@ import {SpinnerService} from "../../../services/spinner.service";
 import {Utilisateur} from "../../../model/utilisateur";
 import {NgModel} from "@angular/forms";
 import {ShowHidePasswordDirective} from "../../../authentication/show-hide-password.directive";
+import {finalize, first} from "rxjs/operators";
 
 @Component({
   selector: 'app-change-password-modal',
@@ -36,13 +37,12 @@ export class ChangePasswordModalComponent implements OnInit {
 
   updatePassword() {
     this.spinner.show();
-    this.utilisateurService.changePassword(this.utilisateur).subscribe((response) => {
+    this.utilisateurService.changePassword(this.utilisateur).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.toastService.success('Le mot de passe à été modifier avec succes', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
       this.utilisateurModalRel.hide();
     }, error => {
       console.log(error);
@@ -51,7 +51,6 @@ export class ChangePasswordModalComponent implements OnInit {
         closeButton: true,
         tapToDismiss: false
       });
-      this.spinner.hide();
       this.utilisateurModalRel.hide();
     });
 
@@ -85,22 +84,6 @@ export class ChangePasswordModalComponent implements OnInit {
 
 
   toggleShowPassword() {
-    this.showPassword = !this.showPassword;
-    let iElt;
-    if (this.showPassword) {
-      this.input.changeType('text');
-      iElt = this.myToggler.nativeElement.childNodes[0];
-      iElt.classList.replace('fa-eye', 'fa-eye-slash');
-      iElt.parentNode.parentNode.setAttribute('title', 'Cacher');
-    } else {
-      this.input.changeType('password');
-      iElt = this.myToggler.nativeElement.childNodes[0];
-      iElt.classList.replace('fa-eye-slash', 'fa-eye');
-      iElt.parentNode.parentNode.setAttribute('title', 'Afficher');
-    }
-  }
-
-  toggleShowPassword1() {
     this.showPassword = !this.showPassword;
     let iElt;
     if (this.showPassword) {
