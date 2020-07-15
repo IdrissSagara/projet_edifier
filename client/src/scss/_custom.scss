@@ -69,6 +69,16 @@
   color: black;
 }
 
+.empty-image:before {
+  content: url("assets/img/box.svg");
+  width: 2em;
+  height: 2em;
+}
+
+.empty-image {
+  text-align: center;
+}
+
 label.requis:after {
   content: '*';
   color: red;
