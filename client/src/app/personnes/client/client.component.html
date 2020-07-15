@@ -28,7 +28,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let client of clients$ | async; let i = index; trackBy: trackById"
-              [routerLink]="['/clients/detail', client.id]"
+              [routerLink]="['/personnes/clients/detail', client.id]"
               id="clickable-row">
             <td>
               <span class="ui-column-title">#</span>
@@ -66,8 +66,7 @@
           </tr>
           <tr *ngIf="(clients$ | async).length === 0">
             <td colspan="5">
-              <div class="empty-image">
-              </div>
+              <div class="empty-image"></div>
               <p class="text-center">Aucun client trouvé</p>
             </td>
           </tr>

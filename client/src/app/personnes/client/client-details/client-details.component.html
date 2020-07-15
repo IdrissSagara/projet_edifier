@@ -1,117 +1,122 @@
-<div class="animated fadeIn">
-  <div class="card">
-    <div *ngIf="client$" class="card-header" id="title">
-      <div class="pull-left">
-        <h2>Details du client </h2>
-      </div>
-    </div>
-
-    <div *ngIf="showError" class="card-header" id="">
-      <alert type="danger">
-        <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
-          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
-      </alert>
-    </div>
-
-  </div>
-</div>
-
-<div *ngIf="(client$ | async) as client" class="row justify-content-md-center">
-  <div class="col-lg-8 col-sm-offset-8">
+<div class="px-3">
+  <div class="animated fadeIn">
     <div class="card">
-      <div class="card-header text-center">
-        <strong>Les informations du client</strong>
-      </div>
-      <div class="card-body">
-        <table class="table table-striped">
-          <tbody>
-          <tr>
-            <td><strong>Identifiant du client :</strong></td>
-            <td>{{client.id}}</td>
-          </tr>
-          <tr>
-            <td><strong>Nom :</strong></td>
-            <td>{{client.nom}}</td>
-          </tr>
-          <tr>
-            <td><strong>Prenom :</strong></td>
-            <td>{{client.prenom}}</td>
-          </tr>
-          <tr>
-            <td><strong>Téléphone :</strong></td>
-            <td>{{client.telephone}}</td>
-          </tr>
-          <tr>
-            <td><strong>Client créer le :</strong></td>
-            <td>{{client.createdAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Ouvrier modifier le :</strong></td>
-            <td>{{client.updatedAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Creer par :</strong></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>Modifié par :</strong></td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
-        <hr>
-        <div class="card">
-          <div class="card-header text-center">
-            <strong>les chantiers du client</strong>
-          </div>
-          <div class="card-body">
-            <table class="table table-striped custom-responsive-table">
-              <thead>
-              <tr class="text-center">
-                <th>#</th>
-                <th>emplacement</th>
-                <th>Cout</th>
-                <th>Montant dispo</th>
-                <th>Date debut</th>
-                <th>Date fin</th>
-              </tr>
-              </thead>
-              <tbody *ngIf="chantiers" class="text-center">
-              <tr *ngFor="let c of chantiers; let i = index" class="text-center">
-                <td>
-                  <span class="ui-column-title">#</span>
-                  {{i + 1}}
-                </td>
-                <td>
-                  <span class="ui-column-title">Emplacement</span>
-                  {{c.emplacement | titlecase}}
-                </td>
-                <td>
-                  <span class="ui-column-title">Coût</span>
-                  {{c.cout}}
-                </td>
-                <td>
-                  <span class="ui-column-title">Montant dispo</span>
-                  {{c.montant_dispo}}
-                </td>
-                <td>
-                  <span class="ui-column-title">Date debut</span>
-                  {{c.date_debut | date: 'dd/MM/yyyy'}}
-                </td>
-                <td>
-                  <span class="ui-column-title">Date fin</span>
-                  {{c.date_fin | date: 'dd/MM/yyyy'}}
-                </td>
-              </tr>
-              <tr *ngIf="chantiers.length === 0">
-                <td class="empty-msg" colspan="6">Aucun chantier associé à ce client</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+      <div *ngIf="client$" class="card-header" id="title">
+        <div class="pull-left">
+          <h2>Details du client </h2>
         </div>
       </div>
 
+      <div *ngIf="showError" class="card-header" id="">
+        <alert type="danger">
+          <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
+          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
+        </alert>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="(client$ | async) as client" class="row justify-content-md-center">
+    <div class="col-lg-8 col-sm-offset-8">
+      <div class="card">
+        <div class="card-header text-center">
+          <strong>Les informations du client</strong>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Identifiant du client :</strong></td>
+              <td>{{client.id}}</td>
+            </tr>
+            <tr>
+              <td><strong>Nom :</strong></td>
+              <td>{{client.nom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Prenom :</strong></td>
+              <td>{{client.prenom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Téléphone :</strong></td>
+              <td>{{client.telephone}}</td>
+            </tr>
+            <tr>
+              <td><strong>Client créer le :</strong></td>
+              <td>{{client.createdAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Ouvrier modifier le :</strong></td>
+              <td>{{client.updatedAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Creer par :</strong></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Modifié par :</strong></td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+          <hr>
+          <div class="card">
+            <div class="card-header text-center">
+              <strong>les chantiers du client</strong>
+            </div>
+            <div class="card-body">
+              <table class="table table-striped custom-responsive-table">
+                <thead>
+                <tr class="text-center">
+                  <th>#</th>
+                  <th>emplacement</th>
+                  <th>Cout</th>
+                  <th>Montant dispo</th>
+                  <th>Date debut</th>
+                  <th>Date fin</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="chantiers" class="text-center">
+                <tr *ngFor="let c of chantiers; let i = index" class="text-center">
+                  <td>
+                    <span class="ui-column-title">#</span>
+                    {{i + 1}}
+                  </td>
+                  <td>
+                    <span class="ui-column-title">Emplacement</span>
+                    {{c.emplacement | titlecase}}
+                  </td>
+                  <td>
+                    <span class="ui-column-title">Coût</span>
+                    {{c.cout}}
+                  </td>
+                  <td>
+                    <span class="ui-column-title">Montant dispo</span>
+                    {{c.montant_dispo}}
+                  </td>
+                  <td>
+                    <span class="ui-column-title">Date debut</span>
+                    {{c.date_debut | date: 'dd/MM/yyyy'}}
+                  </td>
+                  <td>
+                    <span class="ui-column-title">Date fin</span>
+                    {{c.date_fin | date: 'dd/MM/yyyy'}}
+                  </td>
+                </tr>
+                <tr *ngIf="chantiers.length === 0">
+                  <td class="empty-msg" colspan="6">
+                    <div class="empty-image"></div>
+                    <p class="text-center">Aucun chantier associé à ce client</p>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

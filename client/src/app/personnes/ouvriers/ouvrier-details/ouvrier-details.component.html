@@ -1,100 +1,102 @@
-<div class="animated fadeIn">
-  <div class="card">
-    <div *ngIf="ouvrier" class="card-header" id="title">
-      <div class="pull-left">
-        <h2>Details de l'ouvrier : {{ouvrier?.nom}} {{ouvrier?.prenom}}</h2>
-      </div>
-    </div>
-
-    <div *ngIf="showError" class="card-header" id="">
-      <alert type="danger">
-        <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
-          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
-      </alert>
-    </div>
-
-  </div>
-</div>
-
-<div *ngIf="ouvrier || user" class="row justify-content-md-center">
-  <div class="col-lg-8 col-sm-offset-8">
+<div class="px-3">
+  <div class="animated fadeIn">
     <div class="card">
-      <div class="card-header text-center">
-        <strong>Les details de <i>l'ouvrier </i></strong>
-      </div>
-      <div class="card-body">
-        <table class="table table-striped">
-          <tbody>
-          <tr>
-            <td><strong>Identifiant de l'ouvrier :</strong></td>
-            <td>{{ouvrier.id}}</td>
-          </tr>
-          <tr>
-            <td><strong>Nom :</strong></td>
-            <td>{{ouvrier.nom}}</td>
-          </tr>
-          <tr>
-            <td><strong>Prenom :</strong></td>
-            <td>{{ouvrier.prenom}}</td>
-          </tr>
-          <tr>
-            <td><strong>Téléphone :</strong></td>
-            <td>{{ouvrier.telephone}}</td>
-          </tr>
-          <tr>
-            <td><strong>Ouvrier créer le :</strong></td>
-            <td>{{ouvrier.createdAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Ouvrier modifier le :</strong></td>
-            <td>{{ouvrier.updatedAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Creer par :</strong></td>
-            <td>{{user?.username}}</td>
-          </tr>
-          <tr>
-            <td><strong>Modifié par :</strong></td>
-            <td>{{user?.username}}</td>
-          </tr>
-          </tbody>
-        </table>
-        <hr>
-        <div class="card">
-          <div chiffre_title class="card-header text-center">
-            <strong>Chantier sur le quel il à travailler </strong>
-          </div>
-          <div class="card-body">
-            <table class="table">
-              <thead>
-              <tr class="text-center">
-                <th>#</th>
-                <th>Identifiant client</th>
-                <th>emplacement</th>
-                <th>Cout</th>
-                <th>Montant dispo</th>
-              </tr>
-              </thead>
-              <tbody *ngIf="chantier" class="text-center">
-              <tr *ngFor="let c of chantier; let i = index" class="text-center">
-                <td>{{i + 1}}</td>
-                <td>
-                  <span [routerLink]="['/clients/detail', c.clientId]"
-                        class="badge badge-success " id="clickable-row">{{c.clientId}}</span>
-                </td>
-                <td>{{c.emplacement}}</td>
-                <td>{{c.cout}}</td>
-                <td>{{c.montant_dispo}}</td>
-              </tr>
-              <tr *ngIf="chantier.length === 0">
-                <td class="text-center" colspan="6">Aucun chantier associé à cet ouvrier</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+      <div *ngIf="ouvrier" class="card-header" id="title">
+        <div class="pull-left">
+          <h2>Details de l'ouvrier : {{ouvrier?.nom}} {{ouvrier?.prenom}}</h2>
         </div>
       </div>
 
+      <div *ngIf="showError" class="card-header" id="">
+        <alert type="danger">
+          <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
+          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
+        </alert>
+      </div>
+
+    </div>
+  </div>
+
+  <div *ngIf="ouvrier || user" class="row justify-content-md-center">
+    <div class="col-lg-8 col-sm-offset-8">
+      <div class="card">
+        <div class="card-header text-center">
+          <strong>Les details de <i>l'ouvrier </i></strong>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Identifiant de l'ouvrier :</strong></td>
+              <td>{{ouvrier.id}}</td>
+            </tr>
+            <tr>
+              <td><strong>Nom :</strong></td>
+              <td>{{ouvrier.nom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Prenom :</strong></td>
+              <td>{{ouvrier.prenom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Téléphone :</strong></td>
+              <td>{{ouvrier.telephone}}</td>
+            </tr>
+            <tr>
+              <td><strong>Ouvrier créer le :</strong></td>
+              <td>{{ouvrier.createdAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Ouvrier modifier le :</strong></td>
+              <td>{{ouvrier.updatedAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Creer par :</strong></td>
+              <td>{{user?.username}}</td>
+            </tr>
+            <tr>
+              <td><strong>Modifié par :</strong></td>
+              <td>{{user?.username}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <hr>
+          <div class="card">
+            <div chiffre_title class="card-header text-center">
+              <strong>Chantier sur le quel il à travailler </strong>
+            </div>
+            <div class="card-body">
+              <table class="table">
+                <thead>
+                <tr class="text-center">
+                  <th>#</th>
+                  <th>Identifiant client</th>
+                  <th>emplacement</th>
+                  <th>Cout</th>
+                  <th>Montant dispo</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="chantier" class="text-center">
+                <tr *ngFor="let c of chantier; let i = index" class="text-center">
+                  <td>{{i + 1}}</td>
+                  <td>
+                  <span [routerLink]="['/clients/detail', c.clientId]"
+                        class="badge badge-success " id="clickable-row">{{c.clientId}}</span>
+                  </td>
+                  <td>{{c.emplacement}}</td>
+                  <td>{{c.cout}}</td>
+                  <td>{{c.montant_dispo}}</td>
+                </tr>
+                <tr *ngIf="chantier.length === 0">
+                  <td class="text-center" colspan="6">Aucun chantier associé à cet ouvrier</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

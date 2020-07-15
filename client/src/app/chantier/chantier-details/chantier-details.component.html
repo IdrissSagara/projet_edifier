@@ -1,137 +1,139 @@
-<div class="animated fadeIn">
-  <div class="card">
-    <div *ngIf="chantier" class="card-header" id="title">
-      <div class="pull-left">
-        <h2>Details du chantier : N° {{chantier?.id}} du
-          client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
-      </div>
-      <div class="btn-group pull-right">
-        <button (click)="addMouvement()" class="btn btn-info btn-icon" tooltip="Effectuer un mouvement"
-                type="button"><i class="fa fa-reply"></i>
-        </button>
+<div class="px-3">
+  <div class="animated fadeIn">
+    <div class="card">
+      <div *ngIf="chantier" class="card-header" id="title">
+        <div class="pull-left">
+          <h2>Details du chantier : N° {{chantier?.id}} du
+            client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
+        </div>
+        <div class="btn-group pull-right">
+          <button (click)="addMouvement()" class="btn btn-info btn-icon" tooltip="Effectuer un mouvement"
+                  type="button"><i class="fa fa-reply"></i>
+          </button>
 
-        <button (click)="effectuerUnPaiement()" class="btn btn-outline-secondary" tooltip="Effectuer un paiement"
-                type="button"><i class="fa fa-credit-card"></i>
-        </button>
-        <button (click)="genererFacture()"
-                class="btn btn-link bg-success btn-icon" tooltip="Imprimer une facture pour ce chantier"><i
-          class="cui-print"></i></button>
+          <button (click)="effectuerUnPaiement()" class="btn btn-outline-secondary" tooltip="Effectuer un paiement"
+                  type="button"><i class="fa fa-credit-card"></i>
+          </button>
+          <button (click)="genererFacture()"
+                  class="btn btn-link bg-success btn-icon" tooltip="Imprimer une facture pour ce chantier"><i
+            class="cui-print"></i></button>
+        </div>
       </div>
-    </div>
 
-    <div *ngIf="showError" class="card-header" id="">
-      <alert type="danger">
-        <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
+      <div *ngIf="showError" class="card-header" id="">
+        <alert type="danger">
+          <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
           <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
-      </alert>
-    </div>
-
-  </div>
-</div>
-
-<div *ngIf="chantier" class="row">
-  <div class="col-md-6">
-    <div class="card">
-      <div class="card-header">
-        <strong>Autre infos sur le <i>client & chantier </i></strong>
-      </div>
-      <div class="card-body">
-        <table class="table table-striped">
-          <tbody>
-          <tr>
-            <td><strong>Identifiant du client :</strong></td>
-            <td>{{chantier.ClientId}}</td>
-          </tr>
-          <tr>
-            <td><strong>Nom :</strong></td>
-            <td>{{chantier.Client.nom}}</td>
-          </tr>
-          <tr>
-            <td><strong>Prenom :</strong></td>
-            <td>{{chantier.Client.prenom}}</td>
-          </tr>
-          <tr>
-            <td><strong>Téléphone :</strong></td>
-            <td>{{chantier.Client.telephone}}</td>
-          </tr>
-          </tbody>
-        </table>
-        <hr>
-        <br>
-        <table class="table table-striped">
-          <tbody>
-          <tr>
-            <td><strong>Emplacement :</strong></td>
-            <td>{{chantier.emplacement}}</td>
-          </tr>
-          <tr>
-            <td><strong>Date début :</strong></td>
-            <td>{{chantier.date_fin | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Date fin :</strong></td>
-            <td>{{chantier.date_fin | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Chantier créer le :</strong></td>
-            <td>{{chantier.createdAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Chantier modifier le :</strong></td>
-            <td>{{chantier.updatedAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          </tbody>
-        </table>
+        </alert>
       </div>
 
     </div>
-
   </div>
-  <div class="col-md-6">
-    <div class="card">
-      <div chiffre_title class="card-header">
-        <strong>Chiffres du chantier </strong>
-      </div>
-      <div class="card-body">
-        <table class="table table-striped">
-          <tbody>
-          <tr>
-            <td><strong>Coût du chantier :</strong></td>
-            <td>{{chantier.cout}} Fcfa</td>
-          </tr>
-          <tr>
-            <td><strong>Montant disponible :</strong></td>
-            <td>{{chantier.montant_dispo}} Fcfa</td>
-          </tr>
-          <tr>
-            <td><strong>Montant emprunter sur un autre chantier :</strong></td>
-            <td>{{chantier.walita}} Fcfa</td>
-          </tr>
-          <tr>
-            <td><strong>Montant de cet chantier :</strong></td>
-            <td>{{chantier.yereta}} Fcfa</td>
-          </tr>
-          </tbody>
-        </table>
-        <div class="card-header" id="graph_title">
-          <strong>Graphe </strong>
+
+  <div *ngIf="chantier" class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <strong>Autre infos sur le <i>client & chantier </i></strong>
         </div>
         <div class="card-body">
-          <div class="card">
-            <div class="card-body">
-              <div *ngIf="chantier" class="chart-wrapper">
-                <canvas [chartType]="pieChartType"
-                        [data]="pieChartData"
-                        [labels]="pieChartLabels"
-                        baseChart
-                        class="chart"></canvas>
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Identifiant du client :</strong></td>
+              <td>{{chantier.ClientId}}</td>
+            </tr>
+            <tr>
+              <td><strong>Nom :</strong></td>
+              <td>{{chantier.Client.nom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Prenom :</strong></td>
+              <td>{{chantier.Client.prenom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Téléphone :</strong></td>
+              <td>{{chantier.Client.telephone}}</td>
+            </tr>
+            </tbody>
+          </table>
+          <hr>
+          <br>
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Emplacement :</strong></td>
+              <td>{{chantier.emplacement}}</td>
+            </tr>
+            <tr>
+              <td><strong>Date début :</strong></td>
+              <td>{{chantier.date_fin | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Date fin :</strong></td>
+              <td>{{chantier.date_fin | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Chantier créer le :</strong></td>
+              <td>{{chantier.createdAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Chantier modifier le :</strong></td>
+              <td>{{chantier.updatedAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div chiffre_title class="card-header">
+          <strong>Chiffres du chantier </strong>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Coût du chantier :</strong></td>
+              <td>{{chantier.cout}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Montant disponible :</strong></td>
+              <td>{{chantier.montant_dispo}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Montant emprunter sur un autre chantier :</strong></td>
+              <td>{{chantier.walita}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Montant de cet chantier :</strong></td>
+              <td>{{chantier.yereta}} Fcfa</td>
+            </tr>
+            </tbody>
+          </table>
+          <div class="card-header" id="graph_title">
+            <strong>Graphe </strong>
+          </div>
+          <div class="card-body">
+            <div class="card">
+              <div class="card-body">
+                <div *ngIf="chantier" class="chart-wrapper">
+                  <canvas [chartType]="pieChartType"
+                          [data]="pieChartData"
+                          [labels]="pieChartLabels"
+                          baseChart
+                          class="chart"></canvas>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div><!--/.col-->
-</div><!--/.row-->
+    </div><!--/.col-->
+  </div><!--/.row-->
+</div>
 <iframe #pdfIframe [src]="pdfUrl" style="visibility: hidden">
 </iframe>

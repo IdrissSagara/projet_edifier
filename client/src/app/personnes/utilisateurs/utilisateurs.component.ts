@@ -14,7 +14,7 @@ import {AuthService} from "../../services/auth.service";
   styleUrls: ['./utilisateurs.component.css']
 })
 export class UtilisateursComponent implements OnInit {
-  utilisateur: Utilisateur[];
+  utilisateurs: Utilisateur[];
   newUtilisateur: Utilisateur;
   errorMessage: String;
   totalPages: number;
@@ -37,7 +37,7 @@ export class UtilisateursComponent implements OnInit {
   getAllUtilisateur() {
     this.spinner.show();
     this.utilisateurService.getAllUsers().subscribe((response) => {
-      this.utilisateur = response.rows;
+      this.utilisateurs = response.rows;
       this.totalPages = response.count;
       this.curentUser = this.authService._utilisateurCourant;
       this.spinner.hide();

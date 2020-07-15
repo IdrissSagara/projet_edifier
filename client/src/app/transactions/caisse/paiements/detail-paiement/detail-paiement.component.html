@@ -1,76 +1,78 @@
-<div class="animated fadeIn">
-  <div class="card">
-    <div *ngIf="paiement" class="card-header" id="title">
-      <div class="pull-left">
-        <h2>Details du paiement pour le chantier: {{paiement.ChantierId}}</h2>
-      </div>
-    </div>
-
-    <div *ngIf="showError" class="card-header" id="">
-      <alert type="danger">
-        <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du paiement.
-          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
-      </alert>
-    </div>
-
-  </div>
-</div>
-
-
-<div *ngIf="paiement " class="row justify-content-md-center">
-  <div class="col-lg-8 col-sm-offset-8">
+<div class="px-3">
+  <div class="animated fadeIn">
     <div class="card">
-      <div class="card-header text-center">
-        <strong>Les informations du paiement</strong>
-      </div>
-      <div class="card-body">
-        <table class="table table-striped">
-          <tbody>
-          <tr>
-            <td><strong>Identifiant du paiement :</strong></td>
-            <td>{{paiement.id}}</td>
-          </tr>
-          <tr>
-            <td><strong>Type de paiement :</strong></td>
-            <td>{{paiement.type}}</td>
-          </tr>
-          <tr>
-            <td><strong>Montant :</strong></td>
-            <td>{{paiement.montant}}</td>
-          </tr>
-          <tr>
-            <td><strong>Commentaire :</strong></td>
-            <td>{{paiement.commentaire}}</td>
-          </tr>
-          <tr>
-            <td><strong>Chantier :</strong></td>
-            <td><span [routerLink]="['/chantiers/details', paiement.ChantierId]"
-                      class="badge badge-success " id="clickable-row">{{paiement.ChantierId}}</span></td>
-          </tr>
-          <tr>
-            <td><strong>Date de paiement :</strong></td>
-            <td>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Paiement créer le :</strong></td>
-            <td>{{paiement.createdAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Paiement modifier le :</strong></td>
-            <td>{{paiement.updatedAt | date: 'dd/MM/yyyy'}}</td>
-          </tr>
-          <tr>
-            <td><strong>Creer par :</strong></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td><strong>Modifié par :</strong></td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
+      <div *ngIf="paiement" class="card-header" id="title">
+        <div class="pull-left">
+          <h2>Details du paiement pour le chantier: {{paiement.ChantierId}}</h2>
+        </div>
       </div>
 
+      <div *ngIf="showError" class="card-header" id="">
+        <alert type="danger">
+          <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du paiement.
+          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
+        </alert>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div *ngIf="paiement " class="row justify-content-md-center">
+    <div class="col-lg-8 col-sm-offset-8">
+      <div class="card">
+        <div class="card-header text-center">
+          <strong>Les informations du paiement</strong>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Identifiant du paiement :</strong></td>
+              <td>{{paiement.id}}</td>
+            </tr>
+            <tr>
+              <td><strong>Type de paiement :</strong></td>
+              <td>{{paiement.type}}</td>
+            </tr>
+            <tr>
+              <td><strong>Montant :</strong></td>
+              <td>{{paiement.montant}}</td>
+            </tr>
+            <tr>
+              <td><strong>Commentaire :</strong></td>
+              <td>{{paiement.commentaire}}</td>
+            </tr>
+            <tr>
+              <td><strong>Chantier :</strong></td>
+              <td><span [routerLink]="['/chantiers/details', paiement.ChantierId]"
+                        class="badge badge-success " id="clickable-row">{{paiement.ChantierId}}</span></td>
+            </tr>
+            <tr>
+              <td><strong>Date de paiement :</strong></td>
+              <td>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Paiement créer le :</strong></td>
+              <td>{{paiement.createdAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Paiement modifier le :</strong></td>
+              <td>{{paiement.updatedAt | date: 'dd/MM/yyyy'}}</td>
+            </tr>
+            <tr>
+              <td><strong>Creer par :</strong></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><strong>Modifié par :</strong></td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>

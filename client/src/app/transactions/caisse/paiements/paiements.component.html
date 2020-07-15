@@ -54,6 +54,12 @@
           <tr *ngIf="errorMessage">
             <td class="text-center" colspan="5">{{errorMessage}}</td>
           </tr>
+          <tr *ngIf="!paiements.length">
+            <td colspan="5">
+              <div class="empty-image"></div>
+              <p class="text-center">Aucun paiement trouvé</p>
+            </td>
+          </tr>
           </tbody>
           <tbody *ngIf="isLoading">
           <tr>
