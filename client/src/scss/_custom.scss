@@ -71,12 +71,14 @@
 
 .empty-image:before {
   content: url("assets/img/box.svg");
-  width: 2em;
-  height: 2em;
 }
 
 .empty-image {
   text-align: center;
+}
+
+.not-found:before {
+  content: url("assets/img/404.svg");
 }
 
 label.requis:after {
