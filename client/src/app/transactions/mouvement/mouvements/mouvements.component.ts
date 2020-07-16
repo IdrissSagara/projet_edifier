@@ -3,6 +3,7 @@ import {MouvementService} from "../../../services/mouvement.service";
 import {SpinnerService} from "../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {finalize, first} from "rxjs/operators";
+import {Mouvement} from "../../../model/mouvement";
 
 @Component({
   selector: 'app-mv-entrant',
@@ -47,6 +48,10 @@ export class MouvementsComponent implements OnInit {
         tapToDismiss: false
       });
     });
+  }
+
+  trackById(_, mouvement: Mouvement): number {
+    return mouvement.id;
   }
 
 }

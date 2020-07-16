@@ -1,153 +1,154 @@
-<div class="animated fadeIn">
-  <div class="card">
-    <div class="card-header" id="title">
-      <div class="pull-left">
-        <h2>Informations de votre societé </h2>
+<div class="p-3">
+  <div class="animated fadeIn">
+    <div class="card">
+      <div class="card-header" id="title">
+        <div class="pull-left">
+          <h2>Informations de votre societé </h2>
+        </div>
       </div>
+
     </div>
-
   </div>
-</div>
 
-<div class="row justify-content-md-center">
-  <div class="col-lg-8 col-sm-offset-8">
-    <div class="modal-content">
-      <div *ngIf="!isLoading" class="modal-body">
-        <form #form="ngForm" role="form">
-          <div [ngClass]="{'has-error': inputEnErreur(rccm)}" class="form-group">
-            <label class="control-label requis" for="rccm">N° Rccm:</label>
-            <input #rccm="ngModel" [(ngModel)]="agence.rccm" class="form-control" id="rccm" name="rccm" required
-                   type="number"/>
-            <div *ngIf="inputEnErreur(rccm)" class="alert alert-danger">
-              <div *ngIf="rccm.errors?.required">
-                Le registre du commerce est requis.
-              </div>
-              <div *ngFor="let erreur of erreursServeur?.rccm">
-                {{erreur}}
-              </div>
-            </div>
-          </div>
-
-          <div [ngClass]="{'has-error': inputEnErreur(fiscal)}"
-               class="form-group">
-            <label class="control-label requis" for="fiscal">N° Fiscal:</label>
-            <input #fiscal="ngModel" [(ngModel)]="agence.fiscal" class="form-control" id="fiscal"
-                   min="0" name="fiscal" required type="number"/>
-            <span *ngIf="inputEnErreur(fiscal)" class="fa fa-times fa-2x form-control-feedback"></span>
-
-            <div *ngIf="inputEnErreur(fiscal)" class="alert alert-danger">
-              <div *ngIf="fiscal.errors?.required">Le numéro fiscal est requis.</div>
-
-              <div *ngFor="let erreur of erreursServeur?.fiscal">
-                {{erreur}}
-              </div>
-
-            </div>
-          </div>
-
-          <div [ngClass]="{'has-error has-feedback': inputEnErreur(libelle)}"
-               class="form-group">
-            <label class="control-label requis" for="libelle">Libelle:</label>
-            <input #libelle="ngModel" [(ngModel)]="agence.libelle" class="form-control" id="libelle"
-                   name="libelle" required type="text"/>
-            <span *ngIf="inputEnErreur(libelle)"
-                  class="fa fa-times fa-2x form-control-feedback"></span>
-
-            <div *ngIf="inputEnErreur(libelle)" class="alert alert-danger">
-              <div *ngIf="libelle.errors?.required">Le libellé de la societé est requis.</div>
-
-              <div *ngFor="let erreur of erreursServeur?.libelle">
-                {{erreur}}
-              </div>
-            </div>
-          </div>
-
-          <div [ngClass]="{'has-error has-feedback': inputEnErreur(telephone)}"
-               class="form-group">
-            <label class="control-label requis" for="telephone">Téléphone:</label>
-            <input #telephone="ngModel" [(ngModel)]="agence.telephone" class="form-control"
-                   id="telephone" name="telephone" required type="tel"/>
-            <span *ngIf="inputEnErreur(telephone)"
-                  class="fa fa-times fa-2x form-control-feedback"></span>
-
-            <div *ngIf="inputEnErreur(telephone)" class="alert alert-danger">
-              <div *ngIf="telephone.errors?.required">
-                Le numéro de téléphone de la societé est requis.
-              </div>
-
-              <div *ngFor="let erreur of erreursServeur?.telephone">
-                {{erreur}}
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="control-label" for="fax">Fax:</label>
-            <input #fax="ngModel" [(ngModel)]="agence.fax" class="form-control" id="fax" name="fax"
-                   type="tel"/>
-          </div>
-
-          <div [ngClass]="{'has-error has-feedback': inputEnErreur(mail)}"
-               class="form-group">
-            <label class="control-label requis" for="mail">Email:</label>
-            <input #mail="ngModel" [(ngModel)]="agence.mail" class="form-control" id="mail" name="mail"
-                   required type="email"/>
-            <span *ngIf="inputEnErreur(mail)"
-                  class="fa fa-times fa-2x form-control-feedback"></span>
-
-            <div *ngIf="inputEnErreur(mail)" class="alert alert-danger">
-              <div *ngIf="mail.errors?.required">
-                L'email de contact de la societé est requis.
-              </div>
-
-              <div *ngFor="let erreur of erreursServeur?.mail">
-                {{erreur}}
+  <div class="row justify-content-md-center">
+    <div class="col-lg-8 col-sm-offset-8">
+      <div class="modal-content">
+        <div *ngIf="!isLoading" class="modal-body">
+          <form #form="ngForm" role="form">
+            <div [ngClass]="{'has-error': inputEnErreur(rccm)}" class="form-group">
+              <label class="control-label requis" for="rccm">N° Rccm:</label>
+              <input #rccm="ngModel" [(ngModel)]="agence.rccm" class="form-control" id="rccm" name="rccm" required
+                     type="number"/>
+              <div *ngIf="inputEnErreur(rccm)" class="alert alert-danger">
+                <div *ngIf="rccm.errors?.required">
+                  Le registre du commerce est requis.
+                </div>
+                <div *ngFor="let erreur of erreursServeur?.rccm">
+                  {{erreur}}
+                </div>
               </div>
             </div>
 
-          </div>
+            <div [ngClass]="{'has-error': inputEnErreur(fiscal)}"
+                 class="form-group">
+              <label class="control-label requis" for="fiscal">N° Fiscal:</label>
+              <input #fiscal="ngModel" [(ngModel)]="agence.fiscal" class="form-control" id="fiscal"
+                     min="0" name="fiscal" required type="number"/>
+              <span *ngIf="inputEnErreur(fiscal)" class="fa fa-times fa-2x form-control-feedback"></span>
 
-          <div [ngClass]="{'has-error has-feedback': inputEnErreur(adresse)}"
-               class="form-group">
-            <label class="control-label requis" for="adresse">Adresse:</label>
-            <input #adresse="ngModel" [(ngModel)]="agence.adresse" class="form-control" id="adresse"
-                   name="adresse" required type="text"/>
+              <div *ngIf="inputEnErreur(fiscal)" class="alert alert-danger">
+                <div *ngIf="fiscal.errors?.required">Le numéro fiscal est requis.</div>
 
-            <span *ngIf="inputEnErreur(adresse)"
-                  class="fa fa-times fa-2x form-control-feedback"></span>
+                <div *ngFor="let erreur of erreursServeur?.fiscal">
+                  {{erreur}}
+                </div>
 
-            <div *ngIf="inputEnErreur(adresse)" class="alert alert-danger">
-              <div *ngIf="adresse.errors?.required">
-                L'adresse de l'societé est requise.
-              </div>
-
-              <div *ngFor="let erreur of erreursServeur?.adresse">
-                {{erreur}}
               </div>
             </div>
-          </div>
 
-          <div class="fileinput fileinput-new input-group" data-provides="fileinput">
-            <div class="form-control" data-trigger="fileinput">
-              <i class="fa fa-image"></i>Logo de la societé
-              <span class="fileinput-filename"></span>
+            <div [ngClass]="{'has-error has-feedback': inputEnErreur(libelle)}"
+                 class="form-group">
+              <label class="control-label requis" for="libelle">Libelle:</label>
+              <input #libelle="ngModel" [(ngModel)]="agence.libelle" class="form-control" id="libelle"
+                     name="libelle" required type="text"/>
+              <span *ngIf="inputEnErreur(libelle)"
+                    class="fa fa-times fa-2x form-control-feedback"></span>
+
+              <div *ngIf="inputEnErreur(libelle)" class="alert alert-danger">
+                <div *ngIf="libelle.errors?.required">Le libellé de la societé est requis.</div>
+
+                <div *ngFor="let erreur of erreursServeur?.libelle">
+                  {{erreur}}
+                </div>
+              </div>
             </div>
-            <span class="input-group-addon btn btn-default btn-file">
+
+            <div [ngClass]="{'has-error has-feedback': inputEnErreur(telephone)}"
+                 class="form-group">
+              <label class="control-label requis" for="telephone">Téléphone:</label>
+              <input #telephone="ngModel" [(ngModel)]="agence.telephone" class="form-control"
+                     id="telephone" name="telephone" required type="tel"/>
+              <span *ngIf="inputEnErreur(telephone)"
+                    class="fa fa-times fa-2x form-control-feedback"></span>
+
+              <div *ngIf="inputEnErreur(telephone)" class="alert alert-danger">
+                <div *ngIf="telephone.errors?.required">
+                  Le numéro de téléphone de la societé est requis.
+                </div>
+
+                <div *ngFor="let erreur of erreursServeur?.telephone">
+                  {{erreur}}
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="control-label" for="fax">Fax:</label>
+              <input #fax="ngModel" [(ngModel)]="agence.fax" class="form-control" id="fax" name="fax"
+                     type="tel"/>
+            </div>
+
+            <div [ngClass]="{'has-error has-feedback': inputEnErreur(mail)}"
+                 class="form-group">
+              <label class="control-label requis" for="mail">Email:</label>
+              <input #mail="ngModel" [(ngModel)]="agence.mail" class="form-control" id="mail" name="mail"
+                     required type="email"/>
+              <span *ngIf="inputEnErreur(mail)"
+                    class="fa fa-times fa-2x form-control-feedback"></span>
+
+              <div *ngIf="inputEnErreur(mail)" class="alert alert-danger">
+                <div *ngIf="mail.errors?.required">
+                  L'email de contact de la societé est requis.
+                </div>
+
+                <div *ngFor="let erreur of erreursServeur?.mail">
+                  {{erreur}}
+                </div>
+              </div>
+
+            </div>
+
+            <div [ngClass]="{'has-error has-feedback': inputEnErreur(adresse)}"
+                 class="form-group">
+              <label class="control-label requis" for="adresse">Adresse:</label>
+              <input #adresse="ngModel" [(ngModel)]="agence.adresse" class="form-control" id="adresse"
+                     name="adresse" required type="text"/>
+
+              <span *ngIf="inputEnErreur(adresse)"
+                    class="fa fa-times fa-2x form-control-feedback"></span>
+
+              <div *ngIf="inputEnErreur(adresse)" class="alert alert-danger">
+                <div *ngIf="adresse.errors?.required">
+                  L'adresse de l'societé est requise.
+                </div>
+
+                <div *ngFor="let erreur of erreursServeur?.adresse">
+                  {{erreur}}
+                </div>
+              </div>
+            </div>
+
+            <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+              <div class="form-control" data-trigger="fileinput">
+                <i class="fa fa-image"></i>Logo de la societé
+                <span class="fileinput-filename"></span>
+              </div>
+              <span class="input-group-addon btn btn-default btn-file">
                <input #logoInput (change)="handleFileInput($event.target.files)" accept="image/*"
                       class="fileinput-image" name="logo"
                       type="file"/>
              </span>
-          </div>
+            </div>
 
 
-          <br>
-          <button (click)="enregistrerFormulaire()" [disabled]="form.invalid"
-                  class="btn btn-primary block full-width m-b" type="button">Enregistrer
-          </button>
-        </form>
+            <br>
+            <button (click)="enregistrerFormulaire()" [disabled]="form.invalid"
+                    class="btn btn-primary block full-width m-b" type="button">Enregistrer
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<br>
 

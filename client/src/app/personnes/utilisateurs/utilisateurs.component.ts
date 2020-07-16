@@ -95,4 +95,8 @@ export class UtilisateursComponent implements OnInit {
   canDelete() {
     return [USER_ROLES.ADMIN].includes(this.authService.getRole());
   }
+
+  trackById(_, utilisateur: Utilisateur): number {
+    return utilisateur.id;
+  }
 }

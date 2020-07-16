@@ -24,7 +24,7 @@
           </tr>
           </thead>
           <tbody *ngIf="!isLoading" class="text-center">
-          <tr *ngFor="let mouvement of mouvements; let i = index">
+          <tr *ngFor="let mouvement of mouvements; let i = index; trackBy: trackById">
             <td>{{mouvement.source }} </td>
             <td>{{mouvement.destination }}</td>
             <td>{{mouvement.montant }}</td>

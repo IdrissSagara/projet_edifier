@@ -28,7 +28,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let user of utilisateurs; let i = index" [class.message]="user.username === curentUser.username">
+          <tr *ngFor="let user of utilisateurs; let i = index; trackBy: trackById"
+              [class.message]="user.username === curentUser.username">
             <td><span class="ui-column-title">#</span>{{i + 1}}</td>
             <td><span class="ui-column-title">Prénom</span>{{user.prenom | titlecase}}</td>
             <td><span class="ui-column-title">Nom</span>{{user.nom | titlecase}}</td>
