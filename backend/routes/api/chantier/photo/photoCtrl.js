@@ -26,6 +26,38 @@ async function savePhoto(req, res, next) {
     return res.status(201).json(photoSaved);
 }
 
+async function saveMultiplePhotos(req, res, next) {
+    let imageFiles = req.files;
+    let imagesToSave = [];
+    imageFiles.map(file => {
+        const photo = {
+            chantier: req.params.id,
+            type: req.params.type,
+            user: null,
+            path: file.path,
+            createdBy: req.user.userId,
+            updatedBy: req.user.userId
+        };
+
+        imagesToSave = [...imagesToSave, photo];
+    });
+
+    let savedImages = await photoDao.saveMultiplePhotos(imagesToSave);
+
+    if (!savedImages) {
+        return res.status(401).json({
+            status: 'error',
+            message: `Impossible d'enregistrer les photos du chantier`
+        })
+    }
+
+    if (savedImages.status === 'error') {
+        return res.status(500).json(savedImages);
+    }
+
+    return res.status(201).json(savedImages);
+}
+
 async function getPhoto(req, res) {
     return res.status(500).json({
         status: 'error',
@@ -54,5 +86,5 @@ async function getAllPhotos(req, res) {
 }
 
 module.exports = {
-    savePhoto, getPhoto, getAllPhotos
+    savePhoto, getPhoto, getAllPhotos, saveMultiplePhotos
 };

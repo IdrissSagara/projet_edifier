@@ -36,5 +36,6 @@ const saveToUploads = multer({
 });
 
 module.exports = {
-    saveToUploads: saveToUploads.single('image')
+    saveToUploads: saveToUploads.single('image'),
+    saveMultipleToUploads: saveToUploads.array('images', 10)
 };

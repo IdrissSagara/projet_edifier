@@ -14,6 +14,12 @@ router.post('/:id',
     accessControl.canAccess(roles.ALL),
     photoCtrl.savePhoto);
 
+router.post('/:id/multiple',
+    photoValidator.validate('get'), validate,
+    multer.saveMultipleToUploads,
+    accessControl.canAccess(roles.ALL),
+    photoCtrl.saveMultiplePhotos);
+
 router.get('/:id',
     photoValidator.validate('get'), validate,
     accessControl.canAccess(roles.ALL),
