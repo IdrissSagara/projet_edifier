@@ -5,7 +5,7 @@ async function savePhoto(req, res, next) {
         chantier: req.params.id,
         type: req.params.type,
         user: null,
-        path: req.file.path,
+        path: file.filename, //will be accessible on {serverUrl}/uploads/chantier/{idChantier}/{filename}
         createdBy: req.user.userId,
         updatedBy: req.user.userId
     };
@@ -34,7 +34,7 @@ async function saveMultiplePhotos(req, res, next) {
             chantier: req.params.id,
             type: req.params.type,
             user: null,
-            path: file.path,
+            path: file.filename, //will be accessible on {serverUrl}/uploads/chantier/{idChantier}/{filename}
             createdBy: req.user.userId,
             updatedBy: req.user.userId
         };

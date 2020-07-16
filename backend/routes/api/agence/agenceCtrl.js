@@ -19,12 +19,10 @@ async function insertOrUpdate(req, res) {
         fax: req.body.fax,
         mail: req.body.mail,
         adresse: req.body.adresse,
-        logo: req.file.path,
+        logo: req.file.filename, //will be accessible on {serverUrl}/uploads/logo/{filename}
         createdBy: req.user.userId,
         updatedBy: req.user.userId,
     };
-
-    console.log(agence);
 
     models.Agence.upsert(agence).then((isNew) => {
         return res.status(201).json(isNew);
