@@ -4,7 +4,7 @@ import {ChantierService} from "../../services/chantier.service";
 import {Chantier} from "../../model/chantier";
 import {MouvementService} from "../../services/mouvement.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {combineLatest, Subscription} from "rxjs";
+import {combineLatest, Observable, Subscription} from "rxjs";
 import {Mouvement} from "../../model/mouvement";
 import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-modal/mouvement-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
@@ -13,6 +13,10 @@ import {Paiement} from "../../model/paiement";
 import {PaiementModalComponent} from "../paiement-modal/paiement-modal.component";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {finalize, first} from "rxjs/operators";
+import {PhotoService} from "../../services/photo.service";
+import {HttpResponse} from "@angular/common/http";
+import {Photo} from "../../model/photo";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-chantier-details',
@@ -26,6 +30,11 @@ export class ChantierDetailsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   mouvementModalRef: BsModalRef;
   showError: boolean = false;
+  photos: Photo[] = [];
+  cheminImages: string;
+  myInterval: number | false = 1000;
+  noWrapSlides: boolean = false;
+  activeSlideIndex: number = 0;
   @ViewChild('pdfIframe') pdfIframe: ElementRef;
   pdfUrl: SafeUrl;
 
@@ -33,11 +42,15 @@ export class ChantierDetailsComponent implements OnInit {
   public pieChartLabels: string[] = ['Cout du chantier', 'yereta', 'walita'];
   public pieChartData: number[];
   public pieChartType = 'pie';
+  selectedFiles: FileList;
+  message = '';
+  fileInfos: Observable<any>;
 
   constructor(private route: ActivatedRoute, private chantierService: ChantierService,
               private mouvementService: MouvementService, private sanitizer: DomSanitizer,
               private modalService: BsModalService, private toastService: ToastrService,
-              private changeDetection: ChangeDetectorRef, private spinner: SpinnerService) {
+              private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
+              private photoService: PhotoService) {
   }
 
   ngOnInit(): void {
@@ -50,8 +63,8 @@ export class ChantierDetailsComponent implements OnInit {
       this.showError = false;
       this.chantier = chantier;
       this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
+      this.getAllPictures(this.chantier.id);
     }, (err) => {
-      console.log(err);
       // afficher une alerte bootstrap
       this.showError = true;
       this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', {
@@ -177,5 +190,46 @@ export class ChantierDetailsComponent implements OnInit {
         progressBar: true,
       });
     });
+  }
+
+  ajouterImages() {
+    this.message = '';
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      this.upload(i, this.selectedFiles[i]);
+    }
+  }
+
+  upload(idx, file) {
+    this.photoService.uploadPictures(file, this.chantier.id).subscribe(
+      event => {
+        if (event instanceof HttpResponse) {
+          this.fileInfos = this.photoService.getPictures(this.chantier.id);
+        }
+      },
+      err => {
+        this.message = 'Could not upload the file:' + file.name;
+      });
+  }
+
+  getAllPictures(id: number) {
+    this.photoService.getPictures(id).pipe(first()).subscribe(photos => {
+      this.photos = photos.rows;
+      this.cheminImages = `${environment.api_url}/uploads/chantier/${this.chantier.id}/`;
+    }, error => {
+      this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    });
+  }
+
+
+  selectFiles(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  trakByName(_, photo: Photo): string {
+    return photo.path;
   }
 }

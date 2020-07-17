@@ -16,7 +16,8 @@
           </button>
           <button (click)="genererFacture()"
                   class="btn btn-link bg-success btn-icon" tooltip="Imprimer une facture pour ce chantier"><i
-            class="cui-print"></i></button>
+            class="cui-print"></i>
+          </button>
         </div>
       </div>
 
@@ -133,7 +134,33 @@
         </div>
       </div>
     </div><!--/.col-->
-  </div><!--/.row-->
-</div>
-<iframe #pdfIframe [src]="pdfUrl" style="visibility: hidden">
-</iframe>
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <strong>Images du chantier</strong>
+          <div class="card-header-actions file-upload">
+            <label class="btn btn-default">
+              <input (change)="selectFiles($event)" multiple type="file"/>
+            </label>
+            <button (click)="ajouterImages()" [disabled]="!selectedFiles" class="btn-success add_picture_button">Ajouter
+            </button>
+          </div>
+          <div class="card-body">
+            <carousel [(activeSlide)]="activeSlideIndex" [interval]="myInterval" [noWrap]="noWrapSlides">
+              <slide *ngFor="let picture of photos; trackBy: trakByName">
+                <img [alt]="picture.path" [src]="cheminImages + picture.path" style="display: block; width: 100%;">
+
+              </slide>
+            </carousel>
+            <!--     <carousel [interval]="false">
+                   <slide *ngFor="let picture of photos; trackBy: trakByName">
+                     <img [src]="cheminImages + picture.path" [alt]="picture.path" style="display: block; width: 100%;">
+                   </slide>
+                 </carousel>-->
+          </div>
+        </div>
+      </div>
+    </div><!--/.row-->
+  </div>
+  <iframe #pdfIframe [src]="pdfUrl" style="visibility: hidden">
+  </iframe>

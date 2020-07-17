@@ -18,6 +18,7 @@ import {BsModalRef, ModalModule} from "ngx-bootstrap/modal";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {NgxSelectModule} from "ngx-select-ex";
 import {PaiementModalComponent} from './paiement-modal/paiement-modal.component';
+import {CarouselModule} from "ngx-bootstrap";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {PaiementModalComponent} from './paiement-modal/paiement-modal.component'
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
+    CarouselModule,
   ],
   providers: [
     BsModalRef,
