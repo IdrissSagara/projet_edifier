@@ -58,13 +58,6 @@ async function saveMultiplePhotos(req, res, next) {
     return res.status(201).json(savedImages);
 }
 
-async function getPhoto(req, res) {
-    return res.status(500).json({
-        status: 'error',
-        message: 'not implemented yet'
-    })
-}
-
 async function getAllPhotos(req, res) {
     let chantier = req.params.id;
 
@@ -86,5 +79,5 @@ async function getAllPhotos(req, res) {
 }
 
 module.exports = {
-    savePhoto, getPhoto, getAllPhotos, saveMultiplePhotos
+    savePhoto, getAllPhotos, saveMultiplePhotos
 };
