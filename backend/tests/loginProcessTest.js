@@ -33,7 +33,7 @@ describe("Test userDao", () => {
 
         username = 'afmin1';
         it("Should return null for username " + username, async () => {
-            const result = await userDao.getByUsername(username);
+            const result = await userDao.getByUsername('afmin1');
             console.log(result);
             assert.isDefined(result);
             assert(result === null, `Shouldn't get any user`);
