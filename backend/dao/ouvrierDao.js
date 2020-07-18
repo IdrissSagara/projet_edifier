@@ -41,15 +41,28 @@ async function getOuvrierWithChantiers(id) {
 const sequelize = require('sequelize');
 
 async function getChantiersOfOuvrier(id) {
-    return models.sequelize.query("select Chantiers.* " +
-        "       from ChantierOuvriers join Ouvriers on ChantierOuvriers.OuvrierId = Ouvriers.id " +
-        "       join Chantiers on ChantierOuvriers.ChantierId = Chantiers.id where OuvrierId = ?",
+    return models.sequelize.query(`select Chantiers.*
+                                   from ChantierOuvriers
+                                            join Ouvriers on ChantierOuvriers.OuvrierId = Ouvriers.id
+                                            join Chantiers on ChantierOuvriers.ChantierId = Chantiers.id
+                                   where OuvrierId = ?`,
         {
             replacements: [id],
             type: sequelize.QueryTypes.SELECT
         });
 }
 
+async function getCount(distinct = true) {
+    return models.Ouvrier.count({distinct: distinct}).catch(err => {
+        console.log(err);
+        return {
+            status: 'error',
+            message: `Une erreur est survenue lors de la récupération du nombre d'ouvriers`,
+            details: err.errors
+        }
+    })
+}
+
 module.exports = {
-    affecterAChantier, getById, getOuvrierWithChantiers, getChantiersOfOuvrier
+    affecterAChantier, getById, getOuvrierWithChantiers, getChantiersOfOuvrier, getCount
 };
