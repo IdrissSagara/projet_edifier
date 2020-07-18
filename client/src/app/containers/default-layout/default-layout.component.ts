@@ -3,8 +3,9 @@ import {navItems} from '../../_nav';
 import {AuthService} from "../../services/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SpinnerService} from "../../services/spinner.service";
-import {Utilisateur} from "../../model/utilisateur";
+import {USER_ROLES, Utilisateur} from "../../model/utilisateur";
 import {UserResolver} from "../../resolvers/user.resolver";
+import {NavEnum} from "../../_nav-enum";
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,8 @@ export class DefaultLayoutComponent implements OnInit {
 
   constructor(readonly authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
               private spinner: SpinnerService) {
+
+    this.navItems = navItems.filter(it => this.authService.getRole() !== USER_ROLES.BASICUSER || it.name !== NavEnum.Utilisateurs);
   }
 
   ngOnInit(): void {

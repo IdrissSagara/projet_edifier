@@ -18,7 +18,7 @@ import {BsModalRef, ModalModule} from "ngx-bootstrap/modal";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {NgxSelectModule} from "ngx-select-ex";
 import {PaiementModalComponent} from './paiement-modal/paiement-modal.component';
-import {CarouselModule} from "ngx-bootstrap";
+import {CarouselModule} from "ngx-bootstrap/carousel";
 
 @NgModule({
   declarations: [
