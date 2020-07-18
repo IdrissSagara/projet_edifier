@@ -1,4 +1,5 @@
 var models = require('../models');
+const sequelize = require('sequelize');
 
 async function getAll(fields, offset, limit, order) {
     return models.Mouvement.findAndCountAll({
@@ -45,6 +46,23 @@ async function save(mouvement, transaction) {
     });
 }
 
+async function getLast() {
+    return models.sequelize.query(`select *
+                                   from Mouvements
+                                   where id = (select max(id) from Mouvements)`,
+        {
+            type: sequelize.QueryTypes.SELECT
+        }
+    ).catch(err => {
+        console.log(err);
+        return {
+            status: 'error',
+            message: `Une erreur est survenue lors de la récupération du dernier mouvement effectué`,
+            details: err.errors
+        }
+    })
+}
+
 module.exports = {
-    getById, save, getAll
+    getById, save, getAll, getLast
 };

@@ -7,6 +7,7 @@ const paiementRouter = require('./paiement/paiementRouter');
 const mouvementRouter = require('./mouvement/mouvementRouter');
 const utilisateurRouter = require('./utilisateur/utilisateurRouter');
 const agenceRouter = require('./agence/agenceRouter');
+const reportingRouter = require('./reporting/reportingRouter');
 
 /**
  *Available roles 'basic-user', 'medium-user', 'advanced-user', 'admin'
@@ -28,6 +29,8 @@ exports.router = (function () {
     apiRouter.use('/utilisateur', utilisateurRouter);
 
     apiRouter.use('/agence', agenceRouter);
+
+    apiRouter.use('/reporting', reportingRouter);
 
     return apiRouter;
 })();

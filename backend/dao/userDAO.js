@@ -94,9 +94,7 @@ async function getAll(fields, offset, limit, order) {
 }
 
 async function getById(id) {
-    return models.User.findOne({
-        where: {id: id}
-    }).catch(err => {
+    return models.User.findByPk(id).catch(err => {
         return {
             status: 'error',
             message: `Une erreur est survenue lors de la récupération de l'utilisateur avec l'identifiant ` + id,
@@ -124,6 +122,17 @@ async function updateUser(user) {
     });
 }
 
+async function getCount(distinct = true) {
+    return models.User.count({distinct: distinct}).catch(err => {
+        console.log(err);
+        return {
+            status: 'error',
+            message: `Une erreur est survenue lors de la récupération du nombre d'utilisateurs`,
+            details: err.errors
+        }
+    })
+}
+
 module.exports = {
-    getByUsername, pwdCompare, save, update, destroy, getAll, getById, updateUser
+    getByUsername, pwdCompare, save, update, destroy, getAll, getById, updateUser, getCount
 };

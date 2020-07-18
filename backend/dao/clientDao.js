@@ -31,7 +31,18 @@ async function getChantierofClient(id) {
         });
 }
 
+async function getCount(distinct = true) {
+    return models.Client.count({distinct: distinct}).catch(err => {
+        console.log(err);
+        return {
+            status: 'error',
+            message: 'Une erreur est survenue lors de la récupération du nombre de clients',
+            details: err.errors
+        }
+    })
+}
+
 module.exports = {
-    search, getChantierofClient,
+    search, getChantierofClient, getCount
 };
 
