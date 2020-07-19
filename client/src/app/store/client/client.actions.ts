@@ -1,4 +1,4 @@
-import {ClientModel} from "../../../model/clientModel";
+import {ClientModel} from "../../model/clientModel";
 
 export class GetClients {
   static readonly type = '[Clients] Get Clients';

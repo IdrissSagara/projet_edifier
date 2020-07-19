@@ -1,0 +1,17 @@
+.brand-card-header {
+  font-weight: bolder;
+  height: 4em;
+  font-size: 1.53125rem;
+
+  a {
+    color: white;
+
+    &:hover {
+      text-decoration: none;
+      color: #f9f0c0;
+      cursor: pointer;
+    }
+  }
+}
+
+

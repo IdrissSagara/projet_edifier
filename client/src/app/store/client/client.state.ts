@@ -1,6 +1,6 @@
-import {ClientModel} from "../../../model/clientModel";
+import {ClientModel} from "../../model/clientModel";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
-import {ClientService} from "../../../services/client.service";
+import {ClientService} from "../../services/client.service";
 import {AddClient, DeleteClient, GetClients, UpdateClient} from "./client.actions";
 import {tap} from "rxjs/operators";
 

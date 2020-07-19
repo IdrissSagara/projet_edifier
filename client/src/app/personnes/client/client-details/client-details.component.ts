@@ -7,10 +7,10 @@ import {ClientService} from "../../../services/client.service";
 import {ClientModel} from "../../../model/clientModel";
 import {Chantier} from "../../../model/chantier";
 import {Select, Store} from "@ngxs/store";
-import {ClientState} from "../store/clientState";
+import {ClientState} from "../../../store/client/client.state";
 import {Observable, Subscription} from "rxjs";
 import {finalize, first, map, tap} from "rxjs/operators";
-import {GetClients} from "../store/client.actions";
+import {GetClients} from "../../../store/client/client.actions";
 
 @Component({
   selector: 'app-client-details',

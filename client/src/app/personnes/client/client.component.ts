@@ -6,10 +6,10 @@ import {combineLatest, Observable, Subscription} from "rxjs";
 import {ClientModalComponent} from "./client-modal/client-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
-import {ClientState} from "./store/clientState";
+import {ClientState} from "../../store/client/client.state";
 import {Select, Store} from "@ngxs/store";
 import {finalize, first, tap} from "rxjs/operators";
-import {DeleteClient, GetClients} from "./store/client.actions";
+import {DeleteClient, GetClients} from "../../store/client/client.actions";
 
 @Component({
   selector: 'app-client',
@@ -30,7 +30,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
   @Select(ClientState.getClients) clients$: Observable<ClientModel[]>;
   @Select(ClientState.areClientsLoaded) areClientsLoaded$;
-  areCoursesLoadedSub: Subscription;
+  areClientsLoadedSub: Subscription;
 
   constructor(private clientService: ClientService, private modalService: BsModalService,
               private changeDetection: ChangeDetectorRef, private spinner: SpinnerService,
@@ -38,7 +38,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.areCoursesLoadedSub = this.areClientsLoaded$.pipe(
+    this.areClientsLoadedSub = this.areClientsLoaded$.pipe(
       tap((areCoursesLoaded) => {
         if (!areCoursesLoaded) {
           this.store.dispatch(new GetClients());
@@ -177,6 +177,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.areCoursesLoadedSub.unsubscribe();
+    this.areClientsLoadedSub.unsubscribe();
   }
 }

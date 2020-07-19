@@ -6,7 +6,7 @@ import {SpinnerService} from "../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {NgModel} from "@angular/forms";
 import {Store} from "@ngxs/store";
-import {AddClient, UpdateClient} from "../store/client.actions";
+import {AddClient, UpdateClient} from "../../../store/client/client.actions";
 
 @Component({
   selector: 'app-client-modal',
