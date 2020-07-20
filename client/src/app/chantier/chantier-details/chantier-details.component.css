@@ -21,7 +21,9 @@
 }
 
 .add_picture_button:disabled {
-  color: red;
+  background-color: #d1ecf1;
+  color: #686868;
+  cursor: not-allowed;
 }
 
 .add_picture_input {
