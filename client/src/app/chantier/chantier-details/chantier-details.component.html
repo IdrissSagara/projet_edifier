@@ -34,7 +34,7 @@
       <!-- Nav tabs -->
       <tabset>
         <tab>
-          <ng-template tabHeading><i class="icon-user"></i> Infos client et chantier</ng-template>
+          <ng-template tabHeading><i class="icon-user"></i>Client & Chantier</ng-template>
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
@@ -142,7 +142,7 @@
           </div><!--/.col-->
         </tab>
         <tab>
-          <ng-template tabHeading><i class="icon-picture"></i> Images</ng-template>
+          <ng-template tabHeading><i class="icon-picture"></i> Galerie</ng-template>
           <div class="col-sm-12">
             <div class="card">
               <div class="card-header">
@@ -157,18 +157,11 @@
                 </div>
               </div>
               <div class="card-body">
-                <carousel [(activeSlide)]="activeSlideIndex" [interval]="myInterval" [noWrap]="noWrapSlides">
+                <carousel [(activeSlide)]="activeSlideIndex" [noWrap]="noWrapSlides" class="crsl">
                   <slide *ngFor="let picture of photos; trackBy: trakByName">
-                    <img [alt]="picture.path" [src]="cheminImages + picture.path"
-                         style="display: block; width: 100%;">
-
+                    <img [alt]="picture.path" [src]="cheminImages + picture.path" class="carousel-img">
                   </slide>
                 </carousel>
-                <!--     <carousel [interval]="false">
-                       <slide *ngFor="let picture of photos; trackBy: trakByName">
-                         <img [src]="cheminImages + picture.path" [alt]="picture.path" style="display: block; width: 100%;">
-                       </slide>
-                     </carousel>-->
               </div>
             </div>
           </div><!--/.row-->

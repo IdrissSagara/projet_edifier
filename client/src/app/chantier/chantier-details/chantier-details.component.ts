@@ -204,6 +204,7 @@ export class ChantierDetailsComponent implements OnInit {
       event => {
         if (event instanceof HttpResponse) {
           this.fileInfos = this.photoService.getPictures(this.chantier.id);
+          this.getAllPictures(this.chantier.id);
         }
       },
       err => {
@@ -212,9 +213,11 @@ export class ChantierDetailsComponent implements OnInit {
   }
 
   getAllPictures(id: number) {
+    this.spinner.show();
     this.photoService.getPictures(id).pipe(first()).subscribe(photos => {
       this.photos = photos.rows;
       this.cheminImages = `${environment.api_url}/uploads/chantier/${this.chantier.id}/`;
+      this.spinner.hide();
     }, error => {
       this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
         progressBar: true,

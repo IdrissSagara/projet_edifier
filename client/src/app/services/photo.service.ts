@@ -15,8 +15,9 @@ export class PhotoService {
 
   uploadPictures(file: File, idChantier: number): Observable<any> {
     const formData: FormData = new FormData();
+    formData.append('images', file);
     const req = new HttpRequest('POST', `${this.apiUrl}/photo/${idChantier}/multiple`, formData,
-      {reportProgress: true, responseType: 'json'});
+      {responseType: 'json'});
     return this.http.request(req);
   }
 
