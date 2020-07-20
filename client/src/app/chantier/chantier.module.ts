@@ -19,6 +19,8 @@ import {AlertModule} from "ngx-bootstrap/alert";
 import {NgxSelectModule} from "ngx-select-ex";
 import {PaiementModalComponent} from './paiement-modal/paiement-modal.component';
 import {CarouselModule} from "ngx-bootstrap/carousel";
+import {LightboxModule} from "@ngx-gallery/lightbox";
+import {GalleryModule} from "@ngx-gallery/core";
 
 @NgModule({
   declarations: [
@@ -40,6 +42,9 @@ import {CarouselModule} from "ngx-bootstrap/carousel";
     MouvementModule,
     NgxSpinnerModule,
     NgxSelectModule,
+    GalleryModule,
+    LightboxModule,
+    CarouselModule,
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
@@ -47,7 +52,6 @@ import {CarouselModule} from "ngx-bootstrap/carousel";
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     AlertModule.forRoot(),
-    CarouselModule,
   ],
   providers: [
     BsModalRef,

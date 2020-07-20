@@ -20,7 +20,7 @@ router.post('/:id/multiple',
     accessControl.canAccess(roles.ALL),
     photoCtrl.saveMultiplePhotos);
 
-router.get('/:id',
+router.get('/:id/all',
     photoValidator.validate('get'), validate,
     accessControl.canAccess(roles.ALL),
     photoCtrl.getAllPhotos);

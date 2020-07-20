@@ -13,16 +13,18 @@ export class PhotoService {
   constructor(private http: HttpClient) {
   }
 
-  uploadPictures(file: File, idChantier: number): Observable<any> {
+  uploadPictures(files: FileList, idChantier: number): Observable<any> {
     const formData: FormData = new FormData();
-    formData.append('images', file);
+    for (let i = 0; i < files.length; i++) {
+      formData.append('images', files[i]);
+    }
     const req = new HttpRequest('POST', `${this.apiUrl}/photo/${idChantier}/multiple`, formData,
       {responseType: 'json'});
     return this.http.request(req);
   }
 
   getPictures(idChantier: number): Observable<AllChantierPictures> {
-    return this.http.get<AllChantierPictures>(`${this.apiUrl}/photo/${idChantier}`);
+    return this.http.get<AllChantierPictures>(`${this.apiUrl}/photo/${idChantier}/all`);
   }
 
 }

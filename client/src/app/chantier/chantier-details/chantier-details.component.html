@@ -149,7 +149,7 @@
                 <strong>Images du chantier</strong>
                 <div class="card-header-actions file-upload">
                   <label class="btn btn-default">
-                    <input (change)="selectFiles($event)" multiple type="file"/>
+                    <input (change)="selectFiles($event)" accept=".gif, .jpg, .png, jpeg" multiple type="file"/>
                   </label>
                   <button (click)="ajouterImages()" [disabled]="!selectedFiles" class="btn-success add_picture_button">
                     Ajouter
@@ -157,11 +157,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <carousel [(activeSlide)]="activeSlideIndex" [noWrap]="noWrapSlides" class="crsl">
-                  <slide *ngFor="let picture of photos; trackBy: trakByName">
-                    <img [alt]="picture.path" [src]="cheminImages + picture.path" class="carousel-img">
-                  </slide>
-                </carousel>
+                <gallery *ngIf="images?.length" [items]="images"></gallery>
               </div>
             </div>
           </div><!--/.row-->
@@ -171,3 +167,4 @@
   </div>
   <iframe #pdfIframe [src]="pdfUrl" style="visibility: hidden">
   </iframe>
+</div>
