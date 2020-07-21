@@ -49,6 +49,9 @@ export const routes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     component: DefaultLayoutComponent,
+    resolve: {
+      currentUser: UserResolver
+    },
     data: {
       title: 'Home',
       roles: [Role.Admin, Role.BasicUser]
@@ -57,9 +60,6 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
-        resolve: {
-          currentUser: UserResolver
-        },
       },
       {
         path: 'chantiers',
