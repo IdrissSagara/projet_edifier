@@ -28,6 +28,11 @@ router.put('/',
     accessControl.canAccess([roles.ALL]),
     utilisateurCtrl.updateUser);
 
+router.delete('/:id',
+    utilisateurValidator.validate('getUser'),
+    accessControl.canAccess(['admin', 'advanced-user']),
+    utilisateurCtrl.destroy);
+
 router.use('/photo', photoRouter);
 
 module.exports = router;

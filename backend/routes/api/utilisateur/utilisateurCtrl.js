@@ -86,6 +86,52 @@ async function whoAmI(req, res) {
     return res.status(200).json(user);
 }
 
+function destroy(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        res.status(422).json({ errors: errors.array() });
+        return;
+    }
+
+    var id = req.params.id;
+
+    models.User.findByPk(id).then((userFound) => {
+        if (!userFound) {
+            return res.status(404).json({
+                status: 'error',
+                message: `Aucun Utilisateur trouvé avec l'identifiant ` + id
+            })
+        }
+
+        userFound.destroy().then((UserDestroyed) => {
+            if (UserDestroyed) {
+                return res.status(200).json(UserDestroyed)
+            } else {
+                return res.status(403).json({
+                    status: 'error',
+                    message: `Impossible de supprimer l'utilisateur avec l'identifiant ` + id
+                })
+            }
+        }).catch((err) => {
+            console.error(err);
+            return res.status(500).json({
+                status: 'error',
+                message: 'Une erreur interne est survenue lors de la suppression du client',
+                details: err.errors
+            });
+        });
+
+    }).catch((err) => {
+        console.error(err);
+        return res.status(500).json({
+            status: 'error',
+            message: 'Une erreur interne est survenue lors de la récupération de l\'utilisateur',
+            details: err.errors
+        });
+    });
+
+}
+
 module.exports = {
-    getAll, getUserById, updateUser, whoAmI
+    getAll, getUserById, updateUser, whoAmI, destroy
 };
