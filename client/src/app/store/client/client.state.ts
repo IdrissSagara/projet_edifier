@@ -59,7 +59,7 @@ export class ClientState {
   }
 
   @Action(DeleteClient)
-  deleteCourse({getState, setState}: StateContext<ClientStateModel>, {id}: DeleteClient) {
+  deleteClent({getState, setState}: StateContext<ClientStateModel>, {id}: DeleteClient) {
     return this.clientService.deleteClientById(id).pipe(
       tap(result => {
         const state = getState();
@@ -73,7 +73,7 @@ export class ClientState {
   }
 
   @Action(UpdateClient)
-  updateCourse({getState, setState}: StateContext<ClientStateModel>, {id, payload}: UpdateClient) {
+  updateClient({getState, setState}: StateContext<ClientStateModel>, {id, payload}: UpdateClient) {
     return this.clientService.updateClient(payload).pipe(
       tap(result => {
         const state = getState();
