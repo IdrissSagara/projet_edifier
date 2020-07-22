@@ -21,18 +21,11 @@ async function register(req, res) {
 
     let userFound = await userDao.getByUsername(user.username);
 
-    if (!userFound) {
-        return res.status(404).json({
-            status: 'error',
-            message: `Aucun utilisateur trouvé avec le nom d'utilisateur ` + user.username
-        });
-    }
-
-    if (userFound.status === 'error') {
+    if (userFound && userFound.status === 'error') {
         return res.status(500).json(userFound);
     }
 
-    if (userFound.username) {
+    if (userFound && userFound.username) {
         return res.status(403).json({
             status: 'error',
             message: `Un utilisateur possède déjà le nom d'utilisateur ` + user.username
@@ -50,8 +43,8 @@ async function register(req, res) {
         });
     }
 
-    if (userCreated.status === 'error') {
-        return
+    if (userCreated && userCreated.status === 'error') {
+        return res.status(500).json(userCreated)
     }
 
     return res.status(201).json(userCreated);
