@@ -60,7 +60,7 @@
           </tbody>
         </table>
         <div class="col-xs-12 col-12">
-          <pagination [(ngModel)]="currentPage" [boundaryLinks]="true" [maxSize]="6"
+          <pagination (pageChanged)="pageChanged($event)" [(ngModel)]="currentPage" [boundaryLinks]="true" [maxSize]="6"
                       [totalItems]="totalPages" class="pagination"
                       firstText="&laquo;" lastText="&raquo;" nextText="&rsaquo;" previousText="&lsaquo;">
           </pagination>

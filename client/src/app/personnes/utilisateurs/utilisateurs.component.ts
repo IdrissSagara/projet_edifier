@@ -34,9 +34,9 @@ export class UtilisateursComponent implements OnInit {
     this.getAllUtilisateur();
   }
 
-  getAllUtilisateur() {
+  getAllUtilisateur(offset = 0) {
     this.spinner.show();
-    this.utilisateurService.getAllUsers().pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
+    this.utilisateurService.getAllUsers(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.utilisateurs = response.rows;
       this.totalPages = response.count;
       this.curentUser = this.authService._utilisateurCourant;
@@ -129,6 +129,11 @@ export class UtilisateursComponent implements OnInit {
     this.utilisateurModalRef = this.modalService.show(UtilisateurModalComponent, {initialState});
     this.utilisateurModalRef.content.closeBtnName = 'Close';
 
+  }
+
+  pageChanged(event: any): void {
+    const offset = (event.page - 1) * 10;
+    this.getAllUtilisateur(offset);
   }
 }
 

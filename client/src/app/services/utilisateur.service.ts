@@ -12,13 +12,13 @@ import {catchError} from "rxjs/operators";
 export class UtilisateurService {
   apiUrl = environment.api_url + 'api/utilisateur';
   urlSaveUser = environment.api_url + 'auth/register';
-  passwordUpdateUrl = environment.api_url + 'auth/reset-password'
+  passwordUpdateUrl = environment.api_url + 'auth/reset-password';
 
   constructor(private http: HttpClient) {
   }
 
-  getAllUsers(): Observable<AllUsersResponse> {
-    return this.http.get<AllUsersResponse>(`${this.apiUrl}`);
+  getAllUsers(offset = 0): Observable<AllUsersResponse> {
+    return this.http.get<AllUsersResponse>(`${this.apiUrl}?offset=${offset}`);
   }
 
   getUserById(id: number) {
@@ -35,11 +35,11 @@ export class UtilisateurService {
   }
 
   changePassword(utilisateur): Observable<Utilisateur> {
-    return this.http.post<Utilisateur>(`${this.passwordUpdateUrl}`, utilisateur)
+    return this.http.post<Utilisateur>(`${this.passwordUpdateUrl}`, utilisateur);
   }
 
   handleError(error) {
-    let errorMessage = '';
+    let errorMessage;
     if (error.error instanceof ErrorEvent) {
       // client-side error
       errorMessage = `Error: ${error.error.message}`;
