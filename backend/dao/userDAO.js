@@ -109,6 +109,7 @@ async function updateUser(user) {
             nom: user.nom,
             prenom: user.prenom,
             username: user.username,
+            role: user.role
         },
         {
             where: {id: user.id}

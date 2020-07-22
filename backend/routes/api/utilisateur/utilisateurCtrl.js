@@ -68,6 +68,7 @@ async function updateUser(req, res) {
         nom: req.body.nom,
         prenom: req.body.prenom,
         username: req.body.username,
+        role: req.body.role
     };
 
     //var id = req.params.id;
