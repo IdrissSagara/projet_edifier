@@ -2,3 +2,12 @@
   background-color: #d1ecf1;
   box-shadow: inset 0 0 4px;
 }
+
+#clickable-row {
+  cursor: pointer;
+}
+
+#unclickable-row {
+  cursor: default;
+}
+
