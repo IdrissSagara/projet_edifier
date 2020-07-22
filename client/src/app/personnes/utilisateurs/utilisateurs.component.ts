@@ -99,4 +99,36 @@ export class UtilisateursComponent implements OnInit {
   trackById(_, utilisateur: Utilisateur): number {
     return utilisateur.id;
   }
+
+  showUpdateUserDialog(utilisateur: Utilisateur) {
+    const initialState = {
+      utilisateur: this.newUtilisateur = utilisateur,
+      title: `Modifier l'utilisateur : ${this.newUtilisateur.nom + ' ' + this.newUtilisateur.prenom}`
+    };
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllUtilisateur();
+        }
+
+        this.unsubscribe();
+      })
+    );
+    this.subscriptions.push(_combine);
+
+    this.utilisateurModalRef = this.modalService.show(UtilisateurModalComponent, {initialState});
+    this.utilisateurModalRef.content.closeBtnName = 'Close';
+
+  }
 }
+
