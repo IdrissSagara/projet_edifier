@@ -34,6 +34,10 @@ export class UtilisateurService {
       .pipe(catchError<any, any>(this.handleError));
   }
 
+  deleteUserById(id: number): Observable<Utilisateur> {
+    return this.http.delete<Utilisateur>(`${this.apiUrl}/${id}`);
+  }
+
   changePassword(utilisateur): Observable<Utilisateur> {
     return this.http.post<Utilisateur>(`${this.passwordUpdateUrl}`, utilisateur)
   }

@@ -1,10 +1,10 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {UtilisateurService} from "../../services/utilisateur.service";
 import {USER_ROLES, Utilisateur} from "../../model/utilisateur";
 import {combineLatest, Subscription} from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../services/spinner.service";
-import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {UtilisateurModalComponent} from "./utilisateur-modal/utilisateur-modal.component";
 import {AuthService} from "../../services/auth.service";
 import {finalize, first} from "rxjs/operators";
@@ -24,6 +24,10 @@ export class UtilisateursComponent implements OnInit {
   currentPage: number;
   isLoading: Boolean;
   curentUser: Utilisateur;
+  deletedId: number;
+  deltedName: string;
+
+  @ViewChild('dangerModal') public dangerModal: ModalDirective;
 
   constructor(private utilisateurService: UtilisateurService, private toastService: ToastrService,
               private spinner: SpinnerService, private modalService: BsModalService,
@@ -129,6 +133,40 @@ export class UtilisateursComponent implements OnInit {
     this.utilisateurModalRef = this.modalService.show(UtilisateurModalComponent, {initialState});
     this.utilisateurModalRef.content.closeBtnName = 'Close';
 
+  }
+
+  declineSupprimeUtilisateur() {
+    this.dangerModal.hide();
+  }
+
+  confirmSupprimerUtilisateur() {
+    this.spinner.show();
+    this.utilisateurService.deleteUserById(this.deletedId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
+      this.getAllUtilisateur();
+      this.toastService.success('Utilisateur suppimer avec succes', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.deletedId = undefined;
+      this.dangerModal.hide();
+    }, (err) => {
+      this.dangerModal.hide();
+      const message = 'Une erreur est survenu lors de la suppression de l\'utilisateur';
+      this.toastService.error(message, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.deletedId = undefined;
+    });
+
+  }
+
+  supressionUserDialog(utilisateur: Utilisateur) {
+    this.deletedId = utilisateur.id;
+    this.deltedName = utilisateur.nom + " " + utilisateur.prenom;
+    this.dangerModal.show();
   }
 }
 
