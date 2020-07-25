@@ -39,12 +39,9 @@
                 <button [routerLink]="['/transactions/caisse/paiements/detail', paiement.id, paiement.ChantierId]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails du paiement"><i
                   class="icon-eye"></i></button>
-                <button (click)="UpdatePaiementDialog()"
+                <button (click)="UpdatePaiementDialog(paiement)"
                         class="btn btn-warning btn-icon" tooltip="Modifier le paiemnt"><i
                   class="icon-pencil"></i></button>
-                <button (click)="confirmationSuppressionDialog()"
-                        class="btn btn-danger  btn-icon" tooltip="Supprimer le paiement"><i
-                  class="icon-trash"></i></button>
                 <button (click)="imprimerFacture(paiement)"
                         class="btn btn-link bg-success btn-icon" tooltip="Imprimer un reçu"><i
                   class="icon-doc"></i></button>
@@ -54,8 +51,8 @@
           <tr *ngIf="errorMessage">
             <td class="text-center" colspan="5">{{errorMessage}}</td>
           </tr>
-          <tr *ngIf="!paiements.length">
-            <td colspan="5">
+          <tr *ngIf="!paiements">
+            <td colspan="8">
               <div class="empty-image"></div>
               <p class="text-center">Aucun paiement trouvé</p>
             </td>
@@ -63,7 +60,7 @@
           </tbody>
           <tbody *ngIf="isLoading">
           <tr>
-            <td class="text-center" colspan="5"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
+            <td class="text-center" colspan="8"><span class="fa fa-3x fa-spinner fa-spin"></span></td>
           </tr>
           </tbody>
         </table>

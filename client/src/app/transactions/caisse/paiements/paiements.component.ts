@@ -1,10 +1,13 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {PaiementService} from "../../../services/paiement.service";
 import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../../model/paiement";
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 import {SpinnerService} from "../../../services/spinner.service";
 import {finalize, first} from "rxjs/operators";
+import {combineLatest, Subscription} from "rxjs";
+import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
+import {PaiementModalComponent} from "./paiement-modal/paiement-modal.component";
 
 
 @Component({
@@ -13,16 +16,19 @@ import {finalize, first} from "rxjs/operators";
   styleUrls: ['./paiements.component.css']
 })
 export class PaiementsComponent implements OnInit {
-  paiements;
+  paiements: Paiement[];
   errorMessage: String;
   isLoading: Boolean;
   totalPages: number;
   currentPage: number;
+  subscriptions: Subscription[] = [];
+  paiementModalRef: BsModalRef;
   @ViewChild('pdfIframe') pdfIframe: ElementRef;
   pdfUrl: SafeUrl;
 
   constructor(private paiementService: PaiementService, private toastService: ToastrService,
-              private sanitizer: DomSanitizer, private spinner: SpinnerService) {
+              private sanitizer: DomSanitizer, private spinner: SpinnerService, private modalService: BsModalService,
+              private changeDetection: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
@@ -30,11 +36,10 @@ export class PaiementsComponent implements OnInit {
   }
 
   getAllPaiement(offset = 0) {
-    // this.isLoading = true;
     this.spinner.show();
-    this.paiements = [];
     this.paiementService.getAllPaiement(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       this.errorMessage = undefined;
+      console.log('i ma tou mi!!');
       this.paiements = res.rows;
       this.totalPages = res.count;
     }, err => {
@@ -45,8 +50,40 @@ export class PaiementsComponent implements OnInit {
     });
   }
 
-  UpdatePaiementDialog() {
+  unsubscribe() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+    this.subscriptions = [];
+  }
 
+  UpdatePaiementDialog(paiement: Paiement) {
+    const initialState = {
+      paiement: paiement,
+      title: `Modifier le paiement : ${paiement.id} du chantier : ${paiement.ChantierId}`
+    };
+    const _combine = combineLatest(
+      this.modalService.onShown,
+      this.modalService.onHidden
+    ).subscribe(() => this.changeDetection.markForCheck());
+
+    this.subscriptions.push(
+      this.modalService.onShown.subscribe((reason: string) => {
+        // initialisa
+      })
+    );
+    this.subscriptions.push(
+      this.modalService.onHidden.subscribe((reason: string) => {
+        if (reason === null) {
+          this.getAllPaiement();
+        }
+        this.unsubscribe();
+      })
+    );
+    this.subscriptions.push(_combine);
+
+    this.paiementModalRef = this.modalService.show(PaiementModalComponent, {initialState});
+    this.paiementModalRef.content.closeBtnName = 'Close';
   }
 
   confirmationSuppressionDialog() {

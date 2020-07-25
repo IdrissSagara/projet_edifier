@@ -15,13 +15,19 @@ import {HttpClientModule} from "@angular/common/http";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {DetailPaiementComponent} from './caisse/paiements/detail-paiement/detail-paiement.component';
 import {AlertModule} from "ngx-bootstrap/alert";
+import {PaiementModalComponent} from './caisse/paiements/paiement-modal/paiement-modal.component';
+import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 
 
 @NgModule({
   declarations: [
     PaiementsComponent,
     MouvementsComponent,
-    DetailPaiementComponent
+    DetailPaiementComponent,
+    PaiementModalComponent
+  ],
+  entryComponents: [
+    PaiementModalComponent
   ],
   imports: [
     CommonModule,
@@ -34,9 +40,13 @@ import {AlertModule} from "ngx-bootstrap/alert";
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),
     PopoverModule.forRoot(),
+    ModalModule.forRoot(),
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
     AlertModule
+  ],
+  providers: [
+    BsModalService
   ]
 })
 export class TransactionsModule {
