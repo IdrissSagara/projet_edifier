@@ -7,6 +7,7 @@ import {AddChantier, DeleteChantier, GetChantiers, UpdateChantier} from "./chant
 
 export class ChantierStateModel {
   chantiers: Chantier[];
+  count: number;
   areChantiersLoaded: boolean;
 }
 
@@ -14,6 +15,7 @@ export class ChantierStateModel {
   name: 'chantiers',
   defaults: {
     chantiers: [],
+    count: 0,
     areChantiersLoaded: false
   }
 })
@@ -41,14 +43,20 @@ export class ChantierState {
     return state.areChantiersLoaded;
   }
 
+  @Selector()
+  static getCount(state: ChantierStateModel) {
+    return state.count;
+  }
+
   @Action(GetChantiers)
-  getChantiers({getState, setState}: StateContext<ChantierStateModel>) {
-    return this.chantierService.getAllChantier().pipe(
+  getChantiers({getState, setState}: StateContext<ChantierStateModel>, {offset}: GetChantiers) {
+    return this.chantierService.getAllChantier(offset).pipe(
       tap(result => {
         const state = getState();
         setState({
           ...state,
           chantiers: result.rows,
+          count: result.count,
           areChantiersLoaded: true
         });
       })

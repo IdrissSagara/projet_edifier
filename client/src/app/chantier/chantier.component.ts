@@ -10,6 +10,7 @@ import {finalize, first, tap} from "rxjs/operators";
 import {Select, Store} from "@ngxs/store";
 import {ChantierState} from "../store/chantiers/chantier.state";
 import {GetChantiers} from "../store/chantiers/chantier.actions";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-chantier',
@@ -25,31 +26,46 @@ export class ChantierComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   delId: number;
   delName: string;
-
-  totalItems: number;
   currentPage: number;
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
   @Select(ChantierState.getChantiers) chantiers$: Observable<Chantier[]>;
-  @Select(ChantierState.areChantiersLoaded) areChantiersLoaded$;
+  @Select(ChantierState.areChantiersLoaded) areChantiersLoaded$: Observable<boolean>;
+  @Select(ChantierState.getCount) totalItems$: Observable<number>;
   areChantiersLoadedSub: Subscription;
 
   constructor(private chantierService: ChantierService,
               private modalService: BsModalService,
+              private readonly router: Router,
+              private readonly route: ActivatedRoute,
               private changeDetection: ChangeDetectorRef, private store: Store,
               private toastService: ToastrService, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
-    // this.getAllChantiers();
     this.areChantiersLoadedSub = this.areChantiersLoaded$.pipe(
       tap((areChantiersLoaded) => {
         if (!areChantiersLoaded) {
-          this.store.dispatch(new GetChantiers());
+          this.store.dispatch(new GetChantiers(this.getOffsetFromRoute()));
         }
       })
     ).subscribe(value => {
     });
+    this.currentPage = this.getPageFromRoute();
+  }
+
+  refresh(): void {
+    this.store.dispatch(new GetChantiers(this.getOffsetFromRoute()));
+  }
+
+  getPageFromRoute(): number {
+    const page = this.route.snapshot.queryParamMap.get("page");
+    return !!page ? +page : 1;
+  }
+
+  getOffsetFromRoute(): number {
+    const page = this.getPageFromRoute();
+    return (page - 1) * 10;
   }
 
   showAddChantierDialog() {
@@ -164,7 +180,14 @@ export class ChantierComponent implements OnInit, OnDestroy {
 
   pageChanged(event: any): void {
     const offset = (event.page - 1) * 10;
-    // this.getAllChantiers(offset);
+    // https://stackoverflow.com/a/43706998
+    this.router.navigate(
+      [],
+      {
+        queryParams: {page: event.page},
+        queryParamsHandling: 'merge'
+      });
+    this.store.dispatch(new GetChantiers(offset));
   }
 
   ngOnDestroy() {

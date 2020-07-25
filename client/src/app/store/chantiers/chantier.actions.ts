@@ -2,6 +2,9 @@ import {Chantier} from "../../model/chantier";
 
 export class GetChantiers {
   static readonly type = '[Chantiers] Get';
+
+  constructor(public offset: number) {
+  }
 }
 
 export class GetChantierById {
