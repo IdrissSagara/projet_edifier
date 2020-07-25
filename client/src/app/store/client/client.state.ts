@@ -9,6 +9,7 @@ import {tap} from "rxjs/operators";
 
 export class ClientStateModel {
   clients: ClientModel[];
+  count: number;
   areClientsLoaded: boolean;
 }
 
@@ -16,6 +17,7 @@ export class ClientStateModel {
   name: 'clients',
   defaults: {
     clients: [],
+    count: 0,
     areClientsLoaded: false
   }
 })
@@ -42,6 +44,11 @@ export class ClientState {
   @Selector()
   static areClientsLoaded(state: ClientStateModel) {
     return state.areClientsLoaded;
+  }
+
+  @Selector()
+  static getCount(state: ClientStateModel) {
+    return state.count;
   }
 
   @Action(GetClients)
@@ -91,11 +98,13 @@ export class ClientState {
 
   @Action(AddClient)
   addClient({getState, patchState}: StateContext<ClientStateModel>, {payload}: AddClient) {
-    return this.clientService.addClient(payload).pipe(tap((result) => {
-      const state = getState();
-      patchState({
-        clients: [...state.clients, result]
-      });
-    }));
+    return this.clientService.addClient(payload).pipe(
+      tap((result) => {
+        const state = getState();
+        patchState({
+          clients: [...state.clients, result]
+        });
+      })
+    );
   }
 }

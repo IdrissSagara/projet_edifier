@@ -13,10 +13,6 @@
     <form #form="ngForm">
       <div class="form-group">
         <label for="client">Client</label>
-        <!--<select [(ngModel)]="chantier.ClientId" class="form-control" id="client" name="client">
-          <option selected value="undefined">&#45;&#45;Selectionnez un client&#45;&#45;</option>
-          <option *ngFor="let c of clients" value="{{c.id}}">{{c.prenom}} {{c.nom}}</option>
-        </select>-->
         <ngx-select (typed)="search($event)" [(ngModel)]="chantier.ClientId" [items]="clients" id="client"
                     name="client" noResultsFound="Aucun client trouvé"
                     placeholder="Selectionnez un client">

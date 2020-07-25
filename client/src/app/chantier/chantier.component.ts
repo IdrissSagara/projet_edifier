@@ -12,6 +12,12 @@ import {ChantierState} from "../store/chantiers/chantier.state";
 import {GetChantiers} from "../store/chantiers/chantier.actions";
 import {ActivatedRoute, Router} from "@angular/router";
 
+const toastParams = {
+  progressBar: true,
+  closeButton: true,
+  tapToDismiss: false
+};
+
 @Component({
   selector: 'app-chantier',
   templateUrl: './chantier.component.html',
@@ -46,7 +52,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
     this.areChantiersLoadedSub = this.areChantiersLoaded$.pipe(
       tap((areChantiersLoaded) => {
         if (!areChantiersLoaded) {
-          this.store.dispatch(new GetChantiers(this.getOffsetFromRoute()));
+          this.getStore(this.getOffsetFromRoute());
         }
       })
     ).subscribe(value => {
@@ -55,12 +61,12 @@ export class ChantierComponent implements OnInit, OnDestroy {
   }
 
   refresh(): void {
-    this.store.dispatch(new GetChantiers(this.getOffsetFromRoute()));
+    this.getStore(this.getOffsetFromRoute());
   }
 
   getPageFromRoute(): number {
     const page = this.route.snapshot.queryParamMap.get("page");
-    return !!page ? +page : 1;
+    return !!page ? (isNaN(+page) ? 1 : +page) : 1;
   }
 
   getOffsetFromRoute(): number {
@@ -153,11 +159,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.chantierService.deleteChantierById(this.delId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       // this.getAllChantiers();
-      this.toastService.success('Chantier suppimer avec succes', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.success('Chantier suppimer avec succes', '', toastParams);
 
       this.delId = undefined;
       this.dangerModal.hide();
@@ -167,11 +169,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
         message = 'Cet chantier contient des mouvements vous ne pouvez pas le supprimer';
       }
-      this.toastService.error(message, '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.error(message, '', toastParams);
 
       this.delId = undefined;
 
@@ -187,7 +185,15 @@ export class ChantierComponent implements OnInit, OnDestroy {
         queryParams: {page: event.page},
         queryParamsHandling: 'merge'
       });
-    this.store.dispatch(new GetChantiers(offset));
+    this.getStore(offset);
+  }
+
+  getStore(offset: number) {
+    this.spinner.show();
+    this.store.dispatch(new GetChantiers(offset))
+      .pipe(first()).subscribe(() => {
+      this.spinner.hide();
+    });
   }
 
   ngOnDestroy() {
