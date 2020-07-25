@@ -240,7 +240,43 @@ function getById(req, res, next) {
     });
 }
 
-function update() {}
+function update(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors.array()});
+        return;
+    }
+    const paiement = {
+        id: req.body.id,
+        date_paiement: req.body.date_paiement,
+        montant: req.body.montant,
+        montant_restant: req.body.montant_restant,
+        type: req.body.type,
+        commentaire: req.body.commentaire,
+        createdBy: req.body.createdBy,
+        updatedBy: req.user.updatedBy,
+    };
+    models.Paiement.findByPk(paiement.id).then((paiementFound) => {
+        if (!paiementFound) {
+            return res.status(404).json({
+                error: 'Aucun paiement trouvé avec l\'id ' + paiement.id
+            })
+        }
+        paiementFound.update(paiement).then((updatePaiement) => {
+            if (updatePaiement) {
+                return res.status(200).json(updatePaiement)
+            } else {
+                return res.status(403).json({
+                    message: 'Impossible de mettre à jour l\'ouvrier'
+                })
+            }
+        }).catch((err) => {
+            console.error(err);
+            return res.status(500).json(err.errors);
+        });
+    })
+}
 
 async function destroy(req, res, next) {
     const errors = validationResult(req);

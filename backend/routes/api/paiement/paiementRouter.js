@@ -41,6 +41,11 @@ router.get('/:id/facture/',
     recuCtrl.sendRecuPDF
 );
 
+router.put('/',
+    paiementValidator.validate('getById'),
+    accessControl.canAccess([roles.ALL]),
+    paiementCtrl.update);
+
 /**
  * /api/paiement/:id_paiement
  * Deletes a paiement
