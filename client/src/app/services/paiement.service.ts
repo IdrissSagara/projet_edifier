@@ -31,4 +31,8 @@ export class PaiementService {
     return this.http.post<Paiement>(`${this.apiUrl}/chantier/${idChantier}`, paiement);
   }
 
+  updatePaiement(paiement): Observable<Paiement> {
+    return this.http.put<Paiement>(`${this.apiUrl}`, paiement);
+  }
+
 }

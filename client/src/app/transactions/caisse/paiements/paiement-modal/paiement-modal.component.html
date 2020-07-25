@@ -1,0 +1,58 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h4 class="modal-title">{{title}}</h4>
+    <button (click)="paiementModalRel.hide()" aria-label="Close" class="close" type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm">
+      <div *ngIf="paiement" class="form-group">
+        <label class="control-label requis" for="montant">Montant</label>
+        <input #montant="ngModel" [(ngModel)]="paiement.montant" class="form-control" id="montant" name="montant"
+               placeholder="Entrez le montant à payer..." required type="number">
+        <div *ngIf="inputEnErreur(montant)" class="alert alert-danger ">
+
+          <div *ngIf="montant.errors?.required">
+            Ce champs est requis.
+          </div>
+
+          <div *ngFor="let erreur of erreursServeurs?.password">
+            {{erreur}}
+          </div>
+        </div>
+      </div>
+      <div *ngIf="paiement" class="form-group">
+        <label class="control-label requis" for="type">Type de paiement</label>
+        <select #type="ngModel" [(ngModel)]="paiement.type" class="form-control" id="type" name="type"
+                required>
+          <option *ngFor="let type of types_paiements" [value]="type">{{ type }}</option>
+        </select>
+        <div *ngIf="inputEnErreur(type)" class="alert alert-danger ">
+
+          <div *ngIf="type.errors?.required">
+            Ce champs est requis.
+          </div>
+
+          <div *ngFor="let erreur of erreursServeurs?.password">
+            {{erreur}}
+          </div>
+        </div>
+      </div>
+      <div *ngIf="paiement" class="form-group">
+        <label for="commentaire">Commentaire</label>
+        <input [(ngModel)]="paiement.commentaire" class="form-control" id="commentaire" name="commentaire"
+               placeholder="Commentaire sur le paiement" required type="text">
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button (click)="form.reset()" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
+      Nettoyer
+    </button>
+    <button (click)="addPaiement()" [disabled]="form.invalid"
+            class="btn btn-primary" type="button">Effectuer
+    </button>
+    <button (click)="paiementModalRel.hide()" class="btn btn-secondary" type="button">Fermer</button>
+  </div>
+</div>

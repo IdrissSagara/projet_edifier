@@ -20,7 +20,7 @@ export class PaiementModalComponent implements OnInit {
   chantier: Chantier;
   erreursServeurs: any = {};
 
-  types_paiements = TYPES_PAIEMENTS
+  types_paiements = TYPES_PAIEMENTS;
 
   constructor(public paiementModalRel: BsModalRef, private paiementService: PaiementService,
               private toastService: ToastrService, private spinner: SpinnerService) {
