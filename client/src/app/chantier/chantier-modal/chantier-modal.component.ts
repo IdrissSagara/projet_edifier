@@ -40,14 +40,18 @@ export class ChantierModalComponent implements OnInit {
     if (this.chantier === undefined) {
       this.chantier = new Chantier();
     } else {
-      this.chantier.date_debut = new Date().toISOString().split('T')[0];
-      this.chantier.date_fin = new Date().toISOString().split('T')[0];
+      this.chantier.date_debut = this.formatDateForForm(this.chantier.date_debut);
+      this.chantier.date_fin = this.formatDateForForm(this.chantier.date_fin);
     }
     this.getAllClients();
   }
 
   modeModification(): boolean {
     return this.chantier.id !== undefined;
+  }
+
+  formatDateForForm(date: string) {
+    return !!date ? date.split('T')[0] : null;
   }
 
   confirm() {
@@ -62,7 +66,7 @@ export class ChantierModalComponent implements OnInit {
 
   applyModification() {
     this.spinner.show();
-    this.store.dispatch(new UpdateChantier(this.chantier.id, this.chantier)).pipe(
+    this.store.dispatch(new UpdateChantier(this.chantier.id, this.chantier, this.chantier.Client)).pipe(
       first(),
       finalize(() => this.spinner.hide())
     ).subscribe(() => {

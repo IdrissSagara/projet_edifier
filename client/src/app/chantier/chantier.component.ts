@@ -76,7 +76,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
 
   showAddChantierDialog() {
     const initialState = {
-      chantier: this.chantier = new Chantier(),
+      chantier: new Chantier(),
       title: 'Ajouter un nouveau chantier'
     };
 
@@ -108,8 +108,8 @@ export class ChantierComponent implements OnInit, OnDestroy {
 
   showUpdateChantierDialog(chantier: Chantier) {
     const initialState = {
-      chantier: this.chantier = chantier,
-      title: `Modifier le chantier du client : ${this.chantier.Client.nom + ' ' + this.chantier.Client.prenom} `
+      chantier: {...chantier},
+      title: `Modifier le chantier du client : ${chantier.Client.nom + ' ' + chantier.Client.prenom}`
     };
 
     const _combine = combineLatest(

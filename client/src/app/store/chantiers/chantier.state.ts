@@ -1,7 +1,6 @@
 import {Chantier} from "../../model/chantier";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {ChantierService} from "../../services/chantier.service";
-import {UpdateClient} from "../client/client.actions";
 import {tap} from "rxjs/operators";
 import {AddChantier, DeleteChantier, GetChantiers, UpdateChantier} from "./chantier.actions";
 
@@ -77,13 +76,14 @@ export class ChantierState {
     );
   }
 
-  @Action(UpdateClient)
-  updateChantier({getState, setState}: StateContext<ChantierStateModel>, {id, payload}: UpdateChantier) {
+  @Action(UpdateChantier)
+  updateChantier({getState, setState}: StateContext<ChantierStateModel>, {id, payload, client}: UpdateChantier) {
     return this.chantierService.updateChantier(payload).pipe(
       tap(result => {
         const state = getState();
         const chantiersList = [...state.chantiers];
         const courseIndex = chantiersList.findIndex(item => item.id === id);
+        result.Client = client;
         chantiersList[courseIndex] = result;
 
         setState({

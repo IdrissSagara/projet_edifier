@@ -1,7 +1,3 @@
-<!--<div aria-hidden="true" aria-labelledby="myModalLabel" bsModal class="modal fade" role="dialog"
-     tabindex="-1">
-  <div class="modal-dialog" role="document">-->
-<script src="chantier-modal.component.ts"></script>
 <div class="modal-content">
   <div class="modal-header">
     <h4 class="modal-title">{{title}}</h4>
@@ -9,8 +5,8 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="modal-body">
-    <form #form="ngForm">
+  <form #form="ngForm" (ngSubmit)="confirm()">
+    <div class="modal-body">
       <div class="form-group">
         <label for="client">Client</label>
         <ngx-select (typed)="search($event)" [(ngModel)]="chantier.ClientId" [items]="clients" id="client"
@@ -50,26 +46,27 @@
       </div>
       <div *ngIf="advanced" class="form-group">
         <label for="date_fin">Date de fin</label>
-        <input [(ngModel)]="chantier.date_fin " [value]="" class="form-control" id="date_fin" name="date_fin"
-               placeholder="Entrez la date de fin.." required type="date">
+        <input [(ngModel)]="chantier.date_fin" class="form-control" id="date_fin" name="date_fin"
+               placeholder="Entrez la date de fin.." required type="text">
       </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <div class="form-check pull-left">
-      <input [(ngModel)]="advanced" class="form-check-input" id="advanced" type="checkbox" value="advanced">
-      <label class="form-check-label" for="advanced">
-        Mode avancé
-      </label>
     </div>
-    <button (click)="form.reset()" *ngIf="advanced" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
-      Nettoyer
-    </button>
-    <button (click)="confirm()" [disabled]="form.invalid"
-            class="btn btn-primary" type="button">Enregistrer
-    </button>
-    <button (click)="chantierModalRef.hide()" class="btn btn-secondary" type="button">Fermer</button>
-  </div>
+    <div class="modal-footer">
+      <div class="form-check pull-left">
+        <input [(ngModel)]="advanced" class="form-check-input" id="advanced" name="advanced" type="checkbox"
+               value="advanced">
+        <label class="form-check-label" for="advanced">
+          Mode avancé
+        </label>
+      </div>
+      <button (click)="form.reset()" *ngIf="advanced" class="btn btn-link" type="reset"><i class="fa fa-eraser"></i>
+        Nettoyer
+      </button>
+      <button [disabled]="form.invalid"
+              class="btn btn-primary" type="submit">Enregistrer
+      </button>
+      <button (click)="chantierModalRef.hide()" class="btn btn-secondary" type="button">Fermer</button>
+    </div>
+  </form>
   <!--<pre>{{form.value | json}}</pre>-->
 </div>
 <!--</div>
