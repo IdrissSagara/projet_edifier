@@ -37,6 +37,7 @@ import {NgxsModule} from "@ngxs/store";
 import {NgxsReduxDevtoolsPluginModule} from "@ngxs/devtools-plugin";
 import {ClientState} from "./store/client/client.state";
 import {ReportingState} from "./store/reporting/reporting.state";
+import {ChantierState} from "./store/chantiers/chantier.state";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -77,7 +78,7 @@ export function tokenGetter() {
         blacklistedRoutes: [environment.backend_base + '/auth/login']
       }
     }),
-    NgxsModule.forRoot([ClientState, ReportingState], {
+    NgxsModule.forRoot([ClientState, ReportingState, ChantierState], {
       developmentMode: !environment.production
     }),
     NgxsReduxDevtoolsPluginModule.forRoot(),

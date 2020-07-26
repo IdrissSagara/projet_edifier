@@ -1,12 +1,12 @@
 import {Chantier} from "../../model/chantier";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {ChantierService} from "../../services/chantier.service";
-import {UpdateClient} from "../client/client.actions";
 import {tap} from "rxjs/operators";
 import {AddChantier, DeleteChantier, GetChantiers, UpdateChantier} from "./chantier.actions";
 
 export class ChantierStateModel {
   chantiers: Chantier[];
+  count: number;
   areChantiersLoaded: boolean;
 }
 
@@ -14,6 +14,7 @@ export class ChantierStateModel {
   name: 'chantiers',
   defaults: {
     chantiers: [],
+    count: 0,
     areChantiersLoaded: false
   }
 })
@@ -41,14 +42,20 @@ export class ChantierState {
     return state.areChantiersLoaded;
   }
 
+  @Selector()
+  static getCount(state: ChantierStateModel) {
+    return state.count;
+  }
+
   @Action(GetChantiers)
-  getChantiers({getState, setState}: StateContext<ChantierStateModel>) {
-    return this.chantierService.getAllChantier().pipe(
+  getChantiers({getState, setState}: StateContext<ChantierStateModel>, {offset}: GetChantiers) {
+    return this.chantierService.getAllChantier(offset).pipe(
       tap(result => {
         const state = getState();
         setState({
           ...state,
           chantiers: result.rows,
+          count: result.count,
           areChantiersLoaded: true
         });
       })
@@ -69,13 +76,14 @@ export class ChantierState {
     );
   }
 
-  @Action(UpdateClient)
-  updateChantier({getState, setState}: StateContext<ChantierStateModel>, {id, payload}: UpdateChantier) {
+  @Action(UpdateChantier)
+  updateChantier({getState, setState}: StateContext<ChantierStateModel>, {id, payload, client}: UpdateChantier) {
     return this.chantierService.updateChantier(payload).pipe(
       tap(result => {
         const state = getState();
         const chantiersList = [...state.chantiers];
         const courseIndex = chantiersList.findIndex(item => item.id === id);
+        result.Client = client;
         chantiersList[courseIndex] = result;
 
         setState({

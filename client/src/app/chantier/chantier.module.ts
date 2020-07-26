@@ -21,6 +21,7 @@ import {PaiementModalComponent} from './paiement-modal/paiement-modal.component'
 import {CarouselModule} from "ngx-bootstrap/carousel";
 import {LightboxModule} from "@ngx-gallery/lightbox";
 import {GalleryModule} from "@ngx-gallery/core";
+import {IntCommaPipe} from "../utils/pipes/intcomma.pipe";
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import {GalleryModule} from "@ngx-gallery/core";
     ChantierModalComponent,
     ChantierDetailsComponent,
     PaiementModalComponent,
+    IntCommaPipe,
   ],
   entryComponents: [
     ChantierModalComponent,
