@@ -97,7 +97,7 @@
           <ng-template tabHeading><i class="icon-pie-chart"></i> Graphe</ng-template>
           <div class="col-md-12">
             <div class="card">
-              <div chiffre_title class="card-header">
+              <div class="card-header">
                 <strong>Chiffres du chantier </strong>
               </div>
               <div class="card-body">
@@ -105,19 +105,19 @@
                   <tbody>
                   <tr>
                     <td><strong>Coût du chantier :</strong></td>
-                    <td>{{chantier.cout}} Fcfa</td>
+                    <td>{{chantier.cout | intcomma}} Fcfa</td>
                   </tr>
                   <tr>
                     <td><strong>Montant disponible :</strong></td>
-                    <td>{{chantier.montant_dispo}} Fcfa</td>
+                    <td>{{chantier.montant_dispo | intcomma}} Fcfa</td>
                   </tr>
                   <tr>
                     <td><strong>Montant emprunter sur un autre chantier :</strong></td>
-                    <td>{{chantier.walita}} Fcfa</td>
+                    <td>{{chantier.walita | intcomma}} Fcfa</td>
                   </tr>
                   <tr>
                     <td><strong>Montant de cet chantier :</strong></td>
-                    <td>{{chantier.yereta}} Fcfa</td>
+                    <td>{{chantier.yereta | intcomma}} Fcfa</td>
                   </tr>
                   </tbody>
                 </table>
