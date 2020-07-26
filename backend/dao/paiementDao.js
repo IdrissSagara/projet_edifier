@@ -12,6 +12,28 @@ async function save(paiement, transaction) {
     });
 }
 
+async function update(paiement, transaction) {
+    return models.Paiement.update({
+            id: paiement.id,
+            montant: paiement.montant,
+            date_paiement: paiement.date_paiement,
+            montant_restant: paiement.montant_restant,
+            type: paiement.type,
+            commentaire: paiement.commentaire,
+            createdBy: paiement.userId,
+            updatedBy: paiement.userId,
+        },
+        {
+            where: {id: paiement.id}
+        }, {transaction: transaction}).catch((err) => {
+        return {
+            status: 'error',
+            message: 'Une erreur est survenue lors de la mise à jour du paiement',
+            details: err.errors
+        };
+    })
+}
+
 /**
  * Gets the paiement which is identified by its id and its chantier id
  * @param id_paiement
@@ -54,5 +76,5 @@ async function getAll(options) {
 }
 
 module.exports = {
-    getPaiementById, destroy, getAll, save
+    getPaiementById, destroy, getAll, save, update
 };

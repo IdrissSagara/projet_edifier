@@ -240,42 +240,123 @@ function getById(req, res, next) {
     });
 }
 
-function update(req, res) {
+async function update(req, res) {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
         res.status(422).json({errors: errors.array()});
         return;
     }
+
+    const idChantier = req.body.ChantierId;
+    let chantierFound = await chantierDAO.getChantierById(idChantier);
+
+    if (!chantierFound) {
+        return res.status(404).json({
+            'error': 'no chantier found for id ' + idChantier
+        });
+    }
+
+    if (chantierFound.status === 'error') {
+        return res.status(500).json(chantierFound);
+    }
+
     const paiement = {
         id: req.body.id,
+        cout: parseFloat(chantierFound.cout),
+        montant: parseFloat(req.body.montant),
         date_paiement: req.body.date_paiement,
-        montant: req.body.montant,
         montant_restant: req.body.montant_restant,
         type: req.body.type,
         commentaire: req.body.commentaire,
-        createdBy: req.body.createdBy,
-        updatedBy: req.user.updatedBy,
+        createdBy: req.user.userId,
+        updatedBy: req.user.userId,
     };
-    models.Paiement.findByPk(paiement.id).then((paiementFound) => {
-        if (!paiementFound) {
-            return res.status(404).json({
-                error: 'Aucun paiement trouvé avec l\'id ' + paiement.id
-            })
+
+    let allPaiements = await paiementDAO.getAll({
+        where: {chantierId: chantierFound.id},
+        attributes: [
+            'id',
+            [sequelize.fn('sum', sequelize.col('montant')), 'total_amount'],
+        ],
+        group: ['id'],
+        raw: true
+    });
+
+    if (!allPaiements) {
+        return res.status(404).json({
+            'error': 'no paiement found for chantier ' + id
+        });
+    }
+
+    if (allPaiements.status === 'error') {
+        return res.status(500).json(allPaiements);
+    }
+
+    let total_amount = 0;
+    allPaiements.map(i => {
+        return total_amount += parseFloat(i.total_amount);
+    });
+    let montant_restant = paiement.cout - (total_amount + paiement.montant);
+
+    if (montant_restant < 0) {
+        return res.status(400).json({
+            status: 'error',
+            message: `Impossible de proceder a la modification du paiement à cause d'un montant restant négatif après le paiement`,
+        });
+    }
+    let transaction = await models.sequelize.transaction({autocommit: false});
+    try {
+        paiement.date_paiement = (paiement.date_paiement != null) ? paiement.date_paiement : new Date();
+        paiement.ChantierId = chantierFound.id;
+        paiement.montant_restant = montant_restant;
+
+        let updatePaiment = await paiementDAO.update(paiement, transaction);
+
+        if (!updatePaiment) {
+            await transaction.rollback();
+            return res.status(403).json({
+                status: 'error',
+                message: `Impossible de modifier le paiement du chantier ` + id
+            });
         }
-        paiementFound.update(paiement).then((updatePaiement) => {
-            if (updatePaiement) {
-                return res.status(200).json(updatePaiement)
-            } else {
-                return res.status(403).json({
-                    message: 'Impossible de mettre à jour l\'ouvrier'
+
+        if (updatePaiment.status === 'error') {
+            await transaction.rollback();
+            return res.status(500).json(updatePaiment);
+        }
+
+        await transaction.commit();
+        return res.status(200).json(updatePaiment);
+    } catch (e) {
+        await transaction.rollback();
+        return res.status(500).json({
+            status: 'error',
+            message: `Impossible de terminer l'opération`,
+            details: e.errors,
+        });
+    }
+
+
+    /*    models.Paiement.findByPk(paiement.id).then((paiementFound) => {
+            if (!paiementFound) {
+                return res.status(404).json({
+                    error: 'Aucun paiement trouvé avec l\'id ' + paiement.id
                 })
             }
-        }).catch((err) => {
-            console.error(err);
-            return res.status(500).json(err.errors);
-        });
-    })
+            paiementFound.update(paiement).then((updatePaiement) => {
+                if (updatePaiement) {
+                    return res.status(200).json(updatePaiement)
+                } else {
+                    return res.status(403).json({
+                        message: 'Impossible de mettre à jour l\'ouvrier'
+                    })
+                }
+            }).catch((err) => {
+                console.error(err);
+                return res.status(500).json(err.errors);
+            });
+        })*/
 }
 
 async function destroy(req, res, next) {
