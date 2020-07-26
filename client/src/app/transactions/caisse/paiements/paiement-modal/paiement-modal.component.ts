@@ -5,7 +5,8 @@ import {PaiementService} from "../../../../services/paiement.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../../services/spinner.service";
 import {NgModel} from "@angular/forms";
-import {first} from "rxjs/operators";
+import {finalize, first} from "rxjs/operators";
+import {Chantier} from "../../../../model/chantier";
 
 @Component({
   selector: 'app-paiement-modal',
@@ -18,20 +19,23 @@ export class PaiementModalComponent implements OnInit {
   paiement: Paiement;
   erreursServeurs: any = {};
   types_paiements = TYPES_PAIEMENTS;
+  chantier: Chantier;
 
   constructor(public paiementModalRel: BsModalRef, private paiementService: PaiementService,
               private toastService: ToastrService, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
-    this.paiement.date_paiement = new Date(this.paiement.date_paiement).toISOString().split('T')[0];
+    if (this.modeModification()) {
+      this.paiement.date_paiement = new Date(this.paiement.date_paiement).toISOString().split('T')[0];
+    }
   }
 
   modeModification(): boolean {
     return this.paiement.id !== undefined;
   }
 
-  addPaiement() {
+  validerPaiement() {
     if (this.modeModification()) {
       this.spinner.show();
       this.paiementService.updatePaiement(this.paiement).pipe(first()).subscribe(paiement => {
@@ -47,6 +51,24 @@ export class PaiementModalComponent implements OnInit {
       }, error => {
         this.spinner.hide();
         this.toastService.error(`Erreur lors de la modification du paiement`, '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+      });
+    } else {
+      this.spinner.show();
+      this.paiementService.addPaiement(this.chantier.id, this.paiement).pipe(
+        first(), finalize(() => this.spinner.hide())).subscribe((res) => {
+        const message = `Paiement de ${this.paiement.montant} effectuer avec succes`;
+        this.paiementModalRel.hide();
+        this.toastService.success(message, '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+      }, error => {
+        this.toastService.error(`Une erreur est survenue lors du paiement`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false

@@ -10,13 +10,13 @@ import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-mo
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../model/paiement";
-import {PaiementModalComponent} from "../paiement-modal/paiement-modal.component";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {finalize, first} from "rxjs/operators";
 import {PhotoService} from "../../services/photo.service";
 import {Photo} from "../../model/photo";
 import {environment} from "../../../environments/environment";
 import {GalleryItem, ImageItem} from "@ngx-gallery/core";
+import {PaiementModalComponent} from "../../transactions/caisse/paiements/paiement-modal/paiement-modal.component";
 
 @Component({
   selector: 'app-chantier-details',

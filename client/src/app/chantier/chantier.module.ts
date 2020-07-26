@@ -17,23 +17,21 @@ import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {BsModalRef, ModalModule} from "ngx-bootstrap/modal";
 import {AlertModule} from "ngx-bootstrap/alert";
 import {NgxSelectModule} from "ngx-select-ex";
-import {PaiementModalComponent} from './paiement-modal/paiement-modal.component';
 import {CarouselModule} from "ngx-bootstrap/carousel";
 import {LightboxModule} from "@ngx-gallery/lightbox";
 import {GalleryModule} from "@ngx-gallery/core";
 import {IntCommaPipe} from "../utils/pipes/intcomma.pipe";
+import {PaiementModalModule} from "../transactions/caisse/paiements/paiement-modal/paiement-modal.module";
 
 @NgModule({
   declarations: [
     ChantierComponent,
     ChantierModalComponent,
     ChantierDetailsComponent,
-    PaiementModalComponent,
     IntCommaPipe,
   ],
   entryComponents: [
     ChantierModalComponent,
-    PaiementModalComponent,
   ],
   imports: [
     ChartsModule,
@@ -42,6 +40,7 @@ import {IntCommaPipe} from "../utils/pipes/intcomma.pipe";
     ChantierRoutingModule,
     TabsModule,
     MouvementModule,
+    PaiementModalModule,
     NgxSpinnerModule,
     NgxSelectModule,
     GalleryModule,

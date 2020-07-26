@@ -15,8 +15,8 @@ import {HttpClientModule} from "@angular/common/http";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
 import {DetailPaiementComponent} from './caisse/paiements/detail-paiement/detail-paiement.component';
 import {AlertModule} from "ngx-bootstrap/alert";
-import {PaiementModalComponent} from './caisse/paiements/paiement-modal/paiement-modal.component';
 import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
+import {PaiementModalModule} from "./caisse/paiements/paiement-modal/paiement-modal.module";
 
 
 @NgModule({
@@ -24,16 +24,13 @@ import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
     PaiementsComponent,
     MouvementsComponent,
     DetailPaiementComponent,
-    PaiementModalComponent
-  ],
-  entryComponents: [
-    PaiementModalComponent
   ],
   imports: [
     CommonModule,
     HttpClientModule,
     FormsModule,
     TransactionsRoutingModule,
+    PaiementModalModule,
     TabsModule,
     MouvementModule,
     BsDropdownModule.forRoot(),
