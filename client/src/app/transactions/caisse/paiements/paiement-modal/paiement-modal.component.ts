@@ -24,6 +24,7 @@ export class PaiementModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.paiement.date_paiement = new Date(this.paiement.date_paiement).toISOString().split('T')[0];
   }
 
   modeModification(): boolean {

@@ -20,8 +20,7 @@
             <th>Montant restant</th>
             <th>Type Paiement</th>
             <th>Commentaire</th>
-            <th>Chantier id</th>
-            <th>Créé le</th>
+            <th>Date de paiement</th>
             <th style="padding-left: 50px">Action</th>
           </tr>
           </thead>
@@ -32,8 +31,7 @@
             <td>{{paiement.montant_restant }}</td>
             <td>{{paiement.type }}</td>
             <td>{{paiement.commentaire }}</td>
-            <td>{{paiement.ChantierId }}</td>
-            <td>{{paiement.createdAt | date: 'dd/MM/yyyy'}}</td>
+            <td>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
             <td>
               <div class="btn-group" id="button_action">
                 <button [routerLink]="['/transactions/caisse/paiements/detail', paiement.id, paiement.ChantierId]"

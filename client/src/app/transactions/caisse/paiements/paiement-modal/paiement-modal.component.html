@@ -40,10 +40,23 @@
         </div>
       </div>
       <div *ngIf="paiement" class="form-group">
+        <label class="control-label requis" for="date_paiement">Date du paiement</label>
+        <input #date_paiement="ngModel" [(ngModel)]="paiement.date_paiement" class="form-control" id="date_paiement"
+               name="date_paiement"
+               placeholder="Entrez la date de début..." required type="date">
+        <div *ngIf="inputEnErreur(date_paiement)" class="alert alert-danger ">
+
+          <div *ngIf="date_paiement.errors?.required">
+            Ce champs est requis.
+          </div>
+        </div>
+      </div>
+      <div *ngIf="paiement" class="form-group">
         <label for="commentaire">Commentaire</label>
         <input [(ngModel)]="paiement.commentaire" class="form-control" id="commentaire" name="commentaire"
-               placeholder="Commentaire sur le paiement" required type="text">
+               placeholder="Commentaire sur le paiement" type="text">
       </div>
+
     </form>
   </div>
   <div class="modal-footer">
