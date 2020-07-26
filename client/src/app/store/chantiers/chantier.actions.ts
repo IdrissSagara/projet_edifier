@@ -1,7 +1,10 @@
-import {Chantier} from "../../model/chantier";
+import {Chantier, EmbededClient} from "../../model/chantier";
 
 export class GetChantiers {
   static readonly type = '[Chantiers] Get';
+
+  constructor(public offset: number) {
+  }
 }
 
 export class GetChantierById {
@@ -28,7 +31,7 @@ export class DeleteChantier {
 export class UpdateChantier {
   static readonly type = '[Chantiers] Update';
 
-  constructor(public id: number, public payload: Chantier) {
+  constructor(public id: number, public payload: Chantier, public client: EmbededClient) {
   }
 }
 

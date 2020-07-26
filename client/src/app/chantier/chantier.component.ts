@@ -10,6 +10,13 @@ import {finalize, first, tap} from "rxjs/operators";
 import {Select, Store} from "@ngxs/store";
 import {ChantierState} from "../store/chantiers/chantier.state";
 import {GetChantiers} from "../store/chantiers/chantier.actions";
+import {ActivatedRoute, Router} from "@angular/router";
+
+const toastParams = {
+  progressBar: true,
+  closeButton: true,
+  tapToDismiss: false
+};
 
 @Component({
   selector: 'app-chantier',
@@ -25,36 +32,51 @@ export class ChantierComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   delId: number;
   delName: string;
-
-  totalItems: number;
   currentPage: number;
 
   @ViewChild('dangerModal') public dangerModal: ModalDirective;
   @Select(ChantierState.getChantiers) chantiers$: Observable<Chantier[]>;
-  @Select(ChantierState.areChantiersLoaded) areChantiersLoaded$;
+  @Select(ChantierState.areChantiersLoaded) areChantiersLoaded$: Observable<boolean>;
+  @Select(ChantierState.getCount) totalItems$: Observable<number>;
   areChantiersLoadedSub: Subscription;
 
   constructor(private chantierService: ChantierService,
               private modalService: BsModalService,
+              private readonly router: Router,
+              private readonly route: ActivatedRoute,
               private changeDetection: ChangeDetectorRef, private store: Store,
               private toastService: ToastrService, private spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
-    // this.getAllChantiers();
     this.areChantiersLoadedSub = this.areChantiersLoaded$.pipe(
       tap((areChantiersLoaded) => {
         if (!areChantiersLoaded) {
-          this.store.dispatch(new GetChantiers());
+          this.getStore(this.getOffsetFromRoute());
         }
       })
     ).subscribe(value => {
     });
+    this.currentPage = this.getPageFromRoute();
+  }
+
+  refresh(): void {
+    this.getStore(this.getOffsetFromRoute());
+  }
+
+  getPageFromRoute(): number {
+    const page = this.route.snapshot.queryParamMap.get("page");
+    return !!page ? (isNaN(+page) ? 1 : +page) : 1;
+  }
+
+  getOffsetFromRoute(): number {
+    const page = this.getPageFromRoute();
+    return (page - 1) * 10;
   }
 
   showAddChantierDialog() {
     const initialState = {
-      chantier: this.chantier = new Chantier(),
+      chantier: new Chantier(),
       title: 'Ajouter un nouveau chantier'
     };
 
@@ -86,8 +108,8 @@ export class ChantierComponent implements OnInit, OnDestroy {
 
   showUpdateChantierDialog(chantier: Chantier) {
     const initialState = {
-      chantier: this.chantier = chantier,
-      title: `Modifier le chantier du client : ${this.chantier.Client.nom + ' ' + this.chantier.Client.prenom} `
+      chantier: {...chantier},
+      title: `Modifier le chantier du client : ${chantier.Client.nom + ' ' + chantier.Client.prenom}`
     };
 
     const _combine = combineLatest(
@@ -137,11 +159,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.chantierService.deleteChantierById(this.delId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
       // this.getAllChantiers();
-      this.toastService.success('Chantier suppimer avec succes', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.success('Chantier suppimer avec succes', '', toastParams);
 
       this.delId = undefined;
       this.dangerModal.hide();
@@ -151,11 +169,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
         message = 'Cet chantier contient des mouvements vous ne pouvez pas le supprimer';
       }
-      this.toastService.error(message, '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.error(message, '', toastParams);
 
       this.delId = undefined;
 
@@ -164,7 +178,22 @@ export class ChantierComponent implements OnInit, OnDestroy {
 
   pageChanged(event: any): void {
     const offset = (event.page - 1) * 10;
-    // this.getAllChantiers(offset);
+    // https://stackoverflow.com/a/43706998
+    this.router.navigate(
+      [],
+      {
+        queryParams: {page: event.page},
+        queryParamsHandling: 'merge'
+      });
+    this.getStore(offset);
+  }
+
+  getStore(offset: number) {
+    this.spinner.show();
+    this.store.dispatch(new GetChantiers(offset))
+      .pipe(first()).subscribe(() => {
+      this.spinner.hide();
+    });
   }
 
   ngOnDestroy() {
