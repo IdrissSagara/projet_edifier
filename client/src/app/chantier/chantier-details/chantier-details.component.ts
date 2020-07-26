@@ -6,7 +6,7 @@ import {MouvementService} from "../../services/mouvement.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {combineLatest, Observable, Subscription} from "rxjs";
 import {Mouvement} from "../../model/mouvement";
-import {MouvementModalComponent} from "../../transactions/mouvement/mouvement-modal/mouvement-modal.component";
+import {MouvementModalComponent} from "../../transactions/caisse/mouvement/mouvement-modal/mouvement-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../model/paiement";
