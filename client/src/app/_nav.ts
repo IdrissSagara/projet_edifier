@@ -26,12 +26,12 @@ export const navItems: INavData[] = [
         name: 'Paiements',
         url: '/transactions/caisse/paiements',
         icon: 'icon-puzzle'
+      }, {
+        name: NavEnum.Mouvements,
+        url: '/transactions/mouvements',
+        icon: 'icon-credit-card'
       },
     ]
-  }, {
-    name: NavEnum.Mouvements,
-    url: '/transactions/mouvements',
-    icon: 'icon-credit-card'
   }, {
     title: true,
     name: 'Gestion de personnes'
