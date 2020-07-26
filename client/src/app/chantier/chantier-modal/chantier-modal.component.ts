@@ -73,7 +73,7 @@ export class ChantierModalComponent implements OnInit {
       this.chantierModalRef.hide();
       const message = `Modification du chantier ${this.chantier.id} effectuer avec succes`;
       this.toastService.success(message, '', toastParams);
-    }, err => {
+    }, () => {
       this.toastService.error(`Une erreur est survenue lors de la mise à jour du chantier`, '', toastParams);
     });
   }
@@ -100,15 +100,7 @@ export class ChantierModalComponent implements OnInit {
     this.clientService.getAllClient().pipe(
       first(),
       finalize(() => this.spinner.hide())
-    ).subscribe((res) => {
-      this.clients = [Object.assign([])];
-      res.rows.map(c => {
-        const elt = {id: c.id, text: c.nom + " " + c.prenom};
-        if (this.clients.indexOf(elt) === -1) {
-          this.clients.push(elt);
-        }
-      });
-    }, (err) => {
+    ).subscribe(this.getFormattedClients(), (err) => {
       console.log(err);
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', toastParams);
     });
@@ -122,17 +114,21 @@ export class ChantierModalComponent implements OnInit {
     this.spinner.show();
     this.clientService.search($event).pipe(
       first(), finalize(() => this.spinner.hide())
-    ).subscribe((res) => {
+    ).subscribe(this.getFormattedClients(), (err) => {
+      console.log(err);
+    });
+  }
+
+  private getFormattedClients() {
+    return (clients) => {
       this.clients = [Object.assign([])];
-      res.rows.map(c => {
+      clients.rows.map(c => {
         const elt = {id: c.id, text: c.nom + " " + c.prenom};
         if (this.clients.indexOf(elt) === -1) {
           this.clients.push(elt);
         }
       });
-    }, (err) => {
-      console.log(err);
-    });
+    };
   }
 
   buildChantier() {
