@@ -15,6 +15,7 @@ import {NavEnum} from "../../_nav-enum";
 export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems = navItems;
+  currentDate: Date;
 
   constructor(readonly authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
               private spinner: SpinnerService) {
@@ -26,6 +27,7 @@ export class DefaultLayoutComponent implements OnInit {
     this.activatedRoute.data.subscribe((data: { currentUser: Utilisateur }) => {
       this.authService._utilisateurCourant = data.currentUser;
     });
+    this.currentDate = new Date();
   }
 
   toggleMinimize(e) {

@@ -54,7 +54,8 @@
 </div>
 <app-footer>
   <span><i class="flag-icon flag-icon-ml"></i></span>
-  <span>&nbsp;&copy; 2020 Edifier fait par <a href="https://digital-faso.tech">Digital Faso</a> avec 💓️</span>
+  <span>&nbsp;&copy; {{currentDate | date: 'yyyy'}}. Par <a href="https://digital-faso.tech">Digital Faso</a> <span
+    class="tex-hide">avec 💓️</span></span>
   <span class="ml-auto">Template by <a href="https://coreui.io">CoreUI</a></span>
 </app-footer>
 <ngx-spinner [fullScreen]="true" bdColor="rgba(0, 0, 0, 0.8)" color="#fff" size="large"

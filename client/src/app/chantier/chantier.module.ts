@@ -6,7 +6,7 @@ import {ChantierComponent} from "./chantier.component";
 import {ChantierModalComponent} from './chantier-modal/chantier-modal.component';
 import {ChantierDetailsComponent} from './chantier-details/chantier-details.component';
 import {ChartsModule} from "ng2-charts";
-import {MouvementModule} from "../transactions/mouvement/mouvement.module";
+import {MouvementModule} from "../transactions/caisse/mouvement/mouvement.module";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {TabsModule} from "ngx-bootstrap/tabs";
 import {CollapseModule} from "ngx-bootstrap/collapse";

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap/modal";
-import {MouvementService} from "../../../services/mouvement.service";
-import {Mouvement} from "../../../model/mouvement";
-import {Chantier} from "../../../model/chantier";
-import {ChantierService} from "../../../services/chantier.service";
-import {SpinnerService} from "../../../services/spinner.service";
+import {MouvementService} from "../../../../services/mouvement.service";
+import {Mouvement} from "../../../../model/mouvement";
+import {Chantier} from "../../../../model/chantier";
+import {ChantierService} from "../../../../services/chantier.service";
+import {SpinnerService} from "../../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {finalize, first} from "rxjs/operators";
 
