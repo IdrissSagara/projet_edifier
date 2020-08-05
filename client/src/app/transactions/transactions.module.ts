@@ -17,6 +17,7 @@ import {DetailPaiementComponent} from './caisse/paiements/detail-paiement/detail
 import {AlertModule} from "ngx-bootstrap/alert";
 import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {PaiementModalModule} from "./caisse/paiements/paiement-modal/paiement-modal.module";
+import {MouvementDetailsComponent} from './mouvement/mouvement-details/mouvement-details.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {PaiementModalModule} from "./caisse/paiements/paiement-modal/paiement-mo
     PaiementsComponent,
     MouvementsComponent,
     DetailPaiementComponent,
+    MouvementDetailsComponent,
   ],
   imports: [
     CommonModule,
