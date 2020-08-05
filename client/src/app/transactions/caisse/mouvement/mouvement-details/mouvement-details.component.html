@@ -1,0 +1,111 @@
+<div class="px-3">
+  <div class="animated fadeIn">
+    <div class="card">
+      <div *ngIf="mouvement" class="card-header" id="title">
+        <div class="pull-left">
+          <h2>Details du mouvement : {{mouvement.id}}</h2>
+        </div>
+      </div>
+
+      <div *ngIf="showError" class="card-header" id="">
+        <alert type="danger">
+          <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du mouvement.
+          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
+        </alert>
+      </div>
+
+    </div>
+  </div>
+  <div *ngIf="mouvement && chantierDestination && chantierSource" class="row">
+    <div class="col-sm-6">
+      <div class="card border border-0">
+        <div class="card-header title">
+          <strong>Source</strong>
+        </div>
+        <div class="card-body p-1 px-md-4">
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Chantier id source :</strong></td>
+              <td>{{mouvement.source}}</td>
+            </tr>
+            <tr>
+              <td><strong>Cout:</strong></td>
+              <td>{{chantierSource.cout | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Montant envoyé:</strong></td>
+              <td>{{mouvement.montant | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Walita:</strong></td>
+              <td>{{chantierSource.walita | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Yereta:</strong></td>
+              <td>{{chantierSource.yereta | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Montant disponible:</strong></td>
+              <td>{{chantierSource.montant_dispo | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Client:</strong></td>
+              <td>{{chantierSource.Client.nom + ' ' + chantierSource.Client.prenom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Emplacement:</strong></td>
+              <td>{{chantierSource.emplacement }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-header title">
+          <strong>Destination</strong>
+        </div>
+        <div class="card-body p-1 px-md-4">
+          <table class="table table-striped">
+            <tbody>
+            <tr>
+              <td><strong>Chantier id destination :</strong></td>
+              <td>{{mouvement.destination}}</td>
+            </tr>
+            <tr>
+              <td><strong>Cout:</strong></td>
+              <td>{{chantierDestination.cout | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Montant reçu:</strong></td>
+              <td>{{mouvement.montant | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Walita:</strong></td>
+              <td>{{chantierDestination.walita | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Yereta:</strong></td>
+              <td>{{chantierDestination.yereta | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Montant disponible:</strong></td>
+              <td>{{chantierDestination.montant_dispo | intcomma}} Fcfa</td>
+            </tr>
+            <tr>
+              <td><strong>Client:</strong></td>
+              <td>{{chantierDestination.Client.nom + ' ' + chantierDestination.Client.prenom}}</td>
+            </tr>
+            <tr>
+              <td><strong>Emplacement:</strong></td>
+              <td>{{chantierDestination.emplacement}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

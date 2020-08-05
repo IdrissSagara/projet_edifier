@@ -18,6 +18,7 @@ import {AlertModule} from "ngx-bootstrap/alert";
 import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {PaiementModalModule} from "./caisse/paiements/paiement-modal/paiement-modal.module";
 import {MouvementDetailsComponent} from './caisse/mouvement/mouvement-details/mouvement-details.component';
+import {ChantierModule} from "../chantier/chantier.module";
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {MouvementDetailsComponent} from './caisse/mouvement/mouvement-details/mo
     ModalModule.forRoot(),
     ProgressbarModule.forRoot(),
     TooltipModule.forRoot(),
-    AlertModule
+    AlertModule,
+    ChantierModule
   ],
   providers: [
     BsModalService

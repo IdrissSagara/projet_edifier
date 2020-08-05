@@ -54,6 +54,9 @@ import {PaiementModalModule} from "../transactions/caisse/paiements/paiement-mod
     ModalModule.forRoot(),
     AlertModule.forRoot(),
   ],
+  exports: [
+    IntCommaPipe
+  ],
   providers: [
     BsModalRef,
   ]
