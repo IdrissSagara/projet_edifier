@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MouvementService} from "../../../services/mouvement.service";
+import {MouvementService} from "../../../../services/mouvement.service";
 import {ActivatedRoute} from "@angular/router";
-import {SpinnerService} from "../../../services/spinner.service";
+import {SpinnerService} from "../../../../services/spinner.service";
 import {finalize, first} from "rxjs/operators";
-import {Mouvement} from "../../../model/mouvement";
+import {Mouvement} from "../../../../model/mouvement";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
@@ -14,6 +14,7 @@ import {ToastrService} from "ngx-toastr";
 export class MouvementDetailsComponent implements OnInit {
 
   mouvement: Mouvement;
+  showError: boolean = false;
 
   constructor(private mouvementService: MouvementService, private route: ActivatedRoute,
               private spinner: SpinnerService, private toastService: ToastrService) {
@@ -25,7 +26,7 @@ export class MouvementDetailsComponent implements OnInit {
 
   intit(): void {
     this.route.params.subscribe(params => {
-      this.mouvementService.getMouvementById(params['id']);
+      this.getMouvementById(params['id']);
     });
   }
 
@@ -33,6 +34,7 @@ export class MouvementDetailsComponent implements OnInit {
     this.spinner.show();
     this.mouvementService.getMouvementById(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.mouvement = response;
+      console.log(this.mouvement);
     }, (error) => {
       this.toastService.error(`Une erreur est survenue lors de la récupération du mouvement`, '', {
         progressBar: true,
@@ -42,4 +44,7 @@ export class MouvementDetailsComponent implements OnInit {
     });
   }
 
+  refresh() {
+    this.intit();
+  }
 }

@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
 import {PaiementsComponent} from "./caisse/paiements/paiements.component";
-import {MouvementsComponent} from "./caisse/mouvement/mouvements/mouvements.component";
+import {MouvementsComponent} from "./caisse/mouvement/mouvements.component";
 import {DetailPaiementComponent} from "./caisse/paiements/detail-paiement/detail-paiement.component";
-import {MouvementDetailsComponent} from "./mouvement/mouvement-details/mouvement-details.component";
+import {MouvementDetailsComponent} from "./caisse/mouvement/mouvement-details/mouvement-details.component";
 
 const routes: Routes = [
   {
@@ -50,7 +50,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'entrant'
+            redirectTo: 'mouvement'
           }, {
             path: 'mouvement',
             component: MouvementsComponent,

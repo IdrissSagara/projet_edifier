@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MouvementService} from "../../../../services/mouvement.service";
-import {SpinnerService} from "../../../../services/spinner.service";
+import {MouvementService} from "../../../services/mouvement.service";
+import {SpinnerService} from "../../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {finalize, first} from "rxjs/operators";
-import {Mouvement} from "../../../../model/mouvement";
+import {Mouvement} from "../../../model/mouvement";
 
 @Component({
   selector: 'app-mv-entrant',
@@ -17,7 +17,7 @@ export class MouvementsComponent implements OnInit {
   currentPage: number;
 
   constructor(private mouvementService: MouvementService, private spinner: SpinnerService,
-              private toastService: ToastrService,) {
+              private toastService: ToastrService) {
   }
 
   ngOnInit(): void {

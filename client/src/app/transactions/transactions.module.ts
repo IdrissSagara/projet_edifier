@@ -9,7 +9,7 @@ import {PopoverModule} from "ngx-bootstrap/popover";
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {TransactionsRoutingModule} from "./transactions.routing.module";
 import {PaiementsComponent} from './caisse/paiements/paiements.component';
-import {MouvementsComponent} from './caisse/mouvement/mouvements/mouvements.component';
+import {MouvementsComponent} from './caisse/mouvement/mouvements.component';
 import {MouvementModule} from "./caisse/mouvement/mouvement.module";
 import {HttpClientModule} from "@angular/common/http";
 import {BsDropdownModule} from "ngx-bootstrap/dropdown";
@@ -17,7 +17,7 @@ import {DetailPaiementComponent} from './caisse/paiements/detail-paiement/detail
 import {AlertModule} from "ngx-bootstrap/alert";
 import {BsModalService, ModalModule} from "ngx-bootstrap/modal";
 import {PaiementModalModule} from "./caisse/paiements/paiement-modal/paiement-modal.module";
-import {MouvementDetailsComponent} from './mouvement/mouvement-details/mouvement-details.component';
+import {MouvementDetailsComponent} from './caisse/mouvement/mouvement-details/mouvement-details.component';
 
 
 @NgModule({
