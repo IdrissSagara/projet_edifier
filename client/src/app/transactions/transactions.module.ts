@@ -20,7 +20,6 @@ import {PaiementModalModule} from "./caisse/paiements/paiement-modal/paiement-mo
 import {MouvementDetailsComponent} from './caisse/mouvement/mouvement-details/mouvement-details.component';
 import {ChantierModule} from "../chantier/chantier.module";
 
-
 @NgModule({
   declarations: [
     PaiementsComponent,

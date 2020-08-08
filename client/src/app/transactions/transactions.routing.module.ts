@@ -17,15 +17,7 @@ const routes: Routes = [
         redirectTo: 'mouvements'
       },
       {
-        path: 'caisse',
-        data: {
-          title: 'Caisse'
-        },
         children: [
-          {
-            path: '',
-            redirectTo: 'paiements'
-          },
           {
             path: 'paiements',
             component: PaiementsComponent,
@@ -33,37 +25,16 @@ const routes: Routes = [
               title: 'Paiements'
             },
           },
-          {
-            path: 'paiements/detail/:id/:idChantier',
-            component: DetailPaiementComponent,
-            data: {
-              title: 'Detail du Paiements'
-            },
-          },
         ]
       },
       {
-        path: 'mouvements',
-        data: {
-          title: 'Mouvement'
-        },
         children: [
           {
             path: '',
-            redirectTo: 'mouvement'
-          }, {
-            path: 'mouvement',
             component: MouvementsComponent,
             data: {
               title: 'Mouvements '
             }
-          },
-          {
-            path: 'mouvements/detail/:id',
-            component: MouvementDetailsComponent,
-            data: {
-              title: 'Detail du Mouvement'
-            },
           },
         ]
       },
