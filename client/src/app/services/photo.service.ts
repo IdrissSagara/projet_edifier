@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
-import {HttpClient, HttpRequest} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AllChantierPictures} from "../model/responses/AllChantierPictures";
 
@@ -18,9 +18,8 @@ export class PhotoService {
     for (let i = 0; i < files.length; i++) {
       formData.append('images', files[i]);
     }
-    const req = new HttpRequest('POST', `${this.apiUrl}/photo/${idChantier}/multiple`, formData,
-      {responseType: 'json'});
-    return this.http.request(req);
+
+    return this.http.post(`${this.apiUrl}/photo/${idChantier}/multiple`, formData);
   }
 
   getPictures(idChantier: number): Observable<AllChantierPictures> {

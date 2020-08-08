@@ -33,7 +33,7 @@
     <div class="col-md-12 mb-4">
       <!-- Nav tabs -->
       <tabset>
-        <tab class="p-0 p-md-3">
+        <tab class="p-0 p-md-3 px-md-5">
           <ng-template tabHeading><i class="icon-user"></i>Client & Chantier</ng-template>
           <div class="card border border-0">
             <div class="card-header title">
@@ -94,7 +94,7 @@
             </div>
           </div>
         </tab>
-        <tab class="p-0 p-md-3">
+        <tab class="p-0 p-md-3 px-md-5">
           <ng-template tabHeading><i class="icon-pie-chart"></i> Graphe</ng-template>
           <div class="card">
             <div class="card-header">
@@ -136,26 +136,29 @@
             </div>
           </div>
         </tab>
-        <tab>
+        <tab class="p-0 p-md-3 px-md-5">
           <ng-template tabHeading><i class="icon-picture"></i> Galerie</ng-template>
-          <div class="col-sm-12">
-            <div class="card">
-              <div class="card-header">
-                <strong>Images du chantier</strong>
-                <div class="card-header-actions file-upload">
-                  <label class="btn btn-default">
-                    <input (change)="selectFiles($event)" accept=".gif, .jpg, .png, jpeg" multiple type="file"/>
-                  </label>
-                  <button (click)="ajouterImages()" [disabled]="!selectedFiles" class="btn-success add_picture_button">
-                    Ajouter
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <gallery *ngIf="images?.length" [items]="images"></gallery>
-              </div>
+          <div class="card">
+            <div class="card-header">
+              <strong>Images du chantier</strong>
             </div>
-          </div><!--/.row-->
+            <div class="col-12 file-upload p-3">
+              <input
+                (change)="selectFiles($event)"
+                [ngModel]="fileNinput"
+                accept=".gif, .jpg, .png, .jpeg"
+                multiple type="file"
+              />
+              <button (click)="ajouterImages()"
+                      [disabled]="!selectedFiles"
+                      class="btn btn-primary pull-right">
+                Ajouter
+              </button>
+            </div>
+            <div class="card-body card-body px-1 px-md-4">
+              <gallery *ngIf="images?.length" [items]="images"></gallery>
+            </div>
+          </div>
         </tab>
       </tabset>
     </div><!--/.col-->

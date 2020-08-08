@@ -4,7 +4,7 @@ import {ChantierService} from "../../services/chantier.service";
 import {Chantier} from "../../model/chantier";
 import {MouvementService} from "../../services/mouvement.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
-import {combineLatest, Observable, Subscription} from "rxjs";
+import {combineLatest, Subscription} from "rxjs";
 import {Mouvement} from "../../model/mouvement";
 import {MouvementModalComponent} from "../../transactions/caisse/mouvement/mouvement-modal/mouvement-modal.component";
 import {SpinnerService} from "../../services/spinner.service";
@@ -30,8 +30,7 @@ export class ChantierDetailsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   mouvementModalRef: BsModalRef;
   showError: boolean = false;
-  photos: Photo[] = [];
-  images: ImageItem[];
+  images: ImageItem[] = [];
   cheminImages: string;
   @ViewChild('pdfIframe') pdfIframe: ElementRef;
   pdfUrl: SafeUrl;
@@ -41,8 +40,8 @@ export class ChantierDetailsComponent implements OnInit {
   public pieChartData: number[];
   public pieChartType = 'pie';
   selectedFiles: FileList;
+  fileNinput;
   message = '';
-  fileInfos: Observable<any>;
   items: GalleryItem[] = [];
 
   constructor(private route: ActivatedRoute, private chantierService: ChantierService,
@@ -74,32 +73,19 @@ export class ChantierDetailsComponent implements OnInit {
     });
   }
 
-
-  private init(): void {
-    this.route.params.subscribe(params => {
-      this.getChantierById(params['id']);
+  getAllPictures(id: number) {
+    this.spinner.show();
+    this.photoService.getPictures(id).pipe(first()).subscribe(photos => {
+      this.addItemsToGallery(photos.rows);
+      this.spinner.hide();
+    }, error => {
+      this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
     });
   }
-
-  ajouterImages() {
-    this.message = '';
-    this.photoService.uploadPictures(this.selectedFiles, this.chantier.id).pipe(first()).subscribe(
-      () => {
-        this.toastService.success('Les images selectionnées ont été chargées avec succès', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
-      },
-      () => {
-        this.toastService.error('Une erreur est survenue lors du chargement des images', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
-      });
-  }
-
 
   unsubscribe() {
     this.subscriptions.forEach((subscription: Subscription) => {
@@ -210,34 +196,46 @@ export class ChantierDetailsComponent implements OnInit {
     });
   }
 
-  upload(idx, file) {
-
+  ajouterImages() {
+    this.message = '';
+    this.photoService.uploadPictures(this.selectedFiles, this.chantier.id).pipe(first()).subscribe(
+      (uploadedImages) => {
+        this.selectedFiles = undefined;
+        this.fileNinput = "";
+        this.addItemsToGallery(uploadedImages);
+        this.toastService.success('Les images selectionnées ont été chargées avec succès', '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+      },
+      (error) => {
+        console.log("error", error);
+        this.toastService.error('Une erreur est survenue lors du chargement des images', '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+      });
   }
 
-  getAllPictures(id: number) {
-    this.spinner.show();
-    this.photoService.getPictures(id).pipe(first()).subscribe(photos => {
-      this.photos = photos.rows;
-      this.cheminImages = `${environment.api_url}/uploads/chantier/${this.chantier.id}/`;
-      this.initGallery(this.photos);
-      this.spinner.hide();
-    }, error => {
-      this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+  private init(): void {
+    this.route.params.subscribe(params => {
+      const chantierId = params['id'];
+      this.cheminImages = `${environment.api_url}/uploads/chantier/${chantierId}/`;
+      this.getChantierById(chantierId);
     });
   }
 
   selectFiles(event) {
     this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles);
   }
 
-  private initGallery(items: Photo[]) {
-    this.images = items.map(it => {
+  private addItemsToGallery(items: Photo[]) {
+    const newImages = items.map(it => {
       return new ImageItem({src: this.cheminImages + it.path, thumb: this.cheminImages + it.path});
     });
+
+    this.images = [...this.images, ...newImages];
   }
 }
