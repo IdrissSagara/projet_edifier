@@ -17,7 +17,7 @@ import {finalize, first} from "rxjs/operators";
 export class OuvriersComponent implements OnInit {
   ouvrier: Ouvrier[];
   ouvriers: Ouvrier;
-  totalPage: number;
+  totalItems: number;
   errorMessage: String;
   subscriptions: Subscription[] = [];
   ouvrierModalRef: BsModalRef;
@@ -44,7 +44,7 @@ export class OuvriersComponent implements OnInit {
     this.spinner.show();
     this.ouvrierService.getAllOuvrier().pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
       this.ouvrier = response.rows;
-      this.totalPage = response.count;
+      this.totalItems = response.count;
     }, error => {
       this.toastService.error('Une erreur est survenu lors de la recupération des ouvriers', '', {
         progressBar: true,

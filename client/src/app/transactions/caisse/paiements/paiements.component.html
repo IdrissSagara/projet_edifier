@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="card-body">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered custom-responsive-table">
           <thead>
           <tr>
             <th>#</th>
@@ -21,18 +21,19 @@
             <th>Type Paiement</th>
             <th>Commentaire</th>
             <th>Date de paiement</th>
-            <th style="padding-left: 50px">Action</th>
+            <th style="padding-left: 50px">Actions</th>
           </tr>
           </thead>
           <tbody *ngIf="!isLoading">
           <tr *ngFor="let paiement of paiements; let i = index; trackBy: trackById">
-            <td>{{i + 1}} </td>
-            <td>{{paiement.montant }}</td>
-            <td>{{paiement.montant_restant }}</td>
-            <td>{{paiement.type }}</td>
-            <td>{{paiement.commentaire }}</td>
-            <td>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
+            <td><span class="ui-column-title">#</span>{{paiement.id}} </td>
+            <td><span class="ui-column-title">Montant</span>{{paiement.montant }}</td>
+            <td><span class="ui-column-title">Montant restant</span>{{paiement.montant_restant }}</td>
+            <td><span class="ui-column-title">Type Paiement</span>{{paiement.type }}</td>
+            <td><span class="ui-column-title">Commentaire</span>{{paiement.commentaire }}</td>
+            <td><span class="ui-column-title">Date de paiement</span>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
             <td>
+              <span class="ui-column-title">Actions</span>
               <div class="btn-group" id="button_action">
                 <button [routerLink]="['/transactions/caisse/paiements/detail', paiement.id, paiement.ChantierId]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails du paiement"><i

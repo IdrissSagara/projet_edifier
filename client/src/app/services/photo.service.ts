@@ -19,7 +19,7 @@ export class PhotoService {
       formData.append('images', files[i]);
     }
 
-    return this.http.post(`${this.apiUrl}/photo/${idChantier}/multiple`, formData);
+    return this.http.post(`${this.apiUrl}photo/${idChantier}/multiple`, formData);
   }
 
   getPictures(idChantier: number): Observable<AllChantierPictures> {
