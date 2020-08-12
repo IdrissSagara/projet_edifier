@@ -136,11 +136,16 @@
             </div>
           </div>
         </tab>
-        <tab class="p-0 p-md-3 px-md-5">
+        <tab (selectTab)="initGalerie()" class="p-0 p-md-3 px-md-5 gallery">
           <ng-template tabHeading><i class="icon-picture"></i> Galerie</ng-template>
           <div class="card border border-0">
             <div class="card-header">
               <strong>Images du chantier</strong>
+              <div class="pull-right">
+                <button (click)="initGalerie(true)"
+                        class="btn btn-outline-info mr-3" tooltip="Rafraichir"><i class="fa fa-refresh"></i>
+                </button>
+              </div>
             </div>
             <div class="col-12 file-upload p-3">
               <input

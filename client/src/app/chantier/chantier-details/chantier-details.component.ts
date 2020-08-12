@@ -30,7 +30,8 @@ export class ChantierDetailsComponent implements OnInit {
   subscriptions: Subscription[] = [];
   mouvementModalRef: BsModalRef;
   showError: boolean = false;
-  images: ImageItem[] = [];
+  images: ImageItem[];
+  galeryInited: boolean = false;
   cheminImages: string;
   @ViewChild('pdfIframe') pdfIframe: ElementRef;
   pdfUrl: SafeUrl;
@@ -61,7 +62,6 @@ export class ChantierDetailsComponent implements OnInit {
       this.showError = false;
       this.chantier = chantier;
       this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
-      this.getAllPictures(this.chantier.id);
     }, (err) => {
       // afficher une alerte bootstrap
       this.showError = true;
@@ -78,6 +78,7 @@ export class ChantierDetailsComponent implements OnInit {
     this.photoService.getPictures(id).pipe(first()).subscribe(photos => {
       this.addItemsToGallery(photos.rows);
       this.spinner.hide();
+      this.galeryInited = true;
     }, error => {
       this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
         progressBar: true,
@@ -93,7 +94,6 @@ export class ChantierDetailsComponent implements OnInit {
     });
     this.subscriptions = [];
   }
-
 
   addMouvement() {
     const initialState = {
@@ -229,6 +229,13 @@ export class ChantierDetailsComponent implements OnInit {
 
   selectFiles(event) {
     this.selectedFiles = event.target.files;
+  }
+
+  initGalerie(forced?: boolean) {
+    if (forced || !this.galeryInited) {
+      this.images = [];
+      this.getAllPictures(this.chantier.id);
+    }
   }
 
   private addItemsToGallery(items: Photo[]) {
