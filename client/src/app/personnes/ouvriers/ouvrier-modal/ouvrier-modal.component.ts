@@ -4,7 +4,9 @@ import {BsModalRef} from "ngx-bootstrap/modal";
 import {OuvrierService} from "../../../services/ouvrier.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
-import {finalize, first} from "rxjs/operators";
+import {catchError, finalize, first} from "rxjs/operators";
+import {of} from "rxjs";
+import {NgModel} from "@angular/forms";
 
 @Component({
   selector: 'app-ouvrier-modal',
@@ -15,8 +17,8 @@ export class OuvrierModalComponent implements OnInit {
 
   title: string;
   ouvrier: Ouvrier;
-
   types_ouvrier = TYPES_OUVRIER;
+  erreursServeur: any;
 
   constructor(public ouvrierModalRel: BsModalRef, private ouvrierService: OuvrierService,
               private toastService: ToastrService, private spinner: SpinnerService) {
@@ -32,21 +34,29 @@ export class OuvrierModalComponent implements OnInit {
   addOuvrier() {
     if (this.modeModification()) {
       this.spinner.show();
-      this.ouvrierService.updateOuvrier(this.ouvrier).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
-        const message = `Modification de l'ouvrier ${this.ouvrier.nom} ${this.ouvrier.prenom} effectuée avec succès`;
-        this.ouvrierModalRel.hide();
-        this.toastService.success(message, '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
-      }, error => {
+      this.ouvrierService.updateOuvrier(this.ouvrier).pipe(first(), catchError((error) => {
+        this.spinner.hide();
+        this.erreursServeur = error.error.errors[0].msg;
         this.toastService.error(`Une erreur est survenue lors de la modification de l'ouvrier`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
         });
-      });
+        return of(error);
+      })).subscribe((response) => {
+        if (!!response.error && response.error.errors.length) {
+          return;
+        }
+        console.log('response', response);
+        const message = `Modification de l'ouvrier ${this.ouvrier.nom} ${this.ouvrier.prenom} effectuée avec succès`;
+        this.ouvrierModalRel.hide();
+        this.spinner.hide();
+        this.toastService.success(message, '', {
+          progressBar: true,
+          closeButton: true,
+          tapToDismiss: false
+        });
+      },);
     } else {
       this.spinner.show();
       this.ouvrierService.addOuvrier(this.ouvrier).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
@@ -65,5 +75,16 @@ export class OuvrierModalComponent implements OnInit {
         });
       });
     }
+  }
+
+  inputEnErreur(input: NgModel): boolean {
+    if (input.invalid && input.touched) {
+      return true;
+    }
+
+    if (input.untouched && input.errors && !input.errors.required) {
+      return true;
+    }
+    return this.erreursServeur;
   }
 }
