@@ -38,7 +38,7 @@
       <div class="form-group" [ngClass]="{'has-error': inputEnErreur(telephone)}">
         <label class="requis" for="telephone">Téléphone</label>
         <input #telephone="ngModel" [(ngModel)]="ouvrier.telephone" class="form-control" id="telephone" name="telephone"
-               placeholder="Entrez le numéro de téléphone..." required type="tel" minLength="8">
+               placeholder="Entrez le numéro de téléphone..." required type="number" minLength="8">
         <div *ngIf="inputEnErreur(telephone)" class="alert-danger">
 
           <div *ngIf="telephone.errors?.required">

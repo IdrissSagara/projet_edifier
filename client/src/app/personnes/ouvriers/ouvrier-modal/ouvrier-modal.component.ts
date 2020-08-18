@@ -37,7 +37,7 @@ export class OuvrierModalComponent implements OnInit {
       this.ouvrierService.updateOuvrier(this.ouvrier).pipe(first(), catchError((error) => {
         this.spinner.hide();
         this.erreursServeur = error.error.errors[0].msg;
-        this.toastService.error(`Une erreur est survenue lors de la modification de l'ouvrier`, '', {
+        this.toastService.error(`Erreur survenue : ${this.erreursServeur} , lors de la modification de l'ouvrier`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
