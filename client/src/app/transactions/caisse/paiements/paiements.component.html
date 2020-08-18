@@ -35,9 +35,10 @@
             <td>
               <span class="ui-column-title">Actions</span>
               <div class="btn-group" id="button_action">
-                <button [routerLink]="['/transactions/caisse/paiements/detail', paiement.id, paiement.ChantierId]"
+                <button [routerLink]="['/transactions/paiements/detail', paiement.id, paiement.ChantierId]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails du paiement"><i
                   class="icon-eye"></i></button>
+
                 <button (click)="UpdatePaiementDialog(paiement)"
                         class="btn btn-warning btn-icon" tooltip="Modifier le paiemnt"><i
                   class="icon-pencil"></i></button>
