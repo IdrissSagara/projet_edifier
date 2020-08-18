@@ -8,6 +8,8 @@ export class Paiement {
   commentaire: string;
   createdAt: string;
   updatedAt: string;
+  createdBy: number;
+  updatedBy: number;
 
   constructor() {
     this.type = ESPÈCE;
