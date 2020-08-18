@@ -5,4 +5,6 @@ export class ClientModel {
   telephone: number;
   createdAt: string;
   updatedAt: string;
+  createdBy: number;
+  updatedBy: number;
 }

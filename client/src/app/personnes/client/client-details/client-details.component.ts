@@ -11,6 +11,7 @@ import {ClientState} from "../../../store/client/client.state";
 import {Observable, Subscription} from "rxjs";
 import {finalize, first, map, tap} from "rxjs/operators";
 import {GetClients} from "../../../store/client/client.actions";
+import {UtilisateurService} from "../../../services/utilisateur.service";
 
 @Component({
   selector: 'app-client-details',
@@ -28,7 +29,7 @@ export class ClientDetailsComponent implements OnInit, OnDestroy {
 
   constructor(private route: ActivatedRoute, private clientService: ClientService,
               private spinner: SpinnerService, private toastService: ToastrService,
-              private store: Store) {
+              private store: Store, private utilisateurService: UtilisateurService) {
   }
 
   ngOnInit(): void {
@@ -48,10 +49,30 @@ export class ClientDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  getUser(id: number) {
+    this.utilisateurService.getUserById(id).pipe(first()).subscribe(response => {
+      this.user = response;
+    }, error => {
+      this.toastService.warning(`Une erreur est survenue lors de la récupération de l'uitlisateur`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    });
+  }
+
+  getClientById(id: number) {
+    this.clientService.getClientById(id).subscribe(res => {
+      this.getUser(res.createdBy);
+    }, error => {
+      console.log(error);
+    });
+  }
+
   init(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
-
+      this.getClientById(id);
       this.areCoursesLoadedSub = this.areClientsLoaded().subscribe(value => {
       });
 
