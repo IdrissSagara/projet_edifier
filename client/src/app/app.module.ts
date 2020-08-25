@@ -74,7 +74,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        whitelistedDomains: [environment.backend_base],
+        whitelistedDomains: ["edifier.herokuapp.com/", "localhost:3000"],
         blacklistedRoutes: [environment.backend_base + '/auth/login']
       }
     }),
