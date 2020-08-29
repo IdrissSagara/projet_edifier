@@ -56,7 +56,8 @@ export class OuvrierModalComponent implements OnInit {
           closeButton: true,
           tapToDismiss: false
         });
-      },);
+      }, error => {
+      });
     } else {
       this.spinner.show();
       this.ouvrierService.addOuvrier(this.ouvrier).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {

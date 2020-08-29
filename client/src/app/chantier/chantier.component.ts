@@ -6,7 +6,7 @@ import {combineLatest, Observable, Subscription} from "rxjs";
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../services/spinner.service";
-import {finalize, first, tap} from "rxjs/operators";
+import {first, tap} from "rxjs/operators";
 import {Select, Store} from "@ngxs/store";
 import {ChantierState} from "../store/chantiers/chantier.state";
 import {GetChantiers} from "../store/chantiers/chantier.actions";
@@ -157,13 +157,15 @@ export class ChantierComponent implements OnInit, OnDestroy {
 
   confirmSupprimerChantier(): void {
     this.spinner.show();
-    this.chantierService.deleteChantierById(this.delId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
+    this.chantierService.deleteChantierById(this.delId).pipe(first()).subscribe(res => {
       // this.getAllChantiers();
       this.toastService.success('Chantier suppimer avec succes', '', toastParams);
 
       this.delId = undefined;
       this.dangerModal.hide();
+      this.spinner.hide();
     }, (err) => {
+      this.spinner.hide();
       const e = err.error;
       let message = 'Une erreur est survenu lors de la suppression du chantier';
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
@@ -191,9 +193,12 @@ export class ChantierComponent implements OnInit, OnDestroy {
   getStore(offset: number) {
     this.spinner.show();
     this.store.dispatch(new GetChantiers(offset))
-      .pipe(first()).subscribe(() => {
-      this.spinner.hide();
-    });
+      .pipe(first())
+      .subscribe(() => {
+        this.spinner.hide();
+      }, error => {
+        this.spinner.hide();
+      });
   }
 
   ngOnDestroy() {

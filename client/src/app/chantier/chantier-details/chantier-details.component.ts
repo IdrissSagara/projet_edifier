@@ -11,7 +11,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../model/paiement";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 import {PhotoService} from "../../services/photo.service";
 import {Photo} from "../../model/photo";
 import {environment} from "../../../environments/environment";
@@ -58,12 +58,14 @@ export class ChantierDetailsComponent implements OnInit {
 
   async getChantierById(id: number) {
     this.spinner.show();
-    this.chantierService.getChantierById(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe(chantier => {
+    this.chantierService.getChantierById(id).pipe(first()).subscribe(chantier => {
+      this.spinner.hide();
       this.showError = false;
       this.chantier = chantier;
       this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
     }, (err) => {
       // afficher une alerte bootstrap
+      this.spinner.hide();
       this.showError = true;
       this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', {
         progressBar: true,
@@ -80,6 +82,7 @@ export class ChantierDetailsComponent implements OnInit {
       this.spinner.hide();
       this.galeryInited = true;
     }, error => {
+      this.spinner.hide();
       this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
         progressBar: true,
         closeButton: true,
@@ -169,7 +172,8 @@ export class ChantierDetailsComponent implements OnInit {
 
   genererFacture(): void {
     this.spinner.show();
-    this.chantierService.getChantierFacture(this.chantier.id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res: any) => {
+    this.chantierService.getChantierFacture(this.chantier.id).pipe(first()).subscribe((res: any) => {
+      this.spinner.hide();
       const pdf = new Blob([res], {type: 'application/pdf'});
 
       // création d'une url locale avec le fichier pdf
@@ -188,8 +192,8 @@ export class ChantierDetailsComponent implements OnInit {
       }, 1000);
 
     }, error => {
-      console.log(error);
-      const message = "erreur survenu lors de l'inpression";
+      this.spinner.hide();
+      const message = "erreur survenue lors de l'inpression";
       this.toastService.error(message, '', {
         progressBar: true,
       });
@@ -198,8 +202,10 @@ export class ChantierDetailsComponent implements OnInit {
 
   ajouterImages() {
     this.message = '';
-    this.photoService.uploadPictures(this.selectedFiles, this.chantier.id).pipe(first()).subscribe(
-      (uploadedImages) => {
+    this.spinner.show()
+    this.photoService.uploadPictures(this.selectedFiles, this.chantier.id)
+      .pipe(first()).subscribe((uploadedImages) => {
+        this.spinner.hide();
         this.selectedFiles = undefined;
         this.fileNinput = "";
         this.addItemsToGallery(uploadedImages);
@@ -210,7 +216,7 @@ export class ChantierDetailsComponent implements OnInit {
         });
       },
       (error) => {
-        console.log("error", error);
+        this.spinner.hide();
         this.toastService.error('Une erreur est survenue lors du chargement des images', '', {
           progressBar: true,
           closeButton: true,

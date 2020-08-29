@@ -6,7 +6,7 @@ import {SpinnerService} from "../../../services/spinner.service";
 import {Utilisateur} from "../../../model/utilisateur";
 import {NgModel} from "@angular/forms";
 import {ShowHidePasswordDirective} from "../../../authentication/show-hide-password.directive";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-change-password-modal',
@@ -37,7 +37,8 @@ export class ChangePasswordModalComponent implements OnInit {
 
   updatePassword() {
     this.spinner.show();
-    this.utilisateurService.changePassword(this.utilisateur).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
+    this.utilisateurService.changePassword(this.utilisateur).pipe(first()).subscribe((response) => {
+      this.spinner.hide();
       this.toastService.success('Le mot de passe à été modifier avec succes', '', {
         progressBar: true,
         closeButton: true,
@@ -45,7 +46,7 @@ export class ChangePasswordModalComponent implements OnInit {
       });
       this.utilisateurModalRel.hide();
     }, error => {
-      console.log(error);
+      this.spinner.hide();
       this.toastService.error(`Une erreur est survenue lors de la modification du mot de passe`, '', {
         progressBar: true,
         closeButton: true,
