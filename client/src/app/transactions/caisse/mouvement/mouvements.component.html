@@ -15,8 +15,6 @@
         <table class="table table-striped table-bordered custom-responsive-table">
           <thead>
           <tr>
-            <th>Source</th>
-            <th>Destination</th>
             <th>Montant</th>
             <th>Commentaire</th>
             <th>Créé le</th>
@@ -24,15 +22,8 @@
           </tr>
           </thead>
           <tbody *ngIf="!isLoading" class="text-center">
-          <tr *ngFor="let mouvement of mouvements; let i = index; trackBy: trackById">
-            <td>
-              <span class="ui-column-title">Source</span>
-              {{mouvement.source }}
-            </td>
-            <td>
-              <span class="ui-column-title">Destination</span>
-              {{mouvement.destination }}
-            </td>
+          <tr *ngFor="let mouvement of mouvements; let i = index; trackBy: trackById" id="clickable-row"
+              [routerLink]="['/transactions/mouvements/detail', mouvement.id]">
             <td>
               <span class="ui-column-title">Montant</span>
               {{mouvement.montant }}
@@ -45,7 +36,7 @@
               <span class="ui-column-title">Créé</span>
               {{mouvement.createdAt | date: 'dd/MM/yyyy'}}
             </td>
-            <td>
+            <td (click)="$event.stopPropagation()" id="unclickable-row">
               <span class="ui-column-title">Action</span>
               <div class="btn-group">
                 <button [routerLink]="['/transactions/mouvements/detail', mouvement.id]"
