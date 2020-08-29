@@ -157,6 +157,7 @@ export class UtilisateursComponent implements OnInit {
       });
       this.deletedId = undefined;
       this.dangerModal.hide();
+      this.spinner.hide();
     }, (err) => {
       this.spinner.hide();
       this.dangerModal.hide();

@@ -70,6 +70,7 @@ export class ClientDetailsComponent implements OnInit, OnDestroy {
     this.spinner.show();
     this.clientService.getClientById(id).pipe(first()).subscribe(res => {
       this.getUser(res.createdBy);
+      this.spinner.hide();
     }, error => {
       this.spinner.hide();
     });
