@@ -169,7 +169,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
       const e = err.error;
       let message = 'Une erreur est survenu lors de la suppression du chantier';
       if (e.code === 'ER_ROW_IS_REFERENCED_2') {
-        message = 'Cet chantier contient des mouvements vous ne pouvez pas le supprimer';
+        message = 'Ce chantier contient des mouvements et/ou des ouvriers. Supprimez-les puis réessayez';
       }
       this.toastService.error(message, '', toastParams);
 

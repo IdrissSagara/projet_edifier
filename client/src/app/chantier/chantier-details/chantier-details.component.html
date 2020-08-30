@@ -3,7 +3,7 @@
     <div class="card">
       <div *ngIf="chantier" class="card-header title">
         <div class="pull-left">
-          <h2>Details du chantier : N° {{chantier?.id}} du
+          <h2>Détails du chantier : N° {{chantier?.id}} du
             client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
         </div>
         <div class="btn-group col-12 col-md-3 pull-right">
@@ -43,15 +43,11 @@
               <table class="table table-striped">
                 <tbody>
                 <tr>
-                  <td><strong>Identifiant du client :</strong></td>
-                  <td>{{chantier.ClientId}}</td>
-                </tr>
-                <tr>
                   <td><strong>Nom :</strong></td>
                   <td>{{chantier.Client.nom}}</td>
                 </tr>
                 <tr>
-                  <td><strong>Prenom :</strong></td>
+                  <td><strong>Prénom :</strong></td>
                   <td>{{chantier.Client.prenom}}</td>
                 </tr>
                 <tr>
@@ -112,11 +108,11 @@
                   <td>{{chantier.montant_dispo | intcomma}} Fcfa</td>
                 </tr>
                 <tr>
-                  <td><strong>Montant emprunté sur un autre chantier:</strong></td>
+                  <td><strong>Montant emprunté:</strong></td>
                   <td>{{chantier.walita | intcomma}} Fcfa</td>
                 </tr>
                 <tr>
-                  <td><strong>Montant de cet chantier:</strong></td>
+                  <td><strong>Montant propre:</strong></td>
                   <td>{{chantier.yereta | intcomma}} Fcfa</td>
                 </tr>
                 </tbody>

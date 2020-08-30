@@ -38,8 +38,10 @@ export class PaiementModalComponent implements OnInit {
   validerPaiement() {
     if (this.modeModification()) {
       this.spinner.show();
+      // TODO: temporay fix
+      this.paiement.type = this.paiement.type.toLocaleLowerCase();
       this.paiementService.updatePaiement(this.paiement).pipe(first()).subscribe(paiement => {
-        const message = `Modification de l'paiement ${this.paiement.id} du chantier ${this.paiement.ChantierId}`;
+        const message = `Modification du paiement ${this.paiement.id} du chantier ${this.paiement.ChantierId}`;
         this.paiementModalRel.hide();
         this.spinner.hide();
         this.toastService.success(message, '', {
@@ -58,9 +60,11 @@ export class PaiementModalComponent implements OnInit {
       });
     } else {
       this.spinner.show();
+      // TODO: temporay fix
+      this.paiement.type = this.paiement.type.toLocaleLowerCase();
       this.paiementService.addPaiement(this.chantier.id, this.paiement).pipe(
         first(), finalize(() => this.spinner.hide())).subscribe((res) => {
-        const message = `Paiement de ${this.paiement.montant} effectuer avec succes`;
+        const message = `Paiement de ${this.paiement.montant} effectué avec succes`;
         this.paiementModalRel.hide();
         this.toastService.success(message, '', {
           progressBar: true,

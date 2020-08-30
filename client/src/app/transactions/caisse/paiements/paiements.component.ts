@@ -39,7 +39,6 @@ export class PaiementsComponent implements OnInit {
     this.spinner.show();
     this.paiementService.getAllPaiement(offset).pipe(first()).subscribe(res => {
       this.errorMessage = undefined;
-      console.log('i ma tou mi!!');
       this.paiements = res.rows;
       this.totalPages = res.count;
       this.spinner.hide();
@@ -114,7 +113,6 @@ export class PaiementsComponent implements OnInit {
       }, 1000);
 
     }, err => {
-      console.log(err);
       const message = "erreur survenu lors de l'inpression";
       this.toastService.error(message, '', {
         progressBar: true,

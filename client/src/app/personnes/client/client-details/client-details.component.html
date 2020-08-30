@@ -3,14 +3,14 @@
     <div class="card">
       <div *ngIf="client$" class="card-header" id="title">
         <div class="pull-left">
-          <h2>Details du client </h2>
+          <h2>Détails du client </h2>
         </div>
       </div>
 
       <div *ngIf="showError" class="card-header" id="">
         <alert type="danger">
           <i class="fa fa-2x fa-info-circle"></i>&nbsp;<span class="h2">Une erreur est survenue lors de la récupération des informations du chantier.
-          <button (click)="refresh()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
+          <button (click)="init()" class="btn btn-outline-danger alert-link">Réessayer</button>.</span>
         </alert>
       </div>
 
@@ -18,16 +18,16 @@
   </div>
 
   <div *ngIf="(client$ | async) as client" class="row justify-content-md-center">
-    <div class="col-lg-8 col-sm-offset-8">
+    <div class="col-md-12 mb-4">
       <div class="card">
         <div class="card-header text-center">
-          <strong>Les informations du client</strong>
+          <strong>Informations du client</strong>
         </div>
         <div class="card-body">
           <table class="table table-striped">
             <tbody>
             <tr>
-              <td><strong>Identifiant du client :</strong></td>
+              <td><strong>Identifiant :</strong></td>
               <td>{{client.id}}</td>
             </tr>
             <tr>
@@ -35,7 +35,7 @@
               <td>{{client.nom}}</td>
             </tr>
             <tr>
-              <td><strong>Prenom :</strong></td>
+              <td><strong>Prénom :</strong></td>
               <td>{{client.prenom}}</td>
             </tr>
             <tr>
@@ -43,15 +43,15 @@
               <td>{{client.telephone}}</td>
             </tr>
             <tr>
-              <td><strong>Client créer le :</strong></td>
+              <td><strong>Créé le :</strong></td>
               <td>{{client.createdAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td><strong>Ouvrier modifier le :</strong></td>
+              <td><strong>Modifié le :</strong></td>
               <td>{{client.updatedAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td><strong>Creer par :</strong></td>
+              <td><strong>Créé par :</strong></td>
               <td>{{user.prenom + ' ' + user.nom}}</td>
             </tr>
             <tr>
@@ -63,18 +63,18 @@
           <hr>
           <div class="card">
             <div class="card-header text-center">
-              <strong>les chantiers du client</strong>
+              <strong>Chantiers du client</strong>
             </div>
             <div class="card-body">
               <table class="table table-striped custom-responsive-table">
                 <thead>
                 <tr class="text-center">
                   <th>#</th>
-                  <th>emplacement</th>
+                  <th>Emplacement</th>
                   <th>Cout</th>
                   <th>Montant dispo</th>
-                  <th>Date debut</th>
-                  <th>Date fin</th>
+                  <th>Date de début</th>
+                  <th>Date de fin</th>
                 </tr>
                 </thead>
                 <tbody *ngIf="chantiers" class="text-center">
@@ -96,11 +96,11 @@
                     {{c.montant_dispo}}
                   </td>
                   <td>
-                    <span class="ui-column-title">Date debut</span>
+                    <span class="ui-column-title">Date de début</span>
                     {{c.date_debut | date: 'dd/MM/yyyy'}}
                   </td>
                   <td>
-                    <span class="ui-column-title">Date fin</span>
+                    <span class="ui-column-title">Date de fin</span>
                     {{c.date_fin | date: 'dd/MM/yyyy'}}
                   </td>
                 </tr>

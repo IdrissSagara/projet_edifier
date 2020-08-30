@@ -65,7 +65,7 @@ export class UtilisateursComponent implements OnInit {
   showAddUserDialog() {
     const initialState = {
       utilisateur: this.newUtilisateur = new Utilisateur(),
-      title: 'Ajouter un nouveau utilisateur'
+      title: 'Ajouter un nouvel utilisateur'
     };
 
     const _combine = combineLatest(

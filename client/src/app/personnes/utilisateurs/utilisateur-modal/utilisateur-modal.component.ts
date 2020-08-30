@@ -36,7 +36,7 @@ export class UtilisateurModalComponent implements OnInit {
       this.spinner.show();
       this.utilisateurService.updateUser(this.utilisateur).pipe(first()).subscribe((response) => {
         this.spinner.hide();
-        const message = `Modification de l'utilisateur ${this.utilisateur.nom} ${this.utilisateur.prenom} effectuer avec succes`;
+        const message = `Modification de l'utilisateur ${this.utilisateur.nom} ${this.utilisateur.prenom} effectuée avec succes`;
         this.utilisateurModalRel.hide();
         this.toastService.success(message, '', {
           progressBar: true,
@@ -45,7 +45,7 @@ export class UtilisateurModalComponent implements OnInit {
         });
       }, error => {
         this.spinner.hide();
-        this.toastService.error(`Une erreur est survenue lors de la modification du chantier`, '', {
+        this.toastService.error(`Une erreur est survenue lors de la modification de l'utilisateur`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
@@ -64,7 +64,7 @@ export class UtilisateurModalComponent implements OnInit {
         });
       }, error => {
         this.spinner.hide();
-        this.toastService.error(`Une erreur est survenue lors de l'ajout d'un utilisateur`, '', {
+        this.toastService.error(`Une erreur est survenue lors de l'ajout de l'utilisateur`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false

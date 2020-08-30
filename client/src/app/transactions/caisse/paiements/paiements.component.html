@@ -18,10 +18,10 @@
             <th>#</th>
             <th>Montant</th>
             <th>Montant restant</th>
-            <th>Type Paiement</th>
+            <th>Type paiement</th>
             <th>Commentaire</th>
             <th>Date de paiement</th>
-            <th style="padding-left: 50px">Actions</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody *ngIf="!isLoading">
@@ -42,7 +42,7 @@
                   class="icon-eye"></i></button>
 
                 <button (click)="UpdatePaiementDialog(paiement)"
-                        class="btn btn-warning btn-icon" tooltip="Modifier le paiemnt"><i
+                        class="btn btn-warning btn-icon" tooltip="Modifier le paiement"><i
                   class="icon-pencil"></i></button>
                 <button (click)="imprimerFacture(paiement)"
                         class="btn btn-link bg-success btn-icon" tooltip="Imprimer un reçu"><i
@@ -72,7 +72,6 @@
                       firstText="&laquo;" lastText="&raquo;" nextText="&rsaquo;" previousText="&lsaquo;">
 
           </pagination>
-
         </div>
       </div>
     </div>

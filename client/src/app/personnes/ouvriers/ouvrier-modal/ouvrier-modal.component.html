@@ -22,16 +22,16 @@
         </div>
       </div>
       <div class="form-group" [ngClass]="{'has-error': inputEnErreur(prenom)}">
-        <label class="requis" for="prenom">Prenom</label>
+        <label class="requis" for="prenom">Prénom</label>
         <input #prenom="ngModel" [(ngModel)]="ouvrier.prenom" class="form-control" id="prenom" name="prenom"
-               placeholder="Entrez le prenom..." required type="text" minlength="3">
+               minlength="3" placeholder="Entrez le prénom..." required type="text">
         <div *ngIf="inputEnErreur(prenom)" class="alert-danger">
 
           <div *ngIf="prenom.errors?.required">
             Le prenom de l'ouvrier est requis.
           </div>
           <div *ngIf="prenom.errors?.minlength">
-            Le prenom doit faire au moins 3 caractères.
+            Le prénom doit faire au moins 3 caractères.
           </div>
         </div>
       </div>

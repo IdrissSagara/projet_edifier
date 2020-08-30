@@ -6,6 +6,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {USER_ROLES, Utilisateur} from "../../model/utilisateur";
 import {UserResolver} from "../../resolvers/user.resolver";
 import {NavEnum} from "../../_nav-enum";
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,7 @@ export class DefaultLayoutComponent implements OnInit {
   public sidebarMinimized = false;
   public navItems = navItems;
   currentDate: Date;
+  backendUrl: string = environment.backend_base;
 
   constructor(readonly authService: AuthService, private router: Router, private activatedRoute: ActivatedRoute,
               private spinner: SpinnerService) {

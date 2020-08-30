@@ -13,9 +13,9 @@
                name="nom" placeholder="Entrez le nom..." required type="text">
       </div>
       <div class="form-group">
-        <label class="requis" for="prenom">Prenom</label>
+        <label class="requis" for="prenom">Prénom</label>
         <input [(ngModel)]="utilisateur.prenom" class="form-control" id="prenom" name="prenom"
-               placeholder="Entrez le prenom..." required type="text">
+               placeholder="Entrez le prénom..." required type="text">
       </div>
       <div class="form-group">
         <label class="requis" for="username">Nom d'utilisateur</label>
@@ -28,10 +28,11 @@
                placeholder="Entrez votre mot de passe..." required type="text">
       </div>
       <div *ngIf="utilisateur" class="form-group">
-        <label class="requis" for="role">Le role de l'utilisateur</label>
+        <label class="requis" for="role">Rôle</label>
         <select [(ngModel)]="utilisateur.role" class="form-control" id="role" name="role"
                 required>
-          <option *ngFor="let role of roleUtilisateur" [value]="role">{{ role }}</option>
+          <option disabled value="undefined">-- Selectionnez le role --</option>
+          <option *ngFor="let role of roleUtilisateur" [value]="role">{{ role.toUpperCase() }}</option>
         </select>
       </div>
     </form>

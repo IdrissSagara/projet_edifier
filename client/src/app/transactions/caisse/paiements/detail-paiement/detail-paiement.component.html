@@ -22,7 +22,7 @@
     <div class="col-lg-8 col-sm-offset-8">
       <div class="card">
         <div class="card-header text-center">
-          <strong>Les informations du paiement</strong>
+          <strong>Informations du paiement</strong>
         </div>
         <div class="card-body">
           <table class="table table-striped">
@@ -60,14 +60,16 @@
               <td><strong>Paiement modifier le :</strong></td>
               <td>{{paiement.updatedAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr>
-              <td><strong>Creer par :</strong></td>
-              <td>{{utilisateur.prenom + ' ' + utilisateur.nom}}</td>
-            </tr>
-            <tr>
-              <td><strong>Modifié par :</strong></td>
-              <td> {{utilisateur.prenom + ' ' + utilisateur.nom}}</td>
-            </tr>
+            <ng-container *ngIf="utilisateur$ | async as user">
+              <tr>
+                <td><strong>Creer par :</strong></td>
+                <td>{{user.prenom + ' ' + user.nom}}</td>
+              </tr>
+              <tr>
+                <td><strong>Modifié par :</strong></td>
+                <td> {{user.prenom + ' ' + user.nom}}</td>
+              </tr>
+            </ng-container>
             </tbody>
           </table>
         </div>

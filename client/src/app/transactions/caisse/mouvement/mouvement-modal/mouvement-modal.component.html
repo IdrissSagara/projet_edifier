@@ -8,12 +8,12 @@
   <div class="modal-body">
     <form #form="ngForm">
       <div class="form-group">
-        <label for="source">Source chantier</label>
+        <label for="source">Chantier source</label>
         <input [(ngModel)]="mouvement.source" autocomplete="text" class="form-control" id="source"
-               name="source" required type="text">
+               disabled name="source" required type="text">
       </div>
       <div class="form-group">
-        <label for="destination">Destination chantier</label>
+        <label for="destination">Chantier destination</label>
         <select [(ngModel)]="mouvement.destination" class="form-control" id="destination" name="destination">
           <option selected value="undefined">--Selectionnez un chantier--</option>
           <option *ngFor="let c of chantiers" value="{{c.id}}">Chantier de {{c.Client.nom}} {{c.Client.prenom}}

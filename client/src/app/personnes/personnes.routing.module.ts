@@ -35,7 +35,7 @@ const routes: Routes = [
         path: 'clients/detail/:id',
         component: ClientDetailsComponent,
         data: {
-          title: 'Details du client'
+          title: 'Détails du client'
         }
       },
       {
@@ -49,7 +49,7 @@ const routes: Routes = [
         path: 'ouvriers/details/:id',
         component: OuvrierDetailsComponent,
         data: {
-          title: 'Details de l\'ouvrier'
+          title: 'Détails de l\'ouvrier'
         }
       },
       {
@@ -65,7 +65,7 @@ const routes: Routes = [
         path: 'utilisateurs/details/:id',
         component: DetailUtilisateurComponent,
         data: {
-          title: 'Details de l\'utilisateur'
+          title: 'Détails de l\'utilisateur'
         }
       }
     ]
