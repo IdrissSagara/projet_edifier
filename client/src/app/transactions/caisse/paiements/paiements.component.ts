@@ -37,16 +37,18 @@ export class PaiementsComponent implements OnInit {
 
   getAllPaiement(offset = 0) {
     this.spinner.show();
-    this.paiementService.getAllPaiement(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
+    this.paiementService.getAllPaiement(offset).pipe(first()).subscribe(res => {
       this.errorMessage = undefined;
       console.log('i ma tou mi!!');
       this.paiements = res.rows;
       this.totalPages = res.count;
+      this.spinner.hide();
     }, err => {
       const message = "erreur de chargement des données";
       this.toastService.error(message, '', {
         progressBar: true,
       });
+      this.spinner.hide();
     });
   }
 
