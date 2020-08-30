@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap/modal";
-import {Chantier} from "../../model/chantier";
+import {Chantier, EmbededClient} from "../../model/chantier";
 import {ClientService} from "../../services/client.service";
 import {ChantierService} from "../../services/chantier.service";
 import {ToastrService} from "ngx-toastr";
@@ -82,7 +82,13 @@ export class ChantierModalComponent implements OnInit {
 
   addNew() {
     this.spinner.show();
-    this.store.dispatch(new AddChantier(this.chantier)).pipe(
+    const selectedClient = this.clients.find(cl => this.chantier.clientId === cl.id);
+    const chantierClient: EmbededClient = {
+      nom: selectedClient.text.split(' ')[0],
+      prenom: selectedClient.text.split(' ')[1],
+      telephone: null,
+    };
+    this.store.dispatch(new AddChantier(this.chantier, chantierClient)).pipe(
       first()
     ).subscribe(() => {
       this.chantierModalRef.hide();

@@ -1,7 +1,7 @@
 export class Chantier {
   id: number;
   clientId: number;
-  Client: EmbededClient;
+  Client?: EmbededClient;
   emplacement: string;
   cout: number;
   date_debut: string;

@@ -158,7 +158,7 @@ export class ChantierComponent implements OnInit, OnDestroy {
   confirmSupprimerChantier(): void {
     this.spinner.show();
     this.chantierService.deleteChantierById(this.delId).pipe(first()).subscribe(res => {
-      // this.getAllChantiers();
+      this.getStore(this.getOffsetFromRoute());
       this.toastService.success('Chantier suppimer avec succes', '', toastParams);
 
       this.delId = undefined;
@@ -172,9 +172,8 @@ export class ChantierComponent implements OnInit, OnDestroy {
         message = 'Ce chantier contient des mouvements et/ou des ouvriers. Supprimez-les puis réessayez';
       }
       this.toastService.error(message, '', toastParams);
-
+      this.dangerModal.hide();
       this.delId = undefined;
-
     });
   }
 

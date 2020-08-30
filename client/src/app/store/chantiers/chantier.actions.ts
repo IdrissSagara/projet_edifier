@@ -17,7 +17,7 @@ export class GetChantierById {
 export class AddChantier {
   static readonly type = '[Chantiers] Create';
 
-  constructor(public payload: Chantier) {
+  constructor(public payload: Chantier, public client: EmbededClient) {
   }
 }
 
