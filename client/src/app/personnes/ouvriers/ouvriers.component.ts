@@ -116,8 +116,8 @@ export class OuvriersComponent implements OnInit {
       });
       this.deletedId = undefined;
       this.dangerModal.hide();
-    }, (err) => {
       this.spinner.hide();
+    }, (err) => {
       this.dangerModal.hide();
       const message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
       this.toastService.error(message, '', {

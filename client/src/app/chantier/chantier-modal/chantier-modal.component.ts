@@ -70,10 +70,10 @@ export class ChantierModalComponent implements OnInit {
     this.store.dispatch(new UpdateChantier(this.chantier.id, this.chantier, this.chantier.Client)).pipe(
       first(),
     ).subscribe(() => {
-      this.spinner.show();
       this.chantierModalRef.hide();
       const message = `Modification du chantier ${this.chantier.id} effectuer avec succes`;
       this.toastService.success(message, '', toastParams);
+      this.spinner.hide();
     }, () => {
       this.spinner.show();
       this.toastService.error(`Une erreur est survenue lors de la mise à jour du chantier`, '', toastParams);

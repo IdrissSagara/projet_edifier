@@ -47,15 +47,15 @@ export class AgenceComponent implements OnInit {
     const formData = this.toFormData();
     this.spinner.show();
     this.agenceService.insertOrUpdate(formData).pipe(first()).subscribe((response) => {
-      this.spinner.hide();
-      const msg = response ? 'Les informations de la societé ont été enregistrées avec succes'
-        : 'Les informations de la societé ont été modifiées avec succes';
+      const msg = response ? 'Les informations de la societé ont été enregistrées avec succès'
+        : 'Les informations de la societé ont été modifiées avec succès';
       location.reload();
       this.toastService.success(msg, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
+      this.spinner.hide();
     }, error => {
       this.spinner.hide();
       this.toastService.error(`Une erreur est survenue lors de l'enregistrement des informations de l'agence`, '', {
