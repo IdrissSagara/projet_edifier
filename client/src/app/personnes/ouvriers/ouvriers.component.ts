@@ -43,9 +43,9 @@ export class OuvriersComponent implements OnInit {
   getAllOuvrier() {
     this.spinner.show();
     this.ouvrierService.getAllOuvrier().pipe(first()).subscribe((response) => {
-      this.spinner.hide();
       this.ouvrier = response.rows;
       this.totalItems = response.count;
+      this.spinner.hide();
     }, error => {
       this.spinner.hide();
       this.toastService.error('Une erreur est survenu lors de la recupération des ouvriers', '', {

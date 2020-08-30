@@ -50,6 +50,7 @@ export class AgenceComponent implements OnInit {
       this.spinner.hide();
       const msg = response ? 'Les informations de la societé ont été enregistrées avec succes'
         : 'Les informations de la societé ont été modifiées avec succes';
+      location.reload();
       this.toastService.success(msg, '', {
         progressBar: true,
         closeButton: true,

@@ -39,7 +39,8 @@ export class PaiementsComponent implements OnInit {
     this.spinner.show();
     this.paiementService.getAllPaiement(offset).pipe(first()).subscribe(res => {
       this.errorMessage = undefined;
-      this.paiements = res.rows;
+      // this.paiements = res.rows;
+      this.paiements = [];
       this.totalPages = res.count;
       this.spinner.hide();
     }, err => {

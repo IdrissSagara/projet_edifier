@@ -9,7 +9,7 @@
     <div class="modal-body">
       <div class="form-group">
         <label for="client">Client</label>
-        <ngx-select (typed)="search($event)" [(ngModel)]="chantier.ClientId" [items]="clients" id="client"
+        <ngx-select (typed)="search($event)" [(ngModel)]="chantier.clientId" [items]="clients" id="client"
                     name="client" noResultsFound="Aucun client trouvé"
                     placeholder="Selectionnez un client">
         </ngx-select>
