@@ -26,7 +26,7 @@
           </thead>
           <tbody *ngIf="!isLoading">
           <tr *ngFor="let paiement of paiements; let i = index; trackBy: trackById" id="clickable-row"
-              [routerLink]="['/transactions/paiements/detail', paiement.id, paiement.ChantierId]">
+              [routerLink]="['/transactions/paiements/detail', paiement.id, paiement.chantierId]">
             <td><span class="ui-column-title">#</span>{{paiement.id}} </td>
             <td><span class="ui-column-title">Montant</span>{{paiement.montant }}</td>
             <td><span class="ui-column-title">Montant restant</span>{{paiement.montant_restant }}</td>
@@ -37,7 +37,7 @@
             <td (click)="$event.stopPropagation()" id="unclickable-row">
               <span class="ui-column-title">Actions</span>
               <div class="btn-group" id="button_action">
-                <button [routerLink]="['/transactions/paiements/detail', paiement.id, paiement.ChantierId]"
+                <button [routerLink]="['/transactions/paiements/detail', paiement.id, paiement.chantierId]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails du paiement"><i
                   class="icon-eye"></i></button>
 

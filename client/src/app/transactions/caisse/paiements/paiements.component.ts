@@ -39,8 +39,7 @@ export class PaiementsComponent implements OnInit {
     this.spinner.show();
     this.paiementService.getAllPaiement(offset).pipe(first()).subscribe(res => {
       this.errorMessage = undefined;
-      // this.paiements = res.rows;
-      this.paiements = [];
+      this.paiements = res.rows;
       this.totalPages = res.count;
       this.spinner.hide();
     }, err => {
@@ -62,7 +61,7 @@ export class PaiementsComponent implements OnInit {
   UpdatePaiementDialog(paiement: Paiement) {
     const initialState = {
       paiement: paiement,
-      title: `Modifier le paiement : ${paiement.id} du chantier : ${paiement.ChantierId}`
+      title: `Modifier le paiement : ${paiement.id} du chantier : ${paiement.chantierId}`
     };
     const _combine = combineLatest(
       this.modalService.onShown,

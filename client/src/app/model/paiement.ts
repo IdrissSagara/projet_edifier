@@ -1,6 +1,6 @@
 export class Paiement {
   id: number;
-  ChantierId: number;
+  chantierId: number;
   date_paiement: string;
   montant: number;
   montant_restant: number;

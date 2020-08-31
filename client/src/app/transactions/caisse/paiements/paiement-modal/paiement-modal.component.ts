@@ -41,7 +41,7 @@ export class PaiementModalComponent implements OnInit {
       // TODO: temporay fix
       this.paiement.type = this.paiement.type.toLocaleLowerCase();
       this.paiementService.updatePaiement(this.paiement).pipe(first()).subscribe(paiement => {
-        const message = `Modification du paiement ${this.paiement.id} du chantier ${this.paiement.ChantierId}`;
+        const message = `Modification du paiement ${this.paiement.id} du chantier ${this.paiement.chantierId}`;
         this.paiementModalRel.hide();
         this.spinner.hide();
         this.toastService.success(message, '', {
