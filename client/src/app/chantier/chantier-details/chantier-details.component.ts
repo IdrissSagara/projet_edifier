@@ -31,6 +31,7 @@ export class ChantierDetailsComponent implements OnInit {
   mouvementModalRef: BsModalRef;
   showError: boolean = false;
   images: ImageItem[];
+  photos: Photo[];
   galeryInited: boolean = false;
   cheminImages: string;
   @ViewChild('pdfIframe') pdfIframe: ElementRef;
@@ -78,7 +79,11 @@ export class ChantierDetailsComponent implements OnInit {
   getAllPictures(id: number) {
     this.spinner.show();
     this.photoService.getPictures(id).pipe(first()).subscribe(photos => {
-      this.addItemsToGallery(photos.rows);
+      this.photos = photos.rows.map(photo => {
+        photo.path = this.cheminImages + photo.path;
+        return photo;
+      });
+      this.addItemsToGallery(this.photos);
       this.spinner.hide();
       this.galeryInited = true;
     }, error => {
@@ -202,13 +207,16 @@ export class ChantierDetailsComponent implements OnInit {
 
   ajouterImages() {
     this.message = '';
-    this.spinner.show()
+    this.spinner.show();
     this.photoService.uploadPictures(this.selectedFiles, this.chantier.id)
       .pipe(first()).subscribe((uploadedImages) => {
         this.spinner.hide();
         this.selectedFiles = undefined;
         this.fileNinput = "";
         this.addItemsToGallery(uploadedImages);
+        this.photos = [...this.photos, uploadedImages.map(image => {
+          image.path = this.cheminImages + image.path;
+        })];
         this.toastService.success('Les images selectionnées ont été chargées avec succès', '', {
           progressBar: true,
           closeButton: true,
@@ -246,7 +254,7 @@ export class ChantierDetailsComponent implements OnInit {
 
   private addItemsToGallery(items: Photo[]) {
     const newImages = items.map(it => {
-      return new ImageItem({src: this.cheminImages + it.path, thumb: this.cheminImages + it.path});
+      return new ImageItem({src: it.path, thumb: it.path});
     });
 
     this.images = [...this.images, ...newImages];

@@ -6,4 +6,6 @@ export class Photo {
   path: string;
   createdBy: number;
   updatedBy: number;
+  createdAt: string;
+  updatedAt: string;
 }

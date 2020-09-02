@@ -160,6 +160,14 @@
               <gallery *ngIf="images?.length" [items]="images"></gallery>
             </div>
           </div>
+          <div class="card border border-0" *ngIf="photos">
+            <div class="card-header">
+              <strong>Gérer les images</strong>
+            </div>
+            <div class="card-body card-body px-1 px-md-4">
+              <app-pin-board [photos]="photos"></app-pin-board>
+            </div>
+          </div>
         </tab>
       </tabset>
     </div><!--/.col-->

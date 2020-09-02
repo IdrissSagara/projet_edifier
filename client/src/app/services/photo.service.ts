@@ -26,4 +26,5 @@ export class PhotoService {
     return this.http.get<AllChantierPictures>(`${this.apiUrl}/photo/${idChantier}/all`);
   }
 
+
 }
