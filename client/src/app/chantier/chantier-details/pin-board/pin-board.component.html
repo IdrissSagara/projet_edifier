@@ -1,12 +1,12 @@
-<ul class="notes">
+<ul class="notes animated fadeIn">
   <li *ngFor="let photo of photos; trackBy: trackByImage">
     <div class="text-center">
-      <small>{{photo.createdAt | date:'dd/MM/yyyy à hh:mm'}}</small>
+      <small>Ajoutée le {{photo.createdAt | date:'dd/MM/yyyy à hh:mm'}}</small>
       <h1></h1>
       <img [src]="photo.path" [alt]="photo.chantier">
       <button tooltip="Supprimer cette image"
               class="btn btn-ghost-primary"
-              (click)="deleteImage(photo)">
+              (click)="deletePhoto(photo.id)">
         <i class="fa fa-trash-o "></i></button>
     </div>
   </li>

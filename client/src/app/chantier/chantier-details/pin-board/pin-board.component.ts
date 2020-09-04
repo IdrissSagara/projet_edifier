@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Photo} from "../../../model/photo";
 
 @Component({
@@ -6,19 +6,15 @@ import {Photo} from "../../../model/photo";
   templateUrl: './pin-board.component.html',
   styleUrls: ['./pin-board.component.css']
 })
-export class PinBoardComponent implements OnInit {
-
-  constructor() {
-  }
+export class PinBoardComponent {
 
   @Input() photos: Photo[];
+  @Output() onPhotoDeleted = new EventEmitter<number>();
 
-  ngOnInit(): void {
-  }
+  deletePhoto(id: number): void {
+    const conf = confirm(`Voulez-vous supprimer l'image ?`);
 
-  deleteImage(photo: Photo): void {
-    console.log('delete this image', photo);
-    // the emit an event to inform the parent
+    conf ? this.onPhotoDeleted.emit(id) : this.onPhotoDeleted.emit(-1);
   }
 
   trackByImage(_, photo: Photo): string {
