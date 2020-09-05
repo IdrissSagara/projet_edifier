@@ -43,7 +43,7 @@
         <label class="requis" for="telephone">Téléphone</label>
         <input [(ngModel)]="client.telephone" class="form-control" id="telephone" name="telephone"
                #telephone="ngModel" placeholder="Entrez le numéro de téléphone..." required
-               type="phone">
+               pattern="^([+]223[-\s])?[567][0-9]{1}[-\s][0-9]{2}[-\s][0-9]{2}[-\s][0-9]{2}" type="phone">
         <div *ngIf="inputEnErreur(telephone)" class="alert alert-danger">
 
           <div *ngIf="telephone.errors?.required">
