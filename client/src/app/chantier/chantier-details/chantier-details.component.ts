@@ -48,6 +48,12 @@ export class ChantierDetailsComponent implements OnInit {
   message = '';
   items: GalleryItem[] = [];
 
+  toastParams = {
+    progressBar: true,
+    closeButton: true,
+    tapToDismiss: false
+  };
+
   constructor(private route: ActivatedRoute, private chantierService: ChantierService,
               private mouvementService: MouvementService, private sanitizer: DomSanitizer,
               private modalService: BsModalService, private toastService: ToastrService,
@@ -70,11 +76,7 @@ export class ChantierDetailsComponent implements OnInit {
       // afficher une alerte bootstrap
       this.spinner.hide();
       this.showError = true;
-      this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', this.toastParams);
     });
   }
 
@@ -86,11 +88,7 @@ export class ChantierDetailsComponent implements OnInit {
       this.galeryInited = true;
     }, error => {
       this.spinner.hide();
-      this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', this.toastParams);
     });
   }
 
@@ -196,10 +194,8 @@ export class ChantierDetailsComponent implements OnInit {
 
     }, error => {
       this.spinner.hide();
-      const message = "erreur survenue lors de l'inpression";
-      this.toastService.error(message, '', {
-        progressBar: true,
-      });
+      const message = "erreur survenue lors de l'impression";
+      this.toastService.error(message, '', this.toastParams);
     });
   }
 
@@ -212,19 +208,11 @@ export class ChantierDetailsComponent implements OnInit {
         this.selectedFiles = undefined;
         this.fileNinput = "";
         this.addItemsToGallery(uploadedImages);
-        this.toastService.success('Les images selectionnées ont été chargées avec succès', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
+        this.toastService.success('Les images selectionnées ont été chargées avec succès', '', this.toastParams);
       },
       (error) => {
         this.spinner.hide();
-        this.toastService.error('Une erreur est survenue lors du chargement des images', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
+        this.toastService.error('Une erreur est survenue lors du chargement des images', '', this.toastParams);
       });
   }
 
@@ -254,19 +242,11 @@ export class ChantierDetailsComponent implements OnInit {
     this.spinner.show();
     this.photoService.deletePhotoById(id).pipe(first()).subscribe((res) => {
       this.removeItemFromGallery(id);
-      this.toastService.success('Image supprimée avec succes', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.success('Image supprimée avec succès', '', this.toastParams);
       this.spinner.hide();
     }, error => {
       this.spinner.hide();
-      this.toastService.error(`Une erreur est survenue lors de la suppression de l'image`, '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.error(`Une erreur est survenue lors de la suppression de l'image`, '', this.toastParams);
     });
     // the emit an event to inform the parent
   }
