@@ -54,9 +54,4 @@ export const navItems: INavData[] = [
     url: '/parametrage/agence',
     icon: 'fa fa-wrench'
   },
-  {
-    name: NavEnum.Credits,
-    url: 'https://coreui.io/',
-    icon: 'icon-info'
-  },
 ];

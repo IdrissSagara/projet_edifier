@@ -3,7 +3,7 @@
     <div class="card">
       <div *ngIf="paiement" class="card-header" id="title">
         <div class="pull-left">
-          <h2>Details du paiement pour le chantier: {{paiement.chantierId}}</h2>
+          <h2>Détails du paiement pour le chantier: {{paiement.chantierId}}</h2>
         </div>
       </div>
 
@@ -17,9 +17,8 @@
     </div>
   </div>
 
-
   <div *ngIf="paiement " class="row justify-content-md-center">
-    <div class="col-lg-8 col-sm-offset-8">
+    <div class="col-md-12 mb-4">
       <div class="card">
         <div class="card-header text-center">
           <strong>Informations du paiement</strong>
@@ -53,16 +52,16 @@
               <td>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td><strong>Paiement créer le :</strong></td>
+              <td><strong>Paiement effectué le :</strong></td>
               <td>{{paiement.createdAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td><strong>Paiement modifier le :</strong></td>
+              <td><strong>Paiement modifié le :</strong></td>
               <td>{{paiement.updatedAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             <ng-container *ngIf="utilisateur$ | async as user">
               <tr>
-                <td><strong>Creer par :</strong></td>
+                <td><strong>Effectué par :</strong></td>
                 <td>{{user.prenom + ' ' + user.nom}}</td>
               </tr>
               <tr>
