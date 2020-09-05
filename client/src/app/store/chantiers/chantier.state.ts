@@ -1,8 +1,9 @@
 import {Chantier} from "../../model/chantier";
 import {Action, Selector, State, StateContext} from "@ngxs/store";
 import {ChantierService} from "../../services/chantier.service";
-import {tap} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
 import {AddChantier, DeleteChantier, GetChantiers, UpdateChantier} from "./chantier.actions";
+import {of} from "rxjs";
 
 export class ChantierStateModel {
   chantiers: Chantier[];
@@ -58,6 +59,9 @@ export class ChantierState {
           count: result.count,
           areChantiersLoaded: true
         });
+      }),
+      catchError((err) => {
+        return of(err);
       })
     );
   }
@@ -72,6 +76,9 @@ export class ChantierState {
           ...state,
           chantiers: filteredArray,
         });
+      }),
+      catchError((err) => {
+        return of(err);
       })
     );
   }
@@ -90,14 +97,18 @@ export class ChantierState {
           ...state,
           chantiers: chantiersList,
         });
+      }),
+      catchError((err) => {
+        return of(err);
       })
     );
   }
 
   @Action(AddChantier)
-  addChantier({getState, patchState}: StateContext<ChantierStateModel>, {payload}: AddChantier) {
+  addChantier({getState, patchState}: StateContext<ChantierStateModel>, {payload, client}: AddChantier) {
     return this.chantierService.addChantier(payload).pipe(tap((result) => {
       const state = getState();
+      result.Client = client;
       patchState({
         chantiers: [...state.chantiers, result]
       });

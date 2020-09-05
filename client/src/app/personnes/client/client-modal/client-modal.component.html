@@ -12,7 +12,7 @@
         <input #nom="ngModel" [(ngModel)]="client.nom" class="form-control" id="nom" name="nom"
                placeholder="Nom" required
                type="text"/>
-        <div *ngIf="inputEnErreur(nom)" class="alert alert-danger">
+        <div *ngIf="inputEnErreur(nom)" class="alert-danger">
 
           <div *ngIf="nom.errors?.required">
             Le nom du client est requis.

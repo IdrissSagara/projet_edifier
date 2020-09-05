@@ -4,7 +4,7 @@ import {OuvrierService} from "../../../services/ouvrier.service";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
 import {ChantierService} from "../../../services/chantier.service";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-add-ouvrier-to-chantier-modal',
@@ -27,10 +27,10 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
     this.getAllChantier();
   }
 
-
   addOuvrierToChantier() {
     this.spinner.show();
-    this.ouvrierService.addOuvrierInChantier(this.ouvrierId, this.chantierId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
+    this.ouvrierService.addOuvrierInChantier(this.ouvrierId, this.chantierId).pipe(first()).subscribe(res => {
+      this.spinner.hide();
       this.toastService.success('L\'ouvrier à été ajouté avec succes', '', {
         progressBar: true,
         closeButton: true,
@@ -38,7 +38,7 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
       });
       this.ouvrierModalRel.hide();
     }, error => {
-      console.log(error);
+      this.spinner.hide();
       this.toastService.error(`Une erreur est survenue lors de l'ajout de l'ouvrier`, '', {
         progressBar: true,
         closeButton: true,
@@ -46,13 +46,12 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
       });
       this.ouvrierModalRel.hide();
     });
-
   }
 
   getAllChantier(offset = 0) {
     this.spinner.show();
-    this.chantierService.getAllChantier(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe((chantier) => {
-
+    this.chantierService.getAllChantier(offset).pipe(first()).subscribe((chantier) => {
+      this.spinner.hide();
       this.chantiers = [Object.assign({})];
       chantier.rows.map(c => {
         const elt = {
@@ -65,6 +64,7 @@ export class AddOuvrierToChantierModalComponent implements OnInit {
       });
     }, err => {
       // this.errorMessage = "data loading error";
+      this.spinner.hide();
       this.toastService.error('Une erreur est survenu lors de la récuperation des chantiers', '', {
         progressBar: true,
         closeButton: true,

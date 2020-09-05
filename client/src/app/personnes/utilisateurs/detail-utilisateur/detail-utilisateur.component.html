@@ -2,13 +2,13 @@
   <div class="card">
     <div *ngIf="utilisateur" class="card-header" id="title">
       <div class="pull-left">
-        <h2>Details de l'utilisateur : {{utilisateur.nom | titlecase}} {{utilisateur.prenom | titlecase}}</h2>
+        <h2>Détails de l'utilisateur : {{utilisateur.nom | titlecase}} {{utilisateur.prenom | titlecase}}</h2>
       </div>
     </div>
   </div>
 
   <div *ngIf="utilisateur " class="row justify-content-md-center">
-    <div class="col-lg-8 col-sm-offset-8">
+    <div class="col-md-12 mb-4">
       <div class="row">
         <div class="col-xs-12 col-lg-12 m-b-xs" id="cadre_boutton">
           <div class="pull-right">
@@ -25,7 +25,7 @@
           <table class="table table-striped">
             <tbody>
             <tr>
-              <td><strong>Identifiant de l'utilisateur :</strong></td>
+              <td><strong>Identifiant :</strong></td>
               <td>{{utilisateur.id}}</td>
             </tr>
             <tr>
@@ -33,23 +33,23 @@
               <td>{{utilisateur.nom}}</td>
             </tr>
             <tr>
-              <td><strong>Prenom :</strong></td>
+              <td><strong>Prénom :</strong></td>
               <td>{{utilisateur.prenom}}</td>
             </tr>
             <tr>
-              <td><strong>Nom utilisateur :</strong></td>
+              <td><strong>Nom d'utilisateur :</strong></td>
               <td>{{utilisateur.username}}</td>
             </tr>
             <tr>
-              <td><strong>Niveau d'accreditation :</strong></td>
+              <td><strong>Rôle :</strong></td>
               <td>{{utilisateur.role}}</td>
             </tr>
             <tr>
-              <td><strong>Utilisateur créé le :</strong></td>
+              <td><strong>Créé le :</strong></td>
               <td>{{utilisateur.createdAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             <tr>
-              <td><strong>Utilisateur modifié le :</strong></td>
+              <td><strong>Modifié le :</strong></td>
               <td>{{utilisateur.updatedAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
             </tbody>

@@ -27,7 +27,7 @@ const routes: Routes = [
         path: 'paiements/detail/:id/:idChantier',
         component: DetailPaiementComponent,
         data: {
-          title: 'Details du Paiements'
+          title: 'Détails du Paiements'
         },
       },
       {
@@ -50,7 +50,7 @@ const routes: Routes = [
             path: 'mouvements/detail/:id',
             component: MouvementDetailsComponent,
             data: {
-              title: 'Details du Mouvement'
+              title: 'Détails du Mouvement'
             },
           },
         ]

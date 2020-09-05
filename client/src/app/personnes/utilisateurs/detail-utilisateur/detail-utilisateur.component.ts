@@ -8,7 +8,7 @@ import {AuthService} from "../../../services/auth.service";
 import {BsModalRef, BsModalService} from "ngx-bootstrap/modal";
 import {combineLatest, Subscription} from "rxjs";
 import {ChangePasswordModalComponent} from "../change-password-modal/change-password-modal.component";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-detail-utilisateur',
@@ -52,10 +52,11 @@ export class DetailUtilisateurComponent implements OnInit {
 
   getUtilisateurById(id: number) {
     this.spinner.show();
-    this.utilisateurService.getUserById(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
+    this.utilisateurService.getUserById(id).pipe(first()).subscribe((res) => {
+      this.spinner.hide();
       this.utilisateur = res;
     }, error => {
-
+      this.spinner.hide();
     });
   }
 

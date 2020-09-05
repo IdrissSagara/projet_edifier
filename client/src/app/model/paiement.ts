@@ -1,6 +1,6 @@
 export class Paiement {
   id: number;
-  ChantierId: number;
+  chantierId: number;
   date_paiement: string;
   montant: number;
   montant_restant: number;
@@ -8,14 +8,16 @@ export class Paiement {
   commentaire: string;
   createdAt: string;
   updatedAt: string;
+  createdBy: number;
+  updatedBy: number;
 
   constructor() {
-    this.type = ESPÈCE;
+    this.type = ESPECE;
   }
 }
 
-export const ESPÈCE = 'especes';
-export const CHEQUE = 'cheque';
-export const VIREMENT_BANCAIRE = 'virement';
+export const ESPECE = 'Especes';
+export const CHEQUE = 'Cheque';
+export const VIREMENT_BANCAIRE = 'Virement';
 
-export const TYPES_PAIEMENTS = [ESPÈCE, CHEQUE, VIREMENT_BANCAIRE];
+export const TYPES_PAIEMENTS = [ESPECE, CHEQUE, VIREMENT_BANCAIRE];

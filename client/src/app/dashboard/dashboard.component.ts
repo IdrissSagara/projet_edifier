@@ -5,6 +5,7 @@ import {tap} from "rxjs/operators";
 import {Select, Store} from "@ngxs/store";
 import {ReportingState} from "../store/reporting/reporting.state";
 import {GetReporting} from "../store/reporting/reporting.action";
+import {SpinnerService} from "../services/spinner.service";
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -16,14 +17,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
   @Select(ReportingState.isReportingLoaded) isReportingLoaded$;
   isReportingLoadedSub: Subscription;
 
-  constructor(private readonly store: Store) {
+  constructor(private readonly store: Store, private readonly spinner: SpinnerService) {
   }
 
   ngOnInit(): void {
     this.isReportingLoadedSub = this.isReportingLoaded$.pipe(
       tap((isReportingLoaded) => {
         if (!isReportingLoaded) {
+          this.spinner.show();
           this.store.dispatch(new GetReporting());
+          this.spinner.hide();
         }
       })
     ).subscribe(value => {

@@ -10,21 +10,16 @@ before_script:
   - apt-get update -qq
   - apt-get install -qq git
   # Setup SSH deploy keys
-  - mkdir -p ~/.ssh
-  - ssh-keygen -R gitlab.com && ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
-  - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-  - chmod 600 ~/.ssh/id_rsa
+  #- mkdir -p ~/.ssh
+  #- ssh-keygen -R gitlab.com && ssh-keyscan -t rsa gitlab.com >> ~/.ssh/known_hosts
+  #- echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+  #- chmod 600 ~/.ssh/id_rsa
 
 deploy_staging:
   stage: deploy
-  environment:
-    name: staging
-    url: https://app.digital-faso.tech
-  only:
-    - deploy
   script:
     - cd ./client/
     - npm install
     - ./node_modules/@angular/cli/bin/ng build --prod --progress true
-    - cd ./dist/ && ls -la
-    - scp * edifier@app.digital-faso.tech:/httpdocs/
+    #- cd ./dist/ && ls -la
+    #- scp * edifier@app.digital-faso.tech:/httpdocs/

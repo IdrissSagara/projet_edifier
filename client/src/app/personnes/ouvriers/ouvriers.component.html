@@ -10,7 +10,7 @@
             </button>
           </span>
           <button (click)="showAddOuvrierDialog()" class="btn btn-outline-info"
-                  tooltip="Ajouter un nouveau  client" type="button">
+                  tooltip="Ajouter un nouvel ouvrier" type="button">
             <i class="fa fa-plus"></i> Ajouter
           </button>
         </div>
@@ -23,7 +23,7 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Téléphone</th>
-            <th>type</th>
+            <th>Type</th>
             <th>Créé le</th>
             <th>Modifié le</th>
             <th>Actions</th>
@@ -63,7 +63,7 @@
             </td>
             <td (click)="$event.stopPropagation()" id="unclickable-row">
               <span class="ui-column-title">Actions</span>
-              <div class="btn-group text-center">
+              <div class="btn-group">
                 <button [routerLink]="['/personnes/ouvriers/details', ouvrier.id]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails de l'ouvrier "><i
                   class="icon-eye"></i></button>
@@ -80,10 +80,10 @@
             </td>
           </tr>
           <tr *ngIf="errorMessage">
-            <td class="text-center" colspan="5">{{errorMessage}}</td>
+            <td class="text-center" colspan="8">{{errorMessage}}</td>
           </tr>
           <tr *ngIf="ouvrier.length === 0">
-            <td colspan="5">
+            <td colspan="8">
               <div class="empty-image"></div>
               <p class="text-center">Aucun ouvrier trouvé</p>
             </td>

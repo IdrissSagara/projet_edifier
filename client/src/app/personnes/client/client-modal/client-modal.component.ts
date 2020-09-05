@@ -36,42 +36,50 @@ export class ClientModalComponent implements OnInit {
 
   async confirm() {
     if (this.modeModification()) {
-      this.spinner.show();
-      this.store.dispatch(new UpdateClient(this.client.id, this.client)).toPromise().then((res) => {
-        this.clientModalRef.hide();
-        this.toastService.success('Client modifié avec succès', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
-      }).catch((err) => {
-        this.toastService.error('Une erreur est survenue lors de la création du client', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
-      }).finally(() => {
-        this.spinner.hide();
-      });
+      this.applyModifications();
     } else {
-      this.spinner.show();
-      this.store.dispatch(new AddClient(this.client)).toPromise().then((res) => {
-        this.clientModalRef.hide();
-        this.toastService.success('Le client a été ajouté avec succès', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
-      }).catch((err) => {
-        this.toastService.error('Une erreur est survenue lors de la création du client', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
-      }).finally(() => {
-        this.spinner.hide();
-      });
+      this.createClient();
     }
+  }
+
+  private createClient() {
+    this.spinner.show();
+    this.store.dispatch(new AddClient(this.client)).toPromise().then((res) => {
+      this.clientModalRef.hide();
+      this.toastService.success('Le client a été ajouté avec succès', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    }).catch((err) => {
+      this.toastService.error('Une erreur est survenue lors de la création du client', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    }).finally(() => {
+      this.spinner.hide();
+    });
+  }
+
+  private applyModifications() {
+    this.spinner.show();
+    this.store.dispatch(new UpdateClient(this.client.id, this.client)).toPromise().then((res) => {
+      this.clientModalRef.hide();
+      this.toastService.success('Client modifié avec succès', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    }).catch((err) => {
+      this.toastService.error('Une erreur est survenue lors de la création du client', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    }).finally(() => {
+      this.spinner.hide();
+    });
   }
 
   inputEnErreur(input: NgModel): boolean {
@@ -84,7 +92,6 @@ export class ClientModalComponent implements OnInit {
     if (input.untouched && input.errors && !input.errors.required) {
       return true;
     }
-
 
     return this.erreursServeur.hasOwnProperty(input.name);
   }

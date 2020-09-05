@@ -7,7 +7,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {UtilisateurModalComponent} from "./utilisateur-modal/utilisateur-modal.component";
 import {AuthService} from "../../services/auth.service";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-utilisateurs',
@@ -40,11 +40,13 @@ export class UtilisateursComponent implements OnInit {
 
   getAllUtilisateur(offset = 0) {
     this.spinner.show();
-    this.utilisateurService.getAllUsers(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
+    this.utilisateurService.getAllUsers(offset).pipe(first()).subscribe((response) => {
+      this.spinner.hide();
       this.utilisateurs = response.rows;
       this.totalPages = response.count;
       this.curentUser = this.authService._utilisateurCourant;
     }, (err) => {
+      this.spinner.hide();
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
         progressBar: true,
         closeButton: true,
@@ -63,7 +65,7 @@ export class UtilisateursComponent implements OnInit {
   showAddUserDialog() {
     const initialState = {
       utilisateur: this.newUtilisateur = new Utilisateur(),
-      title: 'Ajouter un nouveau utilisateur'
+      title: 'Ajouter un nouvel utilisateur'
     };
 
     const _combine = combineLatest(
@@ -146,7 +148,7 @@ export class UtilisateursComponent implements OnInit {
 
   confirmSupprimerUtilisateur() {
     this.spinner.show();
-    this.utilisateurService.deleteUserById(this.deletedId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
+    this.utilisateurService.deleteUserById(this.deletedId).pipe(first()).subscribe(res => {
       this.getAllUtilisateur();
       this.toastService.success('Utilisateur suppimer avec succes', '', {
         progressBar: true,
@@ -155,7 +157,9 @@ export class UtilisateursComponent implements OnInit {
       });
       this.deletedId = undefined;
       this.dangerModal.hide();
+      this.spinner.hide();
     }, (err) => {
+      this.spinner.hide();
       this.dangerModal.hide();
       const message = 'Une erreur est survenu lors de la suppression de l\'utilisateur';
       this.toastService.error(message, '', {

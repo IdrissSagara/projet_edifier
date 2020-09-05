@@ -1,4 +1,3 @@
-
 <div class="modal-content">
   <div class="modal-header">
     <h4 class="modal-title">{{title}}</h4>
@@ -7,21 +6,51 @@
     </button>
   </div>
   <div class="modal-body">
-    <form #form="ngForm">
-      <div class="form-group">
+    <form #form="ngForm" role="form">
+      <div class="form-group" [ngClass]="{'has-error': inputEnErreur(nom)}">
         <label class="requis" for="nom">Nom</label>
-        <input [(ngModel)]="ouvrier.nom" autocomplete="text" class="form-control" id="nom"
-               name="nom" placeholder="Entrez le nom..." required type="text">
+        <input #nom="ngModel" [(ngModel)]="ouvrier.nom" autocomplete="text" class="form-control" id="nom"
+               name="nom" placeholder="Entrez le nom..." required type="text" minlength="3"/>
+        <div *ngIf="inputEnErreur(nom)" class="alert-danger">
+
+          <div *ngIf="nom.errors?.required">
+            Le nom de l'ouvrier est requis.
+          </div>
+          <div *ngIf="nom.errors?.minlength">
+            Le nom doit faire au moins 3 caractères.
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label class="requis" for="prenom">Prenom</label>
-        <input [(ngModel)]="ouvrier.prenom" class="form-control" id="prenom" name="prenom"
-               placeholder="Entrez le prenom..." required type="text">
+      <div class="form-group" [ngClass]="{'has-error': inputEnErreur(prenom)}">
+        <label class="requis" for="prenom">Prénom</label>
+        <input #prenom="ngModel" [(ngModel)]="ouvrier.prenom" class="form-control" id="prenom" name="prenom"
+               minlength="3" placeholder="Entrez le prénom..." required type="text">
+        <div *ngIf="inputEnErreur(prenom)" class="alert-danger">
+
+          <div *ngIf="prenom.errors?.required">
+            Le prenom de l'ouvrier est requis.
+          </div>
+          <div *ngIf="prenom.errors?.minlength">
+            Le prénom doit faire au moins 3 caractères.
+          </div>
+        </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" [ngClass]="{'has-error': inputEnErreur(telephone)}">
         <label class="requis" for="telephone">Téléphone</label>
-        <input [(ngModel)]="ouvrier.telephone" class="form-control" id="telephone" name="telephone"
-               placeholder="Entrez le numéro de téléphone..." required type="number">
+        <input #telephone="ngModel" [(ngModel)]="ouvrier.telephone" class="form-control" id="telephone" name="telephone"
+               placeholder="Entrez le numéro de téléphone..." required type="number" minLength="8">
+        <div *ngIf="inputEnErreur(telephone)" class="alert-danger">
+
+          <div *ngIf="telephone.errors?.required">
+            Le Téléphone de l'ouvrier est requis.
+          </div>
+          <div *ngIf="telephone.errors?.minLength">
+            Le numéro de Téléphone doit faire au moins 8 caractères.
+          </div>
+          <div *ngIf="erreursServeur">
+            {{erreursServeur}}
+          </div>
+        </div>
       </div>
       <div *ngIf="ouvrier" class="form-group">
         <label class="requis" for="type">Type d'ouvrier</label>

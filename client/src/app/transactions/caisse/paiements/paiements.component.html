@@ -18,28 +18,31 @@
             <th>#</th>
             <th>Montant</th>
             <th>Montant restant</th>
-            <th>Type Paiement</th>
+            <th>Type paiement</th>
             <th>Commentaire</th>
             <th>Date de paiement</th>
-            <th style="padding-left: 50px">Actions</th>
+            <th>Actions</th>
           </tr>
           </thead>
           <tbody *ngIf="!isLoading">
-          <tr *ngFor="let paiement of paiements; let i = index; trackBy: trackById">
+          <tr *ngFor="let paiement of paiements; let i = index; trackBy: trackById" id="clickable-row"
+              [routerLink]="['/transactions/paiements/detail', paiement.id, paiement.chantierId]">
             <td><span class="ui-column-title">#</span>{{paiement.id}} </td>
             <td><span class="ui-column-title">Montant</span>{{paiement.montant }}</td>
             <td><span class="ui-column-title">Montant restant</span>{{paiement.montant_restant }}</td>
             <td><span class="ui-column-title">Type Paiement</span>{{paiement.type }}</td>
             <td><span class="ui-column-title">Commentaire</span>{{paiement.commentaire }}</td>
-            <td><span class="ui-column-title">Date de paiement</span>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}</td>
-            <td>
+            <td><span class="ui-column-title">Date de paiement</span>{{paiement.date_paiement | date: 'dd/MM/yyyy'}}
+            </td>
+            <td (click)="$event.stopPropagation()" id="unclickable-row">
               <span class="ui-column-title">Actions</span>
               <div class="btn-group" id="button_action">
-                <button [routerLink]="['/transactions/caisse/paiements/detail', paiement.id, paiement.ChantierId]"
+                <button [routerLink]="['/transactions/paiements/detail', paiement.id, paiement.chantierId]"
                         class="btn btn-info btn-icon" tooltip="Voir les détails du paiement"><i
                   class="icon-eye"></i></button>
+
                 <button (click)="UpdatePaiementDialog(paiement)"
-                        class="btn btn-warning btn-icon" tooltip="Modifier le paiemnt"><i
+                        class="btn btn-warning btn-icon" tooltip="Modifier le paiement"><i
                   class="icon-pencil"></i></button>
                 <button (click)="imprimerFacture(paiement)"
                         class="btn btn-link bg-success btn-icon" tooltip="Imprimer un reçu"><i
@@ -50,7 +53,7 @@
           <tr *ngIf="errorMessage">
             <td class="text-center" colspan="5">{{errorMessage}}</td>
           </tr>
-          <tr *ngIf="!paiements">
+          <tr *ngIf="!paiements || !paiements.length">
             <td colspan="8">
               <div class="empty-image"></div>
               <p class="text-center">Aucun paiement trouvé</p>
@@ -69,7 +72,6 @@
                       firstText="&laquo;" lastText="&raquo;" nextText="&rsaquo;" previousText="&lsaquo;">
 
           </pagination>
-
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {ClientState} from "../../store/client/client.state";
 import {Select, Store} from "@ngxs/store";
-import {finalize, first, tap} from "rxjs/operators";
+import {first, tap} from "rxjs/operators";
 import {DeleteClient, GetClients} from "../../store/client/client.actions";
 
 @Component({
@@ -41,7 +41,10 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.areClientsLoadedSub = this.areClientsLoaded$.pipe(
       tap((areCoursesLoaded) => {
         if (!areCoursesLoaded) {
-          this.store.dispatch(new GetClients());
+          this.spinner.show();
+          this.store.dispatch(new GetClients()).toPromise().finally(() => {
+            this.spinner.hide();
+          });
         }
       })
     ).subscribe(value => {
@@ -97,10 +100,12 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   getAllClients(offset = 0) {
     this.spinner.show();
-    this.clientService.getAllClient(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res) => {
+    this.clientService.getAllClient(offset).pipe(first()).subscribe((res) => {
+      this.spinner.hide();
       this.clients = res.rows;
       this.totalPages = res.count;
     }, (err) => {
+      this.spinner.hide();
       this.toastService.error('Une erreur est survenue lors de la récupération des clients', '', {
         progressBar: true,
         closeButton: true,

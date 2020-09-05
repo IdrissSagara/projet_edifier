@@ -1,4 +1,8 @@
 let photoDao = require('../../../../dao/photoDao');
+const {validationResult} = require('express-validator');
+const photoModel = require('../../../../models').Photo;
+const fs = require("fs");
+let path = require('path');
 
 async function savePhoto(req, res, next) {
     const photo = {
@@ -78,6 +82,37 @@ async function getAllPhotos(req, res) {
     return res.status(200).json(photosFound);
 }
 
+function deletePhoto(req, res) {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        res.status(422).json({errors: errors.array()});
+        return;
+    }
+    var id = req.params.id;
+
+    photoModel.findByPk(id).then((photofound) => {
+        if (!photofound) {
+            return res.status(404).json(photofound);
+        }
+
+        let pathToFile = path.join(__dirname, '../../../../public/uploads/chantier/' + photofound.chantier + '/' + photofound.path);
+
+        fs.unlink(pathToFile, function (err) {
+            if (err) return console.log(err);
+            console.log('file deleted successfully');
+            photofound.destroy().then((photodeleted) => {
+                if (photodeleted) {
+                    return res.status(200).json({
+                        status: 'error',
+                        message: 'photo ' + id + ' deleted'
+                    });
+                }
+            });
+        });
+    });
+}
+
 module.exports = {
-    savePhoto, getAllPhotos, saveMultiplePhotos
+    savePhoto, getAllPhotos, saveMultiplePhotos, deletePhoto
 };

@@ -1,7 +1,7 @@
 export class Chantier {
   id: number;
-  ClientId: number;
-  Client: EmbededClient;
+  clientId: number;
+  Client?: EmbededClient;
   emplacement: string;
   cout: number;
   date_debut: string;
@@ -11,6 +11,8 @@ export class Chantier {
   montant_dispo: number;
   createdAt: string;
   updatedAt: string;
+  createdBy: number;
+  updatedBy: number;
 }
 
 export interface EmbededClient {

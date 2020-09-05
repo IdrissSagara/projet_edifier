@@ -37,16 +37,17 @@ export class PaiementsComponent implements OnInit {
 
   getAllPaiement(offset = 0) {
     this.spinner.show();
-    this.paiementService.getAllPaiement(offset).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
+    this.paiementService.getAllPaiement(offset).pipe(first()).subscribe(res => {
       this.errorMessage = undefined;
-      console.log('i ma tou mi!!');
       this.paiements = res.rows;
       this.totalPages = res.count;
+      this.spinner.hide();
     }, err => {
       const message = "erreur de chargement des données";
       this.toastService.error(message, '', {
         progressBar: true,
       });
+      this.spinner.hide();
     });
   }
 
@@ -60,7 +61,7 @@ export class PaiementsComponent implements OnInit {
   UpdatePaiementDialog(paiement: Paiement) {
     const initialState = {
       paiement: paiement,
-      title: `Modifier le paiement : ${paiement.id} du chantier : ${paiement.ChantierId}`
+      title: `Modifier le paiement : ${paiement.id} du chantier : ${paiement.chantierId}`
     };
     const _combine = combineLatest(
       this.modalService.onShown,
@@ -112,7 +113,6 @@ export class PaiementsComponent implements OnInit {
       }, 1000);
 
     }, err => {
-      console.log(err);
       const message = "erreur survenu lors de l'inpression";
       this.toastService.error(message, '', {
         progressBar: true,

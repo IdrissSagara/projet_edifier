@@ -11,7 +11,7 @@
   </div>
 
   <div class="row justify-content-md-center">
-    <div class="col-lg-8 col-sm-offset-8">
+    <div class="col-md-12 mb-4">
       <div class="modal-content">
         <div *ngIf="!isLoading" class="modal-body">
           <form #form="ngForm" role="form">
@@ -48,7 +48,7 @@
 
             <div [ngClass]="{'has-error has-feedback': inputEnErreur(libelle)}"
                  class="form-group">
-              <label class="control-label requis" for="libelle">Libelle:</label>
+              <label class="control-label requis" for="libelle">Libellé:</label>
               <input #libelle="ngModel" [(ngModel)]="agence.libelle" class="form-control" id="libelle"
                      name="libelle" required type="text"/>
               <span *ngIf="inputEnErreur(libelle)"

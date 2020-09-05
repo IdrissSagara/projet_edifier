@@ -9,3 +9,7 @@
 #unclickable-row {
   cursor: default;
 }
+
+td, th {
+  text-align: center;
+}

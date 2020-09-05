@@ -11,7 +11,7 @@ import {SpinnerService} from "../../services/spinner.service";
 import {ToastrService} from "ngx-toastr";
 import {Paiement} from "../../model/paiement";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 import {PhotoService} from "../../services/photo.service";
 import {Photo} from "../../model/photo";
 import {environment} from "../../../environments/environment";
@@ -21,7 +21,7 @@ import {PaiementModalComponent} from "../../transactions/caisse/paiements/paieme
 @Component({
   selector: 'app-chantier-details',
   templateUrl: './chantier-details.component.html',
-  styleUrls: ['./chantier-details.component.css']
+  styleUrls: ['./chantier-details.component.scss']
 })
 export class ChantierDetailsComponent implements OnInit {
   chantier: Chantier;
@@ -31,8 +31,11 @@ export class ChantierDetailsComponent implements OnInit {
   mouvementModalRef: BsModalRef;
   showError: boolean = false;
   images: ImageItem[];
-  galeryInited: boolean = false;
+  photos: Photo[] = [];
   cheminImages: string;
+  galeryInited: boolean = false;
+  showEdit: boolean = false;
+
   @ViewChild('pdfIframe') pdfIframe: ElementRef;
   pdfUrl: SafeUrl;
 
@@ -44,6 +47,12 @@ export class ChantierDetailsComponent implements OnInit {
   fileNinput;
   message = '';
   items: GalleryItem[] = [];
+
+  toastParams = {
+    progressBar: true,
+    closeButton: true,
+    tapToDismiss: false
+  };
 
   constructor(private route: ActivatedRoute, private chantierService: ChantierService,
               private mouvementService: MouvementService, private sanitizer: DomSanitizer,
@@ -58,18 +67,16 @@ export class ChantierDetailsComponent implements OnInit {
 
   async getChantierById(id: number) {
     this.spinner.show();
-    this.chantierService.getChantierById(id).pipe(first(), finalize(() => this.spinner.hide())).subscribe(chantier => {
+    this.chantierService.getChantierById(id).pipe(first()).subscribe(chantier => {
+      this.spinner.hide();
       this.showError = false;
       this.chantier = chantier;
       this.pieChartData = [this.chantier.cout, this.chantier.yereta, this.chantier.walita];
     }, (err) => {
       // afficher une alerte bootstrap
+      this.spinner.hide();
       this.showError = true;
-      this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.toastService.error(`Une erreur est survenue lors de la récupération du chantier`, '', this.toastParams);
     });
   }
 
@@ -80,11 +87,8 @@ export class ChantierDetailsComponent implements OnInit {
       this.spinner.hide();
       this.galeryInited = true;
     }, error => {
-      this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
+      this.spinner.hide();
+      this.toastService.error('Une erreur est survenu lors de la récuperation des Images du chantiers', '', this.toastParams);
     });
   }
 
@@ -169,7 +173,8 @@ export class ChantierDetailsComponent implements OnInit {
 
   genererFacture(): void {
     this.spinner.show();
-    this.chantierService.getChantierFacture(this.chantier.id).pipe(first(), finalize(() => this.spinner.hide())).subscribe((res: any) => {
+    this.chantierService.getChantierFacture(this.chantier.id).pipe(first()).subscribe((res: any) => {
+      this.spinner.hide();
       const pdf = new Blob([res], {type: 'application/pdf'});
 
       // création d'une url locale avec le fichier pdf
@@ -188,34 +193,26 @@ export class ChantierDetailsComponent implements OnInit {
       }, 1000);
 
     }, error => {
-      console.log(error);
-      const message = "erreur survenu lors de l'inpression";
-      this.toastService.error(message, '', {
-        progressBar: true,
-      });
+      this.spinner.hide();
+      const message = "erreur survenue lors de l'impression";
+      this.toastService.error(message, '', this.toastParams);
     });
   }
 
   ajouterImages() {
     this.message = '';
-    this.photoService.uploadPictures(this.selectedFiles, this.chantier.id).pipe(first()).subscribe(
-      (uploadedImages) => {
+    this.spinner.show();
+    this.photoService.uploadPictures(this.selectedFiles, this.chantier.id)
+      .pipe(first()).subscribe((uploadedImages) => {
+        this.spinner.hide();
         this.selectedFiles = undefined;
         this.fileNinput = "";
         this.addItemsToGallery(uploadedImages);
-        this.toastService.success('Les images selectionnées ont été chargées avec succès', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
+        this.toastService.success('Les images selectionnées ont été chargées avec succès', '', this.toastParams);
       },
       (error) => {
-        console.log("error", error);
-        this.toastService.error('Une erreur est survenue lors du chargement des images', '', {
-          progressBar: true,
-          closeButton: true,
-          tapToDismiss: false
-        });
+        this.spinner.hide();
+        this.toastService.error('Une erreur est survenue lors du chargement des images', '', this.toastParams);
       });
   }
 
@@ -231,18 +228,50 @@ export class ChantierDetailsComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
 
-  initGalerie(forced?: boolean) {
+  initGalerie(forced?: boolean): void {
     if (forced || !this.galeryInited) {
       this.images = [];
       this.getAllPictures(this.chantier.id);
     }
   }
 
-  private addItemsToGallery(items: Photo[]) {
-    const newImages = items.map(it => {
-      return new ImageItem({src: this.cheminImages + it.path, thumb: this.cheminImages + it.path});
+  deleteImage(id: number): void {
+    if (id === -1) {
+      return;
+    }
+    this.spinner.show();
+    this.photoService.deletePhotoById(id).pipe(first()).subscribe((res) => {
+      this.removeItemFromGallery(id);
+      this.toastService.success('Image supprimée avec succès', '', this.toastParams);
+      this.spinner.hide();
+    }, error => {
+      this.spinner.hide();
+      this.toastService.error(`Une erreur est survenue lors de la suppression de l'image`, '', this.toastParams);
     });
+    // the emit an event to inform the parent
+  }
+
+  private addItemsToGallery(photos: Photo[]): void {
+    this.photos = [...this.photos, ...photos.map(photo => {
+      photo.path = this.cheminImages + photo.path;
+      return photo;
+    })];
+    const newImages = this.convertPhotoToImageItem(photos);
 
     this.images = [...this.images, ...newImages];
+  }
+
+  private removeItemFromGallery(itemId: number): void {
+    this.photos = this.photos.filter(photo => {
+      return photo.id !== itemId;
+    });
+
+    this.images = this.convertPhotoToImageItem(this.photos);
+  }
+
+  private convertPhotoToImageItem(photos: Photo[]): ImageItem[] {
+    return photos.map(it => {
+      return new ImageItem({src: it.path, thumb: it.path});
+    });
   }
 }

@@ -2,7 +2,7 @@
   [asideMenuToggler]="false"
   [mobileAsideMenuToggler]="false"
   [fixed]="true"
-  [navbarBrandFull]="{src: 'http://localhost:3000/uploads/logo/logo.jpg', width: 89, height: 25, alt: 'Edifier'}"
+  [navbarBrandFull]="{src: backendUrl + '/uploads/logo/logo.jpg', width: 89, height: 25, alt: 'Edifier'}"
   [navbarBrandMinimized]="{src: 'assets/img/brand/sygnet.svg', width: 30, height: 30, alt: 'Edifier'}"
   [navbarBrandRouterLink]="['/dashboard']"
   [sidebarToggler]="'lg'">
@@ -11,7 +11,7 @@
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a (click)="false" aria-expanded="false" aria-haspopup="true" class="nav-link" data-toggle="dropdown"
          dropdownToggle href="#" role="button">
-        <img alt="admin@bootstrapmaster.com" class="img-avatar" src="assets/img/avatars/6.jpg"/>
+        <img [alt]="authService._utilisateurCourant.username" class="img-avatar" src="assets/img/avatars/9.png"/>
       </a>
       <div *dropdownMenu aria-labelledby="simple-dropdown" class="dropdown-menu dropdown-menu-right">
         <div class="dropdown-header text-center">

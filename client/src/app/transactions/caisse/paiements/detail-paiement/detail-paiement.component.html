@@ -3,7 +3,7 @@
     <div class="card">
       <div *ngIf="paiement" class="card-header" id="title">
         <div class="pull-left">
-          <h2>Details du paiement pour le chantier: {{paiement.ChantierId}}</h2>
+          <h2>Details du paiement pour le chantier: {{paiement.chantierId}}</h2>
         </div>
       </div>
 
@@ -22,7 +22,7 @@
     <div class="col-lg-8 col-sm-offset-8">
       <div class="card">
         <div class="card-header text-center">
-          <strong>Les informations du paiement</strong>
+          <strong>Informations du paiement</strong>
         </div>
         <div class="card-body">
           <table class="table table-striped">
@@ -45,8 +45,8 @@
             </tr>
             <tr>
               <td><strong>Chantier :</strong></td>
-              <td><span [routerLink]="['/chantiers/details', paiement.ChantierId]"
-                        class="badge badge-success " id="clickable-row">{{paiement.ChantierId}}</span></td>
+              <td><span [routerLink]="['/chantiers/details', paiement.chantierId]"
+                        class="badge badge-success " id="clickable-row">{{paiement.chantierId}}</span></td>
             </tr>
             <tr>
               <td><strong>Date de paiement :</strong></td>
@@ -60,14 +60,16 @@
               <td><strong>Paiement modifier le :</strong></td>
               <td>{{paiement.updatedAt | date: 'dd/MM/yyyy'}}</td>
             </tr>
-            <tr>
-              <td><strong>Creer par :</strong></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><strong>Modifié par :</strong></td>
-              <td></td>
-            </tr>
+            <ng-container *ngIf="utilisateur$ | async as user">
+              <tr>
+                <td><strong>Creer par :</strong></td>
+                <td>{{user.prenom + ' ' + user.nom}}</td>
+              </tr>
+              <tr>
+                <td><strong>Modifié par :</strong></td>
+                <td> {{user.prenom + ' ' + user.nom}}</td>
+              </tr>
+            </ng-container>
             </tbody>
           </table>
         </div>

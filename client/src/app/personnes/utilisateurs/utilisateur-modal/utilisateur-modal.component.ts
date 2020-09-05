@@ -4,7 +4,7 @@ import {BsModalRef} from "ngx-bootstrap/modal";
 import {ToastrService} from "ngx-toastr";
 import {SpinnerService} from "../../../services/spinner.service";
 import {UtilisateurService} from "../../../services/utilisateur.service";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 import {NgModel} from "@angular/forms";
 
 @Component({
@@ -34,8 +34,9 @@ export class UtilisateurModalComponent implements OnInit {
   addUtilisateur() {
     if (this.modeModification()) {
       this.spinner.show();
-      this.utilisateurService.updateUser(this.utilisateur).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
-        const message = `Modification de l'utilisateur ${this.utilisateur.nom} ${this.utilisateur.prenom} effectuer avec succes`;
+      this.utilisateurService.updateUser(this.utilisateur).pipe(first()).subscribe((response) => {
+        this.spinner.hide();
+        const message = `Modification de l'utilisateur ${this.utilisateur.nom} ${this.utilisateur.prenom} effectuée avec succes`;
         this.utilisateurModalRel.hide();
         this.toastService.success(message, '', {
           progressBar: true,
@@ -43,7 +44,8 @@ export class UtilisateurModalComponent implements OnInit {
           tapToDismiss: false
         });
       }, error => {
-        this.toastService.error(`Une erreur est survenue lors de la modification du chantier`, '', {
+        this.spinner.hide();
+        this.toastService.error(`Une erreur est survenue lors de la modification de l'utilisateur`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false
@@ -51,7 +53,8 @@ export class UtilisateurModalComponent implements OnInit {
       });
     } else {
       this.spinner.show();
-      this.utilisateurService.createUser(this.utilisateur).pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
+      this.utilisateurService.createUser(this.utilisateur).pipe(first()).subscribe((response) => {
+        this.spinner.hide();
         const message = `Utilisateur creer avec succes`;
         this.utilisateurModalRel.hide();
         this.toastService.success(message, '', {
@@ -60,7 +63,8 @@ export class UtilisateurModalComponent implements OnInit {
           tapToDismiss: false
         });
       }, error => {
-        this.toastService.error(`Une erreur est survenue lors de l'ajout d'un utilisateur`, '', {
+        this.spinner.hide();
+        this.toastService.error(`Une erreur est survenue lors de l'ajout de l'utilisateur`, '', {
           progressBar: true,
           closeButton: true,
           tapToDismiss: false

@@ -37,7 +37,7 @@ router.get('/:id/chantiers',
 
 //edit a ouvrier
 router.put('/',
-    ouvrierValidator.validate('getById'),
+    ouvrierValidator.validate('save'),
     accessControl.canAccess([roles.ALL]),
     ouvrierCtrl.update);
 

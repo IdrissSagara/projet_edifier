@@ -2,8 +2,8 @@
   <div class="animated fadeIn">
     <div class="card">
       <div *ngIf="chantier" class="card-header title">
-        <div class="pull-left">
-          <h2>Details du chantier : N° {{chantier?.id}} du
+        <div class="">
+          <h2>Détails du chantier : N° {{chantier?.id}} du
             client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
         </div>
         <div class="btn-group col-12 col-md-3 pull-right">
@@ -43,15 +43,11 @@
               <table class="table table-striped">
                 <tbody>
                 <tr>
-                  <td><strong>Identifiant du client :</strong></td>
-                  <td>{{chantier.ClientId}}</td>
-                </tr>
-                <tr>
                   <td><strong>Nom :</strong></td>
                   <td>{{chantier.Client.nom}}</td>
                 </tr>
                 <tr>
-                  <td><strong>Prenom :</strong></td>
+                  <td><strong>Prénom :</strong></td>
                   <td>{{chantier.Client.prenom}}</td>
                 </tr>
                 <tr>
@@ -112,11 +108,11 @@
                   <td>{{chantier.montant_dispo | intcomma}} Fcfa</td>
                 </tr>
                 <tr>
-                  <td><strong>Montant emprunté sur un autre chantier:</strong></td>
+                  <td><strong>Montant emprunté:</strong></td>
                   <td>{{chantier.walita | intcomma}} Fcfa</td>
                 </tr>
                 <tr>
-                  <td><strong>Montant de cet chantier:</strong></td>
+                  <td><strong>Montant propre:</strong></td>
                   <td>{{chantier.yereta | intcomma}} Fcfa</td>
                 </tr>
                 </tbody>
@@ -141,9 +137,13 @@
           <div class="card border border-0">
             <div class="card-header">
               <strong>Images du chantier</strong>
-              <div class="pull-right">
+              <div class="action-bloc">
+                <label class="switch switch-label switch-pill switch-primary" tooltip="Mode gestion des images">
+                  <input [(ngModel)]="showEdit" class="switch-input" type="checkbox">
+                  <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                </label>
                 <button (click)="initGalerie(true)"
-                        class="btn btn-outline-info mr-3" tooltip="Rafraichir"><i class="fa fa-refresh"></i>
+                        class="btn btn-outline-info ml-3" tooltip="Rafraichir"><i class="fa fa-refresh"></i>
                 </button>
               </div>
             </div>
@@ -160,8 +160,10 @@
                 Ajouter
               </button>
             </div>
-            <div class="card-body card-body px-1 px-md-4">
-              <gallery *ngIf="images?.length" [items]="images"></gallery>
+            <div class="card-body card-body px-1">
+              <gallery *ngIf="images && images?.length && !showEdit" [items]="images"></gallery>
+              <app-pin-board (onPhotoDeleted)="deleteImage($event)"
+                             *ngIf="photos && photos?.length && showEdit" [photos]="photos"></app-pin-board>
             </div>
           </div>
         </tab>

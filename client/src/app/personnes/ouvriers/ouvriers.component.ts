@@ -7,7 +7,7 @@ import {combineLatest, Subscription} from "rxjs";
 import {OuvrierModalComponent} from "./ouvrier-modal/ouvrier-modal.component";
 import {BsModalRef, BsModalService, ModalDirective} from "ngx-bootstrap/modal";
 import {AddOuvrierToChantierModalComponent} from "./add-ouvrier-to-chantier-modal/add-ouvrier-to-chantier-modal.component";
-import {finalize, first} from "rxjs/operators";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: 'app-ouvriers',
@@ -42,10 +42,12 @@ export class OuvriersComponent implements OnInit {
 
   getAllOuvrier() {
     this.spinner.show();
-    this.ouvrierService.getAllOuvrier().pipe(first(), finalize(() => this.spinner.hide())).subscribe((response) => {
+    this.ouvrierService.getAllOuvrier().pipe(first()).subscribe((response) => {
       this.ouvrier = response.rows;
       this.totalItems = response.count;
+      this.spinner.hide();
     }, error => {
+      this.spinner.hide();
       this.toastService.error('Une erreur est survenu lors de la recupération des ouvriers', '', {
         progressBar: true,
         closeButton: true,
@@ -93,13 +95,11 @@ export class OuvriersComponent implements OnInit {
     this.subscriptions = [];
   }
 
-
   confirmationSuppressionDialog(ouvrier: Ouvrier) {
     this.deletedId = ouvrier.id;
     this.deltedName = ouvrier.nom + " " + ouvrier.prenom;
     this.dangerModal.show();
   }
-
 
   declineSupprimeOuvrier() {
     this.dangerModal.hide();
@@ -107,7 +107,7 @@ export class OuvriersComponent implements OnInit {
 
   confirmSupprimerOuvrier() {
     this.spinner.show();
-    this.ouvrierService.deleteOuvrierById(this.deletedId).pipe(first(), finalize(() => this.spinner.hide())).subscribe(res => {
+    this.ouvrierService.deleteOuvrierById(this.deletedId).pipe(first()).subscribe(res => {
       this.getAllOuvrier();
       this.toastService.success('Ouvrier suppimer avec succes', '', {
         progressBar: true,
@@ -116,6 +116,7 @@ export class OuvriersComponent implements OnInit {
       });
       this.deletedId = undefined;
       this.dangerModal.hide();
+      this.spinner.hide();
     }, (err) => {
       this.dangerModal.hide();
       const message = 'Une erreur est survenu lors de la suppression de l\'ouvrier';
