@@ -22,6 +22,7 @@ import {LightboxModule} from "@ngx-gallery/lightbox";
 import {GalleryModule} from "@ngx-gallery/core";
 import {IntCommaPipe} from "../utils/pipes/intcomma.pipe";
 import {PaiementModalModule} from "../transactions/caisse/paiements/paiement-modal/paiement-modal.module";
+import {PinBoardComponent} from './chantier-details/pin-board/pin-board.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {PaiementModalModule} from "../transactions/caisse/paiements/paiement-mod
     ChantierModalComponent,
     ChantierDetailsComponent,
     IntCommaPipe,
+    PinBoardComponent,
   ],
   entryComponents: [
     ChantierModalComponent,

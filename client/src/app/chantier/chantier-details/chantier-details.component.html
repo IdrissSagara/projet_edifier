@@ -2,7 +2,7 @@
   <div class="animated fadeIn">
     <div class="card">
       <div *ngIf="chantier" class="card-header title">
-        <div class="pull-left">
+        <div class="">
           <h2>Détails du chantier : N° {{chantier?.id}} du
             client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
         </div>
@@ -137,9 +137,13 @@
           <div class="card border border-0">
             <div class="card-header">
               <strong>Images du chantier</strong>
-              <div class="pull-right">
+              <div class="action-bloc">
+                <label class="switch switch-label switch-pill switch-primary" tooltip="Mode gestion des images">
+                  <input [(ngModel)]="showEdit" class="switch-input" type="checkbox">
+                  <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                </label>
                 <button (click)="initGalerie(true)"
-                        class="btn btn-outline-info mr-3" tooltip="Rafraichir"><i class="fa fa-refresh"></i>
+                        class="btn btn-outline-info ml-3" tooltip="Rafraichir"><i class="fa fa-refresh"></i>
                 </button>
               </div>
             </div>
@@ -156,8 +160,10 @@
                 Ajouter
               </button>
             </div>
-            <div class="card-body card-body px-1 px-md-4">
-              <gallery *ngIf="images?.length" [items]="images"></gallery>
+            <div class="card-body card-body px-1">
+              <gallery *ngIf="images && images?.length && !showEdit" [items]="images"></gallery>
+              <app-pin-board (onPhotoDeleted)="deleteImage($event)"
+                             *ngIf="photos && photos?.length && showEdit" [photos]="photos"></app-pin-board>
             </div>
           </div>
         </tab>

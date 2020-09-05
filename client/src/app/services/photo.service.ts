@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {AllChantierPictures} from "../model/responses/AllChantierPictures";
+import {Photo} from "../model/photo";
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,10 @@ export class PhotoService {
   getPictures(idChantier: number): Observable<AllChantierPictures> {
     return this.http.get<AllChantierPictures>(`${this.apiUrl}/photo/${idChantier}/all`);
   }
+
+  deletePhotoById(idPhoto: number) {
+    return this.http.delete<Photo>(`${this.apiUrl}/photo/${idPhoto}`);
+  }
+
 
 }

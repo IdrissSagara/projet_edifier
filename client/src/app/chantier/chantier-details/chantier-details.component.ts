@@ -21,7 +21,7 @@ import {PaiementModalComponent} from "../../transactions/caisse/paiements/paieme
 @Component({
   selector: 'app-chantier-details',
   templateUrl: './chantier-details.component.html',
-  styleUrls: ['./chantier-details.component.css']
+  styleUrls: ['./chantier-details.component.scss']
 })
 export class ChantierDetailsComponent implements OnInit {
   chantier: Chantier;
@@ -31,8 +31,11 @@ export class ChantierDetailsComponent implements OnInit {
   mouvementModalRef: BsModalRef;
   showError: boolean = false;
   images: ImageItem[];
-  galeryInited: boolean = false;
+  photos: Photo[] = [];
   cheminImages: string;
+  galeryInited: boolean = false;
+  showEdit: boolean = false;
+
   @ViewChild('pdfIframe') pdfIframe: ElementRef;
   pdfUrl: SafeUrl;
 
@@ -202,7 +205,7 @@ export class ChantierDetailsComponent implements OnInit {
 
   ajouterImages() {
     this.message = '';
-    this.spinner.show()
+    this.spinner.show();
     this.photoService.uploadPictures(this.selectedFiles, this.chantier.id)
       .pipe(first()).subscribe((uploadedImages) => {
         this.spinner.hide();
@@ -237,18 +240,58 @@ export class ChantierDetailsComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
 
-  initGalerie(forced?: boolean) {
+  initGalerie(forced?: boolean): void {
     if (forced || !this.galeryInited) {
       this.images = [];
       this.getAllPictures(this.chantier.id);
     }
   }
 
-  private addItemsToGallery(items: Photo[]) {
-    const newImages = items.map(it => {
-      return new ImageItem({src: this.cheminImages + it.path, thumb: this.cheminImages + it.path});
+  deleteImage(id: number): void {
+    if (id === -1) {
+      return;
+    }
+    this.spinner.show();
+    this.photoService.deletePhotoById(id).pipe(first()).subscribe((res) => {
+      this.removeItemFromGallery(id);
+      this.toastService.success('Image supprimée avec succes', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.spinner.hide();
+    }, error => {
+      this.spinner.hide();
+      this.toastService.error(`Une erreur est survenue lors de la suppression de l'image`, '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
     });
+    // the emit an event to inform the parent
+  }
+
+  private addItemsToGallery(photos: Photo[]): void {
+    this.photos = [...this.photos, ...photos.map(photo => {
+      photo.path = this.cheminImages + photo.path;
+      return photo;
+    })];
+    const newImages = this.convertPhotoToImageItem(photos);
 
     this.images = [...this.images, ...newImages];
+  }
+
+  private removeItemFromGallery(itemId: number): void {
+    this.photos = this.photos.filter(photo => {
+      return photo.id !== itemId;
+    });
+
+    this.images = this.convertPhotoToImageItem(this.photos);
+  }
+
+  private convertPhotoToImageItem(photos: Photo[]): ImageItem[] {
+    return photos.map(it => {
+      return new ImageItem({src: it.path, thumb: it.path});
+    });
   }
 }
