@@ -15,8 +15,8 @@ before_script:
   #- echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
   #- chmod 600 ~/.ssh/id_rsa
 
-deploy_staging:
-  stage: deploy
+build:
+  stage: build
   script:
     - cd ./client/
     - npm install
