@@ -1,9 +1,4 @@
 /* PIN BOARD */
-ul.notes {
-  display: flex;
-  justify-content: center;
-}
-
 ul.notes li,
 ul.tag-list li {
   list-style: none;
