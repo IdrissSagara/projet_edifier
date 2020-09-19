@@ -1,12 +1,13 @@
 <div class="px-3">
   <div class="animated fadeIn">
     <div class="card">
-      <div *ngIf="chantier" class="card-header title">
-        <div class="">
+      <div *ngIf="chantier" class="card-header row">
+        <div class="col-12 col-md-9">
           <h2>Détails du chantier : N° {{chantier?.id}} du
-            client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}</h2>
+            client {{chantier?.Client.nom}} {{chantier?.Client.prenom}}
+          </h2>
         </div>
-        <div class="btn-group col-12 col-md-3 pull-right">
+        <div class="btn-group col-12 col-md-3">
           <button (click)="addMouvement()" class="btn btn-info btn-icon" tooltip="Effectuer un mouvement"
                   type="button"><i class="fa fa-reply"></i>
           </button>
