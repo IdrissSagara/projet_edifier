@@ -12,7 +12,7 @@ ul.notes li h4 {
 ul.notes li div {
   text-decoration: none;
   color: #000;
-  background: #ffc;
+  background: #c7e4ee;
   display: block;
   height: 140px;
   width: 140px;
@@ -46,7 +46,7 @@ ul.notes li div p {
 ul.notes li div {
   text-decoration: none;
   color: #000;
-  background: #ffc;
+  background: #c7e4ee;
   display: block;
   height: 140px;
   width: 140px;
@@ -106,7 +106,7 @@ ul.notes li div:focus {
 ul.notes li div {
   text-decoration: none;
   color: #000;
-  background: #ffc;
+  background: #c7e4ee;
   display: block;
   height: 210px;
   width: 210px;
