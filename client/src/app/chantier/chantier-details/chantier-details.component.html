@@ -160,7 +160,7 @@
                 Ajouter
               </button>
             </div>
-            <div class="card-body card-body px-1">
+            <div class="card-body px-1">
               <gallery *ngIf="images && images?.length && !showEdit" [items]="images"></gallery>
               <app-pin-board (onPhotoDeleted)="deleteImage($event)"
                              *ngIf="photos && photos?.length && showEdit" [photos]="photos"></app-pin-board>
