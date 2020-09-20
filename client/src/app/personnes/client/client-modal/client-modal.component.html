@@ -7,54 +7,60 @@
   </div>
   <div class="modal-body">
     <form #form="ngForm" role="form">
-      <div [ngClass]="{'has-error': inputEnErreur(nom)}" class="form-group">
+      <div class="form-group">
         <label class="control-label requis" for="nom">Nom</label>
         <input #nom="ngModel" [(ngModel)]="client.nom" class="form-control" id="nom" name="nom"
-               placeholder="Nom" required
+               [ngClass]="{'is-invalid': inputEnErreur(nom)}" placeholder="Nom" required
                type="text"/>
-        <div *ngIf="inputEnErreur(nom)" class="alert-danger">
+        <div *ngIf="inputEnErreur(nom)" class="invalid-feedback">
 
           <div *ngIf="nom.errors?.required">
             Le nom du client est requis.
           </div>
 
-          <div *ngFor="let erreur of erreursServeur?.nom">
-            {{erreur}}
+          <div *ngIf="erreursServeur?.errors && erreursServeur?.errors['nom']">
+            {{erreursServeur?.errors['nom'].msg}}
           </div>
         </div>
       </div>
-      <div [ngClass]="{'has-error': inputEnErreur(prenom)}" class="form-group">
+      <div class="form-group">
         <label class="requis" for="prenom">Prénom</label>
         <input [(ngModel)]="client.prenom" class="form-control" id="prenom" minlength="2"
                #prenom="ngModel" name="prenom" placeholder="Entrez le prénom..."
-               required type="text"/>
-        <div *ngIf="inputEnErreur(prenom)" class="alert alert-danger">
+               [ngClass]="{'is-invalid': inputEnErreur(prenom)}" required type="text"/>
+        <div *ngIf="inputEnErreur(prenom)" class="invalid-feedback">
 
           <div *ngIf="prenom.errors?.required">
-            Le prenom du client est requis.
+            Le prénom du client est requis.
+          </div>
+          <div *ngIf="prenom.errors?.minlength">
+            Le prénom doit avoir au moins 2 caractères.
           </div>
 
-          <div *ngFor="let erreur of erreursServeur?.prenom">
-            {{erreur}}
+          <div *ngIf="erreursServeur?.errors && erreursServeur?.errors['prenom']">
+            {{erreursServeur?.errors['prenom'].msg}}
           </div>
         </div>
       </div>
-      <div [ngClass]="{'has-error': inputEnErreur(telephone)}" class="form-group">
+
+      <div class="form-group">
         <label class="requis" for="telephone">Téléphone</label>
-        <input [(ngModel)]="client.telephone" class="form-control" id="telephone" name="telephone"
+        <input [(ngModel)]="client.telephone" [ngClass]="{'is-invalid': inputEnErreur(telephone)}" class="form-control"
+               id="telephone" name="telephone"
                #telephone="ngModel" placeholder="Entrez le numéro de téléphone..." required
                pattern="^([+]223[-\s])?[567][0-9]{1}[-\s][0-9]{2}[-\s][0-9]{2}[-\s][0-9]{2}" type="phone">
-        <div *ngIf="inputEnErreur(telephone)" class="alert alert-danger">
+        <div *ngIf="inputEnErreur(telephone)" class="invalid-feedback">
 
           <div *ngIf="telephone.errors?.required">
             Le numero de téléphone du client est requis.
           </div>
-
-          <div *ngFor="let erreur of erreursServeur?.telephone">
-            {{erreur}}
+          <div *ngIf="telephone.errors?.pattern">
+            Le numero de téléphone doit respecter le format malien. Ex: 76 12 34 56.
+          </div>
+          <div *ngIf="erreursServeur?.errors && erreursServeur?.errors['telephone']">
+            {{erreursServeur?.errors['telephone'].msg}}
           </div>
         </div>
-
       </div>
     </form>
   </div>

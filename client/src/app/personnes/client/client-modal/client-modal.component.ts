@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BsModalRef} from "ngx-bootstrap/modal";
 import {ClientModel} from "../../../model/clientModel";
 import {ClientService} from "../../../services/client.service";
@@ -7,6 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {NgModel} from "@angular/forms";
 import {Store} from "@ngxs/store";
 import {AddClient, UpdateClient} from "../../../store/client/client.actions";
+import {ErrorHandler} from "../../../utils/error-handler/error-handler";
 
 @Component({
   selector: 'app-client-modal',
@@ -17,7 +18,7 @@ export class ClientModalComponent implements OnInit {
   title: string;
   client: ClientModel;
 
-  @Input() erreursServeur: any = {};
+  erreursServeur: any = {};
 
   constructor(public clientModalRef: BsModalRef, private clientService: ClientService,
               private spinner: SpinnerService, private toastService: ToastrService,
@@ -38,28 +39,22 @@ export class ClientModalComponent implements OnInit {
     if (this.modeModification()) {
       this.applyModifications();
     } else {
-      this.createClient();
+      this.createClient(this.client);
     }
   }
 
-  private createClient() {
-    this.spinner.show();
-    this.store.dispatch(new AddClient(this.client)).toPromise().then((res) => {
-      this.clientModalRef.hide();
-      this.toastService.success('Le client a été ajouté avec succès', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
-    }).catch((err) => {
-      this.toastService.error('Une erreur est survenue lors de la création du client', '', {
-        progressBar: true,
-        closeButton: true,
-        tapToDismiss: false
-      });
-    }).finally(() => {
-      this.spinner.hide();
-    });
+  inputEnErreur(input: NgModel): boolean {
+
+    // validation côté client (validation html)
+    if (input.invalid && input.touched) {
+      return true;
+    }
+
+    if (input.untouched && input.errors && !input.errors.required) {
+      return true;
+    }
+
+    return !!this.erreursServeur.errors ? !!this.erreursServeur.errors[`${input.name}`] : false;
   }
 
   private applyModifications() {
@@ -82,17 +77,25 @@ export class ClientModalComponent implements OnInit {
     });
   }
 
-  inputEnErreur(input: NgModel): boolean {
-
-    // validation côté client (validation html)
-    if (input.invalid && input.touched) {
-      return true;
-    }
-
-    if (input.untouched && input.errors && !input.errors.required) {
-      return true;
-    }
-
-    return this.erreursServeur.hasOwnProperty(input.name);
+  private createClient(client: ClientModel) {
+    this.spinner.show();
+    this.store.dispatch(new AddClient(client)).toPromise().then((res) => {
+      this.clientModalRef.hide();
+      this.toastService.success('Le client a été ajouté avec succès', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+      this.erreursServeur = {};
+    }).catch((err) => {
+      this.erreursServeur = ErrorHandler.handleAPIErrors(err);
+      this.toastService.error('Une erreur est survenue lors de la création du client', '', {
+        progressBar: true,
+        closeButton: true,
+        tapToDismiss: false
+      });
+    }).finally(() => {
+      this.spinner.hide();
+    });
   }
 }
