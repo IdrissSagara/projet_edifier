@@ -8,6 +8,7 @@ import {NgModel} from "@angular/forms";
 import {Store} from "@ngxs/store";
 import {AddClient, UpdateClient} from "../../../store/client/client.actions";
 import {handleAPIErrors} from "../../../utils/error-handler/error-handler";
+import {ExtractedError} from "../../../utils/error-handler/errors-model";
 
 @Component({
   selector: 'app-client-modal',
@@ -18,7 +19,7 @@ export class ClientModalComponent implements OnInit {
   title: string;
   client: ClientModel;
 
-  erreursServeur: any = {};
+  erreursServeur: ExtractedError | any = {};
 
   constructor(public clientModalRef: BsModalRef, private clientService: ClientService,
               private spinner: SpinnerService, private toastService: ToastrService,
@@ -61,13 +62,14 @@ export class ClientModalComponent implements OnInit {
     this.spinner.show();
     this.store.dispatch(new UpdateClient(this.client.id, this.client)).toPromise().then((res) => {
       this.clientModalRef.hide();
-      this.toastService.success('Client modifié avec succès', '', {
+      this.toastService.success('Le client a été modifié avec succès', '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
       });
     }).catch((err) => {
-      this.toastService.error('Une erreur est survenue lors de la création du client', '', {
+      this.erreursServeur = handleAPIErrors(err);
+      this.toastService.error(this.erreursServeur.message, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false
@@ -89,7 +91,7 @@ export class ClientModalComponent implements OnInit {
       this.erreursServeur = {};
     }).catch((err) => {
       this.erreursServeur = handleAPIErrors(err);
-      this.toastService.error('Une erreur est survenue lors de la création du client', '', {
+      this.toastService.error(this.erreursServeur.message, '', {
         progressBar: true,
         closeButton: true,
         tapToDismiss: false

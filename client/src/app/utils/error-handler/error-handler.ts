@@ -1,9 +1,14 @@
 import {BackendValidationError, ExtractedError, ExtractedErrorTypes} from "./errors-model";
 
 export function handleAPIErrors(error): ExtractedError {
-  let errors: ExtractedError;
+  let errors: ExtractedError = {
+    type: ExtractedErrorTypes.Unknown,
+    message: `Une erreur inconnue est survenue lors de la validation du formulaire`,
+    errors: [],
+  };
+
   if (error.status === 422) {
-    errors = this.extractUnprocessableEntityErrors(error);
+    errors = extractUnprocessableEntityErrors(error);
   }
 
   return errors;
@@ -12,8 +17,8 @@ export function handleAPIErrors(error): ExtractedError {
 export function extractUnprocessableEntityErrors(error): ExtractedError {
   return {
     type: ExtractedErrorTypes.UnprocessableEntity,
-    message: `L'entité envoyé n'a pas pu être traitée. Certains champs ne sont pas conformes`,
-    errors: !!error.error.errors ? this.detailFieldErrors(error.error.errors) : undefined
+    message: `L'entité envoyé n'a pas pu être traitée car certains champs ne sont pas conformes. Corrigez-les puis réessayez`,
+    errors: !!error.error.errors ? detailFieldErrors(error.error.errors) : undefined
   };
 }
 

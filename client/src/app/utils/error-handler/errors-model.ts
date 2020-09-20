@@ -11,6 +11,7 @@ export interface BackendValidationError {
 }
 
 export enum ExtractedErrorTypes {
+  Unknown,
   UnprocessableEntity,
   Unauthorized,
 }
