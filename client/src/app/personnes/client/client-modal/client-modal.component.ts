@@ -7,7 +7,7 @@ import {ToastrService} from "ngx-toastr";
 import {NgModel} from "@angular/forms";
 import {Store} from "@ngxs/store";
 import {AddClient, UpdateClient} from "../../../store/client/client.actions";
-import {ErrorHandler} from "../../../utils/error-handler/error-handler";
+import {handleAPIErrors} from "../../../utils/error-handler/error-handler";
 
 @Component({
   selector: 'app-client-modal',
@@ -88,7 +88,7 @@ export class ClientModalComponent implements OnInit {
       });
       this.erreursServeur = {};
     }).catch((err) => {
-      this.erreursServeur = ErrorHandler.handleAPIErrors(err);
+      this.erreursServeur = handleAPIErrors(err);
       this.toastService.error('Une erreur est survenue lors de la création du client', '', {
         progressBar: true,
         closeButton: true,
