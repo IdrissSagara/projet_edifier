@@ -212,7 +212,11 @@ export class ChantierDetailsComponent implements OnInit {
       },
       (error) => {
         this.spinner.hide();
-        this.toastService.error('Une erreur est survenue lors du chargement des images', '', this.toastParams);
+        let msg = "Une erreur est survenue lors du chargement des images";
+        if (error.error.message === "File too large") {
+          msg = "Une image selectionnée est trop grande pour être chargée. La taille maximale autorisée est de 2048x2048.";
+        }
+        this.toastService.error(msg, '', this.toastParams);
       });
   }
 
