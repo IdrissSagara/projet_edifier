@@ -165,6 +165,9 @@
               <gallery *ngIf="images && images?.length && !showEdit" [items]="images"></gallery>
               <app-pin-board (onPhotoDeleted)="deleteImage($event)"
                              *ngIf="photos && photos?.length && showEdit" [photos]="photos"></app-pin-board>
+              <div *ngIf="photos.length === 0" class="empty-image">
+                <p class="text-center">Aucune image trouvée</p>
+              </div>
             </div>
           </div>
         </tab>
